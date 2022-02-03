@@ -37,7 +37,7 @@ def hunt(channel_id, token, config, log, ID):
         if config["logging"]["warning"]:
             register(log, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} second(s)). Aborting command.")
         return
-    elif latest_message["content"].lower() == "you don't have a hunting rifle, you need to go buy one. you're not good enough to shoot animals with your bare hands... i hope":
+    elif latest_message["content"].lower() == "you don't have a hunting rifle, you need to go buy one. you're not good enough to shoot animals with your bare hands... i hope.":
         if config["logging"]["debug"]:
             register(log, "DEBUG", "User does not have item `hunting rifle`. Buying hunting rifle now.")
         
