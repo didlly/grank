@@ -37,4 +37,4 @@ def verify_credentials(log, cwd):
     
     register(log, "DEBUG", f"Logged in as {data['username']}#{data['discriminator']}.")
     
-    return [credentials, data["id"]]
+    return credentials, data["id"]
