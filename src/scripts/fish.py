@@ -37,7 +37,7 @@ def fish(channel_id, token, config, log, ID):
         if config["logging"]["warning"]:
             register(log, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} second(s)). Aborting command.")
         return
-    elif latest_message["content"].lower() == "you don't have a fishing pole, you need to go buy one. you're not good enough to catch them with your hands.":
+    elif latest_message["content"] == "You don't have a fishing pole, you need to go buy one. You're not good enough to catch them with your hands.":
         if config["logging"]["debug"]:
             register(log, "DEBUG", "User does not have item `fishing pole`. Buying fishing pole now.")
         

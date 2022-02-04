@@ -13,7 +13,7 @@ def buy(channel_id, token, config, log, ID, item):
         return
     
     if config["logging"]["debug"]:
-        register(log, "DEBUG", "Successfully sent command `pls buy`.")
+        register(log, "DEBUG", f"Successfully sent command `pls buy {item}`.")
     
     latest_message = None
     

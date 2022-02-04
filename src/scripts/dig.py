@@ -38,7 +38,7 @@ def dig(channel_id, token, config, log, ID):
         if config["logging"]["warning"]:
             register(log, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} second(s)). Aborting command.")
         return
-    elif latest_message["content"].lower() == "you don't have a shovel, you need to go buy one. i'd hate to let you dig with your bare hands.":
+    elif latest_message["content"] == "You don't have a shovel, you need to go buy one. I'd hate to let you dig with your bare hands.":
         if config["logging"]["debug"]:
             register(log, "DEBUG", "User does not have item `shovel`. Buying shovel now.")
         
