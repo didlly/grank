@@ -91,6 +91,4 @@ def postmeme(username, channel_id, token, config, log, ID, cwd):
 
         utils.run.run = True
         
-        print("")
-        
         sleep(30 - (end - start))
