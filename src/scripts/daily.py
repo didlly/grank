@@ -64,4 +64,7 @@ def daily(username, channel_id, token, config, log, cwd):
         
         utils.run.run = True
         
-        sleep(23400 - (end - start))
+        cooldown = 23400 - (end - start)
+
+        if cooldown > 0:
+            sleep(cooldown)

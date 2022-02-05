@@ -81,4 +81,7 @@ def highlow(username, channel_id, token, config, log, ID):
 
         utils.run.run = True
 
-        sleep(30 - (end - start))
+        cooldown = 30 - (end - start)
+
+        if cooldown > 0:
+            sleep(cooldown)

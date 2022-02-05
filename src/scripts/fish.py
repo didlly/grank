@@ -70,4 +70,7 @@ def fish(username, channel_id, token, config, log, ID, cwd):
 
         utils.run.run = True
 
-        sleep(40 - (end - start))
+        cooldown = 40 - (end - start)
+
+        if cooldown > 0:
+            sleep(cooldown)
