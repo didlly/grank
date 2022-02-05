@@ -72,7 +72,7 @@ To use Grank, you will have to provide your Discord token and a channel ID. Don'
 - [Useful article on how to get a channel ID.](https://docs.statbot.net/docs/faq/general/how-find-id/)
 
 #### How to enter them
-Since Grank support multi-instancing, for every `token` you put in you will have to specify a `channel_id`. Open `src/credentails.json`. You should see a dictionary with two keys - `tokens` and `channel_ids`. As I have said earlier, for every `token` you put in the list of `tokens`, you need to put a `channel_id` in the list of `channel_ids`. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
+Since Grank support multi-instancing, for every `token` you put in you will have to specify a `channel_id`. Open `src/credentials.json`. You should see a dictionary with two keys - `tokens` and `channel_ids`. As I have said earlier, for every `token` you put in the list of `tokens`, you need to put a `channel_id` in the list of `channel_ids`. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
 
 You are now ready to use the program. Run ```src/main.py``` to start the program. You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
 
