@@ -5,9 +5,9 @@ from utils.console import style
 def verify_configuration(log, cwd):
     try:
         config = safe_load(open(f"{cwd}/config.yml", "r"))
-        register(log, "DEBUG", "Found `config.yml` and parsed values from it.")
+        register(log, None, "DEBUG", "Found `config.yml` and parsed values from it.")
     except FileNotFoundError:
-        register(log, "ERROR", "Unable to find `config.yml`. Make sure the file is present.")
+        register(log, None, "ERROR", "Unable to find `config.yml`. Make sure the file is present.")
         _ = input(f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}")
         exit(1)
      

@@ -23,6 +23,8 @@
 * [Getting started](https://github.com/didlly/grank#supported-commands-more-to-be-added-in-the-future)
 	* [Setting up the environment.](https://github.com/didlly/grank#setting-up-the-environment)
 	* [Getting your Discord token and channel ID.](https://github.com/didlly/grank#getting-your-discord-token-and-channel-id)
+        * [How do you get this information](https://github.com/didlly/grank#how-do-you-get-this-information)
+        * [How to enter them](https://github.com/didlly/grank#how-to-enter-them)
 * [Config file](https://github.com/didlly/grank#config-file)
 	* [```commands``` category](https://github.com/didlly/grank#commands-category)
 	* [```cooldowns``` category](https://github.com/didlly/grank#cooldowns-category)
@@ -69,6 +71,9 @@ To use Grank, you will have to provide your Discord token and a channel ID. Don'
 
 - [Useful article on how to get a channel ID.](https://docs.statbot.net/docs/faq/general/how-find-id/)
 
+#### How to enter them
+Since Grank support multi-instancing, for every `token` you put in you will have to specify a `channel_id`. Open `src/credentails.json`. You should see a dictionary with two keys - `tokens` and `channel_ids`. As I have said earlier, for every `token` you put in the list of `tokens`, you need to put a `channel_id` in the list of `channel_ids`. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
+
 You are now ready to use the program. Run ```src/main.py``` to start the program. You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
 
 ## Config file
@@ -94,7 +99,6 @@ Values in the ```cooldowns``` category tell the program the cooldowns between co
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| ```commands```  | ```Integer``` | ```1```  | Cooldown between commands. |
 | ```timeout```  | ```Integer``` | ```5```  | Timeout for waiting for responses from Dank Memer to commands that require user interaction (like ```pls search```). |
 
 ### ```logging``` category

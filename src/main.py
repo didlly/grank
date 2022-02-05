@@ -3,16 +3,7 @@ from os.path import dirname
 from utils.logger import initialize_logger
 from utils.configuration.verify_configuration import verify_configuration
 from utils.configuration.verify_credentials import verify_credentials
-from scripts.daily import daily
-from scripts.beg import beg
-from scripts.dig import dig
-from scripts.fish import fish
-from scripts.hunt import hunt
-from scripts.search import search
-from scripts.highlow import highlow
-from scripts.postmeme import postmeme
-from time import time, sleep
-from utils.logger import register
+from threading import Thread
 
 try:
     import ctypes
@@ -29,99 +20,49 @@ elif __file__:
 log = initialize_logger(cwd)
 
 config = verify_configuration(log, cwd)
-temp = verify_credentials(log, cwd)
+credentials = verify_credentials(log, cwd)
 
-credentials = temp[0]
-ID = temp[-1]
+for index, token in enumerate(credentials[0]["tokens"]):
+    channel_id = credentials[0]["channel_ids"][index]
+    ID = credentials[1][index]
+    username = credentials[-1][index]
 
-del temp
-
-token = credentials["token"]
-channel_id = credentials["channel_id"]
-
-del credentials
-
-while True:
-    print("")
-    
     if config["commands"]["daily"]:
-        try:
-            daily(channel_id, token, config, log, cwd)
-        except Exception:
-            register(log, "WARNING", f"An unexpected error occured during the running of the `pls daily` command: `{sys.exc_info()}`")
-    
-    sleep(config["cooldowns"]["commands"])
-    
-    
-    if config["commands"]["beg"]:
-        try:
-            beg(channel_id, token, config, log)
-        except Exception:
-            register(log, "WARNING", f"An unexpected error occured during the running of the `pls beg` command: `{sys.exc_info()}`")
-        
-    start = time()
-    sleep(config["cooldowns"]["commands"])
-    
-    
-    if config["commands"]["dig"]:
-        try:
-            dig(channel_id, token, config, log, ID)
-        except Exception:
-            register(log, "WARNING", f"An unexpected error occured during the running of the `pls dig` command: `{sys.exc_info()}`")
-    
-    sleep(config["cooldowns"]["commands"])    
+        from scripts.daily import daily
+        daily_thread = Thread(target=daily, args=(username, channel_id, token, config, log, cwd))
+        daily_thread.start()
 
+    if config["commands"]["beg"]:
+        from scripts.beg import beg
+        beg_thread = Thread(target=beg, args=(username, channel_id, token, config, log))
+        beg_thread.start()
+
+    if config["commands"]["dig"]:
+        from scripts.dig import dig
+        dig_thread = Thread(target=dig, args=(username, channel_id, token, config, log, ID, cwd))
+        dig_thread.start()
 
     if config["commands"]["fish"]:
-        try:
-            fish(channel_id, token, config, log, ID)
-        except Exception:
-            register(log, "WARNING", f"An unexpected error occured during the running of the `pls fish` command: `{sys.exc_info()}`")
-    
-    sleep(config["cooldowns"]["commands"]) 
-
+        from scripts.fish import fish
+        fish_thread = Thread(target=fish, args=(username, channel_id, token, config, log, ID, cwd))
+        fish_thread.start()
 
     if config["commands"]["hunt"]:
-        try:
-            hunt(channel_id, token, config, log, ID)
-        except Exception:
-            register(log, "WARNING", f"An unexpected error occured during the running of the `pls hunt` command: `{sys.exc_info()}`")
-    
-    sleep(config["cooldowns"]["commands"]) 
-    
-    
+        from scripts.hunt import hunt
+        hunt_thread = Thread(target=hunt, args=(username, channel_id, token, config, log, ID, cwd))
+        hunt_thread.start()
+
     if config["commands"]["search"]:
-        try:
-            search(channel_id, token, config, log, ID)
-        except Exception:
-            register(log, "WARNING", f"An unexpected error occured during the running of the `pls search` command: `{sys.exc_info()}`")
-    
-    sleep(config["cooldowns"]["commands"])
-    
-    
+        from scripts.search import search
+        search_thread = Thread(target=search, args=(username, channel_id, token, config, log, ID))
+        search_thread.start()
+
     if config["commands"]["highlow"]:
-        try:
-            highlow(channel_id, token, config, log, ID)
-        except Exception:
-            register(log, "WARNING", f"An unexpected error occured during the running of the `pls highlow` command: `{sys.exc_info()}`")
-    
-    sleep(config["cooldowns"]["commands"])
-    
-    
+        from scripts.highlow import highlow
+        highlow_thread = Thread(target=highlow, args=(username, channel_id, token, config, log, ID))
+        highlow_thread.start()
+
     if config["commands"]["postmeme"]:
-        try:
-            postmeme(channel_id, token, config, log, ID)
-        except Exception:
-            register(log, "WARNING", f"An unexpected error occured during the running of the `pls postmeme` command: `{sys.exc_info()}`")
-    
-    
-    end = time()
-    
-    cooldown = 45 - (end - start)
-    
-    if cooldown >= 0:
-        if config["logging"]["debug"]:
-            register(log, "DEBUG", f"Beginning {cooldown} second cooldown between command loop.")
-        sleep(cooldown)
-    elif config["logging"]["debug"]:
-            register(log, "DEBUG", f"Skipping cooldown since it is not needed.") 
+        from scripts.postmeme import postmeme
+        postmeme_thread = Thread(target=postmeme, args=(username, channel_id, token, config, log, ID, cwd))
+        postmeme_thread.start()

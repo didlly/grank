@@ -1,24 +1,23 @@
-from math import e
 from requests import post, get
 from utils.logger import register
 from time import sleep
 from json import loads
 
-def buy(channel_id, token, config, log, ID, item):
+def buy(username, channel_id, token, config, log, ID, cwd, item):
     request = post(f"https://discord.com/api/v8/channels/{channel_id}/messages", headers={"authorization": token}, data={"content": f"pls buy {item}"})
     
-    if request.status_code != 200 :
+    if request.status_code != 200:
         if config["logging"]["warning"]:
-            register(log, "WARNING", f"Failed to send command `pls buy`. Status code: {request.status_code} (expected 200). Aborting command.")
+            register(log, username, "WARNING", f"Failed to send command `pls buy`. Status code: {request.status_code} (expected 200). Aborting command.")
         return
     
     if config["logging"]["debug"]:
-        register(log, "DEBUG", f"Successfully sent command `pls buy {item}`.")
+        register(log, username, "DEBUG", f"Successfully sent command `pls buy {item}`.")
     
     latest_message = None
     
-    for _ in range(0, config["cooldowns"]["timeout"]):
-        sleep(1)
+    for _ in range(0, config["cooldowns"]["timeout"] * 10):
+        sleep(0.1)
         
         request = get(f"https://discord.com/api/v8/channels/{channel_id}/messages", headers={"authorization": token})
         
@@ -29,14 +28,14 @@ def buy(channel_id, token, config, log, ID, item):
         
         if latest_message["author"]["id"] == "270904126974590976" and latest_message["referenced_message"]["author"]["id"] == ID:
             if config["logging"]["debug"]:
-                register(log, "DEBUG", f"Got Dank Memer's response to command `pls buy {item}`.")
+                register(log, username, "DEBUG", f"Got Dank Memer's response to command `pls buy {item}`.")
             break
         else:
             continue
        
     if latest_message is None or latest_message["author"]["id"] != "270904126974590976":
         if config["logging"]["warning"]:
-            register(log, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} second(s)). Aborting command.")
+            register(log, username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} second(s)). Aborting command.")
         return
         
     if latest_message["content"] == "Far out, you don't have enough money in your wallet or your bank to buy that much!!":
@@ -58,11 +57,11 @@ def buy(channel_id, token, config, log, ID, item):
     
                 if request.status_code != 200:
                     if config["logging"]["warning"]:
-                        register(log, "WARNING", f"Failed to send command `pls buy {item}`. Status code: {request.status_code} (expected 200).")
+                        register(log, username, "WARNING", f"Failed to send command `pls buy {item}`. Status code: {request.status_code} (expected 200).")
                     return
                 
                 if config["logging"]["debug"]:
-                    register(log, "DEBUG", f"Successfully sent command `pls buy {item}`.")
+                    register(log, username, "DEBUG", f"Successfully sent command `pls buy {item}`.")
             elif (wallet + bank) - data["item"] > 0:
                 amount = (wallet + bank) - data["item"]
                 
@@ -70,23 +69,23 @@ def buy(channel_id, token, config, log, ID, item):
     
                 if request.status_code != 200:
                     if config["logging"]["warning"]:
-                        register(log, "WARNING", f"Failed to send command `pls with {amount}`. Status code: {request.status_code} (expected 200).")
+                        register(log, username, "WARNING", f"Failed to send command `pls with {amount}`. Status code: {request.status_code} (expected 200).")
                     return
                 
                 if config["logging"]["debug"]:
-                    register(log, "DEBUG", f"Successfully sent command `pls with {amount}`.")
+                    register(log, username, "DEBUG", f"Successfully sent command `pls with {amount}`.")
                     
                 request = post(f"https://discord.com/api/v8/channels/{channel_id}/messages", headers={"authorization": token}, data={"content": f"pls buy {item}"})
     
                 if request.status_code != 200:
                     if config["logging"]["warning"]:
-                        register(log, "WARNING", f"Failed to send command `pls buy {item}`. Status code: {request.status_code} (expected 200).")
+                        register(log, username, "WARNING", f"Failed to send command `pls buy {item}`. Status code: {request.status_code} (expected 200).")
                 
                 if config["logging"]["debug"]:
-                    register(log, "DEBUG", f"Successfully sent command `pls buy {item}`.")
+                    register(log, username, "DEBUG", f"Successfully sent command `pls buy {item}`.")
             elif config["logging"]["warning"]:
-                register(log, "WARNING", f"Insufficient funds to buy a {item}")
+                register(log, username, "WARNING", f"Insufficient funds to buy a {item}")
                    
     elif latest_message["embeds"][0]["author"]["name"].lower() == f"successful {item} purchase":
         if config["logging"]["debug"]:
-            register(log, "DEBUG", f"Successfully bought {item}.")
+            register(log, username, "DEBUG", f"Successfully bought {item}.")
