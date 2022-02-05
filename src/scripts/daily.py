@@ -48,10 +48,10 @@ def daily(username, channel_id, token, config, log, cwd):
                 register(log, username, "DEBUG", "Successfully updated latest command run of `pls daily`.")
 
     while True:
-        while not utils.run.run:
+        while not utils.run.run[channel_id]:
             pass
 
-        utils.run.run = False
+        utils.run.run[channel_id] = False
 
         start = time()
 
@@ -62,7 +62,7 @@ def daily(username, channel_id, token, config, log, cwd):
 
         end = time()   
         
-        utils.run.run = True
+        utils.run.run[channel_id] = True
         
         cooldown = 23400 - (end - start)
 

@@ -65,10 +65,10 @@ def highlow(username, channel_id, token, config, log, ID):
             register(log, username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `pls highlow`. Status code: {request.status_code} (expected 200 or 204).")
 
     while True:
-        while not utils.run.run:
+        while not utils.run.run[channel_id]:
             pass
 
-        utils.run.run = False
+        utils.run.run[channel_id] = False
 
         start = time()
 
@@ -79,7 +79,7 @@ def highlow(username, channel_id, token, config, log, ID):
         
         end = time()
 
-        utils.run.run = True
+        utils.run.run[channel_id] = True
 
         cooldown = 30 - (end - start)
 

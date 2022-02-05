@@ -53,10 +53,10 @@ def hunt(username, channel_id, token, config, log, ID, cwd):
                 return
 
     while True:
-        while not utils.run.run:
+        while not utils.run.run[channel_id]:
             pass
 
-        utils.run.run = False
+        utils.run.run[channel_id] = False
 
         start = time()
 
@@ -67,7 +67,7 @@ def hunt(username, channel_id, token, config, log, ID, cwd):
         
         end = time()
 
-        utils.run.run = True
+        utils.run.run[channel_id] = True
 
         cooldown = 40 - (end - start)
 

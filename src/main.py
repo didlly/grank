@@ -1,4 +1,5 @@
 import sys
+import utils.run
 from os.path import dirname
 from utils.logger import initialize_logger
 from utils.configuration.verify_configuration import verify_configuration
@@ -26,6 +27,7 @@ for index, token in enumerate(credentials[0]["tokens"]):
     channel_id = credentials[0]["channel_ids"][index]
     ID = credentials[1][index]
     username = credentials[-1][index]
+    utils.run.run[channel_id] = True
 
     if config["commands"]["daily"]:
         from scripts.daily import daily

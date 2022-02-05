@@ -17,10 +17,10 @@ def beg(username, channel_id, token, config, log):
             register(log, username, "DEBUG", "Successfully sent command `pls beg`.")
 
     while True:
-        while not utils.run.run:
+        while not utils.run.run[channel_id]:
             pass
 
-        utils.run.run = False
+        utils.run.run[channel_id] = False
 
         start = time()
 
@@ -31,7 +31,7 @@ def beg(username, channel_id, token, config, log):
         
         end = time()
 
-        utils.run.run = True
+        utils.run.run[channel_id] = True
         
         cooldown = 45 - (end - start)
 
