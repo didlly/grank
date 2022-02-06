@@ -48,6 +48,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 - ```pls search```
 - ```pls highlow```
 - ```pls postmeme```
+- ```pls trivia```
 
 ## Todo
 Visit [this](https://github.com/didlly/grank/projects/1) link for project updates.
@@ -91,6 +92,7 @@ Values in the ```commands``` category tell the program whether or not to run cer
 | ```search```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls search```. |
 | ```highlow```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls highlow```. |
 | ```postmeme```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls postmeme```. |
+| ```trivia```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls trivia```. |
 | ```auto_buy```  | ```Boolean``` | ```True```  | Tell the program whether or not to buy items  (like ```laptop```) needed to run commands if there are sufficient funds. |
 
 ### ```cooldowns``` category

@@ -68,3 +68,8 @@ for index, token in enumerate(credentials[0]["tokens"]):
         from scripts.postmeme import postmeme
         postmeme_thread = Thread(target=postmeme, args=(username, channel_id, token, config, log, ID, cwd))
         postmeme_thread.start()
+
+    if config["commands"]["trivia"]:
+        from scripts.trivia import trivia
+        trivia_thread = Thread(target=trivia, args=(username, channel_id, token, config, log, ID, cwd))
+        trivia_thread.start()
