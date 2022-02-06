@@ -35,12 +35,12 @@ def buy(username, channel_id, token, config, log, ID, cwd, item):
        
     if latest_message is None or latest_message["author"]["id"] != "270904126974590976":
         if config["logging"]["warning"]:
-            register(log, username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} second(s)). Aborting command.")
+            register(log, username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} {'second' if config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
         return
         
     if latest_message["content"] == "Far out, you don't have enough money in your wallet or your bank to buy that much!!":
         from scripts.balance import balance
-        bal = balance(log, token, channel_id, config["cooldowns"]["timeout"], config["logging"], ID)
+        bal = balance(username, channel_id, token, config, log, ID)
         
         if bal[0]:
             bal = bal[-1]

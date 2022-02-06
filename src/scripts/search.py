@@ -39,7 +39,7 @@ def search(username, channel_id, token, config, log, ID):
         
         if latest_message is None or latest_message["author"]["id"] != "270904126974590976":
             if config["logging"]["warning"]:
-                register(log, username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} second(s)). Aborting command.")
+                register(log, username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} {'second' if config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
             return
             
         data = {

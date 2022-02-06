@@ -39,7 +39,7 @@ def fish(username, channel_id, token, config, log, ID, cwd):
         
         if latest_message is None or latest_message["author"]["id"] != "270904126974590976":
             if config["logging"]["warning"]:
-                register(log, username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} second(s)). Aborting command.")
+                register(log, username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} {'second' if config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
             return
         elif latest_message["content"] == "You don't have a fishing pole, you need to go buy one. You're not good enough to catch them with your hands.":
             if config["logging"]["debug"]:
