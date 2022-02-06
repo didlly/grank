@@ -47,7 +47,7 @@ def fish(username, channel_id, token, config, log, ID, cwd):
             
             if config["commands"]["auto_buy"]:
                 from scripts.buy import buy
-                buy(username, channel_id, token, config, log, ID, cwd, "fishing")
+                buy(username, channel_id, token, config, log, ID, cwd, "fishing pole")
                 return
             elif config["logging"]["warning"]:
                 register(log, username, "WARNING", "A fishing pole is required for the command `pls fish`. However, since `auto_buy` is set to false in the configuration file, the program will not buy one. Aborting command.")
