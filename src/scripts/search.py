@@ -80,7 +80,10 @@ def search(username, channel_id, token, config, log, ID):
 
         utils.run.run[channel_id] = True
 
-        cooldown = 30 - (end - start)
+        if config["cooldowns"]["patron"]:
+            cooldown = 15 - (end - start)
+        else:
+            cooldown = 30 - (end - start)
 
         if cooldown > 0:
             sleep(cooldown)

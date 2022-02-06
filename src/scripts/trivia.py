@@ -98,7 +98,10 @@ def trivia(username, channel_id, token, config, log, ID, cwd):
 
         utils.run.run[channel_id] = True
 
-        cooldown = 5 - (end - start)
+        if config["cooldowns"]["patron"]:
+            cooldown = 3 - (end - start)
+        else:
+            cooldown = 5 - (end - start)
 
         if cooldown > 0:
             sleep(cooldown)

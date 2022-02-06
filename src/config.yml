@@ -11,6 +11,7 @@ commands:
   auto_buy: True
   
 cooldowns:
+  patron: False
   timeout: 5
 
 logging:

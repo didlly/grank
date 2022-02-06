@@ -100,6 +100,7 @@ Values in the ```cooldowns``` category tell the program the cooldowns between co
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
+| ```patron```  | ```Boolean``` | ```False```  | Changes cooldowns to reflect the cooldowns of ```patrons```. |
 | ```timeout```  | ```Integer``` | ```5```  | Timeout for waiting for responses from Dank Memer to commands that require user interaction (like ```pls search```). |
 
 ### ```logging``` category

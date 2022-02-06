@@ -33,7 +33,10 @@ def beg(username, channel_id, token, config, log):
 
         utils.run.run[channel_id] = True
         
-        cooldown = 45 - (end - start)
+        if config["cooldowns"]["patron"]:
+            cooldown = 25 - (end - start)
+        else:
+            cooldown = 45 - (end - start)
 
         if cooldown > 0:
             sleep(cooldown)
