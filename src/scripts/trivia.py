@@ -49,15 +49,13 @@ def trivia(username, channel_id, token, config, log, ID, cwd):
             _ = input(f"\n{style.Italic and style.Faint}Press ENTER to continue the running of the program...{style.RESET_ALL}")
             return
         
-        found = False
+        custom_id = None
 
-        while not found:
-            for index, possible_answer in enumerate(latest_message["components"][0]["components"]):
-                if possible_answer["label"] == answer:
-                    custom_id = latest_message["components"][0]["components"][index]["custom_id"]
-                    found = True
+        for index, possible_answer in enumerate(latest_message["components"][0]["components"]):
+            if possible_answer["label"] == answer:
+                custom_id = latest_message["components"][0]["components"][index]["custom_id"]
 
-        if not found:
+        if custom_id is None:
             register(log, None, "WARNING", f"Unknown answer to trvia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Anwers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
             _ = input(f"\n{style.Italic and style.Faint}Press ENTER to continue the running of the program...{style.RESET_ALL}")
             return
