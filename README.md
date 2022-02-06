@@ -50,8 +50,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 - ```pls postmeme```
 
 ## Todo
-- ```pls trivia```
-- ```pls stream```
+Visit [this](https://github.com/didlly/grank/projects/1) link for project updates.
 
 ## Getting Started
 
