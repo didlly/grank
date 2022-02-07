@@ -32,7 +32,7 @@
 * [Disclaimer](https://github.com/didlly/grank#disclaimer)
 
 ## What is Grank?
-Grank is a feature-rich script that automatically grinds Dank Memer for you. It is inspired by [dankgrinder](https://github.com/dankgrinder/dankgrinder). Since dankgrinder has been discontinued and the [recommended fork](https://github.com/V4NSH4J/dankgrinder) has also been discontinued, I decided to make my own version from scratch in Python. ***GUI coming soon, so stay tuned!***
+Grank is a feature-rich script that automatically grinds Dank Memer for you. It is inspired by [dankgrinder](https://github.com/dankgrinder/dankgrinder). Since dankgrinder has been discontinued and the [recommended fork](https://github.com/V4NSH4J/dankgrinder) has also been discontinued, I decided to make my own version from scratch in Python.
 
 ## Features
 - Supports multi-instancing.
@@ -93,7 +93,17 @@ Values in the ```commands``` category tell the program whether or not to run cer
 | ```highlow```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls highlow```. |
 | ```postmeme```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls postmeme```. |
 | ```trivia```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls trivia```. |
-| ```auto_buy```  | ```Boolean``` | ```True```  | Tell the program whether or not to buy items  (like ```laptop```) needed to run commands if there are sufficient funds. |
+
+### ```auto_buy``` category
+Values in the ```auto_buy``` category tell the program whether or not to buy certain items if needed.
+
+| Name  | Type | Default Value | Description | 
+| ------------- | ------------- | ------------- | ------------- |
+| ```parent```  | ```Boolean``` | ```True```  | If this is set to ```True``` no items will be bought. If it is set to ```False``` the program will try and buy the item if their respective config value is ```True```. |
+| ```laptop```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```laptop```if needed and the user doesn't have it. |
+| ```shovel```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```shovel```if needed and the user doesn't have it. |
+| ```fishing pole```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```fishing pole```if needed and the user doesn't have it. |
+| ```hunting rifle```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the ```hunting rifle```if needed and the user doesn't have it. |
 
 ### ```cooldowns``` category
 Values in the ```cooldowns``` category tell the program the cooldowns between commands and the loop cooldown.

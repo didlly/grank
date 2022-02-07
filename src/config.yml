@@ -8,7 +8,13 @@ commands:
   highlow: True
   postmeme: True
   trivia: True
-  auto_buy: True
+
+auto_buy:
+  parent: True
+  laptop: True
+  shovel: True
+  fishing pole: True
+  hunting rifle: True
   
 cooldowns:
   patron: False

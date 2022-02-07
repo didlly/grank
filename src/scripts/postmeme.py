@@ -45,12 +45,12 @@ def postmeme(username, channel_id, token, config, log, ID, cwd):
             if config["logging"]["debug"]:
                 register(log, username, "DEBUG", "User does not have item `laptop`. Buying laptop now.")
             
-            if config["commands"]["auto_buy"]:
+            if config["auto_buy"]["parent"] and config["auto_buy"]["laptop"]:
                 from scripts.buy import buy
                 buy(username, channel_id, token, config, log, ID, cwd, "laptop")
                 return
             elif config["logging"]["warning"]:
-                register(log, username, "WARNING", "A laptop is required for the command `pls postmeme`. However, since `auto_buy` is set to false in the configuration file, the program will not buy one. Aborting command.")
+                register(log, username, "WARNING", f"A laptop is required for the command `pls postmeme`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for laptops,'} the program will not buy one. Aborting command.")
                 return
             
         data = {

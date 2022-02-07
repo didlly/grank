@@ -50,7 +50,7 @@ def dig(username, channel_id, token, config, log, ID, cwd):
                 buy(username, channel_id, token, config, log, ID, cwd, "shovel")
                 return
             elif config["logging"]["warning"]:
-                register(log, username, "WARNING", "A shovel is required for the command `pls dig`. However, since `auto_buy` is set to false in the configuration file, the program will not buy one. Aborting command.")
+                register(log, username, "WARNING", f"A shovel is required for the command `pls dig`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for shovels,'} the program will not buy one. Aborting command.")
                 return
 
     while True:

@@ -45,7 +45,7 @@ def trivia(username, channel_id, token, config, log, ID, cwd):
         try:
             answer = load(open(f"{cwd}/data.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
         except KeyError:
-            register(log, None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'][0].replace('*', '')}`. Anwers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+            register(log, None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
             _ = input(f"\n{style.Italic and style.Faint}Press ENTER to continue the running of the program...{style.RESET_ALL}")
             return
         
@@ -56,7 +56,7 @@ def trivia(username, channel_id, token, config, log, ID, cwd):
                 custom_id = latest_message["components"][0]["components"][index]["custom_id"]
 
         if custom_id is None:
-            register(log, None, "WARNING", f"Unknown answer to trvia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Anwers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+            register(log, None, "WARNING", f"Unknown answer to trvia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
             _ = input(f"\n{style.Italic and style.Faint}Press ENTER to continue the running of the program...{style.RESET_ALL}")
             return
 

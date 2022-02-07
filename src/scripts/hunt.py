@@ -44,12 +44,12 @@ def hunt(username, channel_id, token, config, log, ID, cwd):
             if config["logging"]["debug"]:
                 register(log, username, "DEBUG", "User does not have item `hunting rifle`. Buying hunting rifle now.")
             
-            if config["commands"]["auto_buy"]:
+            if config["auto_buy"]["parent"] and config["auto_buy"]["hunting rifle"]:
                 from scripts.buy import buy
                 buy(username, channel_id, token, config, log, ID, cwd, "hunting rifle")
                 return
             elif config["logging"]["warning"]:
-                register(log, username, "WARNING", "A hunting rifle is required for the command `pls hunt`. However, since `auto_buy` is set to false in the configuration file, the program will not buy one. Aborting command.")
+                register(log, username, "WARNING", f"A hunting rifle is required for the command `pls hunt`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for hunting rifles,'} the program will not buy one. Aborting command.")
                 return
 
     while True:
