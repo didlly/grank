@@ -100,10 +100,10 @@ Values in the ```auto_buy``` category tell the program whether or not to buy cer
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
 | ```parent```  | ```Boolean``` | ```True```  | If this is set to ```True``` no items will be bought. If it is set to ```False``` the program will try and buy the item if their respective config value is ```True```. |
-| ```laptop```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```laptop```if needed and the user doesn't have it. |
-| ```shovel```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```shovel```if needed and the user doesn't have it. |
-| ```fishing pole```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```fishing pole```if needed and the user doesn't have it. |
-| ```hunting rifle```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the ```hunting rifle```if needed and the user doesn't have it. |
+| ```laptop```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```laptop``` if needed and the user doesn't have it. |
+| ```shovel```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```shovel``` if needed and the user doesn't have it. |
+| ```fishing pole```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```fishing pole``` if needed and the user doesn't have it. |
+| ```hunting rifle```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the ```hunting rifle``` if needed and the user doesn't have it. |
 
 ### ```cooldowns``` category
 Values in the ```cooldowns``` category tell the program the cooldowns between commands and the loop cooldown.
