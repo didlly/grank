@@ -127,3 +127,9 @@ Values in the ```logging``` category tell the program whether or not to log ```d
 This is a self-bot. Self-bots are against Discord's TOS. Automation of Dank Memer commands also breaks Dank Memer's rules. By using this program you acknowledge that I can take no responsibility for actions taken against you if you are caught.
 
 This being said, I believe the chance of being caught running this script is low, provided you take the appropriate measures. The only probable way you will be caught is if someone tries to send you a message and you don't respond.
+
+[![Stargazers repo roster for @didlly/grank](https://reporoster.com/stars/dark/didlly/grank)](https://github.com/didlly/grank/stargazers)
+
+[![Forkers repo roster for @didlly/grank](https://reporoster.com/forks/dark/didlly/grank)](https://github.com/didlly/grank/network/members)
+
+<p align="center"><a href="https://github.com/didlly/grank"><img src="http://randojs.com/images/backToTopButton.png" alt="Back to top" height="29"/></a></p>
