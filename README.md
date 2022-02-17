@@ -15,6 +15,7 @@
 </div>
 
 ## Contents
+***Grank is undergoing a re-write, please see [this](https://github.com/didlly/grank/issues/15) issue.***
 
 * [What is Grank?](https://github.com/didlly/grank#what-is-grank)
 * [Features](https://github.com/didlly/grank#features)
