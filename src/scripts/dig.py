@@ -16,9 +16,9 @@ def dig(username, channel_id, token, config, user_id, cwd):
         if config["logging"]["debug"]:
             log(username, "DEBUG", "User does not have item `shovel`. Buying shovel now.")
         
-        if config["commands"]["auto_buy"]:
+        if config["auto_buy"] and config["auto_buy"]["shovel"]:
             from scripts.buy import buy
-            buy(username, channel_id, token, config, log, user_id, cwd, "shovel")
+            buy(username, channel_id, token, config, user_id, cwd, "shovel")
             return
         elif config["logging"]["warning"]:
             log(username, "WARNING", f"A shovel is required for the command `pls dig`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for shovels,'} the program will not buy one. Aborting command.")

@@ -59,7 +59,7 @@ for index in range(len(credentials)):
         Thread(target=highlow_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
 
     if config["commands"]["postmeme"]:
-        Thread(target=postmeme_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
+        Thread(target=postmeme_parent, args=(username, channel_id, token, config, user_id, session_id, cwd)).start()
 
     if config["commands"]["trivia"]:
         Thread(target=trivia_parent, args=(username, channel_id, token, config, user_id, session_id, cwd)).start()

@@ -18,7 +18,7 @@ def send_message(channel_id, token, config, username, command):
 def retreive_message(channel_id, token, config, username, command, user_id):
     latest_message = None
     
-    for index in range(0, config["cooldowns"]["timeout"]):
+    for index in range(0, config["cooldowns"]["timeout"] * 2):
         sleep(0.1)
         
         request = get(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token})
