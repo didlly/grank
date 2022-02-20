@@ -1,37 +1,29 @@
-from requests import post
-from utils.logger import register
+from discord.message import send_message
+from utils.logger import log
 from time import time, sleep
 from sys import exc_info
-import utils.run
+from utils.shared import data
 
-def beg(username, channel_id, token, config, log):
-    def beg_run(username, channel_id, token, config, log):
-        request = post(f"https://discord.com/api/v8/channels/{channel_id}/messages", headers={"authorization": token}, data={"content": "pls beg"})
-        
-        if request.status_code != 200:
-            if config["logging"]["warning"]:
-                register(log, username, "WARNING", f"Failed to send command `pls beg`. Status code: {request.status_code} (expected 200).")
-            return
-        
-        if config["logging"]["debug"]:
-            register(log, username, "DEBUG", "Successfully sent command `pls beg`.")
+def beg(username, channel_id, token, config):
+    send_message(channel_id, token, config, username, "pls beg")
 
+def beg_parent(username, channel_id, token, config):
     while True:
-        while not utils.run.run[channel_id]:
+        while not data[channel_id]:
             pass
 
-        utils.run.run[channel_id] = False
+        data[channel_id] = False
 
         start = time()
 
         try:
-            beg_run(username, channel_id, token, config, log)
+            beg(username, channel_id, token, config)
         except Exception:
-            register(log, username, "WARNING", f"An unexpected error occured during the running of the `pls beg` command: `{exc_info()}`")
-        
-        end = time()
+            log(username, "WARNING", f"An unexpected error occured during the running of the `pls beg` command: `{exc_info()}`")
 
-        utils.run.run[channel_id] = True
+        end = time()   
+        
+        data[channel_id] = True
         
         if config["cooldowns"]["patron"]:
             cooldown = 25 - (end - start)

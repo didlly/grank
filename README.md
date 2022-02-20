@@ -3,7 +3,6 @@
     <a href="https://github.com/didlly">
         <img src="https://img.shields.io/github/license/didlly/grank">
         <img src="https://img.shields.io/github/languages/top/didlly/grank">
-        <img src="https://img.shields.io/bitbucket/issues-raw/didlly/grank">
     </a>
     <a href="https://didlly.github.io/grank">
         <img src="https://img.shields.io/website?down_color=lightgrey&down_message=Offline&up_color=blue&up_message=Online&url=https%3A%2F%2Fdidlly.github.io%2Fgrank%2F">
@@ -15,8 +14,6 @@
 </div>
 
 ## Contents
-***Grank is undergoing a re-write, please see [this](https://github.com/didlly/grank/issues/15) issue.***
-
 * [What is Grank?](https://github.com/didlly/grank#what-is-grank)
 * [Features](https://github.com/didlly/grank#features)
 * [Supported commands](https://github.com/didlly/grank#supported-commands)
@@ -59,7 +56,7 @@ Visit [this](https://github.com/didlly/grank/projects/1) link for project update
 ### Setting up the environment
 When the majority of Dank Memer commands are supported, compiled versions of the code will be made available. However, since ```v1``` has not been acheived yet, you will have to have Python installed to run Grank.
 
-- Install [Python](https://www.python.org/) (Grank has been tested on Python version ```3.10.0 64-Bit``` & ```3.8.10 64-Bit```). Make sure to have the ```Install Pip``` option ticked.
+- Install [Python](https://www.python.org/) (Grank has been tested on Python version ```3.10.0 64-Bit```). Make sure to have the ```Install Pip``` option ticked.
 - Download this repository by clicking [this](https://github.com/didlly/grank/archive/refs/heads/main.zip) link. 
 - Extract the files, and open a command prompt window in ```/src/```.
 - Run ```pip install -r requirements.txt```
@@ -132,5 +129,3 @@ This being said, I believe the chance of being caught running this script is low
 [![Stargazers repo roster for @didlly/grank](https://reporoster.com/stars/dark/didlly/grank)](https://github.com/didlly/grank/stargazers)
 
 [![Forkers repo roster for @didlly/grank](https://reporoster.com/forks/dark/didlly/grank)](https://github.com/didlly/grank/network/members)
-
-<p align="center"><a href="https://github.com/didlly/grank"><img src="http://randojs.com/images/backToTopButton.png" alt="Back to top" height="29"/></a></p>

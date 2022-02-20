@@ -4,7 +4,7 @@ class fore():
 	Green = "\u001b[32m"
 	Yellow = "\u001b[33m"
 	Blue = "\u001b[34m"
-	Magena = "\u001b[35m"
+	Magenta = "\u001b[35m"
 	Cyan = "\u001b[36m"
 	Whie = "\u001b[37m"
 

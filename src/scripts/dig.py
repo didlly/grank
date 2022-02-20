@@ -1,74 +1,46 @@
-from requests import post
-from utils.logger import register
-from time import sleep, time
-from requests import get
-from json import loads
+from discord.message import send_message, retreive_message
+from utils.logger import log
+from time import time, sleep
 from sys import exc_info
-import utils.run
+from utils.shared import data
 
-def dig(username, channel_id, token, config, log, ID, cwd):
-    def dig_run(username, channel_id, token, config, log, ID, cwd):
-        request = post(f"https://discord.com/api/v8/channels/{channel_id}/messages", headers={"authorization": token}, data={"content": "pls dig"})
-        
-        if request.status_code != 200:
-            if config["logging"]["warning"]:
-                register(log, username, "WARNING", f"Failed to send command `pls dig`. Status code: {request.status_code} (expected 200).")
-            return
-        
+def dig(username, channel_id, token, config, user_id, cwd):
+    send_message(channel_id, token, config, username, "pls dig")
+
+    latest_message = retreive_message(channel_id, token, config, username, "pls dig", user_id)
+
+    if not latest_message[0]:
+        return
+
+    if latest_message[-1]["content"] == "You don't have a shovel, you need to go buy one. I'd hate to let you dig with your bare hands.":
         if config["logging"]["debug"]:
-            register(log, username, "DEBUG", "Successfully sent command `pls dig`.")
-            
-        latest_message = None
+            log(username, "DEBUG", "User does not have item `shovel`. Buying shovel now.")
         
-        for _ in range(0, config["cooldowns"]["timeout"] * 10):
-            sleep(0.1)
-            
-            request = get(f"https://discord.com/api/v8/channels/{channel_id}/messages", headers={"authorization": token})
-            
-            if request.status_code != 200:
-                continue
-
-            latest_message = loads(request.text)[0]
-            
-            if latest_message["author"]["id"] == "270904126974590976" and latest_message["referenced_message"]["author"]["id"] == ID:
-                if config["logging"]["debug"]:
-                    register(log, username, "DEBUG", "Got Dank Memer's response to command `pls dig`.")
-                break
-            else:
-                continue
-        
-        if latest_message is None or latest_message["author"]["id"] != "270904126974590976":
-            if config["logging"]["warning"]:
-                register(log, username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} {'second' if config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
+        if config["commands"]["auto_buy"]:
+            from scripts.buy import buy
+            buy(username, channel_id, token, config, log, user_id, cwd, "shovel")
             return
-        elif latest_message["content"] == "You don't have a shovel, you need to go buy one. I'd hate to let you dig with your bare hands.":
-            if config["logging"]["debug"]:
-                register(log, username, "DEBUG", "User does not have item `shovel`. Buying shovel now.")
-            
-            if config["commands"]["auto_buy"]:
-                from scripts.buy import buy
-                buy(username, channel_id, token, config, log, ID, cwd, "shovel")
-                return
-            elif config["logging"]["warning"]:
-                register(log, username, "WARNING", f"A shovel is required for the command `pls dig`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for shovels,'} the program will not buy one. Aborting command.")
-                return
+        elif config["logging"]["warning"]:
+            log(username, "WARNING", f"A shovel is required for the command `pls dig`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for shovels,'} the program will not buy one. Aborting command.")
+            return
 
+def dig_parent(username, channel_id, token, config, user_id, cwd):
     while True:
-        while not utils.run.run[channel_id]:
+        while not data[channel_id]:
             pass
 
-        utils.run.run[channel_id] = False
+        data[channel_id] = False
 
         start = time()
 
         try:
-            dig_run(username, channel_id, token, config, log, ID, cwd)
+            dig(username, channel_id, token, config, user_id, cwd)
         except Exception:
-            register(log, username, "WARNING", f"An unexpected error occured during the running of the `pls dig` command: `{exc_info()}`")
-        
-        end = time()
+            log(username, "WARNING", f"An unexpected error occured during the running of the `pls dig` command: `{exc_info()}`")
 
-        utils.run.run[channel_id] = True
+        end = time()   
+        
+        data[channel_id] = True
         
         if config["cooldowns"]["patron"]:
             cooldown = 25 - (end - start)
