@@ -19,8 +19,8 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
     
             data = load(f"{cwd}/database.json")
             
-            bank = int(latest_message["embeds"][0]["description"].split(":")[-1].split(" / ")[0].repalce("⏣", ""))
-            wallet = int(latest_message["embeds"][0]["description"].split("\n")[0].split("⏣")[-1])
+            bank = int(latest_message[-1]["embeds"][0]["description"].split(":")[-1].split(" / ")[0].repalce("⏣", ""))
+            wallet = int(latest_message[-1]["embeds"][0]["description"].split("\n")[0].split("⏣")[-1])
             
             if (wallet + bank) - data["item"] > 0:
                 amount = (wallet + bank) - data["item"]
@@ -41,6 +41,6 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
             elif config["logging"]["warning"]:
                 log(username, "WARNING", f"Insufficient funds to buy a {item}.")
                    
-    elif latest_message["embeds"][0]["author"]["name"].lower() == f"successful {item} purchase":
+    elif latest_message[-1]["embeds"][0]["author"]["name"].lower() == f"successful {item} purchase":
         if config["logging"]["debug"]:
             log(username, "DEBUG", f"Successfully bought {item}.")
