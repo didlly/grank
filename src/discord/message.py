@@ -2,6 +2,7 @@ from requests import post, get
 from utils.logger import log
 from time import sleep
 from json import loads
+from datetime import datetime
 
 def send_message(channel_id, token, config, username, command):
     request = post(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token}, json={"content": command})
@@ -18,9 +19,8 @@ def send_message(channel_id, token, config, username, command):
 def retreive_message(channel_id, token, config, username, command, user_id):
     latest_message = None
     
-    for index in range(0, config["cooldowns"]["timeout"] * 2):
-        sleep(0.1)
-        
+    time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
+    while (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time).total_seconds() < config["cooldowns"]["timeout"]:
         request = get(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token})
         
         if request.status_code != 200:
