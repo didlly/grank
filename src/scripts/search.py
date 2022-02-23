@@ -11,10 +11,10 @@ def search(username, channel_id, token, config, user_id, session_id):
 
     latest_message = retreive_message(channel_id, token, config, username, "pls search", user_id)
 
-    if not latest_message[0]:
+    if latest_message is None:
         return
     
-    interact_button(channel_id, token, config, username, "pls search", choice(latest_message[-1]["components"][0]["components"])["custom_id"], latest_message, session_id)
+    interact_button(channel_id, token, config, username, "pls search", choice(latest_message["components"][0]["components"])["custom_id"], latest_message, session_id)
 
 def search_parent(username, channel_id, token, config, user_id, session_id):
     while True:

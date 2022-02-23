@@ -7,10 +7,10 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
     
     latest_message = retreive_message(channel_id, token, config, username, f"pls buy {item}", user_id)
 
-    if not latest_message[0]:
+    if latest_message is None:
         return
         
-    if latest_message[-1]["content"] == "Far out, you don't have enough money in your wallet or your bank to buy that much!!":
+    if latest_message["content"] == "Far out, you don't have enough money in your wallet or your bank to buy that much!!":
         from scripts.balance import balance
         bal = balance(username, channel_id, token, config, log, user_id)
         
@@ -25,22 +25,10 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
             if (wallet + bank) - data["item"] > 0:
                 amount = (wallet + bank) - data["item"]
                 
-                send_message(channel_id, token, config, username, f"pls with {amount}")
-    
-                request = retreive_message(channel_id, token, config, username, f"pls with {amount}", user_id)
-
-                if not request[0]:
-                    return
-                                  
+                send_message(channel_id, token, config, username, f"pls with {amount}")                                
                 send_message(channel_id, token, config, username, f"pls buy {item}")
-    
-                request = retreive_message(channel_id, token, config, username, f"pls buy {item}", user_id)
-
-                if not request[0]:
-                    return
             elif config["logging"]["warning"]:
-                log(username, "WARNING", f"Insufficient funds to buy a {item}.")
-                   
+                log(username, "WARNING", f"Insufficient funds to buy a {item}.")  
     elif latest_message[-1]["embeds"][0]["author"]["name"].lower() == f"successful {item} purchase":
         if config["logging"]["debug"]:
             log(username, "DEBUG", f"Successfully bought {item}.")

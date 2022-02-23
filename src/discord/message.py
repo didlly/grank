@@ -38,6 +38,5 @@ def retreive_message(channel_id, token, config, username, command, user_id):
     if latest_message is None or latest_message["author"]["id"] != "270904126974590976":
         if config["logging"]["warning"]:
             log(username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} {'second' if config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
-        return False, None
     
-    return True, latest_message
+    return latest_message

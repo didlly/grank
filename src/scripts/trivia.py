@@ -11,23 +11,23 @@ def trivia(username, channel_id, token, config, user_id, session_id, cwd):
 
     latest_message = retreive_message(channel_id, token, config, username, "pls trivia", user_id)
 
-    if not latest_message[0]:
+    if latest_message is None:
         return
 
     try:
-        answer = load(open(f"{cwd}/database.json", "r"))["trivia"][latest_message[-1]["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
+        answer = load(open(f"{cwd}/database.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
     except KeyError:
-        log(None, "WARNING", f"Unknown trivia question `{latest_message[-1]['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message[-1]['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+        log(None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
         return
 
     custom_id = None
 
-    for index, possible_answer in enumerate(latest_message[-1]["components"][0]["components"]):
+    for index, possible_answer in enumerate(latest_message["components"][0]["components"]):
         if possible_answer["label"] == answer:
-            custom_id = latest_message[-1]["components"][0]["components"][index]["custom_id"]
+            custom_id = latest_message["components"][0]["components"][index]["custom_id"]
 
     if custom_id is None:
-        log(None, "WARNING", f"Unknown answer to trvia question `{latest_message[-1]['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message[-1]['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+        log(None, "WARNING", f"Unknown answer to trvia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
         return
     
     interact_button(channel_id, token, config, username, "pls trivia", custom_id, latest_message, session_id)

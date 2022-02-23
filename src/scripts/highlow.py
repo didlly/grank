@@ -10,12 +10,12 @@ def highlow(username, channel_id, token, config, user_id, session_id):
 
     latest_message = retreive_message(channel_id, token, config, username, "pls highlow", user_id)
 
-    if not latest_message[0]:
+    if latest_message is None:
         return
 
-    number = int(latest_message[-1]["embeds"][0]["description"].split("**")[-2])
+    number = int(latest_message["embeds"][0]["description"].split("**")[-2])
     
-    interact_button(channel_id, token, config, username, "pls highlow", latest_message[-1]["components"][0]["components"][0]["custom_id"] if number > 50 else latest_message[-1]["components"][0]["components"][2]["custom_id"] if number < 50 else latest_message[-1]["components"][0]["components"][1]["custom_id"], latest_message, session_id)
+    interact_button(channel_id, token, config, username, "pls highlow", latest_message["components"][0]["components"][0]["custom_id"] if number > 50 else latest_message["components"][0]["components"][2]["custom_id"] if number < 50 else latest_message["components"][0]["components"][1]["custom_id"], latest_message, session_id)
 
 def highlow_parent(username, channel_id, token, config, user_id, session_id):
     while True:

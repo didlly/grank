@@ -11,10 +11,10 @@ def postmeme(username, channel_id, token, config, user_id, session_id, cwd):
 
     latest_message = retreive_message(channel_id, token, config, username, "pls postmeme", user_id)
 
-    if not latest_message[0]:
+    if not latest_message:
         return
     
-    if latest_message[-1]["content"] == "oi you need to buy a laptop in the shop to post memes":
+    if latest_message["content"] == "oi you need to buy a laptop in the shop to post memes":
         if config["logging"]["debug"]:
             log(username, "DEBUG", "User does not have item `laptop`. Buying laptop now.")
         
@@ -26,7 +26,7 @@ def postmeme(username, channel_id, token, config, user_id, session_id, cwd):
             log(username, "WARNING", f"A laptop is required for the command `pls postmeme`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for laptops,'} the program will not buy one. Aborting command.")
             return
     else:
-        interact_button(channel_id, token, config, username, "pls postmeme", choice(latest_message[-1]["components"][0]["components"])["custom_id"], latest_message, session_id)
+        interact_button(channel_id, token, config, username, "pls postmeme", choice(latest_message["components"][0]["components"])["custom_id"], latest_message, session_id)
 
 def postmeme_parent(username, channel_id, token, config, user_id, session_id, cwd):
     while True:

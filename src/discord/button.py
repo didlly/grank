@@ -10,9 +10,9 @@ def interact_button(channel_id, token, config, username, command, custom_id, lat
             "component_type": 2,
             "custom_id": custom_id
         },
-        "guild_id": latest_message[-1]["message_reference"]["guild_id"],
+        "guild_id": latest_message["message_reference"]["guild_id"],
         "message_flags": 0,
-        "message_id": latest_message[-1]["id"],
+        "message_id": latest_message["id"],
         "session_id": session_id
     }
     

@@ -9,10 +9,10 @@ def fish(username, channel_id, token, config, user_id, cwd):
 
     latest_message = retreive_message(channel_id, token, config, username, "pls fish", user_id)
 
-    if not latest_message[0]:
+    if latest_message is None:
         return
 
-    if latest_message[-1]["content"] == "You don't have a fishing pole, you need to go buy one. You're not good enough to catch them with your hands.":
+    if latest_message["content"] == "You don't have a fishing pole, you need to go buy one. You're not good enough to catch them with your hands.":
         if config["logging"]["debug"]:
             log(username, "DEBUG", "User does not have item `fishing pole`. Buying fishing pole now.")
         
