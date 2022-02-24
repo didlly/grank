@@ -11,6 +11,10 @@
 
 <div align="center">
     <sub>Inspired by <a href="https://github.com/dankgrinder/dankgrinder">this</a> repository. This is a WIP and there will be more functions added in the future. Special thanks to <a href="https://github.com/V4NSH4J">V4NSH4J</a> for helping me solve lots of the problems I encountered.</sub>
+    <br>
+    <a href="https://discord.gg/h7jK9pBkAs">
+        Discord
+    </a>
 </div>
 
 ## Contents
