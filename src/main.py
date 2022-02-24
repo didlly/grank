@@ -5,6 +5,8 @@ from configuration.config import load_config
 from configuration.credentials import load_credentials
 from threading import Thread
 from utils.shared import data
+from discord.message import send_message
+from json import load, dumps
 from scripts.daily import daily_parent
 from scripts.beg import beg_parent
 from scripts.dig import dig_parent
@@ -34,8 +36,14 @@ for index in range(len(credentials)):
     session_id = credentials[index][2]
     channel_id = credentials[index][3]
     token = credentials[index][4]
-
     data[channel_id] = True
+
+    database = load(open(f"{cwd}/database.json", "r"))
+    if f"{user_id}_confirmation" not in database.keys():
+        send_message(channel_id, token, config, username, "pls settings confirmations nah")
+        database[f"{user_id}_confirmation"] = True
+        open(f"{cwd}/database.json", "w").write(dumps(database))
+
 
     if config["commands"]["daily"]:
         Thread(target=daily_parent, args=(username, channel_id, token, config, cwd)).start()
