@@ -20,10 +20,10 @@ def load_credentials(cwd):
     else:
         log(None, "ERROR", "Unable to find key `channel_ids` in `credentials.json`. Make sure it is present.")
 
-    if len(credentials["tokens"]) > 1:
+    if len(credentials["tokens"]) == 0:
         log(None, "ERROR", "Unable to find values for `tokens` in `credentials.json`. Make sure they are present.")
 
-    if len(credentials["channel_ids"]) > 1:
+    if len(credentials["channel_ids"]) == 0:
         log(None, "ERROR", "Unable to find values for `channel_ids` in `credentials.json`. Make sure they are present.")
 
     if len(credentials["tokens"]) != len(credentials["channel_ids"]):
