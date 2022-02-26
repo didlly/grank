@@ -11,7 +11,7 @@ def postmeme(username, channel_id, token, config, user_id, session_id, cwd):
 
     latest_message = retreive_message(channel_id, token, config, username, "pls postmeme", user_id)
 
-    if not latest_message:
+    if latest_message is None:
         return
     
     if latest_message["content"] == "oi you need to buy a laptop in the shop to post memes":

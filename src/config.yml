@@ -10,11 +10,17 @@ commands:
   trivia: True
 
 auto_buy:
-  parent: True
+  enabled: True
   laptop: True
   shovel: True
   fishing pole: True
   hunting rifle: True
+
+auto_trade:
+  enabled: True
+  trader: someuser#1234
+  bank note: True
+  tidepod: True
   
 cooldowns:
   patron: False

@@ -4,7 +4,7 @@ from utils.logger import log
 def load_config(cwd):
     config = load(f"{cwd}/config.yml")
 
-    options = ["['commands']", "['commands']['daily']", "['commands']['beg']", "['commands']['fish']", "['commands']['hunt']", "['commands']['dig']", "['commands']['search']", "['commands']['highlow']", "['commands']['postmeme']", "['commands']['trivia']", "['auto_buy']", "['auto_buy']['parent']", "['auto_buy']['laptop']", "['auto_buy']['shovel']", "['auto_buy']['fishing pole']", "['auto_buy']['hunting rifle']", "['cooldowns']", "['cooldowns']['patron']", "['cooldowns']['timeout']", "['logging']['debug']", "['logging']['warning']"]
+    options = ["['commands']", "['commands']['daily']", "['commands']['beg']", "['commands']['fish']", "['commands']['hunt']", "['commands']['dig']", "['commands']['search']", "['commands']['highlow']", "['commands']['postmeme']", "['commands']['trivia']", "['auto_buy']", "['auto_buy']['enabled']", "['auto_buy']['laptop']", "['auto_buy']['shovel']", "['auto_buy']['fishing pole']", "['auto_buy']['hunting rifle']", "['auto_trade']", "['auto_trade']['enabled']", "['auto_trade']['trader']", "['cooldowns']", "['cooldowns']['patron']", "['cooldowns']['timeout']", "['logging']['debug']", "['logging']['warning']"]
 
     for option in options:
         try:

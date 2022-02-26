@@ -40,6 +40,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 - Supports multi-instancing.
 - Efficiently coded.
 - Smart - if the user doesn't have a required item to run a command like ```pls pm```, it will buy the required item so long as there are sufficient funds in the user's wallet & bank.
+- Autotrade.
 
 ## Supported commands
 - ```pls daily```
@@ -101,11 +102,23 @@ Values in the ```auto_buy``` category tell the program whether or not to buy cer
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
-| ```parent```  | ```Boolean``` | ```True```  | If this is set to ```True``` no items will be bought. If it is set to ```False``` the program will try and buy the item if their respective config value is ```True```. |
+| ```enabled```  | ```Boolean``` | ```True```  | If this is set to ```True``` no items will be bought. If it is set to ```False``` the program will try and buy the item if their respective config value is ```True```. |
 | ```laptop```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```laptop``` if needed and the user doesn't have it. |
 | ```shovel```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```shovel``` if needed and the user doesn't have it. |
 | ```fishing pole```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```fishing pole``` if needed and the user doesn't have it. |
 | ```hunting rifle```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the ```hunting rifle``` if needed and the user doesn't have it. |
+
+### ```auto_trade``` category
+Values in the ```auto_trade``` category tell the program who items should be traded to, and what items should be traded.
+
+| Name  | Type | Default Value | Description | 
+| ------------- | ------------- | ------------- | ------------- |
+| ```enabled```  | ```Boolean``` | ```True```  | If this is set to ```True``` no items will be traded. If it is set to ```False``` the program will try and trade the item if their respective config value is ```True```. |
+| ```trader```  | ```String``` | ```someuser#1234```  | The username and discriminator of the user the items should be traded to. |
+| ```bank note```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and trade the item ```bank note``` to the user specified in the ```trader```option. |
+| ```tidepod```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and trade the item ```tidepod``` to the user specified in the ```trader```option. |
+
+***Note:*** You can add your own items to be traded by following the layout for the default options.
 
 ### ```cooldowns``` category
 Values in the ```cooldowns``` category tell the program the cooldowns between commands and the loop cooldown.
