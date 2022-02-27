@@ -1,6 +1,7 @@
 from discord.message import send_message, retreive_message
 from json import load
 from discord.button import interact_button
+from random import choice
 from utils.logger import log
 from time import time, sleep
 from sys import exc_info
@@ -17,8 +18,8 @@ def trivia(username, channel_id, token, config, user_id, session_id, cwd):
     try:
         answer = load(open(f"{cwd}/database.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
     except KeyError:
+        answer = None
         log(None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
-        return
 
     custom_id = None
 
@@ -28,8 +29,8 @@ def trivia(username, channel_id, token, config, user_id, session_id, cwd):
 
     if custom_id is None:
         log(None, "WARNING", f"Unknown answer to trvia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
-        return
-    
+        custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
+
     interact_button(channel_id, token, config, username, "pls trivia", custom_id, latest_message, session_id)
 
 def trivia_parent(username, channel_id, token, config, user_id, session_id, cwd):

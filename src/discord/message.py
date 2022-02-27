@@ -1,10 +1,15 @@
 from requests import post, get
 from utils.logger import log
 from time import sleep
+from random import uniform
 from json import loads
 from datetime import datetime
 
 def send_message(channel_id, token, config, username, command):
+    if config["typing_indicator"]["enabled"]:
+        request = post(f"https://discord.com/api/v9/channels/{channel_id}/typing", headers={"authorization": token})
+        sleep(uniform(config["typing_indicator"]["minimum"], config["typing_indicator"]["maximum"]))
+
     request = post(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token}, json={"content": command})
 
     if request.status_code == 200 or request.status_code == 204:
@@ -49,8 +54,6 @@ def retreive_message(channel_id, token, config, username, command, user_id):
                 _ = latest_message["embeds"][0]["description"]
                 if key in latest_message["embeds"][0]["description"]:
                     send_message(channel_id, token, config, username, f"pls gift 1 {key} {config['auto_trade']['trader']}")
-            except KeyError:
-                pass
             except IndexError:
                 pass
    

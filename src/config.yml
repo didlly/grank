@@ -17,10 +17,15 @@ auto_buy:
   hunting rifle: True
 
 auto_trade:
-  enabled: True
+  enabled: False
   trader: someuser#1234
   bank note: True
   tidepod: True
+
+typing_indicator:
+  enabled: False
+  minimum: 0
+  maximum: 1
   
 cooldowns:
   patron: False

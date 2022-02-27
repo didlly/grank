@@ -41,6 +41,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 - Efficiently coded.
 - Smart - if the user doesn't have a required item to run a command like ```pls pm```, it will buy the required item so long as there are sufficient funds in the user's wallet & bank.
 - Autotrade.
+- Typing indicator.
 
 ## Supported commands
 - ```pls daily```
@@ -83,7 +84,7 @@ You are now ready to use the program. Run ```src/main.py``` to start the program
 The ```config.yml``` file is used to change the way the program runs.
 
 ### ```commands``` category
-Values in the ```commands``` category tell the program whether or not to run certain commands.
+Values in the ```commands``` category tell the program whether or not to *run certain commands*.
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
@@ -98,7 +99,7 @@ Values in the ```commands``` category tell the program whether or not to run cer
 | ```trivia```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls trivia```. |
 
 ### ```auto_buy``` category
-Values in the ```auto_buy``` category tell the program whether or not to buy certain items if needed.
+Values in the ```auto_buy``` category tell the program whether or not to *buy certain items* if needed.
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
@@ -109,19 +110,28 @@ Values in the ```auto_buy``` category tell the program whether or not to buy cer
 | ```hunting rifle```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the ```hunting rifle``` if needed and the user doesn't have it. |
 
 ### ```auto_trade``` category
-Values in the ```auto_trade``` category tell the program who items should be traded to, and what items should be traded.
+Values in the ```auto_trade``` category tell the program *who items should be traded to*, and *what items should be traded.*
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
-| ```enabled```  | ```Boolean``` | ```True```  | If this is set to ```True``` no items will be traded. If it is set to ```False``` the program will try and trade the item if their respective config value is ```True```. |
+| ```enabled```  | ```Boolean``` | ```False```  | If this is set to ```True``` no items will be traded. If it is set to ```False``` the program will try and trade the item if their respective config value is ```True```. |
 | ```trader```  | ```String``` | ```someuser#1234```  | The username and discriminator of the user the items should be traded to. |
 | ```bank note```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and trade the item ```bank note``` to the user specified in the ```trader```option. |
 | ```tidepod```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and trade the item ```tidepod``` to the user specified in the ```trader```option. |
 
-***Note:*** You can add your own items to be traded by following the layout for the default options.
+***NOTE:*** You can add your own items to be traded by following the layout for the default options.
+
+### ```typing_indicator``` category
+Values in the ```typing_indicator``` category tell the program whether to make Discord think the self-bot is typing, and for how long it should. This is just for aesthetics and I would recommend it to be *off in private servers* to increase command speed, and *on in public servers* to make the self-bot look more legitimate.
+
+| Name  | Type | Default Value | Description | 
+| ------------- | ------------- | ------------- | ------------- |
+| ```enabled```  | ```Boolean``` | ```False```  | If this is set to ```True```, the program will make Discord think the self-bot is typing. If it is set to ```False``` the program will not make Discord think the self-bot is typing, thus increasing command speed. |
+| ```minimum```  | ```Float``` | ```0```  | The minimum time for the program to sleep after Discord is told that the user is typing. |
+| ```maximum```  | ```Float``` | ```1```  | The maximum time for the program to sleep after Discord is told that the user is typing. |
 
 ### ```cooldowns``` category
-Values in the ```cooldowns``` category tell the program the cooldowns between commands and the loop cooldown.
+Values in the ```cooldowns``` category tell the program whether to use cooldowns for *`patrons`* and what the *timeout is for getting responses from Dank Memer*.
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
@@ -129,7 +139,7 @@ Values in the ```cooldowns``` category tell the program the cooldowns between co
 | ```timeout```  | ```Integer``` | ```5```  | Timeout for waiting for responses from Dank Memer to commands that require user interaction (like ```pls search```). |
 
 ### ```logging``` category
-Values in the ```logging``` category tell the program whether or not to log ```debug``` and ```warning``` messages. We would recommend having *at least* ```warning``` set to ```True```. Fatal errors will be logged regardless of the configuration.
+Values in the ```logging``` category tell the program whether or not to log *```debug```* and *```warning```* messages. We would recommend having *at least* ```warning``` set to ```True```. Fatal errors will be logged regardless of the configuration.
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
