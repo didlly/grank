@@ -1,11 +1,16 @@
 <div align="center">
     <h1>Grank</h1>
-    <a href="https://github.com/didlly">
-        <img src="https://img.shields.io/github/license/didlly/grank">
-        <img src="https://img.shields.io/github/languages/top/didlly/grank">
+    <a href="https://github.com/didlly/grank/stargazers">
+        <img src=https://img.shields.io/github/stars/didlly/grank?style=for-the-badge&logo=Python&color=blue/>
     </a>
-    <a href="https://didlly.github.io/grank">
-        <img src="https://img.shields.io/website?down_color=lightgrey&down_message=Offline&up_color=blue&up_message=Online&url=https%3A%2F%2Fdidlly.github.io%2Fgrank%2F">
+    <a href="https://github.com/didlly/grank/network/members">
+	<img src=https://img.shields.io/github/forks/didlly/grank?style=for-the-badge&logo=Python&color=blue/>
+    </a>
+    <a href="https://github.com/didlly/grank/issues">
+	<img src=https://img.shields.io/github/issues/didlly/grank?style=for-the-badge&logo=Python&color=informational/>
+    </a>
+    <a href="https://github.com/didlly/grank/pulls">
+	<img src=https://img.shields.io/github/issues-pr/didlly/grank?style=for-the-badge&logo=Python&color=informational/>
     </a>
 </div>
 
