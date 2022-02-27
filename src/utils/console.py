@@ -6,7 +6,7 @@ class fore():
 	Blue = "\u001b[34m"
 	Magenta = "\u001b[35m"
 	Cyan = "\u001b[36m"
-	Whie = "\u001b[37m"
+	White = "\u001b[37m"
 
 	Bright_Black = "\u001b[30;1m"
 	Bright_Red = "\u001b[31;1m"
@@ -15,7 +15,7 @@ class fore():
 	Bright_Blue = "\u001b[34;1m"
 	Bright_Magenta = "\u001b[35;1m"
 	Bright_Cyan = "\u001b[36;1m"
-	Bright_Whie = "\u001b[37;1m"
+	Bright_White = "\u001b[37;1m"
 	
 class back():
 	Black = "\u001b[40m"

@@ -1,3 +1,20 @@
+from utils.console import fore, style
+from requests import get
+
+print(f"""{fore.Magenta}
+░██████╗░██████╗░░█████╗░███╗░░██╗██╗░░██╗
+██╔════╝░██╔══██╗██╔══██╗████╗░██║██║░██╔╝
+██║░░██╗░██████╔╝███████║██╔██╗██║█████═╝░
+{fore.Bright_Magenta}██║░░╚██╗██╔══██╗██╔══██║██║╚████║██╔═██╗░
+╚██████╔╝██║░░██║██║░░██║██║░╚███║██║░╚██╗
+░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝
+{style.RESET_ALL}
+{style.Italic + style.Bold}GITHUB: {style.RESET_ALL}https://github.com/didlly/grank
+{style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}v0.2.1-alpha
+{style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{get("https://raw.githubusercontent.com/didlly/grank/main/current_version").content.decode()}
+{style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/C4TMcemPTG
+""")
+
 import sys
 from platform import system
 from os.path import dirname
