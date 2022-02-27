@@ -48,12 +48,12 @@ def retreive_message(channel_id, token, config, username, command, user_id):
         if key == "enabled" and key == "trader":
             continue
         elif key in latest_message["content"].lower():
-            send_message(channel_id, token, config, username, f"pls gift 1 {key} {config['auto_trade']['trader']}")
+            send_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']}")
         else:
             try:
                 _ = latest_message["embeds"][0]["description"]
                 if key in latest_message["embeds"][0]["description"]:
-                    send_message(channel_id, token, config, username, f"pls gift 1 {key} {config['auto_trade']['trader']}")
+                    send_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']}")
             except IndexError:
                 pass
    
