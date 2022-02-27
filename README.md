@@ -22,6 +22,8 @@
     </a>
 </div>
 
+![Untitled](https://user-images.githubusercontent.com/94558954/155896878-a36e031c-aa74-43c9-9253-60a2231b8a84.png)
+
 ## Contents
 * [What is Grank?](https://github.com/didlly/grank#what-is-grank)
 * [Features](https://github.com/didlly/grank#features)
