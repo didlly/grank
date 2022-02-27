@@ -51,6 +51,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 ## Supported commands
 - ```pls daily```
 - ```pls beg```
+- ```pls crime```
 - ```pls dig```
 - ```pls fish```
 - ```pls hunt```
@@ -95,6 +96,7 @@ Values in the ```commands``` category tell the program whether or not to *run ce
 | ------------- | ------------- | ------------- | ------------- |
 | ```daily```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls daily```. |
 | ```beg```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls beg```. |
+| ```crime```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls crime```. |
 | ```dig```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls dig```. |
 | ```fish```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls fish```. |
 | ```hunt```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls hunt```. |

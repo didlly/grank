@@ -1,6 +1,7 @@
 commands:
   daily: True
   beg: True
+  crime: True
   fish: True
   hunt: True
   dig: True
