@@ -35,9 +35,9 @@ def crime_parent(username, channel_id, token, config, user_id, session_id):
         data[channel_id] = True
         
         if config["cooldowns"]["patron"]:
-            cooldown = 45 - (end - start)
-        else:
             cooldown = 15 - (end - start)
+        else:
+            cooldown = 45 - (end - start)
 
         if cooldown > 0:
             sleep(cooldown)
