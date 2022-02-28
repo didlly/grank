@@ -4,10 +4,10 @@ from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def hunt(username, channel_id, token, config, user_id, cwd):
+def hunt(username, channel_id, token, config, user_id, cwd, session_id):
     send_message(channel_id, token, config, username, "pls hunt")
 
-    latest_message = retreive_message(channel_id, token, config, username, "pls hunt", user_id)
+    latest_message = retreive_message(channel_id, token, config, username, "pls hunt", user_id, session_id)
 
     if latest_message is None:
         return
@@ -24,7 +24,7 @@ def hunt(username, channel_id, token, config, user_id, cwd):
             log(username, "WARNING", f"A hunting rifle is required for the command `pls fish`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for hunting rifles,'} the program will not buy one. Aborting command.")
             return
 
-def hunt_parent(username, channel_id, token, config, user_id, cwd):
+def hunt_parent(username, channel_id, token, config, user_id, cwd, session_id):
     while True:
         while not data[channel_id]:
             pass
@@ -34,7 +34,7 @@ def hunt_parent(username, channel_id, token, config, user_id, cwd):
         start = time()
 
         try:
-            hunt(username, channel_id, token, config, user_id, cwd)
+            hunt(username, channel_id, token, config, user_id, cwd, session_id)
         except Exception:
             log(username, "WARNING", f"An unexpected error occured during the running of the `pls hunt` command: `{exc_info()}`")
 

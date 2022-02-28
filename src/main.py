@@ -72,13 +72,13 @@ for index in range(len(credentials)):
         Thread(target=crime_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
 
     if config["commands"]["dig"]:
-        Thread(target=dig_parent, args=(username, channel_id, token, config, user_id, cwd)).start()
+        Thread(target=dig_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
 
     if config["commands"]["fish"]:
-        Thread(target=fish_parent, args=(username, channel_id, token, config, user_id, cwd)).start()
+        Thread(target=fish_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
 
     if config["commands"]["hunt"]:
-        Thread(target=hunt_parent, args=(username, channel_id, token, config, user_id, cwd)).start()
+        Thread(target=hunt_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
 
     if config["commands"]["search"]:
         Thread(target=search_parent, args=(username, channel_id, token, config, user_id, session_id)).start()

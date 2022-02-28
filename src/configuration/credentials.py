@@ -32,7 +32,7 @@ def load_credentials(cwd):
     data = []
 
     for index in range(len(credentials["tokens"])):
-        request = get("https://discord.com/api/v9/users/@me", headers={"authorization": credentials["tokens"][index]})
+        request = get("https://discord.com/api/v10/users/@me", headers={"authorization": credentials["tokens"][index]})
 
         if request.status_code != 200:
             log(None, "ERROR", f"Deemed token number {index + 1} invalid. Please double-check you entered a valid token in `configuration.json`.")

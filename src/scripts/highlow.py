@@ -8,7 +8,7 @@ from utils.shared import data
 def highlow(username, channel_id, token, config, user_id, session_id):
     send_message(channel_id, token, config, username, "pls highlow")
 
-    latest_message = retreive_message(channel_id, token, config, username, "pls highlow", user_id)
+    latest_message = retreive_message(channel_id, token, config, username, "pls highlow", user_id, session_id)
 
     if latest_message is None:
         return

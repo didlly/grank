@@ -47,7 +47,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 - Supports multi-instancing.
 - Efficiently coded.
 - Smart - if the user doesn't have a required item to run a command like ```pls pm```, it will buy the required item so long as there are sufficient funds in the user's wallet & bank.
-- Autotrade ***NOTE:*** Due to updates to how Dank Memer works, the user the items will be traded to needs to be online and ready to click `Trade` when they get asked to validate the trade.
+- Autotrade - the self-bot automates the acception of the trade on both the side of the trader and the trade receiver.
 - Typing indicator.
 
 ## Supported commands
@@ -124,7 +124,7 @@ Values in the ```auto_trade``` category tell the program *who items should be tr
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
 | ```enabled```  | ```Boolean``` | ```False```  | If this is set to ```True``` no items will be traded. If it is set to ```False``` the program will try and trade the item if their respective config value is ```True```. |
-| ```trader```  | ```String``` | ```someuser#1234```  | The username and discriminator of the user the items should be traded to. |
+| ```trader_token```  | ```String``` | ```None```  | The token of the user the items should be traded to. |
 | ```bank note```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and trade the item ```bank note``` to the user specified in the ```trader```option. |
 | ```tidepod```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and trade the item ```tidepod``` to the user specified in the ```trader```option. |
 

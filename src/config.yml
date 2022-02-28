@@ -19,7 +19,7 @@ auto_buy:
 
 auto_trade:
   enabled: False
-  trader: someuser#1234
+  trader_token: None
   bank note: True
   tidepod: True
 
