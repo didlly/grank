@@ -47,7 +47,9 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 
     if config["auto_trade"]["enabled"]:
         for key in config["auto_trade"]:
-            if key != "enabled" and key != "trader_token" and key in latest_message["content"].lower():
+            if key == "enabled" or key == "trader_token" or not config["auto_trade"][key]:
+                continue
+            elif key in latest_message["content"].lower():
                 send_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}")
 
                 latest_message = retreive_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", user_id)
@@ -65,8 +67,7 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
                     return
 
                 interact_button(channel_id, config["auto_trade"]["trader_token"], config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto_trade"]["trader"]["session_id"])
-            elif key != "enabled" and key != "trader_token" and len(latest_message["embeds"]) != 0:
-                
+            elif len(latest_message["embeds"]) != 0:
                 if key in latest_message["embeds"][0]["description"]:
                     send_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}")
 
