@@ -22,7 +22,7 @@
     </a>
 </div>
 
-![Untitled](https://user-images.githubusercontent.com/94558954/155896878-a36e031c-aa74-43c9-9253-60a2231b8a84.png)
+<img src="https://raw.githubusercontent.com/didlly/grank/main/assets/cover.png">
 
 ## Contents
 * [What is Grank?](https://github.com/didlly/grank#what-is-grank)
@@ -36,6 +36,9 @@
         * [How to enter them](https://github.com/didlly/grank#how-to-enter-them)
 * [Config file](https://github.com/didlly/grank#config-file)
 	* [```commands``` category](https://github.com/didlly/grank#commands-category)
+    * [```auto_buy``` category](https://github.com/didlly/grank#auto_buy-category)
+    * [```auto_trade``` category](https://github.com/didlly/grank#auto_trade-category)
+    * [```typing_indicator``` category](https://github.com/didlly/grank#typing_indicator-category)
 	* [```cooldowns``` category](https://github.com/didlly/grank#cooldowns-category)
 	* [```logging``` category](https://github.com/didlly/grank#logging-category)
 * [Disclaimer](https://github.com/didlly/grank#disclaimer)
