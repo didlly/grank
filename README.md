@@ -52,6 +52,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 - Smart - if the user doesn't have a required item to run a command like ```pls pm```, it will buy the required item so long as there are sufficient funds in the user's wallet & bank.
 - Autotrade - the self-bot automates the acception of the trade on both the side of the trader and the trade receiver.
 - Typing indicator.
+- Fast - coded in Python, but as fast as C thanks to [`pypy`](https://www.pypy.org).
 
 ## Supported commands
 - ```pls daily```
@@ -73,10 +74,14 @@ Visit [this](https://github.com/didlly/grank/projects/1) link for project update
 ### Setting up the environment
 When the majority of Dank Memer commands are supported, compiled versions of the code will be made available. However, since ```v1``` has not been acheived yet, you will have to have Python installed to run Grank.
 
-- Install [Python](https://www.python.org/) (Grank has been tested on Python version ```3.10.0 64-Bit```). Make sure to have the ```Install Pip``` option ticked.
-- Download this repository by clicking [this](https://github.com/didlly/grank/archive/refs/heads/main.zip) link. 
-- Extract the files, and open a command prompt window in ```/src/```.
-- Run ```pip install -r requirements.txt```
+- Download and extract the latest version of Grank.
+- Navigate into the `/src/` folder of Grank.
+- Download and extract the files of the latest version of [`pypy`](https://www.pypy.org/download.html) for your platform into the folder. Make sure the files are in the `/src/` folder and not in a sub-folder, otherwise this will not work.
+- Download and save [this](bootstrap.pypa.io/get-pip.py) file in that directory.
+- Open a command prompt in that directory.
+- Run the command `pypy get-pip.py`. If you changed the name of the file when you downloaded it, please replace `get-pip.py` with the new name.
+- Run the command `pypy -m pip install "requests"`.
+- Run the command `pypy -m pip install "websocket-client"`.
 
 ### Getting your Discord token and channel ID
 To use Grank, you will have to provide your Discord token and a channel ID. Don't worry - these details are never shared with anyone. It is best if only you and Dank Memer can send messages in the channel you get the ID of. This is to avoid confusion with other people's interactions.
@@ -87,9 +92,9 @@ To use Grank, you will have to provide your Discord token and a channel ID. Don'
 - [Useful article on how to get a channel ID.](https://docs.statbot.net/docs/faq/general/how-find-id/)
 
 #### How to enter them
-Since Grank support multi-instancing, for every `token` you put in you will have to specify a `channel_id`. Open `src/credentials.json`. You should see a dictionary with two keys - `tokens` and `channel_ids`. As I have said earlier, for every `token` you put in the list of `tokens`, you need to put a `channel_id` in the list of `channel_ids`. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
+Since Grank support multi-instancing, for every `token` you put in you will have to specify a `channel_id`. Open `src/credentials.json`. You should see a dictionary with two keys - `tokens` and `channel_ids`. As mentioned earlier, for every `token` you put in the list of `tokens`, you need to put a `channel_id` in the list of `channel_ids`. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
 
-You are now ready to use the program. Run ```src/main.py``` to start the program. You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
+You are now ready to use the program. Run ```pypy main.py``` in a command promt in the `/src/` directory to start the program. You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
 
 ## Config file
 The ```config.yml``` file is used to change the way the program runs.
