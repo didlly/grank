@@ -14,13 +14,11 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
         from scripts.balance import balance
         bal = balance(username, channel_id, token, config, log, user_id)
         
-        if bal[0]:
-            bal = bal[-1]
-    
+        if bal != None:  
             data = load(f"{cwd}/database.json")
             
-            bank = int(latest_message[-1]["embeds"][0]["description"].split(":")[-1].split(" / ")[0].repalce("⏣", ""))
-            wallet = int(latest_message[-1]["embeds"][0]["description"].split("\n")[0].split("⏣")[-1])
+            bank = int(latest_message["embeds"][0]["description"].split(":")[-1].split(" / ")[0].repalce("⏣", ""))
+            wallet = int(latest_message["embeds"][0]["description"].split("\n")[0].split("⏣")[-1])
             
             if (wallet + bank) - data["item"] > 0:
                 amount = (wallet + bank) - data["item"]

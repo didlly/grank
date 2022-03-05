@@ -12,7 +12,7 @@ def hunt(username, channel_id, token, config, user_id, cwd, session_id):
     if latest_message is None:
         return
 
-    if latest_message["content"] == "You don't have a hunting rifle, you need to go buy one. You're not good enough to catch them with your hands.":
+    if latest_message["content"] == "You don't have a hunting rifle, you need to go buy one. You're not good enough to shoot animals with your bare hands... I hope.":
         if config["logging"]["debug"]:
             log(username, "DEBUG", "User does not have item `hunting rifle`. Buying hunting rifle now.")
         
