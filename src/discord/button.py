@@ -24,5 +24,5 @@ def interact_button(channel_id, token, config, username, command, custom_id, lat
 		return True
 	else:
 		if config["logging"]["warning"]:
-			log(username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.getcode()} (expected 200 or 204).")
+			log(username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 		return False
