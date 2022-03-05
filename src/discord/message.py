@@ -21,8 +21,9 @@ def send_message(channel_id, token, config, username, command):
 		if config["logging"]["warning"]:
 			log(username, "WARNING", f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 		if request.status_code == 429:
-			log(username, "WARNING", "Discord is ratelimiting the self-bot. Sleeping for half a minutue.")
-			sleep(30)
+			request = loads(request.content)
+			log(username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+			sleep(request["retry_after"])
 		return False
 
 def retreive_message(channel_id, token, config, username, command, user_id, session_id=None):   
