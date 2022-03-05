@@ -11,6 +11,10 @@ commands:
   postmeme: True
   trivia: True
 
+lottery:
+  enabled: True
+  cooldown: 3600
+
 auto_buy:
   enabled: True
   laptop: True

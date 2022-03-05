@@ -117,6 +117,14 @@ Values in the ```commands``` category tell the program whether or not to *run ce
 | ```postmeme```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls postmeme```. |
 | ```trivia```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls trivia```. |
 
+### ```lottery``` category
+Values in the ```lottery``` category tell the program *whether lottery tickets should be bought*, and *how often they should be bought*.
+
+| Name  | Type | Default Value | Description | 
+| ------------- | ------------- | ------------- | ------------- |
+| ```enabled```  | ```Boolean``` | ```True```  | Tells the program whether or not to buy lottery tickets. |
+| ```cooldown```  | ```Integer``` | ```3600```  | Tells the program the interval between buying lottery tickets. |
+
 ### ```auto_buy``` category
 Values in the ```auto_buy``` category tell the program whether or not to *buy certain items* if needed.
 
