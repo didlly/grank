@@ -27,6 +27,6 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
 				send_message(channel_id, token, config, username, f"pls buy {item}")
 			elif config["logging"]["warning"]:
 				log(username, "WARNING", f"Insufficient funds to buy a {item}.")  
-	elif latest_message[-1]["embeds"][0]["author"]["name"].lower() == f"successful {item} purchase":
+	elif latest_message["embeds"][0]["author"]["name"].lower() == f"successful {item} purchase":
 		if config["logging"]["debug"]:
 			log(username, "DEBUG", f"Successfully bought {item}.")
