@@ -20,6 +20,9 @@ def send_message(channel_id, token, config, username, command):
 	else:
 		if config["logging"]["warning"]:
 			log(username, "WARNING", f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
+		if request.status_code == 429:
+			log(username, "WARNING", "Discord is ratelimiting the self-bot. Sleeping for half a minutue.")
+			sleep(30)
 		return False
 
 def retreive_message(channel_id, token, config, username, command, user_id, session_id=None):   
@@ -49,7 +52,7 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 		if "title" in latest_message["embeds"][0].keys():
 			if latest_message["embeds"][0]["title"] == "You're currently bot banned!" or latest_message["embeds"][0]["title"] == "You're currently blacklisted!":
 				log(username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.")
-     
+	 
 	if config["auto_trade"]["enabled"]:
 		for key in config["auto_trade"]:
 			if key == "enabled" or key == "trader_token" or not config["auto_trade"][key]:
