@@ -19,7 +19,7 @@ def send_message(channel_id, token, config, username, command):
 		return True
 	else:
 		if config["logging"]["warning"]:
-			log(username, "WARNING", f"Failed to send command `{command}`. Status code: {request.status_code()} (expected 200 or 204).")
+			log(username, "WARNING", f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 		return False
 
 def retreive_message(channel_id, token, config, username, command, user_id, session_id=None):   
