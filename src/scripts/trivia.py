@@ -8,53 +8,53 @@ from sys import exc_info
 from utils.shared import data
 
 def trivia(username, channel_id, token, config, user_id, session_id, cwd):
-    send_message(channel_id, token, config, username, "pls trivia")
+	send_message(channel_id, token, config, username, "pls trivia")
 
-    latest_message = retreive_message(channel_id, token, config, username, "pls trivia", user_id)
+	latest_message = retreive_message(channel_id, token, config, username, "pls trivia", user_id)
 
-    if latest_message is None:
-        return
+	if latest_message is None:
+		return
 
-    try:
-        answer = load(open(f"{cwd}/database.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
-    except KeyError:
-        answer = None
-        log(None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+	try:
+		answer = load(open(f"{cwd}/database.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
+	except KeyError:
+		answer = None
+		log(None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
 
-    custom_id = None
+	custom_id = None
 
-    for index, possible_answer in enumerate(latest_message["components"][0]["components"]):
-        if possible_answer["label"] == answer:
-            custom_id = latest_message["components"][0]["components"][index]["custom_id"]
+	for index, possible_answer in enumerate(latest_message["components"][0]["components"]):
+		if possible_answer["label"] == answer:
+			custom_id = latest_message["components"][0]["components"][index]["custom_id"]
 
-    if custom_id is None:
-        log(None, "WARNING", f"Unknown answer to trvia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
-        custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
+	if custom_id is None:
+		log(None, "WARNING", f"Unknown answer to trvia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+		custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
 
-    interact_button(channel_id, token, config, username, "pls trivia", custom_id, latest_message, session_id)
+	interact_button(channel_id, token, config, username, "pls trivia", custom_id, latest_message, session_id)
 
 def trivia_parent(username, channel_id, token, config, user_id, session_id, cwd):
-    while True:
-        while not data[channel_id]:
-            pass
+	while True:
+		while not data[channel_id]:
+			pass
 
-        data[channel_id] = False
+		data[channel_id] = False
 
-        start = time()
+		start = time()
 
-        try:
-            trivia(username, channel_id, token, config, user_id, session_id, cwd)
-        except Exception:
-            log(username, "WARNING", f"An unexpected error occured during the running of the `pls trivia` command: `{exc_info()}`")
+		try:
+			trivia(username, channel_id, token, config, user_id, session_id, cwd)
+		except Exception:
+			log(username, "WARNING", f"An unexpected error occured during the running of the `pls trivia` command: `{exc_info()}`")
 
-        end = time()   
-        
-        data[channel_id] = True
-        
-        if config["cooldowns"]["patron"]:
-            cooldown = 3 - (end - start)
-        else:
-            cooldown = 5 - (end - start)
+		end = time()   
+		
+		data[channel_id] = True
+		
+		if config["cooldowns"]["patron"]:
+			cooldown = 3 - (end - start)
+		else:
+			cooldown = 5 - (end - start)
 
-        if cooldown > 0:
-            sleep(cooldown)
+		if cooldown > 0:
+			sleep(cooldown)

@@ -7,37 +7,37 @@ from sys import exc_info
 from utils.shared import data
 
 def crime(username, channel_id, token, config, user_id, session_id):
-    send_message(channel_id, token, config, username, "pls crime")
+	send_message(channel_id, token, config, username, "pls crime")
 
-    latest_message = retreive_message(channel_id, token, config, username, "pls crime", user_id)
+	latest_message = retreive_message(channel_id, token, config, username, "pls crime", user_id)
 
-    if latest_message is None:
-        return
-    
-    interact_button(channel_id, token, config, username, "pls crime", choice(latest_message["components"][0]["components"])["custom_id"], latest_message, session_id)
+	if latest_message is None:
+		return
+	
+	interact_button(channel_id, token, config, username, "pls crime", choice(latest_message["components"][0]["components"])["custom_id"], latest_message, session_id)
 
 def crime_parent(username, channel_id, token, config, user_id, session_id):
-    while True:
-        while not data[channel_id]:
-            pass
+	while True:
+		while not data[channel_id]:
+			pass
 
-        data[channel_id] = False
+		data[channel_id] = False
 
-        start = time()
+		start = time()
 
-        try:
-            crime(username, channel_id, token, config, user_id, session_id)
-        except Exception:
-            log(username, "WARNING", f"An unexpected error occured during the running of the `pls crime` command: `{exc_info()}`")
+		try:
+			crime(username, channel_id, token, config, user_id, session_id)
+		except Exception:
+			log(username, "WARNING", f"An unexpected error occured during the running of the `pls crime` command: `{exc_info()}`")
 
-        end = time()   
-        
-        data[channel_id] = True
-        
-        if config["cooldowns"]["patron"]:
-            cooldown = 15 - (end - start)
-        else:
-            cooldown = 45 - (end - start)
+		end = time()   
+		
+		data[channel_id] = True
+		
+		if config["cooldowns"]["patron"]:
+			cooldown = 15 - (end - start)
+		else:
+			cooldown = 45 - (end - start)
 
-        if cooldown > 0:
-            sleep(cooldown)
+		if cooldown > 0:
+			sleep(cooldown)
