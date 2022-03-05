@@ -29,6 +29,7 @@ from scripts.daily import daily_parent
 from scripts.beg import beg_parent
 from scripts.dig import dig_parent
 from scripts.fish import fish_parent
+from scripts.guess import guess_parent
 from scripts.hunt import hunt_parent
 from scripts.search import search_parent
 from scripts.highlow import highlow_parent
@@ -76,6 +77,9 @@ for index in range(len(credentials)):
 
 	if config["commands"]["fish"]:
 		Thread(target=fish_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
+  
+	if config["commands"]["guess"]:
+		Thread(target=guess_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
 
 	if config["commands"]["hunt"]:
 		Thread(target=hunt_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()

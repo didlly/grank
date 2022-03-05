@@ -3,6 +3,7 @@ commands:
   beg: True
   crime: True
   fish: True
+  guess: True
   hunt: True
   dig: True
   search: True
