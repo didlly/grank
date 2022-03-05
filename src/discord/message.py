@@ -45,6 +45,11 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 			log(username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} {'second' if config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
 		return None
 
+	if len(latest_message["embeds"]) != 0:
+		if "title" in latest_message["embeds"][0].keys():
+			if latest_message["embeds"][0]["title"] == "You're currently bot banned!" or latest_message["embeds"][0]["title"] == "You're currently blacklisted!":
+				log(username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.")
+     
 	if config["auto_trade"]["enabled"]:
 		for key in config["auto_trade"]:
 			if key == "enabled" or key == "trader_token" or not config["auto_trade"][key]:
@@ -85,11 +90,5 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 					if latest_message is None:
 						return
 
-					interact_button(channel_id, config["auto_trade"]["trader_token"], config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto_trade"]["trader"]["session_id"])
-
-		if len(latest_message["embeds"]) != 0:
-			if "title" in latest_message["embeds"][0].keys():
-				if latest_message["embeds"][0]["title"] == "You're currently bot banned!":
-					log(username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned.")
-				
+					interact_button(channel_id, config["auto_trade"]["trader_token"], config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto_trade"]["trader"]["session_id"])			
 	return latest_message
