@@ -88,7 +88,8 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 					interact_button(channel_id, config["auto_trade"]["trader_token"], config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto_trade"]["trader"]["session_id"])
 
 		if len(latest_message["embeds"]) != 0:
-			if "If you want to, you can appeal your ban here:" in latest_message["embeds"][0]["description"]:
-				log(username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned.")
+			if "title" in latest_message["embeds"][0].keys():
+				if latest_message["embeds"][0]["title"] == "You're currently bot banned!":
+					log(username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned.")
 				
 	return latest_message
