@@ -61,10 +61,11 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 - ```pls dig```
 - ```pls fish```
 - ```pls guess```
-- ```pls hunt```
-- ```pls search```
 - ```pls highlow```
+- ```pls hunt```
+- ```pls lottery```
 - ```pls postmeme```
+- ```pls search```
 - ```pls trivia```
 
 ## Todo
