@@ -10,7 +10,7 @@ print(f"""{fore.Magenta}
 ░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝
 {style.RESET_ALL}
 {style.Italic + style.Bold}GITHUB: {style.RESET_ALL}https://github.com/didlly/grank
-{style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}v0.4.2-alpha
+{style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}v0.5.0-alpha
 {style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{get("https://raw.githubusercontent.com/didlly/grank/main/current_version").content.decode()}
 {style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/h7jK9pBkAs
 """)
@@ -24,6 +24,7 @@ from threading import Thread
 from utils.shared import data
 from discord.message import send_message
 from json import load, dumps
+from discord.message import send_message, retreive_message
 from scripts.crime import crime_parent
 from scripts.daily import daily_parent
 from scripts.beg import beg_parent
@@ -33,6 +34,7 @@ from scripts.guess import guess_parent
 from scripts.hunt import hunt_parent
 from scripts.lottery import lottery_parent
 from scripts.search import search_parent
+from scripts.stream import stream_parent
 from scripts.highlow import highlow_parent
 from scripts.postmeme import postmeme_parent
 from scripts.trivia import trivia_parent
@@ -64,6 +66,16 @@ for index in range(len(credentials)):
 		database[f"{user_id}_confirmation"] = True
 		open(f"{cwd}/database.json", "w").write(dumps(database))
 
+	send_message(channel_id, token, config, username, "pls beg")
+ 
+	while True:
+		latest_message = retreive_message(channel_id, token, config, username, "pls guess", user_id, session_id)
+
+		if latest_message is not None:
+			break
+
+	data[f"{channel_id}_guild"] = latest_message["message_reference"]["guild_id"]
+ 
 	if config["commands"]["daily"]:
 		Thread(target=daily_parent, args=(username, channel_id, token, config, cwd)).start()
 
@@ -90,6 +102,9 @@ for index in range(len(credentials)):
 
 	if config["commands"]["search"]:
 		Thread(target=search_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
+  
+	if config["commands"]["stream"]:
+		Thread(target=stream_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
 
 	if config["commands"]["highlow"]:
 		Thread(target=highlow_parent, args=(username, channel_id, token, config, user_id, session_id)).start()

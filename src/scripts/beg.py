@@ -8,6 +8,8 @@ def beg(username, channel_id, token, config):
 	send_message(channel_id, token, config, username, "pls beg")
 
 def beg_parent(username, channel_id, token, config):
+    sleep(40)
+    
 	while True:
 		while not data[channel_id]:
 			pass

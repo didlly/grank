@@ -114,6 +114,7 @@ Values in the ```commands``` category tell the program whether or not to *run ce
 | ```guess```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls guess```. |
 | ```hunt```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls hunt```. |
 | ```search```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls search```. |
+| ```stream```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls stream```. |
 | ```highlow```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls highlow```. |
 | ```postmeme```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls postmeme```. |
 | ```trivia```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls trivia```. |

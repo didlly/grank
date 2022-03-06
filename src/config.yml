@@ -7,6 +7,7 @@ commands:
   hunt: True
   dig: True
   search: True
+  stream: True
   highlow: True
   postmeme: True
   trivia: True

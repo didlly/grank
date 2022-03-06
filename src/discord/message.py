@@ -1,5 +1,6 @@
 from requests import post, get
 from utils.logger import log
+from utils.shared import data
 from time import sleep
 from random import uniform
 from json import loads
@@ -39,13 +40,19 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 		
 		latest_message = loads(request.text)[0]
 		
-		if latest_message["author"]["id"] == "270904126974590976" and latest_message["referenced_message"]["author"]["id"] == user_id:
-			if config["logging"]["debug"]:
-				log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
-			break
+		if latest_message["author"]["id"] == "270904126974590976":
+			if "referenced_message" in latest_message.keys():
+				if latest_message["referenced_message"]["author"]["id"] == user_id:
+					if config["logging"]["debug"]:
+						log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
+					break
+			else:
+				if config["logging"]["debug"]:
+					log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
+				break
 		else:
 			continue
-	   
+     
 	if latest_message["author"]["id"] != "270904126974590976":
 		if config["logging"]["warning"]:
 			log(username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} {'second' if config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
