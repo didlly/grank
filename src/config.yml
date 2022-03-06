@@ -12,7 +12,7 @@ commands:
   trivia: True
 
 lottery:
-  enabled: True
+  enabled: False
   cooldown: 3600
 
 auto_buy:

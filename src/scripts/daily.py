@@ -10,7 +10,7 @@ def daily(username, channel_id, token, config, cwd):
 	with open(f"{cwd}/database.json", "r") as data:
 		data = load(data)
 
-		if data["daily"] == "None":
+		if "daily" not in data.keys():
 			send_message(channel_id, token, config, username, "pls daily")
 			
 			data["daily"] = datetime.now().strftime("%x-%X")

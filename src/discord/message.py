@@ -11,20 +11,22 @@ def send_message(channel_id, token, config, username, command):
 		request = post(f"https://discord.com/api/v9/channels/{channel_id}/typing", headers={"authorization": token})
 		sleep(uniform(config["typing_indicator"]["minimum"], config["typing_indicator"]["maximum"]))
 
-	request = post(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token}, json={"content": command})
+	while True:
+		request = post(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token}, json={"content": command})
 
-	if request.status_code == 200 or request.status_code == 204:
-		if config["logging"]["debug"]:
-			 log(username, "DEBUG", f"Successfully sent command `{command}`.")
-		return True
-	else:
-		if config["logging"]["warning"]:
-			log(username, "WARNING", f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
-		if request.status_code == 429:
-			request = loads(request.content)
-			log(username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
-			sleep(request["retry_after"])
-		return False
+		if request.status_code == 200 or request.status_code == 204:
+			if config["logging"]["debug"]:
+					log(username, "DEBUG", f"Successfully sent command `{command}`.")
+			return True
+		else:
+			if config["logging"]["warning"]:
+				log(username, "WARNING", f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
+			if request.status_code == 429:
+				request = loads(request.content)
+				log(username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+				sleep(request["retry_after"])
+				continue
+			return False
 
 def retreive_message(channel_id, token, config, username, command, user_id, session_id=None):   
 	time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")

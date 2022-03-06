@@ -86,7 +86,7 @@ for index in range(len(credentials)):
 		Thread(target=hunt_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
   
 	if config["lottery"]["enabled"]:
-		Thread(target=lottery_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
+		Thread(target=lottery_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
 
 	if config["commands"]["search"]:
 		Thread(target=search_parent, args=(username, channel_id, token, config, user_id, session_id)).start()

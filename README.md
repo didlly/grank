@@ -123,7 +123,7 @@ Values in the ```lottery``` category tell the program *whether lottery tickets s
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
-| ```enabled```  | ```Boolean``` | ```True```  | Tells the program whether or not to buy lottery tickets. |
+| ```enabled```  | ```Boolean``` | ```False```  | Tells the program whether or not to buy lottery tickets. |
 | ```cooldown```  | ```Integer``` | ```3600```  | Tells the program the interval between buying lottery tickets. |
 
 ### ```auto_buy``` category
