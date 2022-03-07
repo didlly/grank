@@ -22,6 +22,8 @@ auto_buy:
   shovel: True
   fishing pole: True
   hunting rifle: True
+  keyboard: True
+  mouse: True
 
 auto_trade:
   enabled: False

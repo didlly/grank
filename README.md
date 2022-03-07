@@ -138,6 +138,8 @@ Values in the ```auto_buy``` category tell the program whether or not to *buy ce
 | ```shovel```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```shovel``` if needed and the user doesn't have it. |
 | ```fishing pole```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```fishing pole``` if needed and the user doesn't have it. |
 | ```hunting rifle```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the ```hunting rifle``` if needed and the user doesn't have it. |
+| ```keyboard```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```keyboard``` if needed and the user doesn't have it. |
+| ```mouse```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```mouse``` if needed and the user doesn't have it. |
 
 ### ```auto_trade``` category
 Values in the ```auto_trade``` category tell the program *who items should be traded to*, and *what items should be traded.*

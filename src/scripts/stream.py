@@ -1,44 +1,143 @@
+from json import load, dumps
+from datetime import datetime
 from discord.message import send_message, retreive_message
 from discord.button import interact_button
 from discord.dropdown import interact_dropdown
-from random import choice, randint
+from random import randint, choice
 from utils.logger import log
 from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
 def stream(username, channel_id, token, config, user_id, cwd, session_id):
-	send_message(channel_id, token, config, username, "pls stream")
+	with open(f"{cwd}/database.json", "r") as data:
+		data = load(data)
 
-	latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
+		if "stream" not in data.keys():
+			send_message(channel_id, token, config, username, "pls stream")
 
-	if latest_message is None:
-		return
+			latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
+
+			if latest_message is None:
+				return
+			
+			if "title" in latest_message["embeds"][0].keys():
+				if "Keyboard" in latest_message["embeds"][0]["description"]:
+					if config["logging"]["debug"]:
+						log(username, "DEBUG", "User does not have item `keyboard`. Buying laptop now.")
+						
+					if config["auto_buy"] and config["auto_buy"]["keyboard"]:
+						from scripts.buy import buy
+						buy(username, channel_id, token, config, user_id, cwd, "keyboard")
+						return
+					elif config["logging"]["warning"]:
+						log(username, "WARNING", f"A keyboard is required for the command `pls stream`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for keyboards,'} the program will not buy one. Aborting command.")
+						return
+
+				if "Mouse" in latest_message["embeds"][0]["description"]:
+					if config["logging"]["debug"]:
+						log(username, "DEBUG", "User does not have item `mouse`. Buying laptop now.")
+						
+					if config["auto_buy"] and config["auto_buy"]["mouse"]:
+						from scripts.buy import buy
+						buy(username, channel_id, token, config, user_id, cwd, "mouse")
+						return
+					elif config["logging"]["warning"]:
+						log(username, "WARNING", f"A mouse is required for the command `pls stream`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for mouses,'} the program will not buy one. Aborting command.")
+						return
+  
+			if len(latest_message["components"][0]["components"]) == 3:
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
+			
+				latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
+
+				if latest_message is None:
+					return
+
+				interact_dropdown(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], choice(latest_message["components"][0]["components"][0]["options"])["value"], latest_message, session_id)
+				
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][-1]["components"][0]["custom_id"], latest_message, session_id)
+		
+			latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
+		
+			if int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0:
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
+			else:
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][randint(1, 2)]["custom_id"], latest_message, session_id)
+		
+			interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][-1]["components"][-1]["custom_id"], latest_message, session_id)
+   
+			data["stream"] = datetime.now().strftime("%x-%X")
+
+			with open(f"{cwd}/database.json", "w") as data_file:
+				data_file.write(dumps(data))
+			
+			if config["logging"]["debug"]:
+				log(username, "DEBUG", "Successfully updated latest command run of `pls stream`.")
+		elif (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(data["stream"], "%x-%X")).total_seconds() > config["stream"]["cooldown"]:
+			send_message(channel_id, token, config, username, "pls stream")
+
+			latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
+
+			if latest_message is None:
+				return
+			
+			if "title" in latest_message["embeds"][0].keys():
+				if "Keyboard" in latest_message["embeds"][0]["description"]:
+					if config["logging"]["debug"]:
+						log(username, "DEBUG", "User does not have item `keyboard`. Buying laptop now.")
+						
+					if config["auto_buy"] and config["auto_buy"]["keyboard"]:
+						from scripts.buy import buy
+						buy(username, channel_id, token, config, user_id, cwd, "keyboard")
+						return
+					elif config["logging"]["warning"]:
+						log(username, "WARNING", f"A keyboard is required for the command `pls stream`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for keyboards,'} the program will not buy one. Aborting command.")
+						return
+
+				if "Mouse" in latest_message["embeds"][0]["description"]:
+					if config["logging"]["debug"]:
+						log(username, "DEBUG", "User does not have item `mouse`. Buying laptop now.")
+						
+					if config["auto_buy"] and config["auto_buy"]["mouse"]:
+						from scripts.buy import buy
+						buy(username, channel_id, token, config, user_id, cwd, "mouse")
+						return
+					elif config["logging"]["warning"]:
+						log(username, "WARNING", f"A mouse is required for the command `pls stream`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for mouses,'} the program will not buy one. Aborting command.")
+						return
+  
+			if len(latest_message["components"][0]["components"]) == 3:
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
+			
+				latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
+
+				if latest_message is None:
+					return
+
+				interact_dropdown(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], choice(latest_message["components"][0]["components"][0]["options"])["value"], latest_message, session_id)
+				
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][-1]["components"][0]["custom_id"], latest_message, session_id)
+		
+			latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
+		
+			if int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0:
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
+			else:
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][randint(1, 2)]["custom_id"], latest_message, session_id)
+		
+			interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][-1]["components"][-1]["custom_id"], latest_message, session_id)
+
+			data["stream"] = datetime.now().strftime("%x-%X")
+			
+			with open(f"{cwd}/database.json", "w") as database:
+				database.write(dumps(data))
+			
+			if config["logging"]["debug"]:
+				log(username, "DEBUG", "Successfully updated latest command run of `pls stream`.")
+    
+def stream(username, channel_id, token, config, user_id, cwd, session_id):
 	
-	if "title" in latest_message["embeds"][0].keys():
-		if "Keyboard" in latest_message["embeds"][0]["description"]:
-			if config["logging"]["debug"]:
-				log(username, "DEBUG", "User does not have item `keyboard`. Buying laptop now.")
-				
-			if config["auto_buy"] and config["auto_buy"]["keyboard"]:
-				from scripts.buy import buy
-				buy(username, channel_id, token, config, user_id, cwd, "keyboard")
-				return
-			elif config["logging"]["warning"]:
-				log(username, "WARNING", f"A keyboard is required for the command `pls postmeme`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for keyboards,'} the program will not buy one. Aborting command.")
-				return
-
-		if "Mouse" in latest_message["embeds"][0]["description"]:
-			if config["logging"]["debug"]:
-				log(username, "DEBUG", "User does not have item `mouse`. Buying laptop now.")
-				
-			if config["auto_buy"] and config["auto_buy"]["mouse"]:
-				from scripts.buy import buy
-				buy(username, channel_id, token, config, user_id, cwd, "mouse")
-				return
-			elif config["logging"]["warning"]:
-				log(username, "WARNING", f"A mouse is required for the command `pls postmeme`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for mouses,'} the program will not buy one. Aborting command.")
-				return
 
 	if len(latest_message["components"][0]["components"]) == 3:
 		interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
