@@ -12,16 +12,17 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
 		
 	if latest_message["content"] == "Far out, you don't have enough money in your wallet or your bank to buy that much!!":
 		from scripts.balance import balance
-		bal = balance(username, channel_id, token, config, log, user_id)
+		bal = balance(username, channel_id, token, config, user_id)
 		
 		if bal != None:  
-			data = load(f"{cwd}/database.json")
+			data = load(open(f"{cwd}/database.json", "r"))
+			latest_message = retreive_message(channel_id, token, config, username, "pls bal", user_id)
+   
+			bank = int(''.join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[1].split("/")[0].strip())))
+			wallet = int(''.join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[0])))
 			
-			bank = int(latest_message["embeds"][0]["description"].split(":")[-1].split(" / ")[0].repalce("⏣", ""))
-			wallet = int(latest_message["embeds"][0]["description"].split("\n")[0].split("⏣")[-1])
-			
-			if (wallet + bank) - data["item"] > 0:
-				amount = (wallet + bank) - data["item"]
+			if (wallet + bank) - data["price"][f"{item}"] > 0:
+				amount = (wallet + bank) - data["price"][f"{item}"]
 				
 				send_message(channel_id, token, config, username, f"pls with {amount}")                                
 				send_message(channel_id, token, config, username, f"pls buy {item}")
