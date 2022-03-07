@@ -80,7 +80,7 @@ When the majority of Dank Memer commands are supported, compiled versions of the
 - Download and extract the latest version of Grank.
 - Navigate into the `/src/` folder of Grank.
 - Download and extract the files of the latest version of [`pypy`](https://www.pypy.org/download.html) for your platform into the folder. Make sure the files are in the `/src/` folder and not in a sub-folder, otherwise this will not work.
-- Download and save [this](bootstrap.pypa.io/get-pip.py) file in that directory.
+- Download and save [this](https://bootstrap.pypa.io/get-pip.py) file in that directory.
 - Open a command prompt in that directory.
 - Run the command `pypy get-pip.py`. If you changed the name of the file when you downloaded it, please replace `get-pip.py` with the new name.
 - Run the command `pypy -m pip install "requests"`.
