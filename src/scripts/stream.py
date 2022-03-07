@@ -74,7 +74,7 @@ def stream(username, channel_id, token, config, user_id, cwd, session_id):
 			
 			if config["logging"]["debug"]:
 				log(username, "DEBUG", "Successfully updated latest command run of `pls stream`.")
-		elif (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(data["stream"], "%x-%X")).total_seconds() > config["stream"]["cooldown"]:
+		elif (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(data["stream"], "%x-%X")).total_seconds() > 600:
 			send_message(channel_id, token, config, username, "pls stream")
 
 			latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
@@ -135,30 +135,6 @@ def stream(username, channel_id, token, config, user_id, cwd, session_id):
 			
 			if config["logging"]["debug"]:
 				log(username, "DEBUG", "Successfully updated latest command run of `pls stream`.")
-    
-def stream(username, channel_id, token, config, user_id, cwd, session_id):
-	
-
-	if len(latest_message["components"][0]["components"]) == 3:
-		interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
-	
-		latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
-
-		if latest_message is None:
-			return
-
-		interact_dropdown(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], choice(latest_message["components"][0]["components"][0]["options"])["value"], latest_message, session_id)
-		
-		interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][-1]["components"][0]["custom_id"], latest_message, session_id)
-  
-	latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
- 
-	if int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0:
-		interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
-	else:
-		interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][randint(1, 2)]["custom_id"], latest_message, session_id)
-   
-	interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][-1]["components"][-1]["custom_id"], latest_message, session_id)
 
 def stream_parent(username, channel_id, token, config, user_id, cwd, session_id):
 	while True:
