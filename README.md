@@ -77,7 +77,7 @@ Visit [this](https://github.com/didlly/grank/projects/1) link for project update
 ### Setting up the environment
 When the majority of Dank Memer commands are supported, compiled versions of the code will be made available. However, since ```v1``` has not been acheived yet, you will have to have Python installed to run Grank.
 
-- Download and extract the latest version of Grank.
+- Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
 - Navigate into the `/src/` folder of Grank.
 - Download and extract the files of the latest version of [`pypy`](https://www.pypy.org/download.html) for your platform into the folder. Make sure the files are in the `/src/` folder and not in a sub-folder, otherwise this will not work.
 - Download and save [this](https://bootstrap.pypa.io/get-pip.py) file in that directory.
