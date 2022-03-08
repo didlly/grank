@@ -62,7 +62,43 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 		if "title" in latest_message["embeds"][0].keys():
 			if latest_message["embeds"][0]["title"] == "You're currently bot banned!" or latest_message["embeds"][0]["title"] == "You're currently blacklisted!":
 				log(username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.")
-	 
+	
+ 
+	if "Dodge the Fireball" in latest_message["content"]:
+		log(username, "DEBUG", "Detected dodge the fireball game.")
+		while True:
+			request = get(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token})
+		
+			if request.status_code != 200:
+				continue
+			
+			latest_message = loads(request.text)[0]
+			
+			if latest_message["author"]["id"] == "270904126974590976":
+				if "referenced_message" in latest_message.keys():
+					if latest_message["referenced_message"]["author"]["id"] == user_id:
+						if config["logging"]["debug"]:
+							log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
+						break
+				else:
+					if config["logging"]["debug"]:
+						log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
+					break
+			else:
+				continue
+      
+			level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
+   
+			if level != 1:	
+				continue
+      
+			interact_button(channel_id, token, config, username, command, latest_message["components"][0]["components"][1]["custom_id"], latest_message, session_id)
+  
+	if "Catch the fish" in latest_message["content"]:
+		log(username, "DEBUG", "Detected catch the fish game.")
+		level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
+		interact_button(channel_id, token, config, username, command, latest_message["components"][0]["components"][level]["custom_id"], latest_message, session_id)
+     
 	if config["auto_trade"]["enabled"]:
 		for key in config["auto_trade"]:
 			if key == "enabled" or key == "trader_token" or not config["auto_trade"][key]:
