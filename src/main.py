@@ -43,6 +43,8 @@ if getattr(sys, "frozen", False):
 	cwd = dirname(sys.executable)
 elif __file__:
 	cwd = dirname(__file__)
+	
+cwd = "" if cwd == "/"
 
 if system().lower() == "windows":
 	import ctypes
