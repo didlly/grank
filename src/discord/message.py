@@ -93,6 +93,8 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 				continue
       
 			interact_button(channel_id, token, config, username, command, latest_message["components"][0]["components"][1]["custom_id"], latest_message, session_id)
+	
+			break
   
 	if "Catch the fish" in latest_message["content"]:
 		log(username, "DEBUG", "Detected catch the fish game.")
