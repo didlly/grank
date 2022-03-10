@@ -44,7 +44,8 @@ if getattr(sys, "frozen", False):
 elif __file__:
 	cwd = dirname(__file__)
 	
-cwd = "" if cwd == "/" else cwd
+if cwd == "/" or cwd == chr(92):
+	cwd = ""
 
 if system().lower() == "windows":
 	import ctypes
