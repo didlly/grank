@@ -7,7 +7,7 @@ from sys import exc_info
 from utils.shared import data
 
 def daily(username, channel_id, token, config, cwd):
-	with open(f"{cwd}/database.json", "r") as data:
+	with open(f"{cwd}database.json", "r") as data:
 		data = load(data)
 
 		if "daily" not in data.keys():
@@ -15,7 +15,7 @@ def daily(username, channel_id, token, config, cwd):
 			
 			data["daily"] = datetime.now().strftime("%x-%X")
 
-			with open(f"{cwd}/database.json", "w") as data_file:
+			with open(f"{cwd}database.json", "w") as data_file:
 				data_file.write(dumps(data))
 			
 			if config["logging"]["debug"]:
@@ -25,7 +25,7 @@ def daily(username, channel_id, token, config, cwd):
 
 			data["daily"] = datetime.now().strftime("%x-%X")
 			
-			with open(f"{cwd}/database.json", "w") as database:
+			with open(f"{cwd}database.json", "w") as database:
 				database.write(dumps(data))
 			
 			if config["logging"]["debug"]:

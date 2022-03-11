@@ -5,7 +5,7 @@ from discord.gateway import gateway
 
 def load_credentials(cwd):
 	try:
-		credentials = load(open(f"{cwd}/credentials.json", "r"))
+		credentials = load(open(f"{cwd}credentials.json", "r"))
 		log(None, "DEBUG", "Found `credentials.json` and parsed values from it.")
 	except FileNotFoundError:
 		log(None, "ERROR", "Unable to find `credentials.json`. Make sure it is present.")

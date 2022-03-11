@@ -8,7 +8,7 @@ from sys import exc_info
 from utils.shared import data
 
 def lottery(username, channel_id, token, config, user_id, cwd, session_id):
-	with open(f"{cwd}/database.json", "r") as data:
+	with open(f"{cwd}database.json", "r") as data:
 		data = load(data)
 
 		if "lottery" not in data.keys():
@@ -23,7 +23,7 @@ def lottery(username, channel_id, token, config, user_id, cwd, session_id):
 			
 			data["lottery"] = datetime.now().strftime("%x-%X")
 
-			with open(f"{cwd}/database.json", "w") as data_file:
+			with open(f"{cwd}database.json", "w") as data_file:
 				data_file.write(dumps(data))
 			
 			if config["logging"]["debug"]:
@@ -40,7 +40,7 @@ def lottery(username, channel_id, token, config, user_id, cwd, session_id):
 
 			data["lottery"] = datetime.now().strftime("%x-%X")
 			
-			with open(f"{cwd}/database.json", "w") as database:
+			with open(f"{cwd}database.json", "w") as database:
 				database.write(dumps(data))
 			
 			if config["logging"]["debug"]:

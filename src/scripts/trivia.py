@@ -16,7 +16,7 @@ def trivia(username, channel_id, token, config, user_id, session_id, cwd):
 		return
 
 	try:
-		answer = load(open(f"{cwd}/database.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
+		answer = load(open(f"{cwd}database.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
 	except KeyError:
 		answer = None
 		log(None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")

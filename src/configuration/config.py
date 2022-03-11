@@ -5,7 +5,7 @@ from requests import get
 from json import loads
 
 def load_config(cwd):
-	config = load(f"{cwd}/config.yml")
+	config = load(f"{cwd}config.yml")
 
 	options = ["['commands']", "['commands']['crime']", "['commands']['daily']", "['commands']['beg']", "['commands']['fish']", "['commands']['guess']", "['commands']['hunt']", "['commands']['dig']", "['commands']['search']", "['commands']['stream']",  "['commands']['highlow']", "['commands']['postmeme']", "['commands']['trivia']", "['lottery']", "['lottery']['enabled']", "['lottery']['cooldown']", "['auto_buy']", "['auto_buy']['enabled']", "['auto_buy']['laptop']", "['auto_buy']['shovel']", "['auto_buy']['fishing pole']", "['auto_buy']['hunting rifle']", "['auto_buy']['keyboard']", "['auto_buy']['mouse']", "['auto_trade']", "['auto_trade']['enabled']", "['auto_trade']['trader_token']", "['typing_indicator']", "['typing_indicator']['enabled']", "['typing_indicator']['minimum']", "['typing_indicator']['maximum']", "['cooldowns']", "['cooldowns']['patron']", "['cooldowns']['timeout']", "['logging']['debug']", "['logging']['warning']"]
 

@@ -44,8 +44,7 @@ if getattr(sys, "frozen", False):
 elif __file__:
 	cwd = dirname(__file__)
 	
-if cwd == "/" or cwd == chr(92):
-	cwd = ""
+cwd = "" if cwd == "/" or cwd == chr(92) else f"{cwd}/"
 
 if system().lower() == "windows":
 	import ctypes
@@ -63,11 +62,11 @@ for index in range(len(credentials)):
 	token = credentials[index][4]
 	data[channel_id] = True
 
-	database = load(open(f"{cwd}/database.json", "r"))
+	database = load(open(f"{cwd}database.json", "r"))
 	if f"{user_id}_confirmation" not in database.keys():
 		send_message(channel_id, token, config, username, "pls settings confirmations nah")
 		database[f"{user_id}_confirmation"] = True
-		open(f"{cwd}/database.json", "w").write(dumps(database))
+		open(f"{cwd}database.json", "w").write(dumps(database))
 
 	send_message(channel_id, token, config, username, "pls beg")
  
