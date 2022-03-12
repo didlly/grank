@@ -48,7 +48,7 @@ def lottery(username, channel_id, token, config, user_id, cwd, session_id):
 
 def lottery_parent(username, channel_id, token, config, user_id, cwd, session_id):
 	while True:
-		while not data[channel_id]:
+		while not data[channel_id] or not data[username]:
 			pass
 
 		data[channel_id] = False

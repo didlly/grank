@@ -35,7 +35,7 @@ def trivia(username, channel_id, token, config, user_id, session_id, cwd):
 
 def trivia_parent(username, channel_id, token, config, user_id, session_id, cwd):
 	while True:
-		while not data[channel_id]:
+		while not data[channel_id] or not data[username]:
 			pass
 
 		data[channel_id] = False

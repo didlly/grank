@@ -26,24 +26,24 @@ def stream(username, channel_id, token, config, user_id, cwd, session_id):
 					if config["logging"]["debug"]:
 						log(username, "DEBUG", "User does not have item `keyboard`. Buying laptop now.")
 						
-					if config["auto_buy"] and config["auto_buy"]["keyboard"]:
+					if config["auto buy"] and config["auto buy"]["keyboard"]:
 						from scripts.buy import buy
 						buy(username, channel_id, token, config, user_id, cwd, "keyboard")
 						return
 					elif config["logging"]["warning"]:
-						log(username, "WARNING", f"A keyboard is required for the command `pls stream`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for keyboards,'} the program will not buy one. Aborting command.")
+						log(username, "WARNING", f"A keyboard is required for the command `pls stream`. However, since {'auto buy is off for all items,' if not config['auto buy']['parent'] else 'autobuy is off for keyboards,'} the program will not buy one. Aborting command.")
 						return
 
 				if "Mouse" in latest_message["embeds"][0]["description"]:
 					if config["logging"]["debug"]:
 						log(username, "DEBUG", "User does not have item `mouse`. Buying laptop now.")
 						
-					if config["auto_buy"] and config["auto_buy"]["mouse"]:
+					if config["auto buy"] and config["auto buy"]["mouse"]:
 						from scripts.buy import buy
 						buy(username, channel_id, token, config, user_id, cwd, "mouse")
 						return
 					elif config["logging"]["warning"]:
-						log(username, "WARNING", f"A mouse is required for the command `pls stream`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for mouses,'} the program will not buy one. Aborting command.")
+						log(username, "WARNING", f"A mouse is required for the command `pls stream`. However, since {'auto buy is off for all items,' if not config['auto buy']['parent'] else 'autobuy is off for mouses,'} the program will not buy one. Aborting command.")
 						return
   
 			if len(latest_message["components"][0]["components"]) == 3:
@@ -91,24 +91,24 @@ def stream(username, channel_id, token, config, user_id, cwd, session_id):
 					if config["logging"]["debug"]:
 						log(username, "DEBUG", "User does not have item `keyboard`. Buying laptop now.")
 						
-					if config["auto_buy"] and config["auto_buy"]["keyboard"]:
+					if config["auto buy"] and config["auto buy"]["keyboard"]:
 						from scripts.buy import buy
 						buy(username, channel_id, token, config, user_id, cwd, "keyboard")
 						return
 					elif config["logging"]["warning"]:
-						log(username, "WARNING", f"A keyboard is required for the command `pls stream`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for keyboards,'} the program will not buy one. Aborting command.")
+						log(username, "WARNING", f"A keyboard is required for the command `pls stream`. However, since {'auto buy is off for all items,' if not config['auto buy']['parent'] else 'autobuy is off for keyboards,'} the program will not buy one. Aborting command.")
 						return
 
 				if "Mouse" in latest_message["embeds"][0]["description"]:
 					if config["logging"]["debug"]:
 						log(username, "DEBUG", "User does not have item `mouse`. Buying laptop now.")
 						
-					if config["auto_buy"] and config["auto_buy"]["mouse"]:
+					if config["auto buy"] and config["auto buy"]["mouse"]:
 						from scripts.buy import buy
 						buy(username, channel_id, token, config, user_id, cwd, "mouse")
 						return
 					elif config["logging"]["warning"]:
-						log(username, "WARNING", f"A mouse is required for the command `pls stream`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for mouses,'} the program will not buy one. Aborting command.")
+						log(username, "WARNING", f"A mouse is required for the command `pls stream`. However, since {'auto buy is off for all items,' if not config['auto buy']['parent'] else 'autobuy is off for mouses,'} the program will not buy one. Aborting command.")
 						return
   
 			if len(latest_message["components"][0]["components"]) == 3:
@@ -147,7 +147,7 @@ def stream(username, channel_id, token, config, user_id, cwd, session_id):
 
 def stream_parent(username, channel_id, token, config, user_id, cwd, session_id):
 	while True:
-		while not data[channel_id]:
+		while not data[channel_id] or not data[username]:
 			pass
 
 		data[channel_id] = False

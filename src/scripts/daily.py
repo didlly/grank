@@ -33,7 +33,7 @@ def daily(username, channel_id, token, config, cwd):
 
 def daily_parent(username, channel_id, token, config, cwd):
 	while True:
-		while not data[channel_id]:
+		while not data[channel_id] or not data[username]:
 			pass
 
 		data[channel_id] = False

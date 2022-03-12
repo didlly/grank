@@ -8,9 +8,9 @@ from datetime import datetime
 from discord.button import interact_button
 
 def send_message(channel_id, token, config, username, command):
-	if config["typing_indicator"]["enabled"]:
+	if config["typing indicator"]["enabled"]:
 		request = post(f"https://discord.com/api/v9/channels/{channel_id}/typing", headers={"authorization": token})
-		sleep(uniform(config["typing_indicator"]["minimum"], config["typing_indicator"]["maximum"]))
+		sleep(uniform(config["typing indicator"]["minimum"], config["typing indicator"]["maximum"]))
 
 	while True:
 		request = post(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token}, json={"content": command})
@@ -101,45 +101,45 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 		level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
 		interact_button(channel_id, token, config, username, command, latest_message["components"][0]["components"][level]["custom_id"], latest_message, session_id)
      
-	if config["auto_trade"]["enabled"]:
-		for key in config["auto_trade"]:
-			if key == "enabled" or key == "trader_token" or not config["auto_trade"][key]:
+	if config["auto trade"]["enabled"]:
+		for key in config["auto trade"]:
+			if key == "enabled" or key == "trader token" or not config["auto trade"][key]:
 				continue
 			elif key in latest_message["content"].lower():
-				send_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}")
+				send_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}")
 
-				latest_message = retreive_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", user_id)
+				latest_message = retreive_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", user_id)
 
 				if latest_message is None:
 					return
 
-				interact_button(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, session_id)
+				interact_button(channel_id, token, config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, session_id)
 			
 				sleep(1)
 
-				latest_message = retreive_message(channel_id, config["auto_trade"]["trader_token"], config, config["auto_trade"]["trader"]["username"], f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", config["auto_trade"]["trader"]["user_id"])
+				latest_message = retreive_message(channel_id, config["auto trade"]["trader token"], config, config["auto trade"]["trader"]["username"], f"pls trade 1 {key} {config['auto trade']['trader']['username']}", config["auto trade"]["trader"]["user_id"])
 
 				if latest_message is None:
 					return
 
-				interact_button(channel_id, config["auto_trade"]["trader_token"], config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto_trade"]["trader"]["session_id"])
+				interact_button(channel_id, config["auto trade"]["trader token"], config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto trade"]["trader"]["session_id"])
 			elif len(latest_message["embeds"]) != 0:
 				if key in latest_message["embeds"][0]["description"]:
-					send_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}")
+					send_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}")
 
-					latest_message = retreive_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", user_id)
+					latest_message = retreive_message(channel_id, token, config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", user_id)
 
 					if latest_message is None:
 						return
 
-					interact_button(channel_id, token, config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, session_id)
+					interact_button(channel_id, token, config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, session_id)
 				
 					sleep(1)
 
-					latest_message = retreive_message(channel_id, config["auto_trade"]["trader_token"], config, config["auto_trade"]["trader"]["username"], f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", config["auto_trade"]["trader"]["user_id"])
+					latest_message = retreive_message(channel_id, config["auto trade"]["trader token"], config, config["auto trade"]["trader"]["username"], f"pls trade 1 {key} {config['auto trade']['trader']['username']}", config["auto trade"]["trader"]["user_id"])
 
 					if latest_message is None:
 						return
 
-					interact_button(channel_id, config["auto_trade"]["trader_token"], config, username, f"pls trade 1 {key} {config['auto_trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto_trade"]["trader"]["session_id"])			
+					interact_button(channel_id, config["auto trade"]["trader token"], config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto trade"]["trader"]["session_id"])			
 	return latest_message

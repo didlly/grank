@@ -18,19 +18,19 @@ def postmeme(username, channel_id, token, config, user_id, session_id, cwd):
 		if config["logging"]["debug"]:
 			log(username, "DEBUG", "User does not have item `laptop`. Buying laptop now.")
 		
-		if config["auto_buy"] and config["auto_buy"]["laptop"]:
+		if config["auto buy"] and config["auto buy"]["laptop"]:
 			from scripts.buy import buy
 			buy(username, channel_id, token, config, user_id, cwd, "laptop")
 			return
 		elif config["logging"]["warning"]:
-			log(username, "WARNING", f"A laptop is required for the command `pls postmeme`. However, since {'auto_buy is off for all items,' if not config['auto_buy']['parent'] else 'autobuy is off for laptops,'} the program will not buy one. Aborting command.")
+			log(username, "WARNING", f"A laptop is required for the command `pls postmeme`. However, since {'auto buy is off for all items,' if not config['auto buy']['parent'] else 'auto buy is off for laptops,'} the program will not buy one. Aborting command.")
 			return
 	else:
 		interact_button(channel_id, token, config, username, "pls postmeme", choice(latest_message["components"][0]["components"])["custom_id"], latest_message, session_id)
 
 def postmeme_parent(username, channel_id, token, config, user_id, session_id, cwd):
 	while True:
-		while not data[channel_id]:
+		while not data[channel_id] or not data[username]:
 			pass
 
 		data[channel_id] = False

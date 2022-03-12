@@ -21,7 +21,7 @@ def interact_button(channel_id, token, config, username, command, custom_id, lat
 	
 	if request.status_code== 200 or request.status_code == 204:
 		if config["logging"]["debug"]:
-			 log(username, "DEBUG", f"Successfully interacted with button on Dank Memer's response to command `{command}`.")
+			log(username, "DEBUG", f"Successfully interacted with button on Dank Memer's response to command `{command}`.")
 		return True
 	else:
 		if config["logging"]["warning"]:

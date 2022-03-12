@@ -19,7 +19,7 @@ def highlow(username, channel_id, token, config, user_id, session_id):
 
 def highlow_parent(username, channel_id, token, config, user_id, session_id):
 	while True:
-		while not data[channel_id]:
+		while not data[channel_id] or not data[username]:
 			pass
 
 		data[channel_id] = False

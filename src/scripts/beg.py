@@ -11,7 +11,7 @@ def beg_parent(username, channel_id, token, config):
 	sleep(40)
 	
 	while True:
-		while not data[channel_id]:
+		while not data[channel_id] or not data[username]:
 			pass
 
 		data[channel_id] = False

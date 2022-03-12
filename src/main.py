@@ -10,7 +10,7 @@ print(f"""{fore.Magenta}
 ░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝
 {style.RESET_ALL}
 {style.Italic + style.Bold}GITHUB: {style.RESET_ALL}https://github.com/didlly/grank
-{style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}v0.5.4-alpha
+{style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}v0.5.5-alpha
 {style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{get("https://raw.githubusercontent.com/didlly/grank/main/current_version").content.decode()}
 {style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/h7jK9pBkAs
 """)
@@ -22,6 +22,7 @@ from configuration.config import load_config
 from configuration.credentials import load_credentials
 from threading import Thread
 from utils.shared import data
+from utils.shifts import shifts
 from json import load, dumps
 from discord.message import send_message
 from discord.guild_id import guild_id
@@ -69,7 +70,13 @@ for index in range(len(credentials)):
 		open(f"{cwd}database.json", "w").write(dumps(database))
 
 	guild_id(username, channel_id, token, config, user_id, session_id)
- 
+	
+	if config["shifts"]["enabled"]:
+		data[username] = False
+		Thread(target=shifts, args=(username, config, cwd))
+	else:
+		data[username] = True
+  
 	if config["commands"]["daily"]:
 		Thread(target=daily_parent, args=(username, channel_id, token, config, cwd)).start()
 

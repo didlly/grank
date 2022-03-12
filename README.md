@@ -120,6 +120,15 @@ Values in the ```commands``` category tell the program whether or not to *run ce
 | ```postmeme```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls postmeme```. |
 | ```trivia```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls trivia```. |
 
+### ```shifts``` category
+Values in the ```shifts``` category tell the program *whether or not to run Grank in shifts*, and *the length of active and passive phases*.
+
+| Name  | Type | Default Value | Description | 
+| ------------- | ------------- | ------------- | ------------- |
+| ```enabled```  | ```Boolean``` | ```False```  | Tells the program whether or not to run in shifts. |
+| ```active```  | ```Integer``` | ```7200```  | Tells the program how long the program should run before sleeping (in seconds). |
+| ```passive```  | ```Integer``` | ```3600```  | Tells the program how long the program should sleep before running again (in seconds). |
+
 ### ```lottery``` category
 Values in the ```lottery``` category tell the program *whether lottery tickets should be bought*, and *how often they should be bought*.
 
@@ -138,8 +147,8 @@ Values in the ```stream``` category tell the program *whether or not to run the 
 | ```chat```  | ```Boolean``` | ```True```  | Tells the program whether or not to read the chat during the stream. |
 | ```donations```  | ```Boolean``` | ```True```  | Tells the program whether or not to collect donations during the stream. |
 
-### ```auto_buy``` category
-Values in the ```auto_buy``` category tell the program whether or not to *buy certain items* if needed.
+### ```auto buy``` category
+Values in the ```auto buy``` category tell the program whether or not to *buy certain items* if needed.
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
@@ -151,8 +160,8 @@ Values in the ```auto_buy``` category tell the program whether or not to *buy ce
 | ```keyboard```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```keyboard``` if needed and the user doesn't have it. |
 | ```mouse```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```mouse``` if needed and the user doesn't have it. |
 
-### ```auto_trade``` category
-Values in the ```auto_trade``` category tell the program *who items should be traded to*, and *what items should be traded.*
+### ```auto trade``` category
+Values in the ```auto trade``` category tell the program *who items should be traded to*, and *what items should be traded.*
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
@@ -163,8 +172,8 @@ Values in the ```auto_trade``` category tell the program *who items should be tr
 
 ***NOTE:*** You can add your own items to be traded by following the layout for the default options.
 
-### ```typing_indicator``` category
-Values in the ```typing_indicator``` category tell the program whether to make Discord think the self-bot is typing, and for how long it should. This is just for aesthetics and I would recommend it to be *off in private servers* to increase command speed, and *on in public servers* to make the self-bot look more legitimate.
+### ```typing indicator``` category
+Values in the ```typing indicator``` category tell the program whether to make Discord think the self-bot is typing, and for how long it should. This is just for aesthetics and I would recommend it to be *off in private servers* to increase command speed, and *on in public servers* to make the self-bot look more legitimate.
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |

@@ -11,6 +11,11 @@ commands:
   postmeme: True
   trivia: True
 
+shifts:
+  enabled: False
+  active: 7200
+  passive: 3600
+  
 lottery:
   enabled: False
   cooldown: 3600
@@ -21,7 +26,7 @@ stream:
   chat: True
   donations: True
 
-auto_buy:
+auto buy:
   enabled: True
   laptop: True
   shovel: True
@@ -30,13 +35,13 @@ auto_buy:
   keyboard: True
   mouse: True
 
-auto_trade:
+auto trade:
   enabled: False
-  trader_token: None
+  trader token: None
   bank note: True
   tidepod: True
 
-typing_indicator:
+typing indicator:
   enabled: False
   minimum: 0
   maximum: 1
