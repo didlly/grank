@@ -52,8 +52,8 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 - Smart - if the user doesn't have a required item to run a command like ```pls pm```, it will buy the required item so long as there are sufficient funds in the user's wallet & bank.
 - Autotrade - the self-bot automates the acception of the trade on both the side of the trader and the trade receiver.
 - Typing indicator.
-- Fast - coded in Python, but as fast as C thanks to [`pypy`](https://www.pypy.org).
 - Detects special events like `Dodge the fireball`.
+- Custom commands.
 
 ## Supported commands
 - ```pls daily```
