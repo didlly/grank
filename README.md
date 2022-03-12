@@ -84,8 +84,7 @@ When the majority of Dank Memer commands are supported, compiled versions of the
 - Download and save [this](https://bootstrap.pypa.io/get-pip.py) file in that directory.
 - Open a command prompt in that directory.
 - Run the command `pypy get-pip.py`. If you changed the name of the file when you downloaded it, please replace `get-pip.py` with the new name.
-- Run the command `pypy -m pip install "requests"`.
-- Run the command `pypy -m pip install "websocket-client"`.
+- Run the command `pypy -m pip install -r requirements.txt`.
 
 ### Getting your Discord token and channel ID
 To use Grank, you will have to provide your Discord token and a channel ID. Don't worry - these details are never shared with anyone. It is best if only you and Dank Memer can send messages in the channel you get the ID of. This is to avoid confusion with other people's interactions.
@@ -119,6 +118,15 @@ Values in the ```commands``` category tell the program whether or not to *run ce
 | ```highlow```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls highlow```. |
 | ```postmeme```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls postmeme```. |
 | ```trivia```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls trivia```. |
+
+### ```custom commands``` category
+Values in the ```custom commands``` category tell the program *what custom commands should be run* and *their cooldowns*.
+
+| Name  | Type | Default Value | Description | 
+| ------------- | ------------- | ------------- | ------------- |
+| ```enabled```  | ```Boolean``` | ```False```  | Tells the program whether or not to run any of the custom commands. |
+
+***NOTE:*** You can add your own custom commands by following the layout for the default options.
 
 ### ```shifts``` category
 Values in the ```shifts``` category tell the program *whether or not to run Grank in shifts*, and *the length of active and passive phases*.

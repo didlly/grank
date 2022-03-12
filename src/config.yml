@@ -11,6 +11,13 @@ commands:
   postmeme: True
   trivia: True
 
+custom commands:
+  enabled: False
+  pls dep max:
+    enabled: False
+    cooldown: 60
+    patron cooldown: 60
+
 shifts:
   enabled: False
   active: 7200

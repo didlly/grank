@@ -1,13 +1,13 @@
-from utils.yaml import load
+from yaml import safe_load
 from utils.logger import log
 from discord.gateway import gateway
 from requests import get
 from json import loads
 
 def load_config(cwd):
-	config = load(f"{cwd}config.yml")
+	config = safe_load(open(f"{cwd}config.yml", "r"))
 
-	options = ["['commands']", "['commands']['crime']", "['commands']['daily']", "['commands']['beg']", "['commands']['fish']", "['commands']['guess']", "['commands']['hunt']", "['commands']['dig']", "['commands']['search']", "['commands']['highlow']", "['commands']['postmeme']", "['commands']['trivia']", "['shifts']", "['shifts']['enabled']", "['shifts']['active']", "['shifts']['passive']", "['lottery']", "['lottery']['enabled']", "['lottery']['cooldown']", "['stream']", "['stream']['ads']", "['stream']['chat']", "['stream']['donations']", "['auto buy']", "['auto buy']['enabled']", "['auto buy']['laptop']", "['auto buy']['shovel']", "['auto buy']['fishing pole']", "['auto buy']['hunting rifle']", "['auto buy']['keyboard']", "['auto buy']['mouse']", "['auto trade']", "['auto trade']['enabled']", "['auto trade']['trader token']", "['typing indicator']", "['typing indicator']['enabled']", "['typing indicator']['minimum']", "['typing indicator']['maximum']", "['cooldowns']", "['cooldowns']['patron']", "['cooldowns']['timeout']", "['logging']['debug']", "['logging']['warning']"]
+	options = ["['commands']", "['commands']['crime']", "['commands']['daily']", "['commands']['beg']", "['commands']['fish']", "['commands']['guess']", "['commands']['hunt']", "['commands']['dig']", "['commands']['search']", "['commands']['highlow']", "['commands']['postmeme']", "['commands']['trivia']", "['custom commands']", "['custom commands']['enabled']", "['shifts']", "['shifts']['enabled']", "['shifts']['active']", "['shifts']['passive']", "['lottery']", "['lottery']['enabled']", "['lottery']['cooldown']", "['stream']", "['stream']['ads']", "['stream']['chat']", "['stream']['donations']", "['auto buy']", "['auto buy']['enabled']", "['auto buy']['laptop']", "['auto buy']['shovel']", "['auto buy']['fishing pole']", "['auto buy']['hunting rifle']", "['auto buy']['keyboard']", "['auto buy']['mouse']", "['auto trade']", "['auto trade']['enabled']", "['auto trade']['trader token']", "['typing indicator']", "['typing indicator']['enabled']", "['typing indicator']['minimum']", "['typing indicator']['maximum']", "['cooldowns']", "['cooldowns']['patron']", "['cooldowns']['timeout']", "['logging']['debug']", "['logging']['warning']"]
 
 	for option in options:
 		try:
