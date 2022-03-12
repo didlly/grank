@@ -1,5 +1,6 @@
 from json import load, dumps
 from datetime import datetime
+from utils.logger import log
 from utils.shared import data
 from time import sleep
 
@@ -13,8 +14,10 @@ def shifts(username, config, cwd):
 				data[username] = True
 			elif (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(data["shifts"]["last active"], "%x-%X")).total_seconds() > config["shifts"]["active"]:
 				data[username] = False
+				log(username, "DEBUG", "Beginning sleep phase.")
 				sleep(config["shifts"]["passive"])
 				data[username] = True
+				log(username, "DEBUG", "Beginning active phase.")
 				database["shifts"]["last active"] = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
 	
 			database.write(dumps(data))
