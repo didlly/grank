@@ -60,10 +60,14 @@ def stream(username, channel_id, token, config, user_id, cwd, session_id):
 		
 			latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
 		
-			if int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0:
+			if int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0 and config["stream"]["ads"]:
 				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
 			else:
-				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][randint(1, 2)]["custom_id"], latest_message, session_id)
+				button = randint(1, 2) if config["stream"]["chat"] and config["stream"]["donations"] else 1 if config["stream"]["chat"] else 2 if config["stream"]["donations"] else None
+				if button is None:
+					return
+ 
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][button]["custom_id"], latest_message, session_id)
 		
 			interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][-1]["components"][-1]["custom_id"], latest_message, session_id)
    
@@ -121,10 +125,15 @@ def stream(username, channel_id, token, config, user_id, cwd, session_id):
 		
 			latest_message = retreive_message(channel_id, token, config, username, "pls stream", user_id)
 		
-			if int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0:
+			if int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0 and config["stream"]["ads"]:
 				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
 			else:
-				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][randint(1, 2)]["custom_id"], latest_message, session_id)
+				button = randint(1, 2) if config["stream"]["chat"] and config["stream"]["donations"] else 1 if config["stream"]["chat"] else 2 if config["stream"]["donations"] else None
+    
+				if button is None:
+					return
+ 
+				interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][0]["components"][button]["custom_id"], latest_message, session_id)
 		
 			interact_button(channel_id, token, config, username, "pls stream", latest_message["components"][-1]["components"][-1]["custom_id"], latest_message, session_id)
 

@@ -7,7 +7,6 @@ commands:
   hunt: True
   dig: True
   search: True
-  stream: True
   highlow: True
   postmeme: True
   trivia: True
@@ -15,6 +14,12 @@ commands:
 lottery:
   enabled: False
   cooldown: 3600
+
+stream:
+  enabled: True
+  ads: True
+  chat: True
+  donations: True
 
 auto_buy:
   enabled: True

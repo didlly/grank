@@ -105,7 +105,7 @@ for index in range(len(credentials)):
 	if config["commands"]["search"]:
 		Thread(target=search_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
   
-	if config["commands"]["stream"]:
+	if config["stream"]["enabled"]:
 		Thread(target=stream_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
 
 	if config["commands"]["highlow"]:

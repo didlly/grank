@@ -29,7 +29,7 @@ def send_message(channel_id, token, config, username, command):
 				continue
 			return False
 
-def retreive_message(channel_id, token, config, username, command, user_id, session_id=None):   
+def retreive_message(channel_id, token, config, username, command, user_id, session_id=None):
 	time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
 
 	while (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time).total_seconds() < config["cooldowns"]["timeout"]:
