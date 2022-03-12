@@ -22,9 +22,9 @@ from configuration.config import load_config
 from configuration.credentials import load_credentials
 from threading import Thread
 from utils.shared import data
-from discord.message import send_message
 from json import load, dumps
-from discord.message import send_message, retreive_message
+from discord.message import send_message
+from discord.guild_id import guild_id
 from scripts.crime import crime_parent
 from scripts.daily import daily_parent
 from scripts.beg import beg_parent
@@ -68,15 +68,7 @@ for index in range(len(credentials)):
 		database[f"{user_id}_confirmation"] = True
 		open(f"{cwd}database.json", "w").write(dumps(database))
 
-	send_message(channel_id, token, config, username, "pls beg")
- 
-	while True:
-		latest_message = retreive_message(channel_id, token, config, username, "pls guess", user_id, session_id)
-
-		if latest_message is not None:
-			break
-
-	data[f"{channel_id}_guild"] = latest_message["message_reference"]["guild_id"]
+	guild_id(username, channel_id, token, config, user_id, session_id)
  
 	if config["commands"]["daily"]:
 		Thread(target=daily_parent, args=(username, channel_id, token, config, cwd)).start()
