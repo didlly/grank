@@ -20,7 +20,8 @@ def shifts(username, config, cwd):
 				log(username, "DEBUG", "Beginning active phase.")
 				database["shifts"]["last active"] = datetime.now().strftime("%Y:%m:%d-%H:%M:%S")
 
-		open(f"{cwd}database.json", "w").write(dumps(database))
+		with open(f"{cwd}database.json", "w") as database_file:
+			database_file.write(dumps(database))
   
 		cooldown = (datetime.strptime(datetime.now().strftime("%Y:%m:%d-%H:%M:%S"), "%Y:%m:%d-%H:%M:%S") - datetime.strptime(database["shifts"]["last active"], "%Y:%m:%d-%H:%M:%S")).total_seconds() - config["shifts"]["active"]
    

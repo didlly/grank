@@ -14,7 +14,7 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
 		from scripts.balance import balance
 		bal = balance(username, channel_id, token, config, user_id)
 		
-		if bal != None:  
+		if bal is not None:  
 			data = load(open(f"{cwd}database.json", "r"))
 			latest_message = retreive_message(channel_id, token, config, username, "pls bal", user_id)
    

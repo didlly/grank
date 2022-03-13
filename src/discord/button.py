@@ -17,7 +17,7 @@ def interact_button(channel_id, token, config, username, command, custom_id, lat
 		"session_id": session_id
 	}
 	
-	request = post(f"https://discord.com/api/v10/interactions", headers={"authorization": token}, json=data)
+	request = post("https://discord.com/api/v10/interactions", headers={"authorization": token}, json=data)
 	
 	if request.status_code== 200 or request.status_code == 204:
 		if config["logging"]["debug"]:

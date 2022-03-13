@@ -20,7 +20,7 @@ def load_config(cwd):
 		request = get("https://discord.com/api/v10/users/@me", headers={"authorization": config["auto trade"]["trader_token"]})
 
 		if request.status_code != 200:
-			log(None, "ERROR", f"Invalid trader token set. Please double-check you entered a valid token in `config.yml`.")
+			log(None, "ERROR", "Invalid trader token set. Please double-check you entered a valid token in `config.yml`.")
 
 		request = loads(request.text)
 
