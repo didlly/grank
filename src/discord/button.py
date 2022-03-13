@@ -16,10 +16,10 @@ def interact_button(channel_id, token, config, username, command, custom_id, lat
 		"message_id": latest_message["id"],
 		"session_id": session_id
 	}
-	
+
 	request = post("https://discord.com/api/v10/interactions", headers={"authorization": token}, json=data)
-	
-	if request.status_code== 200 or request.status_code == 204:
+
+	if request.status_code in [200, 204]:
 		if config["logging"]["debug"]:
 			log(username, "DEBUG", f"Successfully interacted with button on Dank Memer's response to command `{command}`.")
 		return True
