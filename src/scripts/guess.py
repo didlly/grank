@@ -144,7 +144,7 @@ def guess_parent(username, channel_id, token, config, user_id, session_id):
 		
 		data[channel_id] = True
 		
-		cooldown = 15 - (end - start)
+		cooldown = 60 - (end - start)
 
 		if cooldown > 0:
 			sleep(cooldown)
