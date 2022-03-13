@@ -15,13 +15,17 @@ def fish(username, channel_id, token, config, user_id, cwd, session_id):
 	if latest_message["content"] == "You don't have a fishing pole, you need to go buy one. You're not good enough to catch them with your hands.":
 		if config["logging"]["debug"]:
 			log(username, "DEBUG", "User does not have item `fishing pole`. Buying fishing pole now.")
-		
+
 		if config["auto buy"] and config["auto buy"]["fishing pole"]:
 			from scripts.buy import buy
 			buy(username, channel_id, token, config, user_id, cwd, "fishing pole")
 			return
 		elif config["logging"]["warning"]:
-			log(username, "WARNING", f"A fishing pole is required for the command `pls fish`. However, since {'auto buy is off for all items,' if not config['auto buy']['parent'] else 'auto buy is off for fishing poles,'} the program will not buy one. Aborting command.")
+			log(
+			    username,
+			    "WARNING",
+			    f"A fishing pole is required for the command `pls fish`. However, since {'auto buy is off for fishing poles,' if config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+			)
 			return
 
 def fish_parent(username, channel_id, token, config, user_id, cwd, session_id):

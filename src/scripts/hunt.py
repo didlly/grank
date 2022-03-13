@@ -15,13 +15,17 @@ def hunt(username, channel_id, token, config, user_id, cwd, session_id):
 	if latest_message["content"] == "You don't have a hunting rifle, you need to go buy one. You're not good enough to shoot animals with your bare hands... I hope.":
 		if config["logging"]["debug"]:
 			log(username, "DEBUG", "User does not have item `hunting rifle`. Buying hunting rifle now.")
-		
+
 		if config["auto buy"] and config["auto buy"]["hunting rifle"]:
 			from scripts.buy import buy
 			buy(username, channel_id, token, config, user_id, cwd, "hunting rifle")
 			return
 		elif config["logging"]["warning"]:
-			log(username, "WARNING", f"A hunting rifle is required for the command `pls fish`. However, since {'auto buy is off for all items,' if not config['auto buy']['parent'] else 'auto buy is off for hunting rifles,'} the program will not buy one. Aborting command.")
+			log(
+			    username,
+			    "WARNING",
+			    f"A hunting rifle is required for the command `pls fish`. However, since {'auto buy is off for hunting rifles,' if config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+			)
 			return
 
 def hunt_parent(username, channel_id, token, config, user_id, cwd, session_id):

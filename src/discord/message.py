@@ -15,7 +15,7 @@ def send_message(channel_id, token, config, username, command):
 	while True:
 		request = post(f"https://discord.com/api/v10/channels/{channel_id}/messages?limit=1", headers={"authorization": token}, json={"content": command})
 
-		if request.status_code == 200 or request.status_code == 204:
+		if request.status_code in [200, 204]:
 			if config["logging"]["debug"]:
 					log(username, "DEBUG", f"Successfully sent command `{command}`.")
 			return True
@@ -34,13 +34,50 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 
 	while (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time).total_seconds() < config["cooldowns"]["timeout"]:
 		request = get(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token})
-		
+
 		if request.status_code != 200:
 			continue
-		
+
 		latest_message = loads(request.text)[0]
-		
-		if latest_message["author"]["id"] == "270904126974590976":
+
+		if latest_message["author"]["id"] != "270904126974590976":
+			continue
+
+		if "referenced_message" in latest_message.keys():
+			if latest_message["referenced_message"]["author"]["id"] == user_id:
+				if config["logging"]["debug"]:
+					log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
+				break
+		else:
+			if config["logging"]["debug"]:
+				log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
+			break
+	if latest_message["author"]["id"] != "270904126974590976":
+		if config["logging"]["warning"]:
+			log(username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} {'second' if config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
+		return None
+
+	if (len(latest_message["embeds"]) != 0
+	    and "title" in latest_message["embeds"][0].keys()
+	    and latest_message["embeds"][0]["title"] in [
+	        "You're currently bot banned!", "You're currently blacklisted!"
+	    ]):
+		log(username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.")
+
+
+	if "Dodge the Fireball" in latest_message["content"]:
+		log(username, "DEBUG", "Detected dodge the fireball game.")
+		while True:
+			request = get(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token})
+
+			if request.status_code != 200:
+				continue
+
+			latest_message = loads(request.text)[0]
+
+			if latest_message["author"]["id"] != "270904126974590976":
+				continue
+
 			if "referenced_message" in latest_message.keys():
 				if latest_message["referenced_message"]["author"]["id"] == user_id:
 					if config["logging"]["debug"]:
@@ -50,57 +87,20 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 				if config["logging"]["debug"]:
 					log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
 				break
-		else:
-			continue
-     
-	if latest_message["author"]["id"] != "270904126974590976":
-		if config["logging"]["warning"]:
-			log(username, "WARNING", f"Timeout exceeded for response from Dank Memer ({config['cooldowns']['timeout']} {'second' if config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
-		return None
-
-	if len(latest_message["embeds"]) != 0:
-		if "title" in latest_message["embeds"][0].keys():
-			if latest_message["embeds"][0]["title"] == "You're currently bot banned!" or latest_message["embeds"][0]["title"] == "You're currently blacklisted!":
-				log(username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.")
-	
- 
-	if "Dodge the Fireball" in latest_message["content"]:
-		log(username, "DEBUG", "Detected dodge the fireball game.")
-		while True:
-			request = get(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token})
-		
-			if request.status_code != 200:
-				continue
-			
-			latest_message = loads(request.text)[0]
-			
-			if latest_message["author"]["id"] == "270904126974590976":
-				if "referenced_message" in latest_message.keys():
-					if latest_message["referenced_message"]["author"]["id"] == user_id:
-						if config["logging"]["debug"]:
-							log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
-						break
-				else:
-					if config["logging"]["debug"]:
-						log(username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
-					break
-			else:
-				continue
-      
 			level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
-   
+
 			if level != 1:	
 				continue
-      
+
 			interact_button(channel_id, token, config, username, command, latest_message["components"][0]["components"][1]["custom_id"], latest_message, session_id)
-	
+
 			break
-  
+
 	if "Catch the fish" in latest_message["content"]:
 		log(username, "DEBUG", "Detected catch the fish game.")
 		level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
 		interact_button(channel_id, token, config, username, command, latest_message["components"][0]["components"][level]["custom_id"], latest_message, session_id)
-     
+
 	if config["auto trade"]["enabled"]:
 		for key in config["auto trade"]:
 			if key == "enabled" or key == "trader token" or not config["auto trade"][key]:
@@ -114,7 +114,7 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 					return
 
 				interact_button(channel_id, token, config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, session_id)
-			
+
 				sleep(1)
 
 				latest_message = retreive_message(channel_id, config["auto trade"]["trader token"], config, config["auto trade"]["trader"]["username"], f"pls trade 1 {key} {config['auto trade']['trader']['username']}", config["auto trade"]["trader"]["user_id"])
@@ -133,7 +133,7 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 						return
 
 					interact_button(channel_id, token, config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, session_id)
-				
+
 					sleep(1)
 
 					latest_message = retreive_message(channel_id, config["auto trade"]["trader token"], config, config["auto trade"]["trader"]["username"], f"pls trade 1 {key} {config['auto trade']['trader']['username']}", config["auto trade"]["trader"]["user_id"])
@@ -141,5 +141,5 @@ def retreive_message(channel_id, token, config, username, command, user_id, sess
 					if latest_message is None:
 						return
 
-					interact_button(channel_id, config["auto trade"]["trader token"], config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto trade"]["trader"]["session_id"])			
+					interact_button(channel_id, config["auto trade"]["trader token"], config, username, f"pls trade 1 {key} {config['auto trade']['trader']['username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, config["auto trade"]["trader"]["session_id"])
 	return latest_message
