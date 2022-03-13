@@ -13,7 +13,7 @@ def send_message(channel_id, token, config, username, command):
 		sleep(uniform(config["typing indicator"]["minimum"], config["typing indicator"]["maximum"]))
 
 	while True:
-		request = post(f"https://discord.com/api/v10/channels/{channel_id}/messages", headers={"authorization": token}, json={"content": command})
+		request = post(f"https://discord.com/api/v10/channels/{channel_id}/messages?limit=1", headers={"authorization": token}, json={"content": command})
 
 		if request.status_code == 200 or request.status_code == 204:
 			if config["logging"]["debug"]:

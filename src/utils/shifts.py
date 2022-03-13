@@ -6,23 +6,23 @@ from time import sleep
 
 def shifts(username, config, cwd):
 	while True:
-		with open(f"{cwd}database.json", "r+") as database:
-			database = load(database)
+		with open(f"{cwd}database.json", "r") as database_file:
+			database = load(database_file)
    
 			if "last active" not in database["shifts"]:
-				database["shifts"]["last active"] = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
+				database["shifts"]["last active"] = datetime.now().strftime("%Y:%m:%d-%H:%M:%S")
 				data[username] = True
-			elif (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(data["shifts"]["last active"], "%x-%X")).total_seconds() > config["shifts"]["active"]:
+			elif (datetime.strptime(datetime.now().strftime("%Y:%m:%d-%H:%M:%S"), "%Y:%m:%d-%H:%M:%S") - datetime.strptime(database["shifts"]["last active"], "%Y:%m:%d-%H:%M:%S")).total_seconds() > config["shifts"]["active"]:
 				data[username] = False
 				log(username, "DEBUG", "Beginning sleep phase.")
 				sleep(config["shifts"]["passive"])
 				data[username] = True
 				log(username, "DEBUG", "Beginning active phase.")
-				database["shifts"]["last active"] = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-	
-			database.write(dumps(data))
+				database["shifts"]["last active"] = datetime.now().strftime("%Y:%m:%d-%H:%M:%S")
+
+		open(f"{cwd}database.json", "w").write(dumps(database))
+  
+		cooldown = (datetime.strptime(datetime.now().strftime("%Y:%m:%d-%H:%M:%S"), "%Y:%m:%d-%H:%M:%S") - datetime.strptime(database["shifts"]["last active"], "%Y:%m:%d-%H:%M:%S")).total_seconds() - config["shifts"]["active"]
    
-			cooldown = (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(data["shifts"]["last active"], "%x-%X")).total_seconds() - config["shifts"]["active"]
-   
-			if cooldown > 0:
-				sleep(cooldown)
+		if cooldown > 0:
+			sleep(cooldown)

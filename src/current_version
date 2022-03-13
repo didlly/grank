@@ -1,1 +1,1 @@
-v0.5.7-alpha
+v0.5.8-alpha
