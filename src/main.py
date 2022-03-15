@@ -17,7 +17,7 @@ elif __file__:
 cwd = f"{cwd}/" if cwd != "" else cwd
 
 with open(f"{cwd}current_version", "r") as f:
-    version = f.read()
+	version = f.read()
 
 print(f"""{fore.Magenta}
 ░██████╗░██████╗░░█████╗░███╗░░██╗██╗░░██╗
@@ -41,6 +41,7 @@ from utils.shifts import shifts
 from json import load, dumps
 from discord.message import send_message
 from discord.guild_id import guild_id
+from scripts.blackjack import blackjack_parent
 from scripts.crime import crime_parent
 from scripts.daily import daily_parent
 from scripts.beg import beg_parent
@@ -95,6 +96,9 @@ for index in range(len(credentials)):
 	if config["commands"]["beg"]:
 		Thread(target=beg_parent, args=(username, channel_id, token, config)).start()
 
+	if config["blackjack"]["enabled"]:
+		Thread(target=blackjack_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
+  
 	if config["commands"]["crime"]:
 		Thread(target=crime_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
 

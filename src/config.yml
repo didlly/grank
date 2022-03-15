@@ -11,6 +11,23 @@ commands:
   postmeme: True
   trivia: True
 
+lottery:
+  enabled: False
+  cooldown: 3600
+
+stream:
+  enabled: True
+  ads: True
+  chat: True
+  donations: True
+
+blackjack:
+  enabled: False
+  random: False
+  amount: 1500
+  minimum: 1500
+  maximum: 3000
+
 custom commands:
   enabled: False
   pls dep max:
@@ -23,16 +40,6 @@ shifts:
   active: 7200
   passive: 3600
   
-lottery:
-  enabled: False
-  cooldown: 3600
-
-stream:
-  enabled: True
-  ads: True
-  chat: True
-  donations: True
-
 auto buy:
   enabled: True
   laptop: True

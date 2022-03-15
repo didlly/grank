@@ -18,8 +18,8 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
 			data = load(open(f"{cwd}database.json", "r"))
 			latest_message = retreive_message(channel_id, token, config, username, "pls bal", user_id)
    
-			bank = int(''.join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[1].split("/")[0].strip())))
-			wallet = int(''.join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[0])))
+			bank = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[1].split("/")[0].strip())))
+			wallet = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[0])))
 			
 			if (wallet + bank) - data["price"][f"{item}"] > 0:
 				amount = (wallet + bank) - data["price"][f"{item}"]
