@@ -7,9 +7,7 @@ from sys import exc_info
 from utils.shared import data
 
 def blackjack(username, channel_id, token, config, user_id, session_id):
-	amount = (randint(config['blackjack']['minimum'],
-	                  config['blackjack']['maximum'])
-	          if config['blackjack']['random'] else config['blackjack']['amount'])
+	amount = config['blackjack']['amount'] if not config['blackjack']['random'] else randint(config['blackjack']['minimum'], config['blackjack']['maximum'])
 
 	send_message(channel_id, token, config, username, f"pls bj {amount}")
 
@@ -23,13 +21,13 @@ def blackjack(username, channel_id, token, config, user_id, session_id):
 			log(username, "WARNING", f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.")
 			return
 
-		if ("description" in latest_message["embeds"][0].keys()
-		    and "You lost" in latest_message["embeds"][0]["description"]):
-			return
+		if "description" in latest_message["embeds"][0].keys():
+			if "You lost" in latest_message["embeds"][0]["description"]:
+				return
 
 		total = int("".join(filter(str.isdigit, latest_message["embeds"][0]["fields"][0]["value"].split("\n")[-1])))
 
-		if total < 19:
+		if total < 18:
 			interact_button(channel_id, token, config, username, f"pls bj {amount}", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
 		else:
 			interact_button(channel_id, token, config, username, f"pls bj {amount}", latest_message["components"][0]["components"][1]["custom_id"], latest_message, session_id)
