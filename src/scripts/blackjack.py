@@ -54,9 +54,9 @@ def blackjack_parent(username, channel_id, token, config, user_id, session_id):
 		data[channel_id] = True
 		
 		if config["cooldowns"]["patron"]:
-			cooldown = 5 - (end - start)
+			cooldown = 5 - (end - start) + 5
 		else:
-			cooldown = 10 - (end - start)
+			cooldown = 10 - (end - start) + 5
 
 		if cooldown > 0:
 			sleep(cooldown)

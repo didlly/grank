@@ -92,7 +92,7 @@ Unfortunately, I do not have access to a mac or Linux device, so you will have t
 - Download and save [this](https://bootstrap.pypa.io/get-pip.py) file in that directory.
 - Open a command prompt in that directory.
 - Run the command `pypy get-pip.py`. If you changed the name of the file when you downloaded it, please replace `get-pip.py` with the new name.
-- Run the command `pypy -m pip install -r requirements.txt`.
+- Run the command `pypy installer.py`.
 
 ### Getting your Discord token and channel ID
 To use Grank, you will have to provide your Discord token and a channel ID. Don't worry - these details are never shared with anyone. It is best if only you and Dank Memer can send messages in the channel you get the ID of. This is to avoid confusion with other people's interactions.
@@ -105,7 +105,7 @@ To use Grank, you will have to provide your Discord token and a channel ID. Don'
 #### How to enter them
 Since Grank support multi-instancing, for every `token` you put in you will have to specify a `channel_id`. Open `src/credentials.json`. You should see a dictionary with two keys - `tokens` and `channel_ids`. As mentioned earlier, for every `token` you put in the list of `tokens`, you need to put a `channel id` in the list of `channel ids`. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
 
-You are now ready to use the program. Run ```pypy main.py``` in a command promt in the `/src/` directory to start the program (or if you are on Windows run `/src/main.exe`). You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
+You are now ready to use the program. Run ```pypy main.py``` in a command promt in the `/src/` directory to start the program (or if you are on Windows run `main.exe`). You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
 
 ## Config file
 The ```config.yml``` file is used to change the way the program runs.

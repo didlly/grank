@@ -1,3 +1,0 @@
-requests
-websocket-client
-pyyaml
