@@ -57,3 +57,5 @@ def postmeme_parent(username, channel_id, token, config, user_id, session_id, cw
 
 		if cooldown > 0:
 			sleep(cooldown)
+		else:
+			sleep(1)

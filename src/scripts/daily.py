@@ -53,3 +53,5 @@ def daily_parent(username, channel_id, token, config, cwd):
 
 		if cooldown > 0:
 			sleep(cooldown)
+		else:
+			sleep(1)

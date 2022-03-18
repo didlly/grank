@@ -41,3 +41,5 @@ def crime_parent(username, channel_id, token, config, user_id, session_id):
 
 		if cooldown > 0:
 			sleep(cooldown)
+		else:
+			sleep(1)

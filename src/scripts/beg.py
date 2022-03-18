@@ -34,3 +34,5 @@ def beg_parent(username, channel_id, token, config):
 
 		if cooldown > 0:
 			sleep(cooldown)
+		else:
+			sleep(1)
