@@ -28,7 +28,7 @@ def trivia(username, channel_id, token, config, user_id, session_id, cwd):
 			custom_id = latest_message["components"][0]["components"][index]["custom_id"]
 
 	if custom_id is None:
-		log(None, "WARNING", f"Unknown answer to trvia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+		log(None, "WARNING", f"Unknown answer to trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
 		custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
 
 	interact_button(channel_id, token, config, username, "pls trivia", custom_id, latest_message, session_id)
