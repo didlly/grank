@@ -17,5 +17,5 @@ def gateway(token):
 			}
 		}
 	}))
-
+	
 	return loads(ws.recv())["d"]["sessions"][0]["session_id"]

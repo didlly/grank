@@ -14,23 +14,7 @@ def postmeme(username, channel_id, token, config, user_id, session_id, cwd):
 	if latest_message is None:
 		return
 
-	if latest_message["content"] == "oi you need to buy a laptop in the shop to post memes":
-		if config["logging"]["debug"]:
-			log(username, "DEBUG", "User does not have item `laptop`. Buying laptop now.")
-
-		if config["auto buy"] and config["auto buy"]["laptop"]:
-			from scripts.buy import buy
-			buy(username, channel_id, token, config, user_id, cwd, "laptop")
-			return
-		elif config["logging"]["warning"]:
-			log(
-			    username,
-			    "WARNING",
-			    f"A laptop is required for the command `pls postmeme`. However, since {'auto buy is off for laptops,' if config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
-			)
-			return
-	else:
-		interact_button(channel_id, token, config, username, "pls postmeme", choice(latest_message["components"][0]["components"])["custom_id"], latest_message, session_id)
+	interact_button(channel_id, token, config, username, "pls postmeme", choice(latest_message["components"][0]["components"])["custom_id"], latest_message, session_id)
 
 def postmeme_parent(username, channel_id, token, config, user_id, session_id, cwd):
 	while True:
@@ -51,9 +35,9 @@ def postmeme_parent(username, channel_id, token, config, user_id, session_id, cw
 		data[channel_id] = True
 		
 		if config["cooldowns"]["patron"]:
-			cooldown = 20 - (end - start)
+			cooldown = 45 - (end - start)
 		else:
-			cooldown = 30 - (end - start)
+			cooldown = 50 - (end - start)
 
 		if cooldown > 0:
 			sleep(cooldown)
