@@ -10,7 +10,7 @@ def buy(username, channel_id, token, config, user_id, cwd, item):
 	if latest_message is None:
 		return
 		
-	if latest_message["content"] == "Far out, you don't have enough money in your wallet or your bank to buy that much!!":
+	if latest_message["content"] == "your wallet is short on cash, go withdraw some BANK money to make this purchase":
 		from scripts.balance import balance
 		bal = balance(username, channel_id, token, config, user_id)
 		
