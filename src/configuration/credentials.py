@@ -15,19 +15,19 @@ def load_credentials(cwd):
 	else:
 		log(None, "ERROR", "Unable to find key `tokens` in `credentials.json`. Make sure it is present.")
 
-	if "channel ids" in credentials.keys():
-		log(None, "DEBUG", "Found key `channel ids` in `credentials.json`.")
+	if "channel_ids" in credentials.keys():
+		log(None, "DEBUG", "Found key `channel_ids` in `credentials.json`.")
 	else:
-		log(None, "ERROR", "Unable to find key `channel ids` in `credentials.json`. Make sure it is present.")
+		log(None, "ERROR", "Unable to find key `channel_ids` in `credentials.json`. Make sure it is present.")
 
 	if len(credentials["tokens"]) == 0:
 		log(None, "ERROR", "Unable to find values for `tokens` in `credentials.json`. Make sure they are present.")
 
-	if len(credentials["channel ids"]) == 0:
-		log(None, "ERROR", "Unable to find values for `channel ids` in `credentials.json`. Make sure they are present.")
+	if len(credentials["channel_ids"]) == 0:
+		log(None, "ERROR", "Unable to find values for `channel_ids` in `credentials.json`. Make sure they are present.")
 
-	if len(credentials["tokens"]) != len(credentials["channel ids"]):
-		log(None, "ERROR", "The amount of tokens and channel ids in `credentials.json` are not the same.")
+	if len(credentials["tokens"]) != len(credentials["channel_ids"]):
+		log(None, "ERROR", "The amount of tokens and channel_ids in `credentials.json` are not the same.")
 
 	data = []
 
@@ -37,14 +37,14 @@ def load_credentials(cwd):
 		if request.status_code != 200:
 			log(None, "ERROR", f"Deemed token number {index + 1} invalid. Please double-check you entered a valid token in `configuration.json`.")
    
-		request2 = get(f"https://discord.com/api/v10/channels/{credentials['channel ids'][index]}/messages", headers={"authorization": credentials["tokens"][index]})
+		request2 = get(f"https://discord.com/api/v10/channels/{credentials['channel_ids'][index]}/messages", headers={"authorization": credentials["tokens"][index]})
 
 		if request2.status_code == 401:
 			log(None, "ERROR", f"Unabled to access channel number {index + 1} with token {index + 1}. Please double-check the specified token has access to that channel.")
 
 		request = loads(request.text)
 
-		data.append([request["id"], f"{request['username']}#{request['discriminator']}", gateway(credentials["tokens"][index]), credentials["channel ids"][index], credentials["tokens"][index]])
+		data.append([request["id"], f"{request['username']}#{request['discriminator']}", gateway(credentials["tokens"][index]), credentials["channel_ids"][index], credentials["tokens"][index]])
 
 		log(None, "DEBUG", f"Logged in as {request['username']}#{request['discriminator']}.")
 
