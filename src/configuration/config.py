@@ -1,11 +1,11 @@
-from yaml import safe_load
+from utils.yaml import load
 from utils.logger import log
 from discord.gateway import gateway
 from requests import get
 from json import loads
 
 def load_config(cwd):
-	config = safe_load(open(f"{cwd}config.yml", "r"))
+	config = load(f"{cwd}config.yml")
 
 	options = ["['commands']", "['commands']['crime']", "['commands']['daily']", "['commands']['beg']", "['commands']['fish']", "['commands']['guess']", "['commands']['hunt']", "['commands']['dig']", "['commands']['search']", "['commands']['highlow']", "['commands']['postmeme']", "['commands']['trivia']", "['lottery']", "['lottery']['enabled']", "['lottery']['cooldown']", "['stream']", "['stream']['ads']", "['stream']['chat']", "['stream']['donations']", "['blackjack']", "['blackjack']['random']", "['blackjack']['enabled']", "['blackjack']['amount']", "['blackjack']['minimum']",  "['blackjack']['maximum']", "['custom commands']", "['custom commands']['enabled']", "['shifts']", "['shifts']['enabled']", "['shifts']['active']", "['shifts']['passive']", "['auto buy']", "['auto buy']['enabled']", "['auto buy']['laptop']", "['auto buy']['shovel']", "['auto buy']['fishing pole']", "['auto buy']['hunting rifle']", "['auto buy']['keyboard']", "['auto buy']['mouse']", "['auto trade']", "['auto trade']['enabled']", "['auto trade']['trader token']", "['typing indicator']", "['typing indicator']['enabled']", "['typing indicator']['minimum']", "['typing indicator']['maximum']", "['cooldowns']", "['cooldowns']['patron']", "['cooldowns']['timeout']", "['logging']['debug']", "['logging']['warning']"]
 
