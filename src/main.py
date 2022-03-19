@@ -1,6 +1,7 @@
 import sys
 from platform import system
 from os.path import dirname
+from scripts.snakeeyes import snakeeyes_parent
 from utils.console import fore, style
 from requests import get
 
@@ -57,6 +58,7 @@ from scripts.stream import stream_parent
 from scripts.highlow import highlow_parent
 from scripts.postmeme import postmeme_parent
 from scripts.trivia import trivia_parent
+from scripts.snakeeyes import snakeeyes_parent
 from scripts.custom import custom_parent
 
 config = load_config(cwd)
@@ -142,6 +144,9 @@ for index in range(len(credentials)):
 
 	if config["commands"]["postmeme"]:
 		Thread(target=postmeme_parent, args=(username, channel_id, token, config, user_id, session_id, cwd)).start()
+
+	if config["snakeeyes"]["enabled"]:
+		Thread(target=snakeeyes_parent, args=(username, channel_id, token, config)).start()
 
 	if config["commands"]["trivia"]:
 		Thread(target=trivia_parent, args=(username, channel_id, token, config, user_id, session_id, cwd)).start()

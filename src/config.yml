@@ -28,12 +28,19 @@ blackjack:
   minimum: 1500
   maximum: 3000
 
-custom commands:
+snakeeyes:
   enabled: False
+  random: False
+  amount: 1500
+  minimum: 1500
+  maximum: 3000
+
+custom commands:
+  enabled: True
   pls dep max:
-    enabled: False
-    cooldown: 60
-    patron cooldown: 60
+    enabled: True
+    cooldown: 300
+    patron cooldown: 300
 
 shifts:
   enabled: False

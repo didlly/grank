@@ -71,6 +71,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 - ```pls postmeme```
 - ```pls stream```
 - ```pls search```
+- ```pls snakeeyes```
 - ```pls trivia```
 
 ## Todo
@@ -152,6 +153,17 @@ Values in the ```blackjack``` category tell the program *whether or not to run t
 | ------------- | ------------- | ------------- | ------------- |
 | ```enabled```  | ```Boolean``` | ```False```  | Tells the program whether or not to run the command ```pls blackjack`. |
 | ```random```  | ```Boolean``` | ```False```  | Tells the program whether or not to choose a random amount each time the command `pls blackjack` is run, or to choose a pre-set amount. |
+| ```amount```  | ```Integer``` | ```1500```  | The pre-set amount to be bet if `random` is set to `False`. |
+| ```minimum```  | ```Integer``` | ```1500```  | The minimum amount to be bet if `random` is set to `True`. |
+| ```maximum```  | ```Integer``` | ```3000```  | The maximum amount to be bet if `random` is set to `True`. |
+
+### ```snakeeyes``` category
+Values in the ```snakeeyes``` category tell the program *whether or not to run the command ```pls snakeeyes```*, and *how much it should bet each time*.
+
+| Name  | Type | Default Value | Description | 
+| ------------- | ------------- | ------------- | ------------- |
+| ```enabled```  | ```Boolean``` | ```False```  | Tells the program whether or not to run the command ```pls snakeeyes`. |
+| ```random```  | ```Boolean``` | ```False```  | Tells the program whether or not to choose a random amount each time the command `pls snakeeyes` is run, or to choose a pre-set amount. |
 | ```amount```  | ```Integer``` | ```1500```  | The pre-set amount to be bet if `random` is set to `False`. |
 | ```minimum```  | ```Integer``` | ```1500```  | The minimum amount to be bet if `random` is set to `True`. |
 | ```maximum```  | ```Integer``` | ```3000```  | The maximum amount to be bet if `random` is set to `True`. |
