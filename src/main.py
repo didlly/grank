@@ -104,7 +104,7 @@ for index in range(len(credentials)):
 			if key == "enabled":
 				continue
 			if config["custom commands"][key]["enabled"]:
-				Thread(target=custom_parent, args=(username, channel_id, token, config, key, config["custom commands"][key]["cooldown"], config["custom commands"][key]["patron cooldown"]))
+				Thread(target=custom_parent, args=(username, channel_id, token, config, key, config["custom commands"][key]["cooldown"], config["custom commands"][key]["patron cooldown"])).start()
    
 	if config["commands"]["daily"]:
 		Thread(target=daily_parent, args=(username, channel_id, token, config, cwd)).start()
