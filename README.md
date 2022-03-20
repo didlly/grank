@@ -85,7 +85,7 @@ Visit [this](https://github.com/didlly/grank/projects/1) link for project update
 Skip this and download the latest version of Grank from [here](https://github.com/didlly/grank/releases)
 
 #### macOS and Linux
-Unfortunately, I do not have access to a mac or Linux device, so you will have to run the program from the soure code.
+Unfortunately, I do not have access to a Mac or Linux device, so you will have to run the program from the source code.
 
 - Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
 - Navigate into the `/src/` folder of Grank.
@@ -104,9 +104,9 @@ To use Grank, you will have to provide your Discord token and a channel ID. Don'
 - [Useful article on how to get a channel ID.](https://docs.statbot.net/docs/faq/general/how-find-id/)
 
 #### How to enter them
-Since Grank support multi-instancing, for every `token` you put in you will have to specify a `channel_id`. Open `src/credentials.json`. You should see a dictionary with two keys - `tokens` and `channel_ids`. As mentioned earlier, for every `token` you put in the list of `tokens`, you need to put a `channel id` in the list of `channel ids`. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
+Since Grank supports multi-instancing, for every `token` you put in you will have to specify a `channel_id`. Open `src/credentials.json`. You should see a dictionary with two keys - `tokens` and `channel_ids`. As mentioned earlier, for every `token` you put in the list of `tokens`, you need to put a `channel id` in the list of `channel ids`. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
 
-You are now ready to use the program. Run ```pypy main.py``` in a command promt in the `/src/` directory to start the program (or if you are on Windows run `main.exe`). You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
+You are now ready to use the program. Run ```pypy main.py``` in a command prompt in the `/src/` directory to start the program (or if you are on Windows run `main.exe`). You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
 
 ## Config file
 The ```config.yml``` file is used to change the way the program runs.
@@ -151,7 +151,7 @@ Values in the ```blackjack``` category tell the program *whether or not to run t
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
-| ```enabled```  | ```Boolean``` | ```False```  | Tells the program whether or not to run the command ```pls blackjack`. |
+| ```enabled```  | ```Boolean``` | ```False```  | Tells the program whether or not to run the command ```pls blackjack```. |
 | ```random```  | ```Boolean``` | ```False```  | Tells the program whether or not to choose a random amount each time the command `pls blackjack` is run, or to choose a pre-set amount. |
 | ```amount```  | ```Integer``` | ```1500```  | The pre-set amount to be bet if `random` is set to `False`. |
 | ```minimum```  | ```Integer``` | ```1500```  | The minimum amount to be bet if `random` is set to `True`. |
@@ -162,7 +162,7 @@ Values in the ```snakeeyes``` category tell the program *whether or not to run t
 
 | Name  | Type | Default Value | Description | 
 | ------------- | ------------- | ------------- | ------------- |
-| ```enabled```  | ```Boolean``` | ```False```  | Tells the program whether or not to run the command ```pls snakeeyes`. |
+| ```enabled```  | ```Boolean``` | ```False```  | Tells the program whether or not to run the command ```pls snakeeyes```. |
 | ```random```  | ```Boolean``` | ```False```  | Tells the program whether or not to choose a random amount each time the command `pls snakeeyes` is run, or to choose a pre-set amount. |
 | ```amount```  | ```Integer``` | ```1500```  | The pre-set amount to be bet if `random` is set to `False`. |
 | ```minimum```  | ```Integer``` | ```1500```  | The minimum amount to be bet if `random` is set to `True`. |
