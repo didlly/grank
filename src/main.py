@@ -34,6 +34,9 @@ print(f"""{fore.Magenta}
 {style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/h7jK9pBkAs
 """)
 
+import logging
+from os import mkdir
+from datetime import datetime
 from configuration.config import load_config
 from configuration.credentials import load_credentials
 from threading import Thread
@@ -60,6 +63,15 @@ from scripts.postmeme import postmeme_parent
 from scripts.trivia import trivia_parent
 from scripts.snakeeyes import snakeeyes_parent
 from scripts.custom import custom_parent
+
+try:
+    mkdir(f"{cwd}logs/")
+except FileExistsError:
+    pass
+
+logging.basicConfig(filename=f"{cwd}logs/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", filemode="a", format="%(levelname)s %(asctime)s - %(message)s")
+
+data["logger"] = logging.getLogger()
 
 config = load_config(cwd)
 credentials = load_credentials(cwd)
