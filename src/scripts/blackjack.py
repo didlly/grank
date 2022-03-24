@@ -1,24 +1,22 @@
-from discord.message import send_message, retreive_message
-from discord.button import interact_button
 from random import randint
 from utils.logger import log
 from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def blackjack(username, channel_id, token, config, user_id, session_id):
-	amount = config['blackjack']['amount'] if not config['blackjack']['random'] else randint(config['blackjack']['minimum'], config['blackjack']['maximum'])
+def blackjack(Client) -> None:
+	amount = Client.config['blackjack']['amount'] if not Client.config['blackjack']['random'] else randint(Client.config['blackjack']['minimum'], Client.config['blackjack']['maximum'])
 
-	send_message(channel_id, token, config, username, f"pls bj {amount}")
+	Client.send_message(f"pls bj {amount}")
 
 	while True:
-		latest_message = retreive_message(channel_id, token, config, username, f"pls bj {amount}", user_id, session_id)
+		latest_message = Client.retreive_message(f"pls bj {amount}")
 
 		if latest_message is None:
 			return
 
 		if "coins, dont try and lie to me hoe." in latest_message["content"] or "You have no coins in your wallet to gamble with lol." in latest_message["content"]:
-			log(username, "WARNING", f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.")
+			log(Client.username, "WARNING", f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.")
 			return
 
 		if "description" in latest_message["embeds"][0].keys():
@@ -28,32 +26,32 @@ def blackjack(username, channel_id, token, config, user_id, session_id):
 		total = int("".join(filter(str.isdigit, latest_message["embeds"][0]["fields"][0]["value"].split("\n")[-1])))
 
 		if total < 18:
-			interact_button(channel_id, token, config, username, f"pls bj {amount}", latest_message["components"][0]["components"][0]["custom_id"], latest_message, session_id)
+			Client.interact_button(f"pls bj {amount}", latest_message["components"][0]["components"][0]["custom_id"], latest_message)
 		else:
-			interact_button(channel_id, token, config, username, f"pls bj {amount}", latest_message["components"][0]["components"][1]["custom_id"], latest_message, session_id)
+			Client.interact_button(f"pls bj {amount}", latest_message["components"][0]["components"][1]["custom_id"], latest_message)
 			break
 	
 	
 
-def blackjack_parent(username, channel_id, token, config, user_id, session_id):
+def blackjack_parent(Client) -> None:
 	while True:
-		while not data[channel_id] or not data[username]:
+		while not data[Client.channel_id] or not data[Client.username]:
 			pass
 
-		data[channel_id] = False
+		data[Client.channel_id] = False
 
 		start = time()
 
 		try:
-			blackjack(username, channel_id, token, config, user_id, session_id)
+			blackjack(Client)
 		except Exception:
-			log(username, "WARNING", f"An unexpected error occured during the running of the `pls blackjack` command: `{exc_info()}`")
+			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls blackjack` command: `{exc_info()}`")
 
 		end = time()   
 		
-		data[channel_id] = True
+		data[Client.channel_id] = True
 		
-		if config["cooldowns"]["patron"]:
+		if Client.config["cooldowns"]["patron"]:
 			cooldown = 5 - (end - start)
 		else:
 			cooldown = 10 - (end - start)

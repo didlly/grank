@@ -1,52 +1,51 @@
-from discord.message import send_message, retreive_message
 from utils.logger import log
 from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def dig(username, channel_id, token, config, user_id, cwd, session_id):
-	send_message(channel_id, token, config, username, "pls dig")
+def dig(Client, cwd):
+	Client.send_message("pls dig")
 
-	latest_message = retreive_message(channel_id, token, config, username, "pls dig", user_id, session_id)
+	latest_message = Client.retreive_message("pls dig")
 
 	if latest_message is None:
 		return
 
 	if latest_message["content"] == "You don't have a shovel, you need to go buy one. I'd hate to let you dig with your bare hands.":
-		if config["logging"]["debug"]:
-			log(username, "DEBUG", "User does not have item `shovel`. Buying shovel now.")
+		if Client.config["logging"]["debug"]:
+			log(Client.username, "DEBUG", "User does not have item `shovel`. Buying shovel now.")
 
-		if config["auto buy"] and config["auto buy"]["shovel"]:
+		if Client.config["auto buy"] and Client.config["auto buy"]["shovel"]:
 			from scripts.buy import buy
-			buy(username, channel_id, token, config, user_id, cwd, "shovel")
+			buy(Client, "shovel", cwd)
 			return
-		elif config["logging"]["warning"]:
+		elif Client.config["logging"]["warning"]:
 			log(
-			    username,
+			    Client.username,
 			    "WARNING",
-			    f"A shovel is required for the command `pls dig`. However, since {'auto buy is off for shovels,' if config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+			    f"A shovel is required for the command `pls dig`. However, since {'auto buy is off for shovels,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 			)
 			return
 
-def dig_parent(username, channel_id, token, config, user_id, cwd, session_id):
+def dig_parent(Client, cwd):
 	while True:
-		while not data[channel_id] or not data[username]:
+		while not data[Client.channel_id] or not data[Client.username]:
 			pass
 
-		data[channel_id] = False
+		data[Client.channel_id] = False
 
 		start = time()
 
 		try:
-			dig(username, channel_id, token, config, user_id, cwd, session_id)
+			dig(Client, cwd)
 		except Exception:
-			log(username, "WARNING", f"An unexpected error occured during the running of the `pls dig` command: `{exc_info()}`")
+			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls dig` command: `{exc_info()}`")
 
 		end = time()   
 		
-		data[channel_id] = True
+		data[Client.channel_id] = True
 		
-		if config["cooldowns"]["patron"]:
+		if Client.config["cooldowns"]["patron"]:
 			cooldown = 25 - (end - start)
 		else:
 			cooldown = 45 - (end - start)

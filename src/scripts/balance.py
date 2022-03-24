@@ -1,9 +1,7 @@
-from discord.message import send_message, retreive_message
+def balance(Client):
+	request = Client.send_message("pls bal")
 
-def balance(username, channel_id, token, config, user_id):
-	request = send_message(channel_id, token, config, username, "pls bal")
-
-	if request is None:
+	if request is False:
 		return None
 	  
-	return retreive_message(channel_id, token, config, username, "pls bal", user_id)
+	return Client.retreive_message("pls bal")

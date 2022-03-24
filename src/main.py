@@ -43,9 +43,9 @@ from threading import Thread
 from utils.shared import data
 from utils.shifts import shifts
 from utils.logger import log
+from discord.instance import Client as client
 from json import load, dumps
 from json.decoder import JSONDecodeError
-from discord.message import send_message
 from discord.guild_id import guild_id
 from scripts.blackjack import blackjack_parent
 from scripts.crime import crime_parent
@@ -65,9 +65,9 @@ from scripts.snakeeyes import snakeeyes_parent
 from scripts.custom import custom_parent
 
 try:
-    mkdir(f"{cwd}logs/")
+	mkdir(f"{cwd}logs/")
 except FileExistsError:
-    pass
+	pass
 
 logging.basicConfig(filename=f"{cwd}logs/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", filemode="a", format="%(levelname)s %(asctime)s - %(message)s")
 
@@ -83,6 +83,8 @@ for index in range(len(credentials)):
 	channel_id = credentials[index][3]
 	token = credentials[index][4]
 	data[channel_id] = True
+ 
+	Client = client(config, user_id, username, session_id, channel_id, token)
 
 	try:
 		database = load(open(f"{cwd}database.json", "r"))
@@ -98,12 +100,12 @@ for index in range(len(credentials)):
 		database = load(open(f"{cwd}database.json", "r"))
 		
 	if f"{user_id}_confirmation" not in database.keys():
-		send_message(channel_id, token, config, username, "pls settings confirmations nah")
+		Client.send_message("pls settings confirmations nah")
 		database[f"{user_id}_confirmation"] = True
 		with open(f"{cwd}database.json", "w") as database_file:
 			database_file.write(dumps(database))
 
-	guild_id(username, channel_id, token, config, user_id, session_id)
+	guild_id(Client)
 	
 	if config["shifts"]["enabled"]:
 		data[username] = False
@@ -116,49 +118,49 @@ for index in range(len(credentials)):
 			if key == "enabled":
 				continue
 			if config["custom commands"][key]["enabled"]:
-				Thread(target=custom_parent, args=(username, channel_id, token, config, key, config["custom commands"][key]["cooldown"], config["custom commands"][key]["patron cooldown"])).start()
+				Thread(target=custom_parent, args=(Client, key, config["custom commands"][key]["cooldown"], config["custom commands"][key]["patron cooldown"])).start()
    
 	if config["commands"]["daily"]:
-		Thread(target=daily_parent, args=(username, channel_id, token, config, cwd)).start()
+		Thread(target=daily_parent, args=[Client, cwd]).start()
 
 	if config["commands"]["beg"]:
-		Thread(target=beg_parent, args=(username, channel_id, token, config)).start()
+		Thread(target=beg_parent, args=[Client]).start()
 
 	if config["blackjack"]["enabled"]:
-		Thread(target=blackjack_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
+		Thread(target=blackjack_parent, args=[Client]).start()
   
 	if config["commands"]["crime"]:
-		Thread(target=crime_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
+		Thread(target=crime_parent, args=[Client]).start()
 
 	if config["commands"]["dig"]:
-		Thread(target=dig_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
+		Thread(target=dig_parent, args=[Client, cwd]).start()
 
 	if config["commands"]["fish"]:
-		Thread(target=fish_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
+		Thread(target=fish_parent, args=[Client, cwd]).start()
   
 	if config["commands"]["guess"]:
-		Thread(target=guess_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
+		Thread(target=guess_parent, args=[Client]).start()
 
 	if config["commands"]["hunt"]:
-		Thread(target=hunt_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
+		Thread(target=hunt_parent, args=[Client, cwd]).start()
   
 	if config["lottery"]["enabled"]:
-		Thread(target=lottery_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
+		Thread(target=lottery_parent, args=[Client, cwd]).start()
 
 	if config["commands"]["search"]:
-		Thread(target=search_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
+		Thread(target=search_parent, args=[Client]).start()
   
 	if config["stream"]["enabled"]:
-		Thread(target=stream_parent, args=(username, channel_id, token, config, user_id, cwd, session_id)).start()
+		Thread(target=stream_parent, args=[Client, cwd]).start()
 
 	if config["commands"]["highlow"]:
-		Thread(target=highlow_parent, args=(username, channel_id, token, config, user_id, session_id)).start()
+		Thread(target=highlow_parent, args=[Client]).start()
 
 	if config["commands"]["postmeme"]:
-		Thread(target=postmeme_parent, args=(username, channel_id, token, config, user_id, session_id, cwd)).start()
+		Thread(target=postmeme_parent, args=[Client]).start()
 
 	if config["snakeeyes"]["enabled"]:
-		Thread(target=snakeeyes_parent, args=(username, channel_id, token, config)).start()
+		Thread(target=snakeeyes_parent, args=[Client]).start()
 
 	if config["commands"]["trivia"]:
-		Thread(target=trivia_parent, args=(username, channel_id, token, config, user_id, session_id, cwd)).start()
+		Thread(target=trivia_parent, args=[Client, cwd]).start()

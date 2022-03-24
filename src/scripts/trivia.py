@@ -1,16 +1,14 @@
-from discord.message import send_message, retreive_message
 from json import load
-from discord.button import interact_button
 from random import choice
 from utils.logger import log
 from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def trivia(username, channel_id, token, config, user_id, session_id, cwd):
-	send_message(channel_id, token, config, username, "pls trivia")
+def trivia(Client, cwd: str) -> None:
+	Client.send_message("pls trivia")
 
-	latest_message = retreive_message(channel_id, token, config, username, "pls trivia", user_id)
+	latest_message = Client.retreive_message("pls trivia")
 
 	if latest_message is None:
 		return
@@ -31,27 +29,27 @@ def trivia(username, channel_id, token, config, user_id, session_id, cwd):
 		log(None, "WARNING", f"Unknown answer to trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
 		custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
 
-	interact_button(channel_id, token, config, username, "pls trivia", custom_id, latest_message, session_id)
+	Client.interact_button("pls trivia")
 
-def trivia_parent(username, channel_id, token, config, user_id, session_id, cwd):
+def trivia_parent(Client, cwd: str) -> None:
 	while True:
-		while not data[channel_id] or not data[username]:
+		while not data[Client.channel_id] or not data[Client.username]:
 			pass
 
-		data[channel_id] = False
+		data[Client.channel_id] = False
 
 		start = time()
 
 		try:
-			trivia(username, channel_id, token, config, user_id, session_id, cwd)
+			trivia(Client, cwd)
 		except Exception:
-			log(username, "WARNING", f"An unexpected error occured during the running of the `pls trivia` command: `{exc_info()}`")
+			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls trivia` command: `{exc_info()}`")
 
 		end = time()   
 		
-		data[channel_id] = True
+		data[Client.channel_id] = True
 		
-		if config["cooldowns"]["patron"]:
+		if Client.config["cooldowns"]["patron"]:
 			cooldown = 3 - (end - start)
 		else:
 			cooldown = 5 - (end - start)

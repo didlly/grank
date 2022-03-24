@@ -1,52 +1,51 @@
-from discord.message import send_message, retreive_message
 from utils.logger import log
 from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def fish(username, channel_id, token, config, user_id, cwd, session_id):
-	send_message(channel_id, token, config, username, "pls fish")
+def fish(Client, cwd: str) -> None:
+	Client.send_message("pls fish")
 
-	latest_message = retreive_message(channel_id, token, config, username, "pls fish", user_id, session_id)
+	latest_message = Client.retreive_message("pls fish")
 
 	if latest_message is None:
 		return
 
 	if latest_message["content"] == "You don't have a fishing pole, you need to go buy one. You're not good enough to catch them with your hands.":
-		if config["logging"]["debug"]:
-			log(username, "DEBUG", "User does not have item `fishing pole`. Buying fishing pole now.")
+		if Client.config["logging"]["debug"]:
+			log(Client.username, "DEBUG", "User does not have item `fishing pole`. Buying fishing pole now.")
 
-		if config["auto buy"] and config["auto buy"]["fishing pole"]:
+		if Client.config["auto buy"] and Client.config["auto buy"]["fishing pole"]:
 			from scripts.buy import buy
-			buy(username, channel_id, token, config, user_id, cwd, "fishing pole")
+			buy(Client, "fishing pole", cwd)
 			return
-		elif config["logging"]["warning"]:
+		elif Client.config["logging"]["warning"]:
 			log(
-			    username,
+			    Client.username,
 			    "WARNING",
-			    f"A fishing pole is required for the command `pls fish`. However, since {'auto buy is off for fishing poles,' if config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+			    f"A fishing pole is required for the command `pls fish`. However, since {'auto buy is off for fishing poles,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 			)
 			return
 
-def fish_parent(username, channel_id, token, config, user_id, cwd, session_id):
+def fish_parent(Client, cwd: str) -> None:
 	while True:
-		while not data[channel_id] or not data[username]:
+		while not data[Client.channel_id] or not data[Client.username]:
 			pass
 
-		data[channel_id] = False
+		data[Client.channel_id] = False
 
 		start = time()
 
 		try:
-			fish(username, channel_id, token, config, user_id, cwd, session_id)
+			fish(Client, cwd)
 		except Exception:
-			log(username, "WARNING", f"An unexpected error occured during the running of the `pls fish` command: `{exc_info()}`")
+			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls fish` command: `{exc_info()}`")
 
 		end = time()   
 		
-		data[channel_id] = True
+		data[Client.channel_id] = True
 		
-		if config["cooldowns"]["patron"]:
+		if Client.config["cooldowns"]["patron"]:
 			cooldown = 25 - (end - start)
 		else:
 			cooldown = 45 - (end - start)

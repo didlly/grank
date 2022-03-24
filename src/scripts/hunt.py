@@ -1,52 +1,51 @@
-from discord.message import send_message, retreive_message
 from utils.logger import log
 from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def hunt(username, channel_id, token, config, user_id, cwd, session_id):
-	send_message(channel_id, token, config, username, "pls hunt")
+def hunt(Client, cwd: str) -> None:
+	Client.send_message("pls hunt")
 
-	latest_message = retreive_message(channel_id, token, config, username, "pls hunt", user_id, session_id)
+	latest_message = Client.retreive_message("pls hunt")
 
 	if latest_message is None:
 		return
 
 	if latest_message["content"] == "You don't have a hunting rifle, you need to go buy one. You're not good enough to shoot animals with your bare hands... I hope.":
-		if config["logging"]["debug"]:
-			log(username, "DEBUG", "User does not have item `hunting rifle`. Buying hunting rifle now.")
+		if Client.config["logging"]["debug"]:
+			log(Client.username, "DEBUG", "User does not have item `hunting rifle`. Buying hunting rifle now.")
 
-		if config["auto buy"] and config["auto buy"]["hunting rifle"]:
+		if Client.config["auto buy"] and Client.config["auto buy"]["hunting rifle"]:
 			from scripts.buy import buy
-			buy(username, channel_id, token, config, user_id, cwd, "hunting rifle")
+			buy(Client, "hunting rifle", cwd)
 			return
-		elif config["logging"]["warning"]:
+		elif Client.config["logging"]["warning"]:
 			log(
-			    username,
+			    Client.username,
 			    "WARNING",
-			    f"A hunting rifle is required for the command `pls fish`. However, since {'auto buy is off for hunting rifles,' if config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+			    f"A hunting rifle is required for the command `pls fish`. However, since {'auto buy is off for hunting rifles,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 			)
 			return
 
-def hunt_parent(username, channel_id, token, config, user_id, cwd, session_id):
+def hunt_parent(Client, cwd: str) -> None:
 	while True:
-		while not data[channel_id] or not data[username]:
+		while not data[Client.channel_id] or not data[Client.username]:
 			pass
 
-		data[channel_id] = False
+		data[Client.channel_id] = False
 
 		start = time()
 
 		try:
-			hunt(username, channel_id, token, config, user_id, cwd, session_id)
+			hunt(Client, cwd)
 		except Exception:
-			log(username, "WARNING", f"An unexpected error occured during the running of the `pls hunt` command: `{exc_info()}`")
+			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls hunt` command: `{exc_info()}`")
 
 		end = time()   
 		
-		data[channel_id] = True
+		data[Client.channel_id] = True
 		
-		if config["cooldowns"]["patron"]:
+		if Client.config["cooldowns"]["patron"]:
 			cooldown = 25 - (end - start)
 		else:
 			cooldown = 40 - (end - start)
