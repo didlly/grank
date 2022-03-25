@@ -62,7 +62,7 @@ class Client(object):
 				break
 		if latest_message["author"]["id"] != "270904126974590976":
 			if self.config["logging"]["warning"]:
-				log(self.username, "WARNING", f"Timeout exceeded for response from Dank Memer ({self.config['cooldowns']['timeout']} {'second' if self.config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
+				log(self.username, "WARNING", f"Timeout exceeded for response from Dank Memer ({self.config['cooldowns']['timeout']} {'second' if self.config['cooldowns']['timeout'] == 1 else 'seconds'}) to the `{command}` command. Aborting.")
 			return None
 
 		if (len(latest_message["embeds"]) != 0
@@ -130,7 +130,7 @@ class Client(object):
 					if latest_message is None:
 						return
 
-					Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], self.config["auto trade"]["trader"]["session_id"])
+					Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], self.config["auto trade"]["trader"]["session_id"], self.config['auto trade']['trader']['self.username'])
 				elif len(latest_message["embeds"]) != 0:
 					if key in latest_message["embeds"][0]["description"]:
 						Client.send_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
@@ -144,15 +144,15 @@ class Client(object):
 
 						sleep(1)
 
-						latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}",)
+						latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
 						if latest_message is None:
 							return
 
-						Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
+						Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, self.config['auto trade']['trader']['self.username'])
 		return latest_message
 
-	def interact_button(self, command, custom_id, latest_message):
+	def interact_button(self, command, custom_id, latest_message, token=None):
 		data = {
 			"application_id": 270904126974590976,
 			"channel_id": self.channel_id,
@@ -167,7 +167,7 @@ class Client(object):
 			"session_id": self.session_id
 		}
 
-		request = post("https://discord.com/api/v10/interactions", headers={"authorization": self.token}, json=data)
+		request = post("https://discord.com/api/v10/interactions", headers={"authorization": self.token if token is None else token}, json=data)
 
 		if request.status_code in [200, 204]:
 			if self.config["logging"]["debug"]:

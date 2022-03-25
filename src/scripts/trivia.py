@@ -29,7 +29,7 @@ def trivia(Client, cwd: str) -> None:
 		log(None, "WARNING", f"Unknown answer to trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
 		custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
 
-	Client.interact_button("pls trivia")
+	Client.interact_button("pls trivia", custom_id, latest_message)
 
 def trivia_parent(Client, cwd: str) -> None:
 	while True:

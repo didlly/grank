@@ -76,7 +76,7 @@ def guess(Client) -> None:
 
 						return
   
-		elif latest_message["content"] == "Your last number (**10**) was too high\nYou've got `3` attempts left and `1` hint left.":
+		else:
 			Client.send_message("5")
 			
 			latest_message = Client.retreive_message("5")

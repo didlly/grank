@@ -23,7 +23,7 @@ def stream(Client, cwd: str) -> None:
 					if Client.config["logging"]["debug"]:
 						log(Client.username, "DEBUG", "User does not have item `keyboard`. Buying laptop now.")
 
-					if Client.config["auto buy"] and config["auto buy"]["keyboard"]:
+					if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
 						from scripts.buy import buy
 						buy(Client, "keyboard", cwd)
 						return
@@ -94,7 +94,7 @@ def stream(Client, cwd: str) -> None:
 					if Client.config["logging"]["debug"]:
 						log(Client.username, "DEBUG", "User does not have item `keyboard`. Buying laptop now.")
 
-					if Client.config["auto buy"] and config["auto buy"]["keyboard"]:
+					if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
 						from scripts.buy import buy
 						buy(Client, "keyboard", cwd)
 						return
