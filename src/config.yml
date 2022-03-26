@@ -1,14 +1,14 @@
 commands:
-  daily: True
   beg: True
   crime: True
+  daily: True
+  dig: True
   fish: True
   guess: True
-  hunt: True
-  dig: True
-  search: True
   highlow: True
+  hunt: True
   postmeme: True
+  search: True
   trivia: True
 
 lottery:

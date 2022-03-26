@@ -9,7 +9,15 @@ def crime(Client) -> None:
 
 	latest_message = Client.retreive_message("pls crime")
 
-	Client.interact_button("pls crime", choice(latest_message["components"][0]["components"])["custom_id"], latest_message)
+	custom_id = None
+ 
+	for option in latest_message["components"][0]["components"]:
+		if option["label"] == "tax evasion":
+			# Gives Badosz's card
+			custom_id = option["custom_id"]
+			break
+  
+	Client.interact_button("pls crime", choice(latest_message["components"][0]["components"])["custom_id"] if custom_id is None else custom_id, latest_message)
 
 def crime_parent(Client) -> None:
 	"""One of the basic 7 currency commands - `pls crime`.

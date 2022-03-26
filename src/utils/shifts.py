@@ -4,7 +4,15 @@ from utils.logger import log
 from utils.shared import data
 from time import sleep
 
-def shifts(username, config, cwd):
+def shifts(username: str, config: dict, cwd: str) -> None:
+	"""A function which controls shifts.
+
+	Args:
+		username (str): The username of the account.
+		config (dict): The dictionary version of the configuration file.
+		cwd (str): The current working directory.
+	"""
+ 
 	while True:
 		with open(f"{cwd}database.json", "r") as database_file:
 			database = load(database_file)

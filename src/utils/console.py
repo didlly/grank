@@ -1,4 +1,6 @@
 class fore():
+	# ANSII colour codes to change the foreground of text in the terminal.
+ 
 	Black = "\u001b[30m"
 	Red = "\u001b[31m"
 	Green = "\u001b[32m"
@@ -18,6 +20,8 @@ class fore():
 	Bright_White = "\u001b[37;1m"
 	
 class back():
+    # ANSII colour codes to change the background of text in the terminal.
+    
 	Black = "\u001b[40m"
 	Red = "\u001b[41m"
 	Green = "\u001b[42m"
@@ -37,6 +41,8 @@ class back():
 	Bright_White = "\u001b[47;1m"
 	
 class style():
+    # ANSII colour codes to change the style of text in the terminal.
+    
 	Bold =  "\033[1m"
 	Faint =  "\033[2m"
 	Italic =  "\033[3m"

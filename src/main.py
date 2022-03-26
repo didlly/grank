@@ -1,7 +1,6 @@
 import sys
 from platform import system
 from os.path import dirname
-from scripts.snakeeyes import snakeeyes_parent
 from utils.console import fore, style
 from requests import get
 
@@ -119,48 +118,48 @@ for index in range(len(credentials)):
 				continue
 			if config["custom commands"][key]["enabled"]:
 				Thread(target=custom_parent, args=(Client, key, config["custom commands"][key]["cooldown"], config["custom commands"][key]["patron cooldown"])).start()
-   
-	if config["commands"]["daily"]:
-		Thread(target=daily_parent, args=[Client]).start()
 
 	if config["commands"]["beg"]:
 		Thread(target=beg_parent, args=[Client]).start()
-
+  
 	if config["blackjack"]["enabled"]:
 		Thread(target=blackjack_parent, args=[Client]).start()
   
 	if config["commands"]["crime"]:
 		Thread(target=crime_parent, args=[Client]).start()
+  
+	if config["commands"]["daily"]:
+		Thread(target=daily_parent, args=[Client]).start()
 
 	if config["commands"]["dig"]:
 		Thread(target=dig_parent, args=[Client]).start()
-
+  
 	if config["commands"]["fish"]:
 		Thread(target=fish_parent, args=[Client]).start()
   
 	if config["commands"]["guess"]:
 		Thread(target=guess_parent, args=[Client]).start()
 
+	if config["commands"]["highlow"]:
+		Thread(target=highlow_parent, args=[Client]).start()
+  
 	if config["commands"]["hunt"]:
 		Thread(target=hunt_parent, args=[Client]).start()
   
 	if config["lottery"]["enabled"]:
 		Thread(target=lottery_parent, args=[Client]).start()
 
-	if config["commands"]["search"]:
-		Thread(target=search_parent, args=[Client]).start()
-  
-	if config["stream"]["enabled"]:
-		Thread(target=stream_parent, args=[Client]).start()
-
-	if config["commands"]["highlow"]:
-		Thread(target=highlow_parent, args=[Client]).start()
-
 	if config["commands"]["postmeme"]:
 		Thread(target=postmeme_parent, args=[Client]).start()
+  
+	if config["commands"]["search"]:
+		Thread(target=search_parent, args=[Client]).start()
 
 	if config["snakeeyes"]["enabled"]:
 		Thread(target=snakeeyes_parent, args=[Client]).start()
-
+  
+	if config["stream"]["enabled"]:
+		Thread(target=stream_parent, args=[Client]).start()
+  
 	if config["commands"]["trivia"]:
 		Thread(target=trivia_parent, args=[Client]).start()

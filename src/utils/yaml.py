@@ -1,11 +1,29 @@
-def is_float(string):
+def is_float(string: str) -> bool:
+    """Checks whether the inputted string can be converted into a float.
+
+    Args:
+        string (str): The string to be checked.
+
+    Returns:
+        check (bool): A value which tells the program whether or not the inputted string can be converted into a float.
+    """
+    
     try:
         float(string)
         return True
     except ValueError:
         return False
 
-def is_integer(string):
+def is_integer(string: str) -> bool:
+    """Checks whether the inputted string can be converted into a integer.
+
+    Args:
+        string (str): The string to be checked.
+
+    Returns:
+        check (bool): A value which tells the program whether or not the inputted string can be converted into a integer.
+    """
+    
     try:
         int(string)
         return True
@@ -13,6 +31,15 @@ def is_integer(string):
         return False
 
 def load(path: str) -> dict:
+    """A procedure which converts the yaml configuration file into a dictionary.
+
+    Args:
+        path (str): The path of the yaml configuration file.
+
+    Returns:
+        config (dict): The yaml configuration in dictionary form.
+    """
+    
     with open(path, "r") as yaml:
         levels = []
         data = {}
