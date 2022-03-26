@@ -14,7 +14,7 @@ def fish(Client) -> None:
 
 		if Client.config["auto buy"] and Client.config["auto buy"]["fishing pole"]:
 			from scripts.buy import buy
-			buy(Client, "fishing pole", Client.cwd)
+			buy(Client, "fishing pole")
 			return
 		elif Client.config["logging"]["warning"]:
 			log(

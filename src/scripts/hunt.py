@@ -14,7 +14,7 @@ def hunt(Client) -> None:
 
 		if Client.config["auto buy"] and Client.config["auto buy"]["hunting rifle"]:
 			from scripts.buy import buy
-			buy(Client, "hunting rifle", Client.cwd)
+			buy(Client, "hunting rifle")
 			return
 		elif Client.config["logging"]["warning"]:
 			log(

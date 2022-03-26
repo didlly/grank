@@ -14,7 +14,7 @@ def dig(Client):
 
 		if Client.config["auto buy"] and Client.config["auto buy"]["shovel"]:
 			from scripts.buy import buy
-			buy(Client, "shovel", Client.cwd)
+			buy(Client, "shovel")
 			return
 		elif Client.config["logging"]["warning"]:
 			log(

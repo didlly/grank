@@ -22,7 +22,7 @@ def stream(Client) -> None:
 
 					if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
 						from scripts.buy import buy
-						buy(Client, "keyboard", Client.cwd)
+						buy(Client, "keyboard")
 						return
 					elif Client.config["logging"]["warning"]:
 						log(
@@ -37,7 +37,7 @@ def stream(Client) -> None:
 
 					if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
 						from scripts.buy import buy
-						buy(Client, "mouse", Client.cwd)
+						buy(Client, "mouse")
 						return
 					elif Client.config["logging"]["warning"]:
 						log(
@@ -88,7 +88,7 @@ def stream(Client) -> None:
 
 					if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
 						from scripts.buy import buy
-						buy(Client, "keyboard", Client.cwd)
+						buy(Client, "keyboard")
 						return
 					elif Client.config["logging"]["warning"]:
 						log(
@@ -103,7 +103,7 @@ def stream(Client) -> None:
 
 					if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
 						from scripts.buy import buy
-						buy(Client, "mouse", Client.cwd)
+						buy(Client, "mouse")
 						return
 					elif Client.config["logging"]["warning"]:
 						log(
