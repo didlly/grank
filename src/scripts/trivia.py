@@ -5,16 +5,13 @@ from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def trivia(Client, cwd: str) -> None:
+def trivia(Client) -> None:
 	Client.send_message("pls trivia")
 
 	latest_message = Client.retreive_message("pls trivia")
 
-	if latest_message is None:
-		return
-
 	try:
-		answer = load(open(f"{cwd}database.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
+		answer = load(open(f"{Client.cwd}database.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
 	except KeyError:
 		answer = None
 		log(None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
@@ -31,7 +28,18 @@ def trivia(Client, cwd: str) -> None:
 
 	Client.interact_button("pls trivia", custom_id, latest_message)
 
-def trivia_parent(Client, cwd: str) -> None:
+def trivia_parent(Client) -> None:
+	"""A trivia command - `pls trivia`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	while True:
 		while not data[Client.channel_id] or not data[Client.username]:
 			pass
@@ -41,7 +49,7 @@ def trivia_parent(Client, cwd: str) -> None:
 		start = time()
 
 		try:
-			trivia(Client, cwd)
+			trivia(Client)
 		except Exception:
 			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls trivia` command: `{exc_info()}`")
 

@@ -84,7 +84,7 @@ for index in range(len(credentials)):
 	token = credentials[index][4]
 	data[channel_id] = True
  
-	Client = client(config, user_id, username, session_id, channel_id, token)
+	Client = client(config, user_id, username, session_id, channel_id, token, cwd)
 
 	try:
 		database = load(open(f"{cwd}database.json", "r"))
@@ -121,7 +121,7 @@ for index in range(len(credentials)):
 				Thread(target=custom_parent, args=(Client, key, config["custom commands"][key]["cooldown"], config["custom commands"][key]["patron cooldown"])).start()
    
 	if config["commands"]["daily"]:
-		Thread(target=daily_parent, args=[Client, cwd]).start()
+		Thread(target=daily_parent, args=[Client]).start()
 
 	if config["commands"]["beg"]:
 		Thread(target=beg_parent, args=[Client]).start()
@@ -133,25 +133,25 @@ for index in range(len(credentials)):
 		Thread(target=crime_parent, args=[Client]).start()
 
 	if config["commands"]["dig"]:
-		Thread(target=dig_parent, args=[Client, cwd]).start()
+		Thread(target=dig_parent, args=[Client]).start()
 
 	if config["commands"]["fish"]:
-		Thread(target=fish_parent, args=[Client, cwd]).start()
+		Thread(target=fish_parent, args=[Client]).start()
   
 	if config["commands"]["guess"]:
 		Thread(target=guess_parent, args=[Client]).start()
 
 	if config["commands"]["hunt"]:
-		Thread(target=hunt_parent, args=[Client, cwd]).start()
+		Thread(target=hunt_parent, args=[Client]).start()
   
 	if config["lottery"]["enabled"]:
-		Thread(target=lottery_parent, args=[Client, cwd]).start()
+		Thread(target=lottery_parent, args=[Client]).start()
 
 	if config["commands"]["search"]:
 		Thread(target=search_parent, args=[Client]).start()
   
 	if config["stream"]["enabled"]:
-		Thread(target=stream_parent, args=[Client, cwd]).start()
+		Thread(target=stream_parent, args=[Client]).start()
 
 	if config["commands"]["highlow"]:
 		Thread(target=highlow_parent, args=[Client]).start()
@@ -163,4 +163,4 @@ for index in range(len(credentials)):
 		Thread(target=snakeeyes_parent, args=[Client]).start()
 
 	if config["commands"]["trivia"]:
-		Thread(target=trivia_parent, args=[Client, cwd]).start()
+		Thread(target=trivia_parent, args=[Client]).start()

@@ -5,8 +5,8 @@ from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def lottery(Client, cwd: str) -> None:
-	with open(f"{cwd}database.json", "r") as data:
+def lottery(Client) -> None:
+	with open(f"{Client.cwd}database.json", "r") as data:
 		data = load(data)
 
 		if "lottery" not in data.keys():
@@ -14,14 +14,11 @@ def lottery(Client, cwd: str) -> None:
 
 			latest_message = Client.retreive_message("pls lottery")
 
-			if latest_message is None:
-				return
-
 			Client.interact_button("pls lottery", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
 			
 			data["lottery"] = datetime.now().strftime("%x-%X")
 
-			with open(f"{cwd}database.json", "w") as data_file:
+			with open(f"{Client.cwd}database.json", "w") as data_file:
 				data_file.write(dumps(data))
 			
 			if Client.config["logging"]["debug"]:
@@ -30,21 +27,29 @@ def lottery(Client, cwd: str) -> None:
 			Client.send_message("pls lottery")
 
 			latest_message = Client.retreive_message("pls lottery")
-
-			if latest_message is None:
-				return
 			
 			Client.interact_button("pls lottery", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
 
 			data["lottery"] = datetime.now().strftime("%x-%X")
 			
-			with open(f"{cwd}database.json", "w") as database:
+			with open(f"{Client.cwd}database.json", "w") as database:
 				database.write(dumps(data))
 			
 			if Client.config["logging"]["debug"]:
 				log(Client.username, "DEBUG", "Successfully updated latest command run of `pls lottery`.")
 
-def lottery_parent(Client, cwd: str) -> None:
+def lottery_parent(Client) -> None:
+	"""One of the 3 gambling commands - `pls lottery`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	while True:
 		while not data[Client.channel_id] or not data[Client.username]:
 			pass
@@ -54,7 +59,7 @@ def lottery_parent(Client, cwd: str) -> None:
 		start = time()
 
 		try:
-			lottery(Client, cwd)
+			lottery(Client)
 		except Exception:
 			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls lottery` command: `{exc_info()}`")
 

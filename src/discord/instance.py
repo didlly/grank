@@ -6,14 +6,74 @@ from json import loads
 from datetime import datetime
 from utils import shared
 
+class MessageSendError(Exception):
+	pass
+
+class ResponseTimeout(Exception):
+	pass
+
+class ButtonInteractError(Exception):
+    pass
+
+class DropdownInteractError(Exception):
+    pass
+
 class Client(object):
-	def __init__(self, config, user_id, username, session_id, channel_id, token):
+	"""The Class containing all the code for the self-bot to interact with Discord.
+
+	Procedures:
+		retreive_message()
+  
+			- Retreives the latest message from Dank Memer.
+			Args:
+				command (str): The command that the message is being retreived for.
+
+			Returns:
+				latest_message (dict / None): The dictionary version of Dank Memer's latest message (or NoneType if it couldn't be found).
+
+	Functions:
+		send_message()
+			- Sends a message.
+   
+			Args:
+				command (str): The command that the message is being retreived for.
+
+			Returns:
+				sent (bool): A boolean value that tells Grank whether the message was sent succesfully or not.
+	
+		interact_button()
+			- Interacts with a button.
+   
+			Args:
+				command (str): The command that the message is being retreived for.
+				custom_id (str): The ID of the button to be clicked.
+				latest_message (dict): The dictionary version of Dank Memer's message that contains the button. 
+				token (str) [OPTIONAL]: The token of the account that should interact with the button if it should not be the one initialized in the __init__ function of this Class.
+
+			Returns:
+				interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
+	
+		interact_dropdown()
+ 			 - Interacts with a dropdown.
+	 
+			Args:
+				command (str): The command that the message is being retreived for.
+				custom_id (str): The ID of the dropdown to be interacted with.
+	   			custom_id (str): The ID of the dropdown choice to be selected.
+				latest_message (dict): The dictionary version of Dank Memer's message that contains the dropdown. 
+
+			Returns:
+				interacted (bool): A boolean value that tells Grank whether the dropdown was successfully interacted with or not.
+	"""
+	
+	def __init__(self, config, user_id, username, session_id, channel_id, token, cwd):
 		self.config = config
 		self.user_id = user_id
 		self.username = username
 		self.session_id = session_id
 		self.channel_id = channel_id
 		self.token = token
+		self.cwd = cwd
 		
 	def send_message(self, command):
 		if self.config["typing indicator"]["enabled"]:
@@ -26,7 +86,7 @@ class Client(object):
 			if request.status_code in [200, 204]:
 				if self.config["logging"]["debug"]:
 						log(self.username, "DEBUG", f"Successfully sent command `{command}`.")
-				return True
+				return
 			else:
 				if self.config["logging"]["warning"]:
 					log(self.username, "WARNING", f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
@@ -35,7 +95,7 @@ class Client(object):
 					log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
 					sleep(request["retry_after"])
 					continue
-				return False
+				raise MessageSendError(f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 
 	def retreive_message(self, command):
 		time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
@@ -60,10 +120,9 @@ class Client(object):
 				if self.config["logging"]["debug"]:
 					log(self.username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
 				break
+
 		if latest_message["author"]["id"] != "270904126974590976":
-			if self.config["logging"]["warning"]:
-				log(self.username, "WARNING", f"Timeout exceeded for response from Dank Memer ({self.config['cooldowns']['timeout']} {'second' if self.config['cooldowns']['timeout'] == 1 else 'seconds'}) to the `{command}` command. Aborting.")
-			return None
+			raise TimeoutError(f"Timeout exceeded for response from Dank Memer ({self.config['cooldowns']['timeout']} {'second' if self.config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
 
 		if (len(latest_message["embeds"]) != 0
 			and "title" in latest_message["embeds"][0].keys()
@@ -104,7 +163,7 @@ class Client(object):
 
 				break
 
-		if "Catch the fish" in latest_message["content"]:
+		elif "Catch the fish" in latest_message["content"]:
 			log(self.username, "DEBUG", "Detected catch the fish game.")
 			level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
 			Client.interact_button(command, latest_message["components"][0]["components"][level]["custom_id"], latest_message)
@@ -118,17 +177,11 @@ class Client(object):
 
 					latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-					if latest_message is None:
-						return
-
 					Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
 
 					sleep(1)
 
 					latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
-
-					if latest_message is None:
-						return
 
 					Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], self.config["auto trade"]["trader"]["session_id"], self.config['auto trade']['trader']['self.username'])
 				elif len(latest_message["embeds"]) != 0:
@@ -137,17 +190,12 @@ class Client(object):
 
 						latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-						if latest_message is None:
-							return
 
 						Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
 
 						sleep(1)
 
 						latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
-
-						if latest_message is None:
-							return
 
 						Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, self.config['auto trade']['trader']['self.username'])
 		return latest_message
@@ -167,16 +215,22 @@ class Client(object):
 			"session_id": self.session_id
 		}
 
-		request = post("https://discord.com/api/v10/interactions", headers={"authorization": self.token if token is None else token}, json=data)
+		while True:
+			request = post("https://discord.com/api/v10/interactions", headers={"authorization": self.token if token is None else token}, json=data)
 
-		if request.status_code in [200, 204]:
-			if self.config["logging"]["debug"]:
-				log(self.username, "DEBUG", f"Successfully interacted with button on Dank Memer's response to command `{command}`.")
-			return True
-		else:
-			if self.config["logging"]["warning"]:
-				log(self.username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
-			return False
+			if request.status_code in [200, 204]:
+				if self.config["logging"]["debug"]:
+					log(self.username, "DEBUG", f"Successfully interacted with button on Dank Memer's response to command `{command}`.")
+				return
+			else:
+				if self.config["logging"]["warning"]:
+					log(self.username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
+				if request.status_code == 429:
+					request = loads(request.content)
+					log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+					sleep(request["retry_after"])
+					continue
+				raise ButtonInteractError(f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 
 	def interact_dropdown(self, command, custom_id, option_id, latest_message):
 		data = {
@@ -195,13 +249,19 @@ class Client(object):
 			"session_id": self.session_id
 			}
 
-		request = post("https://discord.com/api/v10/interactions", headers={"authorization": self.token}, json=data)
-
-		if request.status_code in [200, 204]:
-			if self.config["logging"]["debug"]:
-				log(self.username, "DEBUG", f"Successfully interacted with dropdown on Dank Memer's response to command `{command}`.")
-			return True
-		else:
-			if self.config["logging"]["warning"]:
-				log(self.username, "WARNING", f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
-			return False
+		while True:
+			request = post("https://discord.com/api/v10/interactions", headers={"authorization": self.token}, json=data)
+   
+			if request.status_code in [200, 204]:
+				if self.config["logging"]["debug"]:
+					log(self.username, "DEBUG", f"Successfully interacted with dropdown on Dank Memer's response to command `{command}`.")
+				return
+			else:
+				if self.config["logging"]["warning"]:
+					log(self.username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
+				if request.status_code == 429:
+					request = loads(request.content)
+					log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+					sleep(request["retry_after"])
+					continue
+				raise DropdownInteractError(f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")

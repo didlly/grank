@@ -6,17 +6,14 @@ from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def stream(Client, cwd: str) -> None:
-	with open(f"{cwd}database.json", "r") as data:
+def stream(Client) -> None:
+	with open(f"{Client.cwd}database.json", "r") as data:
 		data = load(data)
 
 		if "stream" not in data.keys():
 			Client.send_message("pls stream")
 
 			latest_message = Client.retreive_message("pls stream")
-
-			if latest_message is None:
-				return
 
 			if "title" in latest_message["embeds"][0].keys():
 				if "Keyboard" in latest_message["embeds"][0]["description"]:
@@ -25,13 +22,13 @@ def stream(Client, cwd: str) -> None:
 
 					if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
 						from scripts.buy import buy
-						buy(Client, "keyboard", cwd)
+						buy(Client, "keyboard", Client.cwd)
 						return
 					elif Client.config["logging"]["warning"]:
 						log(
-						    Client.username,
-						    "WARNING",
-						    f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+							Client.username,
+							"WARNING",
+							f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 						)
 
 				if "Mouse" in latest_message["embeds"][0]["description"]:
@@ -40,22 +37,19 @@ def stream(Client, cwd: str) -> None:
 
 					if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
 						from scripts.buy import buy
-						buy(Client, "mouse", cwd)
+						buy(Client, "mouse", Client.cwd)
 						return
 					elif Client.config["logging"]["warning"]:
 						log(
-						    Client.username,
-						    "WARNING",
-						    f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+							Client.username,
+							"WARNING",
+							f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 						)
 
 			if len(latest_message["components"][0]["components"]) == 3:
 				Client.interact_button("pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message)
 
 				latest_message = Client.retreive_message("pls stream")
-
-				if latest_message is None:
-					return
 
 				Client.interact_dropdown("pls stream", latest_message["components"][0]["components"][0]["custom_id"], choice(latest_message["components"][0]["components"][0]["options"])["value"], latest_message)
 
@@ -67,6 +61,7 @@ def stream(Client, cwd: str) -> None:
 				Client.interact_button("pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message)
 			else:
 				button = randint(1, 2) if Client.config["stream"]["chat"] and Client.config["stream"]["donations"] else 1 if Client.config["stream"]["chat"] else 2 if Client.config["stream"]["donations"] else None
+    
 				if button is None:
 					return
 
@@ -76,7 +71,7 @@ def stream(Client, cwd: str) -> None:
 
 			data["stream"] = datetime.now().strftime("%x-%X")
 
-			with open(f"{cwd}database.json", "w") as data_file:
+			with open(f"{Client.cwd}database.json", "w") as data_file:
 				data_file.write(dumps(data))
 
 			if Client.config["logging"]["debug"]:
@@ -86,47 +81,41 @@ def stream(Client, cwd: str) -> None:
 
 			latest_message = Client.retreive_message("pls stream")
 
-			if latest_message is None:
-				return
-
 			if "title" in latest_message["embeds"][0].keys():
 				if "Keyboard" in latest_message["embeds"][0]["description"]:
 					if Client.config["logging"]["debug"]:
-						log(Client.username, "DEBUG", "User does not have item `keyboard`. Buying laptop now.")
+						log(Client.username, "DEBUG", "User does not have item `keyboard`. Buying keyboard now.")
 
 					if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
 						from scripts.buy import buy
-						buy(Client, "keyboard", cwd)
+						buy(Client, "keyboard", Client.cwd)
 						return
 					elif Client.config["logging"]["warning"]:
 						log(
-						    Client.username,
-						    "WARNING",
-						    f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+							Client.username,
+							"WARNING",
+							f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 						)
 
 				if "Mouse" in latest_message["embeds"][0]["description"]:
 					if Client.config["logging"]["debug"]:
-						log(Client.username, "DEBUG", "User does not have item `mouse`. Buying laptop now.")
+						log(Client.username, "DEBUG", "User does not have item `mouse`. Buying mouse now.")
 
 					if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
 						from scripts.buy import buy
-						buy(Client, "mouse", cwd)
+						buy(Client, "mouse", Client.cwd)
 						return
 					elif Client.config["logging"]["warning"]:
 						log(
-						    Client.username,
-						    "WARNING",
-						    f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+							Client.username,
+							"WARNING",
+							f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 						)
 
 			if len(latest_message["components"][0]["components"]) == 3:
 				Client.interact_button("pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message)
 
 				latest_message = Client.retreive_message("pls stream")
-
-				if latest_message is None:
-					return
 
 				Client.interact_dropdown("pls stream", latest_message["components"][0]["components"][0]["custom_id"], choice(latest_message["components"][0]["components"][0]["options"])["value"], latest_message)
 
@@ -138,6 +127,7 @@ def stream(Client, cwd: str) -> None:
 				Client.interact_button("pls stream", latest_message["components"][0]["components"][0]["custom_id"], latest_message)
 			else:
 				button = randint(1, 2) if Client.config["stream"]["chat"] and Client.config["stream"]["donations"] else 1 if Client.config["stream"]["chat"] else 2 if Client.config["stream"]["donations"] else None
+    
 				if button is None:
 					return
 
@@ -147,13 +137,24 @@ def stream(Client, cwd: str) -> None:
 
 			data["stream"] = datetime.now().strftime("%x-%X")
 
-			with open(f"{cwd}database.json", "w") as data_file:
+			with open(f"{Client.cwd}database.json", "w") as data_file:
 				data_file.write(dumps(data))
 
 			if Client.config["logging"]["debug"]:
 				log(Client.username, "DEBUG", "Successfully updated latest command run of `pls stream`.")
 
-def stream_parent(Client, cwd: str) -> None:
+def stream_parent(Client) -> None:
+	"""A streaming command - `pls stream`.
+ 
+	Required item(s): keyboard, mouse
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	while True:
 		while not data[Client.channel_id] or not data[Client.username]:
 			pass
@@ -163,7 +164,7 @@ def stream_parent(Client, cwd: str) -> None:
 		start = time()
 
 		try:
-			stream(Client, cwd)
+			stream(Client)
 		except Exception:
 			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls stream` command: `{exc_info()}`")
 

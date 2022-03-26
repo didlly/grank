@@ -4,17 +4,25 @@ from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def crime(Client):
+def crime(Client) -> None:
 	Client.send_message("pls crime")
 
 	latest_message = Client.retreive_message("pls crime")
 
-	if latest_message is None:
-		return
-	
 	Client.interact_button("pls crime", choice(latest_message["components"][0]["components"])["custom_id"], latest_message)
 
-def crime_parent(Client):
+def crime_parent(Client) -> None:
+	"""One of the basic 7 currency commands - `pls crime`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	while True:
 		while not data[Client.channel_id] or not data[Client.username]:
 			pass

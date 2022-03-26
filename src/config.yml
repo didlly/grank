@@ -36,7 +36,7 @@ snakeeyes:
   maximum: 3000
 
 custom commands:
-  enabled: True
+  enabled: False
   pls dep max:
     enabled: True
     cooldown: 300

@@ -9,12 +9,20 @@ def search(Client) -> None:
 
 	latest_message = Client.retreive_message("pls search")
 
-	if latest_message is None:
-		return
-
 	Client.interact_button("pls search", choice(latest_message["components"][0]["components"])["custom_id"], latest_message)
 
 def search_parent(Client) -> None:
+	"""One of the basic 7 currency commands - `pls search`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	while True:
 		while not data[Client.channel_id] or not data[Client.username]:
 			pass

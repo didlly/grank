@@ -12,9 +12,6 @@ def blackjack(Client) -> None:
 	while True:
 		latest_message = Client.retreive_message(f"pls bj {amount}")
 
-		if latest_message is None:
-			return
-
 		if "coins, dont try and lie to me hoe." in latest_message["content"] or "You have no coins in your wallet to gamble with lol." in latest_message["content"]:
 			log(Client.username, "WARNING", f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.")
 			return
@@ -34,6 +31,17 @@ def blackjack(Client) -> None:
 	
 
 def blackjack_parent(Client) -> None:
+	"""One of the 3 gamble commands - `pls blackjack`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	while True:
 		while not data[Client.channel_id] or not data[Client.username]:
 			pass

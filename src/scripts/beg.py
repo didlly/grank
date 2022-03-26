@@ -7,6 +7,17 @@ def beg(Client) -> None:
 	Client.send_message("pls beg")
 
 def beg_parent(Client) -> None:
+	"""One of the basic 7 currency commands - `pls beg`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	sleep(40)
 	
 	while True:

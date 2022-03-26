@@ -9,39 +9,24 @@ def guess(Client) -> None:
 
 	latest_message = Client.retreive_message("pls guess")
 
-	if latest_message is None:
-		return
-
 	Client.send_message("10")
 
 	latest_message = Client.retreive_message("10")
-
-	if latest_message is None:
-		return
 	
 	if latest_message["content"] == "not this time, `3` attempts left and `2` hints left.":
 		Client.send_message("hint")
 
 		latest_message = Client.retreive_message("hint")
 
-		if latest_message is None:
-			return
-
 		if latest_message["content"] == "Your last number (**10**) was too low\nYou've got `3` attempts left and `1` hint left.":
 			Client.send_message("15")
 			
 			latest_message = Client.retreive_message("15")
 
-			if latest_message is None:
-				return
-
 			if latest_message["content"] == "not this time, `2` attempts left and `1` hint left.":
 				Client.send_message("hint")
 
 				latest_message = Client.retreive_message("hint")
-
-				if latest_message is None:
-					return
 
 				if latest_message["content"] == "Your last number (**15**) was too low\nYou've got `2` attempts left and `0` hints left.":
 					num = randint(16, 20)
@@ -49,10 +34,7 @@ def guess(Client) -> None:
 					Client.send_message(num)
 
 					latest_message = Client.retreive_message(num)
-
-					if latest_message is None:
-						return
-
+     
 					if latest_message["content"] == "not this time, `1` attempt left and `0` hints left.":
 						num = randint(16, 20)
 
@@ -66,9 +48,6 @@ def guess(Client) -> None:
 
 					latest_message = Client.retreive_message(num)
 
-					if latest_message is None:
-						return
-
 					if latest_message["content"] == "not this time, `1` attempt left and `0` hints left.":
 						num = randint(11, 14)
 
@@ -81,16 +60,10 @@ def guess(Client) -> None:
 			
 			latest_message = Client.retreive_message("5")
 
-			if latest_message is None:
-				return
-
 			if latest_message["content"] == "not this time, `2` attempts left and `1` hint left.":
 				Client.send_message("hint")
 
 				latest_message = Client.retreive_message("hint")
-
-				if latest_message is None:
-					return
 
 				if latest_message["content"] == "Your last number (**5**) was too low\nYou've got `2` attempts left and `0` hints left.":
 					num = randint(6, 9)
@@ -99,8 +72,6 @@ def guess(Client) -> None:
 
 					latest_message = Client.retreive_message(num)
 
-					if latest_message is None:
-						return
 
 					if latest_message["content"] == "not this time, `1` attempt left and `0` hints left.":
 						num = randint(6, 9)
@@ -115,9 +86,6 @@ def guess(Client) -> None:
 
 					latest_message = Client.retreive_message(num)
 
-					if latest_message is None:
-						return
-
 					if latest_message["content"] == "not this time, `1` attempt left and `0` hints left.":
 						num = randint(1, 4)
 
@@ -126,6 +94,17 @@ def guess(Client) -> None:
 						return
 
 def guess_parent(Client) -> None:
+	"""One of the 2 guess the number commands - `pls guess`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	while True:
 		while not data[Client.channel_id] or not data[Client.username]:
 			pass

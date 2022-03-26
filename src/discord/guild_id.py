@@ -3,6 +3,15 @@ from json import loads
 from utils.shared import data
 
 def guild_id(Client):
+	"""Gets the `guild_id` of the channel specified by the `channel_id` in the `Client` argument.
+ 
+	Args:
+		Client (class): The Client class for the account.
+
+	Returns:
+		None
+	"""
+	
 	response = loads(get(f" https://discord.com/api/v10/channels/{Client.channel_id}/messages?limit=50", headers={"authorization": Client.token}).content.decode())
 	
 	found = False

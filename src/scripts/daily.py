@@ -5,8 +5,8 @@ from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def daily(Client, cwd):
-	with open(f"{cwd}database.json", "r") as data:
+def daily(Client):
+	with open(f"{Client.cwd}database.json", "r") as data:
 		data = load(data)
 
 		if "daily" not in data.keys():
@@ -14,7 +14,7 @@ def daily(Client, cwd):
 			
 			data["daily"] = datetime.now().strftime("%x-%X")
 
-			with open(f"{cwd}database.json", "w") as data_file:
+			with open(f"{Client.cwd}database.json", "w") as data_file:
 				data_file.write(dumps(data))
 			
 			if Client.config["logging"]["debug"]:
@@ -24,13 +24,24 @@ def daily(Client, cwd):
 
 			data["daily"] = datetime.now().strftime("%x-%X")
 			
-			with open(f"{cwd}database.json", "w") as database:
+			with open(f"{Client.cwd}database.json", "w") as database:
 				database.write(dumps(data))
 			
 			if Client.config["logging"]["debug"]:
 				log(Client.username, "DEBUG", "Successfully updated latest command run of `pls daily`.")
 
-def daily_parent(Client, cwd):
+def daily_parent(Client):
+	"""One of the reward commands - `pls daily`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	while True:
 		while not data[Client.channel_id] or not data[Client.username]:
 			pass
@@ -40,7 +51,7 @@ def daily_parent(Client, cwd):
 		start = time()
 
 		try:
-			daily(Client, cwd)
+			daily(Client)
 		except Exception:
 			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls daily` command: `{exc_info()}`")
 

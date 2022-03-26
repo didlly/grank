@@ -9,8 +9,18 @@ def snakeeyes(Client) -> None:
 
 	Client.send_message(f"pls snakeeyes {amount}")
 	
-
 def snakeeyes_parent(Client) -> None:
+	"""One of the 3 gamble commands - `pls snakeeyes`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	while True:
 		while not data[Client.channel_id] or not data[Client.username]:
 			pass
