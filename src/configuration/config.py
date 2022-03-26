@@ -36,6 +36,6 @@ def load_config(cwd: str) -> dict:
 		config["auto trade"]["trader"] = {}
 		config["auto trade"]["trader"]["username"] = f"{request['username']}#{request['discriminator']}"
 		config["auto trade"]["trader"]["user_id"] = request["id"]
-		config["auto trade"]["trader"]["session_id"] = gateway(config["auto trade"]["trader_token"])
+		config["auto trade"]["trader"]["session_id"] = gateway(config["auto trade"]["trader token"])
 		
 	return config
