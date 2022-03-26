@@ -1,4 +1,4 @@
-# Grank <small>1.6</small>
+# Grank <small>1.8.1</small>
 
 > A Dank Memer self-bot.
 
