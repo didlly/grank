@@ -10,6 +10,7 @@ commands:
   postmeme: True
   search: True
   trivia: True
+  vote: True
 
 lottery:
   enabled: False

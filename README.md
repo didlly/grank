@@ -44,6 +44,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 * Typing indicator.
 * Detects special events like `Dodge the fireball`.
 * Custom commands.
+* Autovote.
 
 ## Supported commands
 
@@ -124,6 +125,7 @@ Values in the ```commands``` category tell the program whether or not to *run ce
 | ```postmeme```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls postmeme```. |
 | ```search```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls search```. |
 | ```trivia```  | ```Boolean``` | ```True```  | Tells the program whether or not to run the command ```pls trivia```. |
+| ```vote```  | ```Boolean``` | ```True```  | Tells the program whether or not to vote for Dank Memer on Discord Bot List. |
 
 ### ```lottery``` category
 

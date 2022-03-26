@@ -61,6 +61,7 @@ from scripts.highlow import highlow_parent
 from scripts.postmeme import postmeme_parent
 from scripts.trivia import trivia_parent
 from scripts.snakeeyes import snakeeyes_parent
+from scripts.vote import vote_parent
 from scripts.custom import custom_parent
 
 try:
@@ -147,7 +148,7 @@ for index in range(len(credentials)):
 		Thread(target=hunt_parent, args=[Client]).start()
   
 	if config["lottery"]["enabled"]:
-		Thread(target=lottery_parent, args=[Client]).start()
+		Thread(target=lottery_parent, args=[Client]).start()	
 
 	if config["commands"]["postmeme"]:
 		Thread(target=postmeme_parent, args=[Client]).start()
@@ -163,3 +164,6 @@ for index in range(len(credentials)):
   
 	if config["commands"]["trivia"]:
 		Thread(target=trivia_parent, args=[Client]).start()
+  
+	if config["commands"]["vote"]:
+		Thread(target=vote_parent, args=[Client]).start()
