@@ -25,7 +25,7 @@ def vote(Client):
 
 			dbl_token = loads(req.content.decode())["token"]
 
-			req = loads(post("https://discordbotlist.com/api/v1/bots/270904126974590976/upvote", headers={"Authorization": dbl_token}).content.decode())
+			req = loads(post("https://discordbotlist.com/api/v1/bots/270904126974590976/upvote", headers={"authorization": dbl_token}).content.decode())
    
 			if req["success"]:
 				if Client.config["logging"]["debug"]:
@@ -59,7 +59,7 @@ def vote(Client):
 
 			dbl_token = loads(req.content.decode())["token"]
 
-			req = loads(post("https://discordbotlist.com/api/v1/bots/270904126974590976/upvote", headers={"Authorization": dbl_token}).content.decode())
+			req = loads(post("https://discordbotlist.com/api/v1/bots/270904126974590976/upvote", headers={"authorization": dbl_token}).content.decode())
    
 			if req["success"]:
 				if Client.config["logging"]["debug"]:

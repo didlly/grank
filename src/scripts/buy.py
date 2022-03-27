@@ -23,18 +23,19 @@ def buy(Client, item: str) -> None:
 		latest_message = balance(Client)
 		
 		data = load(open(f"{Client.cwd}database.json", "r"))
-		latest_message = Client.retreive_message("pls bal")
 
 		bank = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[1].split("/")[0].strip())))
 		wallet = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[0])))
 		
-		if (wallet + bank) - data["price"][f"{item}"] > 0:
-			amount = (wallet + bank) - data["price"][f"{item}"]
+		if (wallet + bank) - data["price"][item] > 0:
+			amount = (wallet + bank) - data["price"][item]
 			
 			Client.send_message(f"pls with {amount}")                                
 			Client.send_message(f"pls buy {item}")
 		elif Client.config["logging"]["warning"]:
-			log(Client.username, "WARNING", f"Insufficient funds to buy a {item}.")  
+			log(Client.username, "WARNING", f"Insufficient funds to buy a {item}.")
+			return False
 	elif latest_message["embeds"][0]["author"]["name"].lower() == f"successful {item} purchase":
 		if Client.config["logging"]["debug"]:
 			log(Client.username, "DEBUG", f"Successfully bought {item}.")
+			return True
