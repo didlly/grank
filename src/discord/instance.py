@@ -130,6 +130,8 @@ class Client(object):
 					log(self.username, "WARNING", f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.")
 					sleep(cooldown)
 					Client.send_message(command)
+				else:
+					break
 			else:
 				break
 
