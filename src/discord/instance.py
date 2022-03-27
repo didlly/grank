@@ -13,10 +13,10 @@ class ResponseTimeout(Exception):
 	pass
 
 class ButtonInteractError(Exception):
-    pass
+	pass
 
 class DropdownInteractError(Exception):
-    pass
+	pass
 
 class Client(object):
 	"""The Class containing all the code for the self-bot to interact with Discord.
@@ -98,31 +98,40 @@ class Client(object):
 				raise MessageSendError(f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 
 	def retreive_message(self, command):
-		time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
+		while True:
+			time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
 
-		while (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time).total_seconds() < self.config["cooldowns"]["timeout"]:
-			request = get(f"https://discord.com/api/v10/channels/{self.channel_id}/messages", headers={"authorization": self.token})
+			while (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time).total_seconds() < self.config["cooldowns"]["timeout"]:
+				request = get(f"https://discord.com/api/v10/channels/{self.channel_id}/messages", headers={"authorization": self.token})
 
-			if request.status_code != 200:
-				continue
+				if request.status_code != 200:
+					continue
 
-			latest_message = loads(request.text)[0]
+				latest_message = loads(request.text)[0]
 
-			if latest_message["author"]["id"] != "270904126974590976":
-				continue
+				if latest_message["author"]["id"] != "270904126974590976":
+					continue
 
-			if "referenced_message" in latest_message.keys():
-				if latest_message["referenced_message"]["author"]["id"] == self.user_id:
+				if "referenced_message" in latest_message.keys():
+					if latest_message["referenced_message"]["author"]["id"] == self.user_id:
+						if self.config["logging"]["debug"]:
+							log(self.username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
+						break
+				else:
 					if self.config["logging"]["debug"]:
 						log(self.username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
 					break
-			else:
-				if self.config["logging"]["debug"]:
-					log(self.username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
-				break
 
-		if latest_message["author"]["id"] != "270904126974590976":
-			raise TimeoutError(f"Timeout exceeded for response from Dank Memer ({self.config['cooldowns']['timeout']} {'second' if self.config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
+			if latest_message["author"]["id"] != "270904126974590976":
+				raise TimeoutError(f"Timeout exceeded for response from Dank Memer ({self.config['cooldowns']['timeout']} {'second' if self.config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
+			elif len(latest_message["embeds"]) > 0:
+				if "The default cooldown is" in latest_message["embeds"][0]["description"]:
+					cooldown = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("**")[1].split("**")[0])))
+					log(self.username, "WARNING", f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.")
+					sleep(cooldown)
+					Client.send_message(command)
+			else:
+				break
 
 		if (len(latest_message["embeds"]) != 0
 			and "title" in latest_message["embeds"][0].keys()
