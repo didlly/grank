@@ -103,7 +103,8 @@ def vote_parent(Client):
 		try:
 			vote(Client)
 		except Exception:
-			log(Client.username, "WARNING", f"An unexpected error occured during the voting process: `{exc_info()}`")
+			if Client.config["logging"]["warning"]:
+				log(Client.username, "WARNING", f"An unexpected error occured during the voting process: `{exc_info()}`")
 
 		end = time()   
 		

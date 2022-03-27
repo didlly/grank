@@ -92,7 +92,8 @@ class Client(object):
 					log(self.username, "WARNING", f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 				if request.status_code == 429:
 					request = loads(request.content)
-					log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+					if self.config["logging"]["warning"]:
+						log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
 					sleep(request["retry_after"])
 					continue
 				raise MessageSendError(f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
@@ -127,7 +128,8 @@ class Client(object):
 			elif len(latest_message["embeds"]) > 0:
 				if "The default cooldown is" in latest_message["embeds"][0]["description"]:
 					cooldown = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("**")[1].split("**")[0])))
-					log(self.username, "WARNING", f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.")
+					if self.config["logging"]["warning"]:
+						log(self.username, "WARNING", f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.")
 					sleep(cooldown)
 					Client.send_message(command)
 				else:
@@ -144,7 +146,8 @@ class Client(object):
 
 
 		if "Dodge the Fireball" in latest_message["content"]:
-			log(self.username, "DEBUG", "Detected dodge the fireball game.")
+			if self.config["logging"]["debug"]:
+				log(self.username, "DEBUG", "Detected dodge the fireball game.")
 			while True:
 				request = get(f"https://discord.com/api/v10/channels/{self.channel_id}/messages", headers={"authorization": self.token})
 
@@ -175,7 +178,8 @@ class Client(object):
 				break
 
 		elif "Catch the fish" in latest_message["content"]:
-			log(self.username, "DEBUG", "Detected catch the fish game.")
+			if self.config["logging"]["debug"]:
+				log(self.username, "DEBUG", "Detected catch the fish game.")
 			level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
 			Client.interact_button(command, latest_message["components"][0]["components"][level]["custom_id"], latest_message)
 
@@ -238,7 +242,8 @@ class Client(object):
 					log(self.username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 				if request.status_code == 429:
 					request = loads(request.content)
-					log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+					if self.config["logging"]["warning"]:
+						log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
 					sleep(request["retry_after"])
 					continue
 				raise ButtonInteractError(f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
@@ -272,7 +277,8 @@ class Client(object):
 					log(self.username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 				if request.status_code == 429:
 					request = loads(request.content)
-					log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+					if self.config["logging"]["warning"]:
+						log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
 					sleep(request["retry_after"])
 					continue
 				raise DropdownInteractError(f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")

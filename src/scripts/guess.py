@@ -116,7 +116,8 @@ def guess_parent(Client) -> None:
 		try:
 			guess(Client)
 		except Exception:
-			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls guess` command: `{exc_info()}`")
+			if Client.config["logging"]["warning"]:
+				log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls guess` command: `{exc_info()}`")
 
 		end = time()   
 		

@@ -35,7 +35,8 @@ def highlow_parent(Client) -> None:
 		try:
 			highlow(Client)
 		except Exception:
-			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls highlow` command: `{exc_info()}`")
+			if Client.config["logging"]["warning"]:
+				log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls highlow` command: `{exc_info()}`")
 
 		end = time()   
 		

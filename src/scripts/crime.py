@@ -42,7 +42,8 @@ def crime_parent(Client) -> None:
 		try:
 			crime(Client)
 		except Exception:
-			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls crime` command: `{exc_info()}`")
+			if Client.config["logging"]["warning"]:
+				log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls crime` command: `{exc_info()}`")
 
 		end = time()   
 		

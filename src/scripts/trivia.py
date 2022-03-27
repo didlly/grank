@@ -51,7 +51,8 @@ def trivia_parent(Client) -> None:
 		try:
 			trivia(Client)
 		except Exception:
-			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls trivia` command: `{exc_info()}`")
+			if Client.config["logging"]["warning"]:
+				log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls trivia` command: `{exc_info()}`")
 
 		end = time()   
 		

@@ -18,7 +18,8 @@ def custom_parent(Client, command, cooldown, patron_cooldown):
 		try:
 			custom(Client, command)
 		except Exception:
-			log(Client.username, "WARNING", f"An unexpected error occured during the running of the `{command}` command: `{exc_info()}`")
+			if Client.config["logging"]["warning"]:
+				log(Client.username, "WARNING", f"An unexpected error occured during the running of the `{command}` command: `{exc_info()}`")
 
 		end = time()   
 		
