@@ -19,7 +19,7 @@ def log(username: Union[str, None], level: str, text: str) -> None:
 
     if level == "ERROR":
         data["logger"].error(text) 
-    elif level == "debug":
+    elif level == "DEBUG":
         data["logger"].debug(text)
     else:
         data["logger"].warning(text)
