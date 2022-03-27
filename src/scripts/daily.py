@@ -13,7 +13,7 @@ def daily(Client) -> None:
 			data = load(data)
 		except JSONDecodeError:
 			database_fixer(Client.cwd)
-			data = load(data.read())
+			data = load(data)
 
 		if "daily" not in data.keys():
 			Client.send_message("pls daily")

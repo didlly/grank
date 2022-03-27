@@ -17,7 +17,7 @@ def trivia(Client) -> None:
 			database = load(database)
 		except JSONDecodeError:
 			database_fixer(Client.cwd)
-			database = load(database.read())
+			database = load(database)
 
 		try:
 			answer = database["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]

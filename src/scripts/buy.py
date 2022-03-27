@@ -29,7 +29,7 @@ def buy(Client, item: str) -> None:
 				data = load(data)
 			except JSONDecodeError:
 				database_fixer(Client.cwd)
-				data = load(data.read())
+				data = load(data)
 
 		bank = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[1].split("/")[0].strip())))
 		wallet = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[0])))

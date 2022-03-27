@@ -13,7 +13,7 @@ def lottery(Client) -> None:
 			data = load(data)
 		except JSONDecodeError:
 			database_fixer(Client.cwd)
-			data = load(data.read())
+			data = load(data)
 
 		if "lottery" not in data.keys():
 			Client.send_message("pls lottery")

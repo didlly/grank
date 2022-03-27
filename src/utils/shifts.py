@@ -21,7 +21,7 @@ def shifts(username: str, config: dict, cwd: str) -> None:
 				database = load(database_file)
 			except JSONDecodeError:
 				database_fixer(cwd)
-				database = load(database_file.read())
+				database = load(database_file)
    
 			if "last active" not in database["shifts"]:
 				database["shifts"]["last active"] = datetime.now().strftime("%Y:%m:%d-%H:%M:%S")

@@ -14,7 +14,7 @@ def stream(Client) -> None:
 			data = load(data)
 		except JSONDecodeError:
 			database_fixer(Client.cwd)
-			data = load(data.read())
+			data = load(data)
 
 		if "stream" not in data.keys():
 			while True:

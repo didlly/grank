@@ -14,7 +14,7 @@ def vote(Client):
 			data = load(data)
 		except JSONDecodeError:
 			database_fixer(Client.cwd)
-			data = load(data.read())
+			data = load(data)
 
 		if "vote" not in data.keys():
 			json = {

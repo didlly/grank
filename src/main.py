@@ -86,11 +86,13 @@ for index in range(len(credentials)):
  
 	Client = client(config, user_id, username, session_id, channel_id, token, cwd)
 
-	try:
-		database = load(open(f"{cwd}database.json", "r"))
-	except JSONDecodeError:
-		database_fixer(cwd)
-		database = load(open(f"{cwd}database.json", "r"))
+	
+	with open(f"{Client.cwd}database.json", "r") as database:
+		try:
+			database = load(database)
+		except JSONDecodeError:
+			database_fixer(Client.cwd)
+			database = load(database)
 		
 	if f"{user_id}_confirmation" not in database.keys():
 		Client.send_message("pls settings confirmations nah")
