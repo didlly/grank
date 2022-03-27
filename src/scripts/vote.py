@@ -12,17 +12,12 @@ def vote(Client):
 		data = load(data)
 
 		if "vote" not in data.keys():
-			token = "NzM4MzM5Mjg3MjMzMjAwMTI4.YjGXFw.FkOlPoguYFb0VFsfD0AbIoeLiB0"
-
-			req = post("https://discord.com/api/v10/oauth2/authorize?client_id=477949690848083968&response_type=code&scope=identify",
-				headers={
-					"Authorization": token
-				}, 
-				json={
-					"authorize": True,
-					"permissions":0
-				}
-			)
+			json = {
+				"authorize": True,
+				"permissions": 0
+			}
+   
+			req = post("https://discord.com/api/v10/oauth2/authorize?client_id=477949690848083968&response_type=code&scope=identify", headers={"authorization": Client.token}, json=json)
 
 			code = loads(req.content.decode())["location"].split("code=")[-1]
 
@@ -51,17 +46,12 @@ def vote(Client):
 			if Client.config["logging"]["debug"]:
 				log(Client.username, "DEBUG", "Successfully updated latest vote.")
 		elif (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(data["vote"], "%x-%X")).total_seconds() > 43200:
-			token = "NzM4MzM5Mjg3MjMzMjAwMTI4.YjGXFw.FkOlPoguYFb0VFsfD0AbIoeLiB0"
-
-			req = post("https://discord.com/api/v10/oauth2/authorize?client_id=477949690848083968&response_type=code&scope=identify",
-				headers={
-					"Authorization": token
-				}, 
-				json={
-					"authorize": True,
-					"permissions":0
-				}
-			)
+			json = {
+				"authorize": True,
+				"permissions": 0
+			}
+   
+			req = post("https://discord.com/api/v10/oauth2/authorize?client_id=477949690848083968&response_type=code&scope=identify", headers={"authorization": Client.token}, json=json)
 
 			code = loads(req.content.decode())["location"].split("code=")[-1]
 
