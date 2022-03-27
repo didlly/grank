@@ -41,7 +41,7 @@ from configuration.credentials import load_credentials
 from threading import Thread
 from utils.shared import data
 from utils.shifts import shifts
-from utils.logger import log
+from utils.database import database_fixer
 from discord.instance import Client as client
 from json import load, dumps
 from json.decoder import JSONDecodeError
@@ -89,14 +89,7 @@ for index in range(len(credentials)):
 	try:
 		database = load(open(f"{cwd}database.json", "r"))
 	except JSONDecodeError:
-		log(None, "WARNING", "Database file is corrupted. Re-downloading now.")
-		req = get("https://raw.githubusercontent.com/didlly/grank/main/src/database.json", allow_redirects=True).content
-		log(None, "DEBUG", "Retreived new database file.")
-		with open(f"{cwd}database.json", "wb") as db:
-			log(None, "DEBUG", f"Opened `{cwd}database.json`.")
-			db.write(req)
-			log(None, "DEBUG", f"Wrote new database to `{cwd}database.json`.")
-		log(None, "DEBUG", f"Closed `{cwd}database.json`.")
+		database_fixer(cwd)
 		database = load(open(f"{cwd}database.json", "r"))
 		
 	if f"{user_id}_confirmation" not in database.keys():

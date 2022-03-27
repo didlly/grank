@@ -1,4 +1,6 @@
 from json import load, dumps
+from json.decoder import JSONDecodeError
+from utils.database import database_fixer
 from datetime import datetime
 from utils.logger import log
 from utils.shared import data
@@ -15,7 +17,11 @@ def shifts(username: str, config: dict, cwd: str) -> None:
  
 	while True:
 		with open(f"{cwd}database.json", "r") as database_file:
-			database = load(database_file)
+			try:
+				database = load(database_file)
+			except JSONDecodeError:
+				database_fixer(cwd)
+				database = load(database_file.read())
    
 			if "last active" not in database["shifts"]:
 				database["shifts"]["last active"] = datetime.now().strftime("%Y:%m:%d-%H:%M:%S")

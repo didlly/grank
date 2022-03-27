@@ -1,4 +1,6 @@
 from json import load, dumps
+from json.decoder import JSONDecodeError
+from utils.database import database_fixer
 from datetime import datetime
 from random import randint, choice
 from utils.logger import log
@@ -8,7 +10,11 @@ from utils.shared import data
 
 def stream(Client) -> None:
 	with open(f"{Client.cwd}database.json", "r") as data:
-		data = load(data)
+		try:
+			data = load(data)
+		except JSONDecodeError:
+			database_fixer(Client.cwd)
+			data = load(data.read())
 
 		if "stream" not in data.keys():
 			while True:

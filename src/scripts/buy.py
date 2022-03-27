@@ -1,5 +1,7 @@
 from utils.logger import log
 from json import load
+from json.decoder import JSONDecodeError
+from utils.database import database_fixer
 
 def buy(Client, item: str) -> None:
 	"""Buys an item 
@@ -22,7 +24,12 @@ def buy(Client, item: str) -> None:
 		from scripts.balance import balance
 		latest_message = balance(Client)
 		
-		data = load(open(f"{Client.cwd}database.json", "r"))
+		with open(f"{Client.cwd}database.json", "r") as data:
+			try:
+				data = load(data)
+			except JSONDecodeError:
+				database_fixer(Client.cwd)
+				data = load(data.read())
 
 		bank = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[1].split("/")[0].strip())))
 		wallet = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("\n")[0])))

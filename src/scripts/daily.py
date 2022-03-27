@@ -1,13 +1,19 @@
 from json import load, dumps
+from json.decoder import JSONDecodeError
+from utils.database import database_fixer
 from utils.logger import log
 from datetime import datetime
 from time import time, sleep
 from sys import exc_info
 from utils.shared import data
 
-def daily(Client):
+def daily(Client) -> None:
 	with open(f"{Client.cwd}database.json", "r") as data:
-		data = load(data)
+		try:
+			data = load(data)
+		except JSONDecodeError:
+			database_fixer(Client.cwd)
+			data = load(data.read())
 
 		if "daily" not in data.keys():
 			Client.send_message("pls daily")

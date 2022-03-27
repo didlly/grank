@@ -1,6 +1,7 @@
 from requests import get, post
-from json import loads
 from json import load, loads, dumps
+from json.decoder import JSONDecodeError
+from utils.database import database_fixer
 from utils.logger import log
 from datetime import datetime
 from time import time, sleep
@@ -9,7 +10,11 @@ from utils.shared import data
 
 def vote(Client):
 	with open(f"{Client.cwd}database.json", "r") as data:
-		data = load(data)
+		try:
+			data = load(data)
+		except JSONDecodeError:
+			database_fixer(Client.cwd)
+			data = load(data.read())
 
 		if "vote" not in data.keys():
 			json = {

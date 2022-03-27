@@ -1,4 +1,6 @@
 from json import load
+from json.decoder import JSONDecodeError
+from utils.database import database_fixer
 from random import choice
 from utils.logger import log
 from time import time, sleep
@@ -10,11 +12,18 @@ def trivia(Client) -> None:
 
 	latest_message = Client.retreive_message("pls trivia")
 
-	try:
-		answer = load(open(f"{Client.cwd}database.json", "r"))["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
-	except KeyError:
-		answer = None
-		log(None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+	with open(f"{Client.cwd}database.json", "r") as database:
+		try:
+			database = load(database)
+		except JSONDecodeError:
+			database_fixer(Client.cwd)
+			database = load(database.read())
+
+		try:
+			answer = database["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
+		except KeyError:
+			answer = None
+			log(None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
 
 	custom_id = None
 
