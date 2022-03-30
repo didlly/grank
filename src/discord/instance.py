@@ -103,7 +103,7 @@ class Client(object):
 			time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
 
 			while (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time).total_seconds() < self.config["cooldowns"]["timeout"]:
-				request = get(f"https://discord.com/api/v10/channels/{self.channel_id}/messages", headers={"authorization": self.token})
+				request = get(f"https://discord.com/api/v10/channels/{self.channel_id}/messages?limit=1", headers={"authorization": self.token})
 
 				if request.status_code != 200:
 					continue
@@ -152,7 +152,7 @@ class Client(object):
 			if self.config["logging"]["debug"]:
 				log(self.username, "DEBUG", "Detected dodge the fireball game.")
 			while True:
-				request = get(f"https://discord.com/api/v10/channels/{self.channel_id}/messages", headers={"authorization": self.token})
+				request = get(f"https://discord.com/api/v10/channels/{self.channel_id}/messages?limit=1", headers={"authorization": self.token})
 
 				if request.status_code != 200:
 					continue
