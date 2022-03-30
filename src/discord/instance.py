@@ -126,17 +126,16 @@ class Client(object):
 			if latest_message["author"]["id"] != "270904126974590976":
 				raise TimeoutError(f"Timeout exceeded for response from Dank Memer ({self.config['cooldowns']['timeout']} {'second' if self.config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
 			elif len(latest_message["embeds"]) > 0:
-				if "description" in latest_message["embeds"][0].keys():
-					if "The default cooldown is" in latest_message["embeds"][0]["description"]:
-						cooldown = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("**")[1].split("**")[0])))
-						if self.config["logging"]["warning"]:
-							log(self.username, "WARNING", f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.")
-						sleep(cooldown)
-						Client.send_message(self, command)
-					else:
-						break
-				else:
+				if "description" not in latest_message["embeds"][0].keys():
 					break
+				if ("The default cooldown is" not in latest_message["embeds"][0]
+				    ["description"]):
+					break
+				cooldown = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("**")[1].split("**")[0])))
+				if self.config["logging"]["warning"]:
+					log(self.username, "WARNING", f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.")
+				sleep(cooldown)
+				Client.send_message(self, command)
 			else:
 				break
 
