@@ -1,5 +1,31 @@
+import sys
+from os.path import dirname
 from utils.logger import log
-from os import system
+from os import system, mkdir, name
+from datetime import datetime
+from utils.shared import data
+import logging
+
+if name.lower() == "nt":
+	import ctypes
+	kernel32 = ctypes.windll.kernel32
+	kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
+ 
+if getattr(sys, "frozen", False):
+	cwd = dirname(sys.executable)
+elif __file__:
+	cwd = dirname(__file__)
+	
+cwd = f"{cwd}/" if cwd != "" else cwd
+
+try:
+	mkdir(f"{cwd}logs/")
+except FileExistsError:
+	pass
+
+logging.basicConfig(filename=f"{cwd}logs/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", filemode="a", format="%(levelname)s %(asctime)s - %(message)s")
+
+data["logger"] = logging.getLogger()
 
 try:
     from requests import get
