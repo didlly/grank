@@ -158,7 +158,7 @@ def run(credentials: dict, index: int):
 				except Exception:
 					if Client.config["logging"]["warning"]:
 						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls fish` command: `{exc_info()}`.")
-				last_dig = datetime.now().strftime("%x-%X")
+				last_fish = datetime.now().strftime("%x-%X")
 	
 		if Client.config["commands"]["guess"] and data[username]:
 			if (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_guess, "%x-%X")).total_seconds() > 60:
