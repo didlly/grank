@@ -1,6 +1,8 @@
 from requests import post, get
 from time import sleep
 from random import uniform
+from json import load
+from json.decoder import JSONDecodeError
 from utils.logger import log
 from json import loads
 from datetime import datetime
@@ -74,7 +76,40 @@ class Client(object):
 		self.channel_id = channel_id
 		self.token = token
 		self.cwd = cwd
+  
+		data = open(f"{cwd}database.json", "r+", errors="ignore")
+
+		for count in range(1, 6):
+			try:
+				self.database = loads(data.read())
+				break
+			except JSONDecodeError:
+				log(None, "WARNING", "Database file is corrupted. Re-downloading now.")
+
+				req = get("https://raw.githubusercontent.com/didlly/grank/main/src/database.json", allow_redirects=True).content
+				
+				log(None, "DEBUG", "Retreived new database file.")
+				
+				with open(f"{cwd}database.json", "wb") as db:
+					log(None, "DEBUG", f"Opened `{cwd}database.json`.")
+					db.seek(0)
+					db.truncate()
+					db.write(req)
+					log(None, "DEBUG", f"Wrote new database to `{cwd}database.json`.")
+					
+				log(None, "DEBUG", f"Closed `{cwd}database.json`.")
 		
+		if count == 5:
+			log(None, "ERROR", "Database error. Please close and re-open Grank.")
+   
+		class database:
+			def write(content: str):
+				data.seek(0)
+				data.truncate()
+				data.write(content)
+    
+		self.database_file = database
+	
 	def send_message(self, command):
 		if self.config["typing indicator"]["enabled"]:
 			request = post(f"https://discord.com/api/v9/channels/{self.channel_id}/typing", headers={"authorization": self.token})
@@ -190,31 +225,31 @@ class Client(object):
 				if key == "enabled" or key == "trader token" or not self.config["auto trade"][key]:
 					continue
 				elif key in latest_message["content"].lower():
-					Client.send_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+					Client.send_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-					latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+					latest_message = Client.retreive_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-					Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
+					Client.interact_button(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
 
 					sleep(1)
 
-					latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+					latest_message = Client.retreive_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-					Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], self.config["auto trade"]["trader"]["session_id"], self.config['auto trade']['trader']['self.username'])
+					Client.interact_button(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], self.config["auto trade"]["trader"]["session_id"], self.config['auto trade']['trader']['self.username'])
 				elif len(latest_message["embeds"]) != 0:
 					if key in latest_message["embeds"][0]["description"]:
-						Client.send_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+						Client.send_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-						latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+						latest_message = Client.retreive_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
 
-						Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
+						Client.interact_button(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
 
 						sleep(1)
 
-						latest_message = Client.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+						latest_message = Client.retreive_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-						Client.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, self.config['auto trade']['trader']['self.username'])
+						Client.interact_button(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, self.config['auto trade']['trader']['self.username'])
 		return latest_message
 
 	def interact_button(self, command, custom_id, latest_message, token=None):

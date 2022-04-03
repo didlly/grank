@@ -1,10 +1,17 @@
-from utils.logger import log
 from random import randint
-from time import time, sleep
-from sys import exc_info
-from utils.shared import data
 
 def guess(Client) -> None:
+	"""One of the 2 guess the number commands - `pls guess`.
+ 
+	Required item(s): None
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	Client.send_message("pls guess")
 
 	latest_message = Client.retreive_message("pls guess")
@@ -34,7 +41,7 @@ def guess(Client) -> None:
 					Client.send_message(num)
 
 					latest_message = Client.retreive_message(num)
-     
+	 
 					if latest_message["content"] == "not this time, `1` attempt left and `0` hints left.":
 						num = randint(16, 20)
 
@@ -92,40 +99,3 @@ def guess(Client) -> None:
 						Client.send_message(num)
 
 						return
-
-def guess_parent(Client) -> None:
-	"""One of the 2 guess the number commands - `pls guess`.
- 
-	Required item(s): None
-
-	Args:
-		Client (class): The Client for the user.
-
-	Returns:
-		None
-	"""
- 
-	while True:
-		while not data[Client.channel_id] or not data[Client.username]:
-			pass
-
-		data[Client.channel_id] = False
-
-		start = time()
-
-		try:
-			guess(Client)
-		except Exception:
-			if Client.config["logging"]["warning"]:
-				log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls guess` command: `{exc_info()}`")
-
-		end = time()   
-		
-		data[Client.channel_id] = True
-		
-		cooldown = 60 - (end - start)
-
-		if cooldown > 0:
-			sleep(cooldown)
-		else:
-			sleep(1)

@@ -40,29 +40,29 @@ from configuration.config import load_config
 from configuration.credentials import load_credentials
 from threading import Thread
 from utils.shared import data
-from utils.shifts import shifts
-from utils.database import database_fixer
+from utils.logger import log
 from discord.instance import Client as client
-from json import load, dumps
-from json.decoder import JSONDecodeError
+from json import dumps
+from sys import exc_info
+from utils.shifts import shifts
 from discord.guild_id import guild_id
-from scripts.blackjack import blackjack_parent
-from scripts.crime import crime_parent
-from scripts.daily import daily_parent
-from scripts.beg import beg_parent
-from scripts.dig import dig_parent
-from scripts.fish import fish_parent
-from scripts.guess import guess_parent
-from scripts.hunt import hunt_parent
-from scripts.lottery import lottery_parent
-from scripts.search import search_parent
-from scripts.stream import stream_parent
-from scripts.highlow import highlow_parent
-from scripts.postmeme import postmeme_parent
-from scripts.trivia import trivia_parent
-from scripts.snakeeyes import snakeeyes_parent
-from scripts.vote import vote_parent
-from scripts.custom import custom_parent
+from scripts.blackjack import blackjack
+from scripts.crime import crime
+from scripts.daily import daily
+from scripts.beg import beg
+from scripts.dig import dig
+from scripts.fish import fish
+from scripts.guess import guess
+from scripts.hunt import hunt
+from scripts.lottery import lottery
+from scripts.search import search
+from scripts.stream import stream
+from scripts.highlow import highlow
+from scripts.postmeme import postmeme
+from scripts.trivia import trivia
+from scripts.snakeeyes import snakeeyes
+from scripts.vote import vote
+from scripts.custom import custom
 
 try:
 	mkdir(f"{cwd}logs/")
@@ -76,89 +76,208 @@ data["logger"] = logging.getLogger()
 config = load_config(cwd)
 credentials = load_credentials(cwd)
 
-for index in range(len(credentials)):
+def run(credentials: dict, index: int):
 	user_id = credentials[index][0]
 	username = credentials[index][1]
 	session_id = credentials[index][2]
 	channel_id = credentials[index][3]
 	token = credentials[index][4]
-	data[channel_id] = True
  
 	Client = client(config, user_id, username, session_id, channel_id, token, cwd)
-
 	
-	with open(f"{Client.cwd}database.json", "r") as database:
-		try:
-			database = load(database)
-		except JSONDecodeError:
-			database_fixer(Client.cwd)
-			database = load(database)
-		
-	if f"{user_id}_confirmation" not in database.keys():
+	if f"{user_id}_confirmation" not in Client.database.keys():
 		Client.send_message("pls settings confirmations nah")
-		database[f"{user_id}_confirmation"] = True
-		with open(f"{cwd}database.json", "w") as database_file:
-			database_file.write(dumps(database))
+		Client.database[f"{user_id}_confirmation"] = True
+		Client.database_file.write(dumps(Client.database))
 
 	guild_id(Client)
 	
-	if config["shifts"]["enabled"]:
+	if Client.config["shifts"]["enabled"]:
 		data[username] = False
-		Thread(target=shifts, args=(username, config, cwd)).start()
+		Thread(target=shifts, args=(Client)).start()
 	else:
 		data[username] = True
+	   
+	last_beg, last_blackjack, last_crime, last_dig, last_fish, last_guess, last_highlow, last_hunt, last_postmeme, last_search, last_snakeeyes, last_trivia = ["01/01/22-00:00:00"] * 12
 	
-	if config["custom commands"]["enabled"]:
-		for key in config["custom commands"]:
-			if key == "enabled":
-				continue
-			if config["custom commands"][key]["enabled"]:
-				Thread(target=custom_parent, args=(Client, key, config["custom commands"][key]["cooldown"], config["custom commands"][key]["patron cooldown"])).start()
+	while True:
+		if Client.config["commands"]["beg"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_beg, "%x-%X")).total_seconds() > 25) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_beg, "%x-%X")).total_seconds() > 45:
+				try:
+					beg(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls beg` command: `{exc_info()}`.")
+				last_beg = datetime.now().strftime("%x-%X")
+	
+		if Client.config["blackjack"]["enabled"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_blackjack, "%x-%X")).total_seconds() > 5) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_blackjack, "%x-%X")).total_seconds() > 10:
+				try:
+					blackjack(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls blackjack` command: `{exc_info()}`.")
+				last_blackjack = datetime.now().strftime("%x-%X")
+	
+		if Client.config["commands"]["crime"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_crime, "%x-%X")).total_seconds() > 15) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_crime, "%x-%X")).total_seconds() > 45:
+				try:
+					crime(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls crime` command: `{exc_info()}`.")
+				last_crime = datetime.now().strftime("%x-%X")
+	
+		if Client.config["commands"]["daily"] and data[username]:
+			if (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(Client.database["daily"], "%x-%X")).total_seconds() > 23400:
+				try:
+					daily(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls daily` command: `{exc_info()}`.")
 
-	if config["commands"]["beg"]:
-		Thread(target=beg_parent, args=[Client]).start()
-  
-	if config["blackjack"]["enabled"]:
-		Thread(target=blackjack_parent, args=[Client]).start()
-  
-	if config["commands"]["crime"]:
-		Thread(target=crime_parent, args=[Client]).start()
-  
-	if config["commands"]["daily"]:
-		Thread(target=daily_parent, args=[Client]).start()
+				Client.database["daily"] = datetime.now().strftime("%x-%X")
+				Client.database_file.write(dumps(Client.database))
+	
+				if Client.config["logging"]["debug"]:
+					log(Client.username, "DEBUG", "Successfully updated latest command run of `pls daily`.")
 
-	if config["commands"]["dig"]:
-		Thread(target=dig_parent, args=[Client]).start()
-  
-	if config["commands"]["fish"]:
-		Thread(target=fish_parent, args=[Client]).start()
-  
-	if config["commands"]["guess"]:
-		Thread(target=guess_parent, args=[Client]).start()
+		if Client.config["commands"]["dig"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_dig, "%x-%X")).total_seconds() > 25) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_dig, "%x-%X")).total_seconds() > 45:
+				try:
+					dig(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls dig` command: `{exc_info()}`.")
+				last_dig = datetime.now().strftime("%x-%X")
+	
+		if Client.config["commands"]["fish"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_fish, "%x-%X")).total_seconds() > 25) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_fish, "%x-%X")).total_seconds() > 45:
+				try:
+					fish(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls fish` command: `{exc_info()}`.")
+				last_dig = datetime.now().strftime("%x-%X")
+	
+		if Client.config["commands"]["guess"] and data[username]:
+			if (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_guess, "%x-%X")).total_seconds() > 60:
+				try:
+					guess(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls guess` command: `{exc_info()}`.")
+				last_guess = datetime.now().strftime("%x-%X")
 
-	if config["commands"]["highlow"]:
-		Thread(target=highlow_parent, args=[Client]).start()
-  
-	if config["commands"]["hunt"]:
-		Thread(target=hunt_parent, args=[Client]).start()
-  
-	if config["lottery"]["enabled"]:
-		Thread(target=lottery_parent, args=[Client]).start()	
+		if Client.config["commands"]["highlow"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_highlow, "%x-%X")).total_seconds() > 15) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_highlow, "%x-%X")).total_seconds() > 30:
+				try:
+					highlow(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls highlow` command: `{exc_info()}`.")
+				last_highlow = datetime.now().strftime("%x-%X")
+	
+		if Client.config["commands"]["hunt"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_hunt, "%x-%X")).total_seconds() > 25) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_hunt, "%x-%X")).total_seconds() > 40:
+				try:
+					hunt(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls hunt` command: `{exc_info()}`.")
+				last_hunt = datetime.now().strftime("%x-%X")
+	
+		if Client.config["lottery"]["enabled"] and data[username]:
+			if (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(Client.database["lottery"], "%x-%X")).total_seconds() > Client.config["lottery"]["cooldown"]:
+				try:
+					lottery(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls lottery` command: `{exc_info()}`.")
+				
+				Client.database["lottery"] = datetime.now().strftime("%x-%X")
+				Client.database_file.write(dumps(Client.database))
+	
+				if Client.config["logging"]["debug"]:
+					log(Client.username, "DEBUG", "Successfully updated latest command run of `pls lottery`.")
 
-	if config["commands"]["postmeme"]:
-		Thread(target=postmeme_parent, args=[Client]).start()
-  
-	if config["commands"]["search"]:
-		Thread(target=search_parent, args=[Client]).start()
+		if Client.config["commands"]["postmeme"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_postmeme, "%x-%X")).total_seconds() > 45) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_postmeme, "%x-%X")).total_seconds() > 50:
+				try:
+					postmeme(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls postmeme` command: `{exc_info()}`.")
+				last_postmeme = datetime.now().strftime("%x-%X")
+	
+		if Client.config["commands"]["search"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_search, "%x-%X")).total_seconds() > 15) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_search, "%x-%X")).total_seconds() > 30:
+				try:
+					search(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls search` command: `{exc_info()}`.")
+				last_search = datetime.now().strftime("%x-%X")
 
-	if config["snakeeyes"]["enabled"]:
-		Thread(target=snakeeyes_parent, args=[Client]).start()
-  
-	if config["stream"]["enabled"]:
-		Thread(target=stream_parent, args=[Client]).start()
-  
-	if config["commands"]["trivia"]:
-		Thread(target=trivia_parent, args=[Client]).start()
-  
-	if config["commands"]["vote"]:
-		Thread(target=vote_parent, args=[Client]).start()
+		if Client.config["snakeeyes"]["enabled"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_snakeeyes, "%x-%X")).total_seconds() > 5) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_snakeeyes, "%x-%X")).total_seconds() > 10:
+				try:
+					snakeeyes(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls snakeeyes` command: `{exc_info()}`.")
+				last_snakeeyes = datetime.now().strftime("%x-%X")
+	
+		if Client.config["stream"]["enabled"] and data[username]:
+			if (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(Client.database["stream"], "%x-%X")).total_seconds() > 600:
+				try:
+					stream(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls stream` command: `{exc_info()}`.")
+				
+				Client.database["stream"] = datetime.now().strftime("%x-%X")
+				Client.database_file.write(dumps(Client.database))
+	
+				if Client.config["logging"]["debug"]:
+					log(Client.username, "DEBUG", "Successfully updated latest command run of `pls stream`.")
+	
+		if Client.config["commands"]["trivia"] and data[username]:
+			if (Client.config["cooldowns"]["patron"] and (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_trivia, "%x-%X")).total_seconds() > 3) or (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(last_trivia, "%x-%X")).total_seconds() > 5:
+				try:
+					trivia(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls trivia` command: `{exc_info()}`.")
+				last_trivia = datetime.now().strftime("%x-%X")
+	
+		if Client.config["commands"]["vote"] and data[username]:
+			if (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(Client.database["vote"], "%x-%X")).total_seconds() > 43200:
+				try:
+					vote(Client)
+				except Exception:
+					if Client.config["logging"]["warning"]:
+						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls vote` command: `{exc_info()}`.")
+      
+				Client.database["vote"] = datetime.now().strftime("%x-%X")
+				Client.database_file.write(dumps(Client.database))
+	
+				if Client.config["logging"]["debug"]:
+					log(Client.username, "DEBUG", "Successfully updated latest command run of `pls vote`.")
+
+		if Client.config["custom commands"]["enabled"]:
+			for key in Client.config["custom commands"]:
+				if key == "enabled":
+					continue
+				if Client.config["custom commands"][key]["enabled"]:
+					try:
+						exec(f"if (datetime.strptime(datetime.now().strftime('%x-%X'), '%x-%X') - datetime.strptime(custom_{key.replace(' ', '_')}, '%x-%X')).total_seconds() > Client.config['custom commands'][key]['cooldown']: custom(Client, key)")
+					except NameError:
+						exec(f"custom_{key.replace(' ', '_')} = '01/01/22-00:00:00'")
+						custom(Client, key)
+      
+		while not data[username]:
+			pass
+
+for index in range(len(credentials)):
+	Thread(target=run, args=[credentials, index]).start()

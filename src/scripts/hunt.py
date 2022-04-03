@@ -1,9 +1,17 @@
 from utils.logger import log
-from time import time, sleep
-from sys import exc_info
-from utils.shared import data
 
 def hunt(Client) -> None:
+	"""One of the basic 7 currency commands - `pls hunt`.
+ 
+	Required item(s): hunting rifle
+
+	Args:
+		Client (class): The Client for the user.
+
+	Returns:
+		None
+	"""
+ 
 	Client.send_message("pls hunt")
 
 	latest_message = Client.retreive_message("pls hunt")
@@ -23,43 +31,3 @@ def hunt(Client) -> None:
 				f"A hunting rifle is required for the command `pls fish`. However, since {'auto buy is off for hunting rifles,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 			)
 			return
-
-def hunt_parent(Client) -> None:
-	"""One of the basic 7 currency commands - `pls hunt`.
- 
-	Required item(s): hunting rifle
-
-	Args:
-		Client (class): The Client for the user.
-
-	Returns:
-		None
-	"""
- 
-	while True:
-		while not data[Client.channel_id] or not data[Client.username]:
-			pass
-
-		data[Client.channel_id] = False
-
-		start = time()
-
-		try:
-			hunt(Client)
-		except Exception:
-			if Client.config["logging"]["warning"]:
-				log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls hunt` command: `{exc_info()}`")
-
-		end = time()   
-		
-		data[Client.channel_id] = True
-		
-		if Client.config["cooldowns"]["patron"]:
-			cooldown = 25 - (end - start)
-		else:
-			cooldown = 40 - (end - start)
-
-		if cooldown > 0:
-			sleep(cooldown)
-		else:
-			sleep(1)

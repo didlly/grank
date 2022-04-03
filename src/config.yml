@@ -41,7 +41,6 @@ custom commands:
   pls dep max:
     enabled: True
     cooldown: 300
-    patron cooldown: 300
 
 shifts:
   enabled: False
@@ -50,7 +49,6 @@ shifts:
   
 auto buy:
   enabled: True
-  laptop: True
   shovel: True
   fishing pole: True
   hunting rifle: True
