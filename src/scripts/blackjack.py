@@ -13,7 +13,11 @@ def blackjack(Client) -> None:
 		None
 	"""
  
-	amount = Client.config['blackjack']['amount'] if not Client.config['blackjack']['random'] else randint(Client.config['blackjack']['minimum'], Client.config['blackjack']['maximum'])
+	amount = (randint(
+	    Client.config['blackjack']['minimum'],
+	    Client.config['blackjack']['maximum'],
+	) if Client.config['blackjack']['random'] else
+	          Client.config['blackjack']['amount'])
 
 	Client.send_message(f"pls bj {amount}")
 
@@ -24,9 +28,9 @@ def blackjack(Client) -> None:
 			log(Client.username, "WARNING", f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.")
 			return
 
-		if "description" in latest_message["embeds"][0].keys():
-			if "You lost" in latest_message["embeds"][0]["description"]:
-				return
+		if ("description" in latest_message["embeds"][0].keys()
+		    and "You lost" in latest_message["embeds"][0]["description"]):
+			return
 
 		total = int("".join(filter(str.isdigit, latest_message["embeds"][0]["fields"][0]["value"].split("\n")[-1])))
 

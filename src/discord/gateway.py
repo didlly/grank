@@ -27,4 +27,10 @@ def gateway(token):
 		}
 	}))
 	
-	return loads(ws.recv())["d"]["sessions"][0]["session_id"]
+ 
+	res = ws.recv()
+ 
+	try:
+		return loads(res)["d"]["sessions"][0]["session_id"]
+	except TypeError:
+		return "a"

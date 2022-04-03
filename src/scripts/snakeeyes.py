@@ -12,6 +12,10 @@ def snakeeyes(Client) -> None:
 		None
 	"""
  
-	amount = Client.config['snakeeyes']['amount'] if not Client.config['snakeeyes']['random'] else randint(Client.config['snakeeyes']['minimum'], Client.config['snakeeyes']['maximum'])
+	amount = (randint(
+	    Client.config['snakeeyes']['minimum'],
+	    Client.config['snakeeyes']['maximum'],
+	) if Client.config['snakeeyes']['random'] else
+	          Client.config['snakeeyes']['amount'])
 
 	Client.send_message(f"pls snakeeyes {amount}")

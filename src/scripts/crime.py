@@ -16,12 +16,10 @@ def crime(Client) -> None:
 
 	latest_message = Client.retreive_message("pls crime")
 
-	custom_id = None
- 
-	for option in latest_message["components"][0]["components"]:
-		if option["label"] == "tax evasion":
-			# Gives Badosz's card
-			custom_id = option["custom_id"]
-			break
-  
+	custom_id = next(
+	    (option["custom_id"]
+	     for option in latest_message["components"][0]["components"]
+	     if option["label"] == "tax evasion"),
+	    None,
+	)
 	Client.interact_button("pls crime", choice(latest_message["components"][0]["components"])["custom_id"] if custom_id is None else custom_id, latest_message)

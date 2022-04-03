@@ -1,3 +1,4 @@
+import contextlib
 import sys
 from platform import system
 from os.path import dirname
@@ -8,12 +9,12 @@ if system().lower() == "windows":
 	import ctypes
 	kernel32 = ctypes.windll.kernel32
 	kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
- 
+
 if getattr(sys, "frozen", False):
 	cwd = dirname(sys.executable)
 elif __file__:
 	cwd = dirname(__file__)
-	
+
 cwd = f"{cwd}/" if cwd != "" else cwd
 
 with open(f"{cwd}current_version", "r") as f:
@@ -64,16 +65,14 @@ from scripts.snakeeyes import snakeeyes
 from scripts.vote import vote
 from scripts.custom import custom
 
-try:
+with contextlib.suppress(FileExistsError):
 	mkdir(f"{cwd}logs/")
-except FileExistsError:
-	pass
-
 logging.basicConfig(filename=f"{cwd}logs/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", filemode="a", format="%(levelname)s %(asctime)s - %(message)s")
 
 data["logger"] = logging.getLogger()
 
 config = load_config(cwd)
+credentials = load_credentials(cwd)
 credentials = load_credentials(cwd)
 
 def run(credentials: dict, index: int):
@@ -278,8 +277,10 @@ def run(credentials: dict, index: int):
       
 		while not data[username]:
 			pass
-
-		Client = client(config, user_id, username, session_id, channel_id, token, cwd)
+		
+		if Client.config["auto update"]:
+			if Client.config["auto update"]["config"]:
+				Client = client(config, user_id, username, session_id, channel_id, token, cwd)
 
 for index in range(len(credentials)):
 	Thread(target=run, args=[credentials, index]).start()

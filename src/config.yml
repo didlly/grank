@@ -72,9 +72,7 @@ cooldowns:
 
 auto update:
   enabled: False
-  config:
-    enabled: True
-    cooldown: 60
+  config: False
 
 logging:
   debug: True

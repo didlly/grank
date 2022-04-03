@@ -34,7 +34,6 @@
   * [```cooldowns``` category](https://github.com/didlly/grank#cooldowns-category)
   * [```logging``` category](https://github.com/didlly/grank#logging-category)
   * [```auto update``` category](https://github.com/didlly/grank#auto-update-category)
-    * [```config``` sub category](https://github.com/didlly/grank#config-sub-category)
 * [Disclaimer](https://github.com/didlly/grank#disclaimer)
 
 ## What is Grank?
@@ -251,13 +250,7 @@ Values in the ```auto update``` category tell the program whether or not to *aut
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | ```enabled```  | ```Boolean``` | ```False```  | If this is set to ```True```, the program will auto update the specified options. If it is set to ```False``` the program will not auto update them. |
-
-#### ```config``` sub category
-
-| Name  | Type | Default Value | Description |
-| ------------- | ------------- | ------------- | ------------- |
-| ```enabled```  | ```Boolean``` | ```True```  | If this is set to ```True```, the program will auto update the loaded config. If it is set to ```False``` the program will not auto update the loaded config. |
-| ```cooldown```  | ```Integer``` | ```60```  | Telss the program how often it should updated the loaded config. |
+| ```config```  | ```Boolean``` | ```True```  | If this is set to ```True```, the program will auto update the loaded config. If it is set to ```False``` the program will not auto update the loaded config. |
 
 ### ```logging``` category
 
