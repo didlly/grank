@@ -33,6 +33,8 @@
   * [```typing indicator``` category](https://github.com/didlly/grank#typing-indicator-category)
   * [```cooldowns``` category](https://github.com/didlly/grank#cooldowns-category)
   * [```logging``` category](https://github.com/didlly/grank#logging-category)
+  * [```auto update``` category](https://github.com/didlly/grank#auto-update-category)
+    * [```config``` sub category](https://github.com/didlly/grank#config-sub-category)
 * [Disclaimer](https://github.com/didlly/grank#disclaimer)
 
 ## What is Grank?
@@ -203,7 +205,7 @@ Values in the ```auto buy``` category tell the program whether or not to *buy ce
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| ```enabled```  | ```Boolean``` | ```True```  | If this is set to ```True``` no items will be bought. If it is set to ```False``` the program will try and buy the item if their respective config value is ```True```. |
+| ```enabled```  | ```Boolean``` | ```True```  | If this is set to ```False``` no items will be bought. If it is set to ```True``` the program will try and buy the item if their respective config value is ```True```. |
 | ```shovel```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```shovel``` if needed and the user doesn't have it. |
 | ```fishing pole```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the item ```fishing pole``` if needed and the user doesn't have it. |
 | ```hunting rifle```  | ```Boolean``` | ```True```  | Tells the program whether or not to try and buy the ```hunting rifle``` if needed and the user doesn't have it. |
@@ -241,6 +243,21 @@ Values in the ```cooldowns``` category tell the program whether to use cooldowns
 | ------------- | ------------- | ------------- | ------------- |
 | ```patron```  | ```Boolean``` | ```False```  | Changes cooldowns to reflect the cooldowns of ```patrons```. |
 | ```timeout```  | ```Integer``` | ```5```  | Timeout for waiting for responses from Dank Memer to commands that require user interaction (like ```pls search```). |
+
+### ```auto update``` category
+
+Values in the ```auto update``` category tell the program whether or not to *automatically update the loaded configuration* and *how often to do so*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| ```enabled```  | ```Boolean``` | ```False```  | If this is set to ```True```, the program will auto update the specified options. If it is set to ```False``` the program will not auto update them. |
+
+#### ```config``` sub category
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| ```enabled```  | ```Boolean``` | ```True```  | If this is set to ```True```, the program will auto update the loaded config. If it is set to ```False``` the program will not auto update the loaded config. |
+| ```cooldown```  | ```Integer``` | ```60```  | Telss the program how often it should updated the loaded config. |
 
 ### ```logging``` category
 
