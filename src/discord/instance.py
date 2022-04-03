@@ -110,6 +110,15 @@ class Client(object):
 				data.write(content)
     
 		self.database_file = database
+  
+		def config_update():
+			while True:
+				sleep(self.config["auto update"]["config"]["cooldown"])
+				self.config = load_config(self.cwd)
+   
+		if config["auto update"]["enabled"]:
+			if config["auto update"]["config"]["enabled"]:
+				Thread(target=config_update).start()
 	
 	def send_message(self, command):
 		if self.config["typing indicator"]["enabled"]:
