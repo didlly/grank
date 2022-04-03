@@ -73,7 +73,6 @@ data["logger"] = logging.getLogger()
 
 config = load_config(cwd)
 credentials = load_credentials(cwd)
-credentials = load_credentials(cwd)
 
 def run(credentials: dict, index: int):
 	user_id = credentials[index][0]
