@@ -1,6 +1,8 @@
-from requests import get
 from json import loads
+
+from requests import get
 from utils.shared import data
+
 
 def guild_id(Client):
 	"""Gets the `guild_id` of the channel specified by the `channel_id` in the `Client` argument.

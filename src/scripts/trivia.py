@@ -1,5 +1,7 @@
 from random import choice
+
 from utils.logger import log
+
 
 def trivia(Client) -> None:
 	"""A trivia command - `pls trivia`.

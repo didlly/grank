@@ -1,6 +1,8 @@
-from requests import get, post
 from json import loads
+
+from requests import get, post
 from utils.logger import log
+
 
 def vote(Client) -> None:
 	"""A function that votes for Dank Memer on Discord Bot List.

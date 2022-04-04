@@ -1,5 +1,6 @@
 from random import choice
 
+
 def postmeme(Client) -> None:
 	"""One of the basic 7 currency commands - `pls postmeme`.
  

@@ -1,5 +1,6 @@
 from utils.logger import log
 
+
 def dig(Client):
 	"""One of the basic 7 currency commands - `pls dig`.
  

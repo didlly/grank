@@ -1,5 +1,6 @@
 from utils.logger import log
 
+
 def fish(Client) -> None:
 	"""One of the basic 7 currency commands - `pls fish`.
  

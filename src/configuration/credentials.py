@@ -1,7 +1,9 @@
 from json import load, loads
-from utils.logger import log
-from requests import get
+
 from discord.gateway import gateway
+from requests import get
+from utils.logger import log
+
 
 def load_credentials(cwd: str) -> dict:
 	"""Loads the credentials file (`credentials.json`) and makes sure the required authorization values are present.

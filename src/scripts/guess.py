@@ -1,5 +1,6 @@
 from random import randint
 
+
 def guess(Client) -> None:
 	"""One of the 2 guess the number commands - `pls guess`.
  

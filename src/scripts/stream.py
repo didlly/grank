@@ -1,5 +1,7 @@
-from random import randint, choice
+from random import choice, randint
+
 from utils.logger import log
+
 
 def stream(Client) -> None:
 	"""A streaming command - `pls stream`.

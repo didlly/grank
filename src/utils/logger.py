@@ -1,7 +1,9 @@
-from typing import Union
 from datetime import datetime
-from utils.shared import data
+from typing import Union
+
 from utils.console import fore, style
+from utils.shared import data
+
 
 def log(username: Union[str, None], level: str, text: str) -> None:
     """A function which logs messages to the console and to the log file.

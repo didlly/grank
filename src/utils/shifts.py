@@ -1,8 +1,10 @@
-from json import dumps
 from datetime import datetime
+from json import dumps
+from time import sleep
+
 from utils.logger import log
 from utils.shared import data
-from time import sleep
+
 
 def shifts(Client) -> None:
 	"""A function which controls shifts.

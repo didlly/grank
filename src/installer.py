@@ -1,11 +1,12 @@
 import contextlib
-import sys
-from os.path import dirname
-from utils.logger import log
-from os import system, mkdir, name
-from datetime import datetime
-from utils.shared import data
 import logging
+import sys
+from datetime import datetime
+from os import mkdir, name, system
+from os.path import dirname
+
+from utils.logger import log
+from utils.shared import data
 
 if name.lower() == "nt":
 	import ctypes

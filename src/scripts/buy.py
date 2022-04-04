@@ -1,5 +1,6 @@
 from utils.logger import log
 
+
 def buy(Client, item: str) -> None:
 	"""Buys an item 
  

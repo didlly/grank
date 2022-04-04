@@ -1,5 +1,6 @@
 from random import randint
 
+
 def snakeeyes(Client) -> None:
 	"""One of the 3 gamble commands - `pls snakeeyes`.
  

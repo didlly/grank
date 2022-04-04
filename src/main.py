@@ -1,9 +1,10 @@
 import contextlib
 import sys
-from platform import system
 from os.path import dirname
-from utils.console import fore, style
+from platform import system
+
 from requests import get
+from utils.console import fore, style
 
 if system().lower() == "windows":
 	import ctypes
@@ -35,38 +36,40 @@ print(f"""{fore.Magenta}
 """)
 
 import logging
-from os import mkdir
 from datetime import datetime
+from json import dumps
+from os import mkdir
+from sys import exc_info
+from threading import Thread
+
 from configuration.config import load_config
 from configuration.credentials import load_credentials
-from threading import Thread
-from utils.shared import data
-from utils.logger import log
-from discord.instance import Client as client
-from json import dumps
-from sys import exc_info
-from utils.shifts import shifts
 from discord.guild_id import guild_id
+from discord.instance import Client as client
+from scripts.beg import beg
 from scripts.blackjack import blackjack
 from scripts.crime import crime
+from scripts.custom import custom
 from scripts.daily import daily
-from scripts.beg import beg
 from scripts.dig import dig
 from scripts.fish import fish
 from scripts.guess import guess
+from scripts.highlow import highlow
 from scripts.hunt import hunt
 from scripts.lottery import lottery
-from scripts.search import search
-from scripts.stream import stream
-from scripts.highlow import highlow
 from scripts.postmeme import postmeme
-from scripts.trivia import trivia
+from scripts.search import search
 from scripts.snakeeyes import snakeeyes
+from scripts.stream import stream
+from scripts.trivia import trivia
 from scripts.vote import vote
-from scripts.custom import custom
+from utils.logger import log
+from utils.shared import data
+from utils.shifts import shifts
 
 with contextlib.suppress(FileExistsError):
 	mkdir(f"{cwd}logs/")
+
 logging.basicConfig(filename=f"{cwd}logs/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", filemode="a", format="%(levelname)s %(asctime)s - %(message)s")
 
 data["logger"] = logging.getLogger()

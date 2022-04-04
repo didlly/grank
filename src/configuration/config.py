@@ -1,8 +1,10 @@
-from utils.yaml import load
-from utils.logger import log
+from json import loads
+
 from discord.gateway import gateway
 from requests import get
-from json import loads
+from utils.logger import log
+from utils.yaml import load
+
 
 def load_config(cwd: str) -> dict:
 	"""Loads the configuration file (`config.yml`) and makes sure the required configuration values are present.

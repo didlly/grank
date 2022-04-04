@@ -1,5 +1,7 @@
 from random import randint
+
 from utils.logger import log
+
 
 def blackjack(Client) -> None:
 	"""One of the 3 gamble commands - `pls blackjack`.
