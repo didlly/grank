@@ -16,17 +16,17 @@ def shifts(Client) -> None:
 	"""
  
 	while True:
-		if (datetime.strptime(datetime.now().strftime("%Y:%m:%d-%H:%M:%S"), "%Y:%m:%d-%H:%M:%S") - datetime.strptime(Client.database["shifts"]["last active"], "%Y:%m:%d-%H:%M:%S")).total_seconds() > Client.config["shifts"]["active"]:
+		if (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(Client.database["shifts"]["last active"], "%x-%X")).total_seconds() > Client.config["shifts"]["active"]:
 			data[Client.username] = False
 			log(Client.username, "DEBUG", "Beginning sleep phase.")
 			sleep(Client.config["shifts"]["passive"])
 			data[Client.username] = True
 			log(Client.username, "DEBUG", "Beginning active phase.")
-			Client.database["shifts"]["last active"] = datetime.now().strftime("%Y:%m:%d-%H:%M:%S")
+			Client.database["shifts"]["last active"] = datetime.now().strftime("%x-%X")
 		
 		Client.database_file.write(dumps(Client.database))
 
-		cooldown = (datetime.strptime(datetime.now().strftime("%Y:%m:%d-%H:%M:%S"), "%Y:%m:%d-%H:%M:%S") - datetime.strptime(Client.database["shifts"]["last active"], "%Y:%m:%d-%H:%M:%S")).total_seconds() - Client.config["shifts"]["active"]
+		cooldown = (datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - datetime.strptime(Client.database["shifts"]["last active"], "%x-%X")).total_seconds() - Client.config["shifts"]["active"]
 
 		if cooldown > 0:
 			sleep(cooldown)

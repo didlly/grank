@@ -95,7 +95,7 @@ def run(credentials: dict, index: int):
 	
 	if Client.config["shifts"]["enabled"]:
 		data[username] = False
-		Thread(target=shifts, args=(Client)).start()
+		Thread(target=shifts, args=(Client,)).start()
 	else:
 		data[username] = True
 	   
