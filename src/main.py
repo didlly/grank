@@ -1,5 +1,5 @@
-import contextlib
 import sys
+from contextlib import suppress
 from os.path import dirname
 from platform import system
 
@@ -67,7 +67,7 @@ from utils.logger import log
 from utils.shared import data
 from utils.shifts import shifts
 
-with contextlib.suppress(FileExistsError):
+with suppress(FileExistsError):
 	mkdir(f"{cwd}logs/")
 
 logging.basicConfig(filename=f"{cwd}logs/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", filemode="a", format="%(levelname)s %(asctime)s - %(message)s")
@@ -95,7 +95,7 @@ def run(credentials: dict, index: int):
 	
 	if Client.config["shifts"]["enabled"]:
 		data[username] = False
-		Thread(target=shifts, args=(Client,)).start()
+		Thread(target=shifts, args=[Client]).start()
 	else:
 		data[username] = True
 	   
