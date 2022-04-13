@@ -1,5 +1,5 @@
 from datetime import datetime
-from json import loads
+from json import loads, dumps
 from json.decoder import JSONDecodeError
 from utils.console import fore, style
 from random import uniform
@@ -89,15 +89,17 @@ class Client(object):
 			except JSONDecodeError:
 				log(None, "WARNING", "Database file is corrupted. Re-downloading now.")
 
-				req = get("https://raw.githubusercontent.com/didlly/grank/main/src/database.json", allow_redirects=True).content
-				
+				req = loads(get("https://raw.githubusercontent.com/didlly/grank/main/src/database.json", allow_redirects=True).content)
+				req["shifts"]["last active"] = datetime.now().strftime("%x-%X")
+				req["shifts"]["last passive"] = datetime.now().strftime("%x-%X")
+
 				log(None, "DEBUG", "Retreived new database file.")
 				
-				with open(f"{cwd}database.json", "wb") as db:
+				with open(f"{cwd}database.json", "w") as db:
 					log(None, "DEBUG", f"Opened `{cwd}database.json`.")
 					db.seek(0)
 					db.truncate()
-					db.write(req)
+					db.write(dumps(req))
 					log(None, "DEBUG", f"Wrote new database to `{cwd}database.json`.")
 					
 				log(None, "DEBUG", f"Closed `{cwd}database.json`.")
