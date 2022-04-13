@@ -1,8 +1,5 @@
 from random import choice
 
-from utils.logger import log
-
-
 def trivia(Client) -> None:
 	"""A trivia command - `pls trivia`.
  
@@ -23,7 +20,7 @@ def trivia(Client) -> None:
 		answer = Client.database["trivia"][latest_message["embeds"][0]["description"].split("\n")[0].replace("*", "").replace('"', "&quot;")]
 	except KeyError:
 		answer = None
-		log(None, "WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+		Client.log("WARNING", f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
 
 	custom_id = None
 
@@ -32,7 +29,7 @@ def trivia(Client) -> None:
 			custom_id = latest_message["components"][0]["components"][index]["custom_id"]
 
 	if custom_id is None:
-		log(None, "WARNING", f"Unknown answer to trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
+		Client.log("WARNING", f"Unknown answer to trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.")
 		custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
 
 	Client.interact_button("pls trivia", custom_id, latest_message)

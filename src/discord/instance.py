@@ -1,11 +1,10 @@
 from datetime import datetime
 from json import loads
 from json.decoder import JSONDecodeError
+from utils.console import fore, style
 from random import uniform
-from threading import Thread
 from time import sleep
 
-from configuration.config import load_config
 from requests import get, post
 from utils import shared
 from utils.logger import log
@@ -79,6 +78,7 @@ class Client(object):
 		self.channel_id = channel_id
 		self.token = token
 		self.cwd = cwd
+		self.log_file = open(f"{cwd}logs/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", "a")
   
 		data = open(f"{cwd}database.json", "r+", errors="ignore")
 
@@ -112,15 +112,6 @@ class Client(object):
 				data.write(content)
     
 		self.database_file = database
-  
-		def config_update():
-			while True:
-				sleep(self.config["auto update"]["config"]["cooldown"])
-				self.config = load_config(self.cwd)
-   
-		if config["auto update"]["enabled"]:
-			if config["auto update"]["config"]["enabled"]:
-				Thread(target=config_update).start()
 	
 	def send_message(self, command):
 		if self.config["typing indicator"]["enabled"]:
@@ -331,3 +322,26 @@ class Client(object):
 					sleep(request["retry_after"])
 					continue
 				raise DropdownInteractError(f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
+ 
+	def log(self, level: str, text: str) -> None:
+		"""A function which logs messages to the console and to the log file.
+
+		Args:
+			level (str): The type of message to be logged.
+			text (str): The message to be logged.
+
+		Returns:
+			None
+		"""
+    
+		time = datetime.now().strftime("[%x-%X]")
+
+		print(f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}")
+
+		self.log_file.write(f"{time} - {self.username} - {level} | {text}\n")
+		self.log_file.flush()
+  
+		if level == "ERROR":
+			_ = input(f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}")
+			exit(1)
+		

@@ -1,7 +1,5 @@
 from random import randint
 
-from utils.logger import log
-
 
 def blackjack(Client) -> None:
 	"""One of the 3 gamble commands - `pls blackjack`.
@@ -15,11 +13,7 @@ def blackjack(Client) -> None:
 		None
 	"""
  
-	amount = (randint(
-	    Client.config['blackjack']['minimum'],
-	    Client.config['blackjack']['maximum'],
-	) if Client.config['blackjack']['random'] else
-	          Client.config['blackjack']['amount'])
+	amount = randint(Client.config['blackjack']['minimum'], Client.config['blackjack']['maximum']) if Client.config['blackjack']['random'] else Client.config['blackjack']['amount']
 
 	Client.send_message(f"pls bj {amount}")
 
@@ -27,7 +21,7 @@ def blackjack(Client) -> None:
 		latest_message = Client.retreive_message(f"pls bj {amount}")
 
 		if "coins, dont try and lie to me hoe." in latest_message["content"] or "You have no coins in your wallet to gamble with lol." in latest_message["content"]:
-			log(Client.username, "WARNING", f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.")
+			Client.log("WARNING", f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.")
 			return
 
 		if ("description" in latest_message["embeds"][0].keys()

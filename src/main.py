@@ -35,7 +35,6 @@ print(f"""{fore.Magenta}
 {style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/h7jK9pBkAs
 """)
 
-import logging
 from datetime import datetime
 from json import dumps
 from os import mkdir
@@ -69,10 +68,6 @@ from utils.shifts import shifts
 
 with suppress(FileExistsError):
 	mkdir(f"{cwd}logs/")
-
-logging.basicConfig(filename=f"{cwd}logs/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", filemode="a", format="%(levelname)s %(asctime)s - %(message)s")
-
-data["logger"] = logging.getLogger()
 
 config = load_config(cwd)
 credentials = load_credentials(cwd)
@@ -259,7 +254,7 @@ def run(credentials: dict, index: int):
 				except Exception:
 					if Client.config["logging"]["warning"]:
 						log(Client.username, "WARNING", f"An unexpected error occured during the running of the `pls vote` command: `{exc_info()}`.")
-      
+	  
 				Client.database["vote"] = datetime.now().strftime("%x-%X")
 				Client.database_file.write(dumps(Client.database))
 	
@@ -276,7 +271,7 @@ def run(credentials: dict, index: int):
 					except NameError:
 						exec(f"custom_{key.replace(' ', '_')} = '01/01/22-00:00:00'")
 						custom(Client, key)
-      
+	  
 		while not data[username]:
 			pass
 		

@@ -1,6 +1,3 @@
-from utils.logger import log
-
-
 def dig(Client):
 	"""One of the basic 7 currency commands - `pls dig`.
  
@@ -19,15 +16,14 @@ def dig(Client):
 
 	if latest_message["content"] == "You don't have a shovel, you need to go buy one. I'd hate to let you dig with your bare hands.":
 		if Client.config["logging"]["debug"]:
-			log(Client.username, "DEBUG", "User does not have item `shovel`. Buying shovel now.")
+			Client.log("DEBUG", "User does not have item `shovel`. Buying shovel now.")
 
 		if Client.config["auto buy"] and Client.config["auto buy"]["shovel"]:
 			from scripts.buy import buy
 			buy(Client, "shovel")
 			return
 		elif Client.config["logging"]["warning"]:
-			log(
-				Client.username,
+			Client.log(
 				"WARNING",
 				f"A shovel is required for the command `pls dig`. However, since {'auto buy is off for shovels,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 			)

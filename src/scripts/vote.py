@@ -1,7 +1,6 @@
 from json import loads
 
 from requests import get, post
-from utils.logger import log
 
 
 def vote(Client) -> None:
@@ -33,11 +32,11 @@ def vote(Client) -> None:
 
 	if req["success"]:
 		if Client.config["logging"]["debug"]:
-			log(Client.username, "DEBUG", "Succesfully voted for Dank Memer on Discord Bot List")
+			Client.log("DEBUG", "Succesfully voted for Dank Memer on Discord Bot List")
 	else:
 		if req["message"] == "User has already voted.":
 			if Client.config["logging"]["warning"]:
-				log(Client.username, "WARNING", "Already voted for Dank Memer on Discord Bot List in the past 24 hours.")
+				Client.log("WARNING", "Already voted for Dank Memer on Discord Bot List in the past 24 hours.")
 		elif Client.config["logging"]["warning"]:
-			log(Client.username, "WARNING", "Failed to vote for Dank Memer on Discord Bot List.")
+			Client.log("WARNING", "Failed to vote for Dank Memer on Discord Bot List.")
 		return

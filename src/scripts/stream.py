@@ -1,8 +1,5 @@
 from random import choice, randint
 
-from utils.logger import log
-
-
 def stream(Client) -> None:
 	"""A streaming command - `pls stream`.
  
@@ -25,7 +22,7 @@ def stream(Client) -> None:
 
 		if "Keyboard" in latest_message["embeds"][0]["description"]:
 			if Client.config["logging"]["debug"]:
-				log(Client.username, "DEBUG", "User does not have item `keyboard`. Buying keyboard now.")
+				Client.log("DEBUG", "User does not have item `keyboard`. Buying keyboard now.")
 
 			if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
 				from scripts.buy import buy
@@ -33,23 +30,21 @@ def stream(Client) -> None:
 				if not bought:
 					return
 			elif Client.config["logging"]["warning"]:
-				log(
-					Client.username,
+				Client.log(
 					"WARNING",
 					f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 				)
 
 		if "Mouse" in latest_message["embeds"][0]["description"]:
 			if Client.config["logging"]["debug"]:
-				log(Client.username, "DEBUG", "User does not have item `mouse`. Buying mouse now.")
+				Client.log("DEBUG", "User does not have item `mouse`. Buying mouse now.")
 
 			if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
 				bought = buy(Client, "mouse")
 				if not bought:
 					return
 			elif Client.config["logging"]["warning"]:
-				log(
-					Client.username,
+				Client.log(
 					"WARNING",
 					f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
 				)

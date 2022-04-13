@@ -1,6 +1,3 @@
-from utils.logger import log
-
-
 def buy(Client, item: str) -> None:
 	"""Buys an item 
  
@@ -31,9 +28,9 @@ def buy(Client, item: str) -> None:
 			Client.send_message(f"pls with {amount}")                                
 			Client.send_message(f"pls buy {item}")
 		elif Client.config["logging"]["warning"]:
-			log(Client.username, "WARNING", f"Insufficient funds to buy a {item}.")
+			Client.log("WARNING", f"Insufficient funds to buy a {item}.")
 			return False
 	elif latest_message["embeds"][0]["author"]["name"].lower() == f"successful {item} purchase":
 		if Client.config["logging"]["debug"]:
-			log(Client.username, "DEBUG", f"Successfully bought {item}.")
+			Client.log("DEBUG", f"Successfully bought {item}.")
 			return True
