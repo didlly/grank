@@ -13,6 +13,22 @@ def hunt(Client) -> None:
 	Client.send_message("pls hunt")
 
 	latest_message = Client.retreive_message("pls hunt")
+ 
+	if "Dodge the Fireball" in latest_message["content"]:
+		if Client.config["logging"]["debug"]:
+			Client.log("DEBUG", "Detected dodge the fireball game.")
+   
+		while True:
+			latest_message = Client.retreive_message("pls hunt")
+
+			level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
+
+			if level != 1:	
+				continue
+
+			Client.interact_button("pls hunt", latest_message["components"][0]["components"][1]["custom_id"], latest_message)
+
+			break
 
 	if latest_message["content"] == "You don't have a hunting rifle, you need to go buy one. You're not good enough to shoot animals with your bare hands... I hope.":
 		if Client.config["logging"]["debug"]:

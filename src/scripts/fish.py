@@ -14,6 +14,12 @@ def fish(Client) -> None:
 
 	latest_message = Client.retreive_message("pls fish")
 
+	if "Catch the fish" in latest_message["content"]:
+		if Client.config["logging"]["debug"]:
+			Client.log("DEBUG", "Detected catch the fish game.")
+		level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
+		Client.interact_button("pls fish", latest_message["components"][0]["components"][level]["custom_id"], latest_message)
+
 	if latest_message["content"] == "You don't have a fishing pole, you need to go buy one. You're not good enough to catch them with your hands.":
 		if Client.config["logging"]["debug"]:
 			Client.log("DEBUG", "User does not have item `fishing pole`. Buying fishing pole now.")

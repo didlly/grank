@@ -90,8 +90,8 @@ class Client(object):
 				log(None, "WARNING", "Database file is corrupted. Re-downloading now.")
 
 				req = loads(get("https://raw.githubusercontent.com/didlly/grank/main/src/database.json", allow_redirects=True).content)
-				req["shifts"]["last active"] = datetime.now().strftime("%x-%X")
-				req["shifts"]["last passive"] = datetime.now().strftime("%x-%X")
+				req["shifts"]["active"] = datetime.now().strftime("%x-%X")
+				req["shifts"]["passive"] = datetime.now().strftime("%x-%X")
 
 				log(None, "DEBUG", "Retreived new database file.")
 				
@@ -186,44 +186,6 @@ class Client(object):
 			]):
 			log(self.username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.")
 
-
-		if "Dodge the Fireball" in latest_message["content"]:
-			if self.config["logging"]["debug"]:
-				log(self.username, "DEBUG", "Detected dodge the fireball game.")
-			while True:
-				request = get(f"https://discord.com/api/v10/channels/{self.channel_id}/messages?limit=1", headers={"authorization": self.token})
-
-				if request.status_code != 200:
-					continue
-
-				latest_message = loads(request.text)[0]
-
-				if latest_message["author"]["id"] != "270904126974590976":
-					continue
-
-				if "referenced_message" in latest_message.keys():
-					if latest_message["referenced_message"]["author"]["id"] == self.user_id:
-						if self.config["logging"]["debug"]:
-							log(self.username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
-						break
-				else:
-					if self.config["logging"]["debug"]:
-						log(self.username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
-					break
-				level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
-
-				if level != 1:	
-					continue
-
-				Client.interact_button(command, latest_message["components"][0]["components"][1]["custom_id"], latest_message)
-
-				break
-
-		elif "Catch the fish" in latest_message["content"]:
-			if self.config["logging"]["debug"]:
-				log(self.username, "DEBUG", "Detected catch the fish game.")
-			level = latest_message["content"].split("\n")[1].replace(latest_message["content"].split("\n")[1].strip(), "").count("       ")
-			Client.interact_button(command, latest_message["components"][0]["components"][level]["custom_id"], latest_message)
 
 		if self.config["auto trade"]["enabled"]:
 			for key in self.config["auto trade"]:
