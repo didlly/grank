@@ -2,21 +2,24 @@ from random import randint
 
 
 def snakeeyes(Client) -> None:
-	"""One of the 3 gamble commands - `pls snakeeyes`.
- 
-	Required item(s): None
+    """One of the 3 gamble commands - `pls snakeeyes`.
 
-	Args:
-		Client (class): The Client for the user.
+    Required item(s): None
 
-	Returns:
-		None
-	"""
- 
-	amount = (randint(
-	    Client.config['snakeeyes']['minimum'],
-	    Client.config['snakeeyes']['maximum'],
-	) if Client.config['snakeeyes']['random'] else
-	          Client.config['snakeeyes']['amount'])
+    Args:
+            Client (class): The Client for the user.
 
-	Client.send_message(f"pls snakeeyes {amount}")
+    Returns:
+            None
+    """
+
+    amount = (
+        randint(
+            Client.config["snakeeyes"]["minimum"],
+            Client.config["snakeeyes"]["maximum"],
+        )
+        if Client.config["snakeeyes"]["random"]
+        else Client.config["snakeeyes"]["amount"]
+    )
+
+    Client.send_message(f"pls snakeeyes {amount}")

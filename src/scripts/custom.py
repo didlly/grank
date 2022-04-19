@@ -1,2 +1,2 @@
 def custom(Client, command):
-	Client.send_message(command)
+    Client.send_message(command)

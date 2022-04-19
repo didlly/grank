@@ -2,101 +2,136 @@ from random import randint
 
 
 def guess(Client) -> None:
-	"""One of the 2 guess the number commands - `pls guess`.
- 
-	Required item(s): None
+    """One of the 2 guess the number commands - `pls guess`.
 
-	Args:
-		Client (class): The Client for the user.
+    Required item(s): None
 
-	Returns:
-		None
-	"""
- 
-	Client.send_message("pls guess")
+    Args:
+            Client (class): The Client for the user.
 
-	latest_message = Client.retreive_message("pls guess")
+    Returns:
+            None
+    """
 
-	Client.send_message("10")
+    Client.send_message("pls guess")
 
-	latest_message = Client.retreive_message("10")
-	
-	if latest_message["content"] == "not this time, `3` attempts left and `2` hints left.":
-		Client.send_message("hint")
+    latest_message = Client.retreive_message("pls guess")
 
-		latest_message = Client.retreive_message("hint")
+    Client.send_message("10")
 
-		if latest_message["content"] == "Your last number (**10**) was too low\nYou've got `3` attempts left and `1` hint left.":
-			Client.send_message("15")
-			
-			latest_message = Client.retreive_message("15")
+    latest_message = Client.retreive_message("10")
 
-			if latest_message["content"] == "not this time, `2` attempts left and `1` hint left.":
-				Client.send_message("hint")
+    if (
+        latest_message["content"]
+        == "not this time, `3` attempts left and `2` hints left."
+    ):
+        Client.send_message("hint")
 
-				latest_message = Client.retreive_message("hint")
+        latest_message = Client.retreive_message("hint")
 
-				if latest_message["content"] == "Your last number (**15**) was too low\nYou've got `2` attempts left and `0` hints left.":
-					num = randint(16, 20)
-	 
-					Client.send_message(num)
+        if (
+            latest_message["content"]
+            == "Your last number (**10**) was too low\nYou've got `3` attempts left and `1` hint left."
+        ):
+            Client.send_message("15")
 
-					latest_message = Client.retreive_message(num)
-	 
-					if latest_message["content"] == "not this time, `1` attempt left and `0` hints left.":
-						num = randint(16, 20)
+            latest_message = Client.retreive_message("15")
 
-						Client.send_message(num)
+            if (
+                latest_message["content"]
+                == "not this time, `2` attempts left and `1` hint left."
+            ):
+                Client.send_message("hint")
 
-						return
-				elif latest_message["content"] == "Your last number (**15**) was too high\nYou've got `2` attempts left and `0` hints left.":
-					num = randint(11, 14)
+                latest_message = Client.retreive_message("hint")
 
-					Client.send_message(num)
+                if (
+                    latest_message["content"]
+                    == "Your last number (**15**) was too low\nYou've got `2` attempts left and `0` hints left."
+                ):
+                    num = randint(16, 20)
 
-					latest_message = Client.retreive_message(num)
+                    Client.send_message(num)
 
-					if latest_message["content"] == "not this time, `1` attempt left and `0` hints left.":
-						num = randint(11, 14)
+                    latest_message = Client.retreive_message(num)
 
-						Client.send_message(num)
+                    if (
+                        latest_message["content"]
+                        == "not this time, `1` attempt left and `0` hints left."
+                    ):
+                        num = randint(16, 20)
 
-						return
-  
-		else:
-			Client.send_message("5")
-			
-			latest_message = Client.retreive_message("5")
+                        Client.send_message(num)
 
-			if latest_message["content"] == "not this time, `2` attempts left and `1` hint left.":
-				Client.send_message("hint")
+                        return
+                elif (
+                    latest_message["content"]
+                    == "Your last number (**15**) was too high\nYou've got `2` attempts left and `0` hints left."
+                ):
+                    num = randint(11, 14)
 
-				latest_message = Client.retreive_message("hint")
+                    Client.send_message(num)
 
-				if latest_message["content"] == "Your last number (**5**) was too low\nYou've got `2` attempts left and `0` hints left.":
-					num = randint(6, 9)
-	 
-					Client.send_message(num)
+                    latest_message = Client.retreive_message(num)
 
-					latest_message = Client.retreive_message(num)
+                    if (
+                        latest_message["content"]
+                        == "not this time, `1` attempt left and `0` hints left."
+                    ):
+                        num = randint(11, 14)
 
+                        Client.send_message(num)
 
-					if latest_message["content"] == "not this time, `1` attempt left and `0` hints left.":
-						num = randint(6, 9)
+                        return
 
-						Client.send_message(num)
+        else:
+            Client.send_message("5")
 
-						return
-				elif latest_message["content"] == "Your last number (**5**) was too high\nYou've got `2` attempts left and `0` hints left.":
-					num = randint(1, 4)
+            latest_message = Client.retreive_message("5")
 
-					Client.send_message(num)
+            if (
+                latest_message["content"]
+                == "not this time, `2` attempts left and `1` hint left."
+            ):
+                Client.send_message("hint")
 
-					latest_message = Client.retreive_message(num)
+                latest_message = Client.retreive_message("hint")
 
-					if latest_message["content"] == "not this time, `1` attempt left and `0` hints left.":
-						num = randint(1, 4)
+                if (
+                    latest_message["content"]
+                    == "Your last number (**5**) was too low\nYou've got `2` attempts left and `0` hints left."
+                ):
+                    num = randint(6, 9)
 
-						Client.send_message(num)
+                    Client.send_message(num)
 
-						return
+                    latest_message = Client.retreive_message(num)
+
+                    if (
+                        latest_message["content"]
+                        == "not this time, `1` attempt left and `0` hints left."
+                    ):
+                        num = randint(6, 9)
+
+                        Client.send_message(num)
+
+                        return
+                elif (
+                    latest_message["content"]
+                    == "Your last number (**5**) was too high\nYou've got `2` attempts left and `0` hints left."
+                ):
+                    num = randint(1, 4)
+
+                    Client.send_message(num)
+
+                    latest_message = Client.retreive_message(num)
+
+                    if (
+                        latest_message["content"]
+                        == "not this time, `1` attempt left and `0` hints left."
+                    ):
+                        num = randint(1, 4)
+
+                        Client.send_message(num)
+
+                        return
