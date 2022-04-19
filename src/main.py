@@ -68,7 +68,7 @@ from utils.shifts import shifts
 
 with suppress(FileExistsError):
 	mkdir(f"{cwd}logs/")
-
+ 
 config = load_config(cwd)
 credentials = load_credentials(cwd)
 
@@ -78,6 +78,9 @@ def run(credentials: dict, index: int):
 	session_id = credentials[index][2]
 	channel_id = credentials[index][3]
 	token = credentials[index][4]
+ 
+	with suppress(FileExistsError):
+		mkdir(f"{cwd}logs/{token}")
  
 	Client = client(config, user_id, username, session_id, channel_id, token, cwd)
 	

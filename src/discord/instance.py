@@ -7,7 +7,6 @@ from time import sleep
 
 from requests import get, post
 from utils import shared
-from utils.logger import log
 
 
 class MessageSendError(Exception):
@@ -77,8 +76,8 @@ class Client(object):
 		self.session_id = session_id
 		self.channel_id = channel_id
 		self.token = token
-		self.cwd = cwd
-		self.log_file = open(f"{cwd}logs/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", "a")
+		self.cwd = cwd 
+		self.logger = open(f"{cwd}logs/{token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log", "a")
   
 		data = open(f"{cwd}database.json", "r+", errors="ignore")
 
@@ -87,25 +86,25 @@ class Client(object):
 				self.database = loads(data.read())
 				break
 			except JSONDecodeError:
-				log(None, "WARNING", "Database file is corrupted. Re-downloading now.")
+				self.log(None, "WARNING", "Database file is corrupted. Re-downloading now.")
 
 				req = loads(get("https://raw.githubusercontent.com/didlly/grank/main/src/database.json", allow_redirects=True).content)
 				req["shifts"]["active"] = datetime.now().strftime("%x-%X")
 				req["shifts"]["passive"] = datetime.now().strftime("%x-%X")
 
-				log(None, "DEBUG", "Retreived new database file.")
+				self.log(None, "DEBUG", "Retreived new database file.")
 				
 				with open(f"{cwd}database.json", "w") as db:
-					log(None, "DEBUG", f"Opened `{cwd}database.json`.")
+					self.log(None, "DEBUG", f"Opened `{cwd}database.json`.")
 					db.seek(0)
 					db.truncate()
 					db.write(dumps(req))
-					log(None, "DEBUG", f"Wrote new database to `{cwd}database.json`.")
+					self.log(None, "DEBUG", f"Wrote new database to `{cwd}database.json`.")
 					
-				log(None, "DEBUG", f"Closed `{cwd}database.json`.")
+				self.log(None, "DEBUG", f"Closed `{cwd}database.json`.")
 		
 		if count == 5:
-			log(None, "ERROR", "Database error. Please close and re-open Grank.")
+			self.log(None, "ERROR", "Database error. Please close and re-open Grank.")
    
 		class database:
 			def write(content: str):
@@ -125,15 +124,15 @@ class Client(object):
 
 			if request.status_code in [200, 204]:
 				if self.config["logging"]["debug"]:
-						log(self.username, "DEBUG", f"Successfully sent command `{command}`.")
+						self.log("DEBUG", f"Successfully sent command `{command}`.")
 				return
 			else:
 				if self.config["logging"]["warning"]:
-					log(self.username, "WARNING", f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
+					self.log("WARNING", f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 				if request.status_code == 429:
 					request = loads(request.content)
 					if self.config["logging"]["warning"]:
-						log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+						self.log("WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
 					sleep(request["retry_after"])
 					continue
 				raise MessageSendError(f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
@@ -156,11 +155,11 @@ class Client(object):
 				if "referenced_message" in latest_message.keys():
 					if latest_message["referenced_message"]["author"]["id"] == self.user_id:
 						if self.config["logging"]["debug"]:
-							log(self.username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
+							self.log("DEBUG", f"Got Dank Memer's response to command `{command}`.")
 						break
 				else:
 					if self.config["logging"]["debug"]:
-						log(self.username, "DEBUG", f"Got Dank Memer's response to command `{command}`.")
+						self.log("DEBUG", f"Got Dank Memer's response to command `{command}`.")
 					break
 
 			if latest_message["author"]["id"] != "270904126974590976":
@@ -173,7 +172,7 @@ class Client(object):
 					break
 				cooldown = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("**")[1].split("**")[0])))
 				if self.config["logging"]["warning"]:
-					log(self.username, "WARNING", f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.")
+					self.log("WARNING", f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.")
 				sleep(cooldown)
 				Client.send_message(self, command)
 			else:
@@ -184,7 +183,7 @@ class Client(object):
 			and latest_message["embeds"][0]["title"] in [
 				"You're currently bot banned!", "You're currently blacklisted!"
 			]):
-			log(self.username, "ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.")
+			self.log("ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.")
 
 
 		if self.config["auto trade"]["enabled"]:
@@ -239,15 +238,15 @@ class Client(object):
 
 			if request.status_code in [200, 204]:
 				if self.config["logging"]["debug"]:
-					log(self.username, "DEBUG", f"Successfully interacted with button on Dank Memer's response to command `{command}`.")
+					self.log("DEBUG", f"Successfully interacted with button on Dank Memer's response to command `{command}`.")
 				return
 			else:
 				if self.config["logging"]["warning"]:
-					log(self.username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
+					self.log("WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 				if request.status_code == 429:
 					request = loads(request.content)
 					if self.config["logging"]["warning"]:
-						log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+						self.log("WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
 					sleep(request["retry_after"])
 					continue
 				raise ButtonInteractError(f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
@@ -274,15 +273,15 @@ class Client(object):
    
 			if request.status_code in [200, 204]:
 				if self.config["logging"]["debug"]:
-					log(self.username, "DEBUG", f"Successfully interacted with dropdown on Dank Memer's response to command `{command}`.")
+					self.log("DEBUG", f"Successfully interacted with dropdown on Dank Memer's response to command `{command}`.")
 				return
 			else:
 				if self.config["logging"]["warning"]:
-					log(self.username, "WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
+					self.log("WARNING", f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
 				if request.status_code == 429:
 					request = loads(request.content)
 					if self.config["logging"]["warning"]:
-						log(self.username, "WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
+						self.log("WARNING", f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).")
 					sleep(request["retry_after"])
 					continue
 				raise DropdownInteractError(f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).")
@@ -301,9 +300,9 @@ class Client(object):
 		time = datetime.now().strftime("[%x-%X]")
 
 		print(f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}")
-
-		self.log_file.write(f"{time} - {self.username} - {level} | {text}\n")
-		self.log_file.flush()
+ 
+		self.logger.write(f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n")
+		self.logger.flush()		
   
 		if level == "ERROR":
 			_ = input(f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}")
