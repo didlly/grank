@@ -164,17 +164,20 @@ class Client(object):
 
 			if latest_message["author"]["id"] != "270904126974590976":
 				raise TimeoutError(f"Timeout exceeded for response from Dank Memer ({self.config['cooldowns']['timeout']} {'second' if self.config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command.")
+
 			elif len(latest_message["embeds"]) > 0:
 				if "description" not in latest_message["embeds"][0].keys():
 					break
+ 
 				if ("The default cooldown is" not in latest_message["embeds"][0]
 				    ["description"]):
 					break
+ 
 				cooldown = int("".join(filter(str.isdigit, latest_message["embeds"][0]["description"].split("**")[1].split("**")[0])))
 				if self.config["logging"]["warning"]:
 					self.log("WARNING", f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.")
 				sleep(cooldown)
-				Client.send_message(self, command)
+				self.send_message(command)
 			else:
 				break
 
@@ -185,37 +188,36 @@ class Client(object):
 			]):
 			self.log("ERROR", "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.")
 
-
 		if self.config["auto trade"]["enabled"]:
 			for key in self.config["auto trade"]:
 				if key == "enabled" or key == "trader token" or not self.config["auto trade"][key]:
 					continue
 				elif key in latest_message["content"].lower():
-					Client.send_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+					self.send_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-					latest_message = Client.retreive_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+					latest_message = self.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-					Client.interact_button(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
+					self.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
 
 					sleep(1)
 
-					latest_message = Client.retreive_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+					latest_message = self.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-					Client.interact_button(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], self.config["auto trade"]["trader"]["session_id"], self.config['auto trade']['trader']['self.username'])
+					self.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], self.config["auto trade"]["trader"]["session_id"], self.config['auto trade']['trader']['self.username'])
 				elif len(latest_message["embeds"]) != 0:
 					if key in latest_message["embeds"][0]["description"]:
-						Client.send_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+						self.send_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-						latest_message = Client.retreive_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+						latest_message = self.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
 
-						Client.interact_button(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
+						self.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message)
 
 						sleep(1)
 
-						latest_message = Client.retreive_message(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
+						latest_message = self.retreive_message(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}")
 
-						Client.interact_button(self, f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, self.config['auto trade']['trader']['self.username'])
+						self.interact_button(f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}", latest_message["components"][0]["components"][-1]["custom_id"], latest_message, self.config['auto trade']['trader']['self.username'])
 		return latest_message
 
 	def interact_button(self, command, custom_id, latest_message, token=None):
