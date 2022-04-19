@@ -18,7 +18,7 @@ def search(Client) -> None:
 	latest_message = Client.retreive_message("pls search")
 
 	custom_id = None
- 
+
 	for option in latest_message["components"][0]["components"]:
 		if option["label"] == "street":
 			# Gives `Golden Phalic Object` / `Rare Pepe`.
@@ -48,9 +48,4 @@ def search(Client) -> None:
 			# Gives `Life Saver` / `Apple`.
 			custom_id = option["custom_id"]
 			break
-		elif option["label"] == "laundromat":
-			# Gives `Tidepod`.
-			custom_id = option["custom_id"]
-			break
-
 	Client.interact_button("pls search", choice(latest_message["components"][0]["components"])["custom_id"] if custom_id is None else custom_id, latest_message)

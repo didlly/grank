@@ -107,10 +107,10 @@ class Client(object):
 			self.log(None, "ERROR", "Database error. Please close and re-open Grank.")
    
 		class database:
-			def write(content: str):
+			def write(self):
 				data.seek(0)
 				data.truncate()
-				data.write(content)
+				data.write(self)
     
 		self.database_file = database
 	
