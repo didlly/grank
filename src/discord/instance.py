@@ -6,7 +6,7 @@ from random import uniform
 from time import sleep
 
 from requests import get, post
-from utils import shared
+from utils.shared import data
 
 
 class MessageSendError(Exception):
@@ -179,31 +179,29 @@ class Client(object):
             while (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time
             ).total_seconds() < self.config["cooldowns"]["timeout"]:
-                request = get(
-                    f"https://discord.com/api/v10/channels/{self.channel_id}/messages?limit=1",
-                    headers={"authorization": self.token},
-                )
-
-                if request.status_code != 200:
-                    continue
-
-                latest_message = loads(request.text)[0]
-
-                if latest_message["author"]["id"] != "270904126974590976":
-                    continue
+                latest_message = data["messages"][self.channel_id][-1]
 
                 if "referenced_message" in latest_message.keys():
-                    if (
-                        latest_message["referenced_message"]["author"]["id"]
-                        == self.user_id
-                    ):
+                    if latest_message["referenced_message"] != None:
+                        if (
+                            latest_message["referenced_message"]["author"]["id"]
+                            == self.user_id
+                            and latest_message["author"]["id"] == "270904126974590976"
+                        ):
+                            if self.config["logging"]["debug"]:
+                                self.log(
+                                    "DEBUG",
+                                    f"Got Dank Memer's response to command `{command}`.",
+                                )
+                            break
+                    elif latest_message["author"]["id"] == "270904126974590976":
                         if self.config["logging"]["debug"]:
                             self.log(
                                 "DEBUG",
                                 f"Got Dank Memer's response to command `{command}`.",
                             )
                         break
-                else:
+                elif latest_message["author"]["id"] == "270904126974590976":
                     if self.config["logging"]["debug"]:
                         self.log(
                             "DEBUG",
@@ -324,6 +322,7 @@ class Client(object):
                             latest_message,
                             self.config["auto trade"]["trader"]["self.username"],
                         )
+
         return latest_message
 
     def interact_button(self, command, custom_id, latest_message, token=None):
@@ -334,7 +333,7 @@ class Client(object):
             "data": {"component_type": 2, "custom_id": custom_id},
             "guild_id": latest_message["message_reference"]["guild_id"]
             if "message_reference" in latest_message.keys()
-            else shared.data[f"{self.channel_id}_guild"],
+            else data[f"{self.channel_id}_guild"],
             "message_flags": 0,
             "message_id": latest_message["id"],
             "session_id": self.session_id,
@@ -386,7 +385,7 @@ class Client(object):
             },
             "guild_id": latest_message["message_reference"]["guild_id"]
             if "message_reference" in latest_message.keys()
-            else shared.data[f"{self.channel_id}_guild"],
+            else data[f"{self.channel_id}_guild"],
             "message_flags": 0,
             "message_id": latest_message["id"],
             "session_id": self.session_id,

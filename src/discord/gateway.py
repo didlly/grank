@@ -1,10 +1,42 @@
 from json import dumps, loads
 
-from utils.logger import log
 from websocket import WebSocket
+from threading import Thread
+from time import sleep
+from utils.shared import data
+from contextlib import suppress
 
 
-def gateway(token):
+def send_heartbeat(ws, heartbeat_interval: int) -> None:
+    while True:
+        with suppress(Exception):
+            sleep(heartbeat_interval)
+            ws.send(
+                dumps(
+                    {
+                        "op": 1,
+                        "d": "null"
+                    }
+                )
+            )
+
+
+def receive_messages(ws, event: dict, channel_id: int) -> None:
+    if channel_id not in data["messages"].keys():
+        data["messages"][channel_id] = []
+
+    while True:
+        with suppress(Exception):
+            event = loads(ws.recv())
+
+            if event["t"] == "MESSAGE_CREATE":
+                data["messages"][channel_id].append(event["d"])
+
+            if len(data["messages"][channel_id]) > 10:
+                del data["messages"][channel_id][0]
+
+
+def gateway(token: str, channel_id: int) -> str:
     """Gets the first `session_id` received from Discord during the websocket connection process.
 
     Args:
@@ -14,37 +46,33 @@ def gateway(token):
             session_id (str): The `session_id` for the account specified by the token passed to this function.
     """
 
-    for index in range(1, 6):
-        ws = WebSocket()
-        ws.connect("wss://gateway.discord.gg/?v=10&encoding=json")
-        loads(ws.recv())
+    if "messages" not in data.keys():
+        data["messages"] = {}
 
-        ws.send(
-            dumps(
-                {
-                    "op": 2,
-                    "d": {
-                        "token": token,
-                        "properties": {
-                            "$os": "windows",
-                            "$browser": "chrome",
-                            "$device": "pc",
-                        },
+    ws = WebSocket()
+    ws.connect("wss://gateway.discord.gg/?v=10&encoding=json")
+    heartbeat_interval = loads(ws.recv())["d"]["heartbeat_interval"] / 1000
+
+    Thread(target=send_heartbeat, args=[ws, heartbeat_interval]).start()
+
+    ws.send(
+        dumps(
+            {
+                "op": 2,
+                "d": {
+                    "token": token,
+                    "properties": {
+                        "$os": "windows",
+                        "$browser": "chrome",
+                        "$device": "pc",
                     },
-                }
-            )
+                },
+            }
         )
+    )
 
-        res = ws.recv()
+    event = loads(ws.recv())
 
-        try:
-            return loads(res)["d"]["sessions"][0]["session_id"]
-        except TypeError:
-            log(None, "WARNING", "Failed to get `session_id`. Re-trying again.")
+    Thread(target=receive_messages, args=[ws, event, channel_id]).start()
 
-    if index == 5:
-        log(
-            None,
-            "ERROR",
-            "Failed to get `session_id` after max retries. Please wait a few minutes and re-open Grank.",
-        )
+    return event["d"]["sessions"][0]["session_id"]
