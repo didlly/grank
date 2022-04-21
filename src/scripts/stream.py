@@ -1,4 +1,5 @@
 from random import choice, randint
+from scripts.buy import buy
 
 
 def stream(Client) -> None:
@@ -28,11 +29,9 @@ def stream(Client) -> None:
                 )
 
             if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
-                from scripts.buy import buy
 
-                bought = buy(Client, "keyboard")
-                if not bought:
-                    return
+                buy(Client, "keyboard")
+
             elif Client.config["logging"]["warning"]:
                 Client.log(
                     "WARNING",
@@ -46,9 +45,8 @@ def stream(Client) -> None:
                 )
 
             if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
-                bought = buy(Client, "mouse")
-                if not bought:
-                    return
+                buy(Client, "mouse")
+
             elif Client.config["logging"]["warning"]:
                 Client.log(
                     "WARNING",
