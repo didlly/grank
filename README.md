@@ -73,7 +73,24 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 
 ## Todo
 
-Visit [this](https://github.com/didlly/grank/projects/1) link for project updates.
+* [x] Add `pls daily`
+* [x] Add `pls beg`
+* [x] Add `pls dig`
+* [x] Add `pls fish`
+* [x] Add `pls hunt`
+* [x] Add `pls search`
+* [x] Add `pls highlow`
+* [x] Add `pls postmeme`
+* [x] Add `pls trivia`
+* [x] Add `pls crime`
+* [x] Add `pls guess`
+* [x] Add `pls lottry`
+* [x] Add `pls stream`
+* [x] Add `pls blackjack`
+* [x] Add `pls snakeeyes`
+* [x] Add auto vote.
+* [x] Add auto trade.
+* [x] Add shifts.
 
 ## Getting Started
 
