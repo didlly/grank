@@ -25,13 +25,15 @@ def receive_messages(ws, event: dict, channel_id: int) -> None:
     if channel_id not in data["messages"].keys():
         data["messages"][channel_id] = []
 
+    str_channel_id = str(channel_id)
+
     while True:
         with suppress(Exception):
             event = loads(ws.recv())
             
             if event["t"] == "MESSAGE_CREATE":
 
-                if int(event["d"]["channel_id"]) == channel_id:
+                if event["d"]["channel_id"] == str_channel_id:
                     data["messages"][channel_id].append(event["d"])
 
             if len(data["messages"][channel_id]) > 10:

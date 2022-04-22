@@ -8,7 +8,7 @@ def buy(Client, item: str) -> None:
             item (str): The item to be bought.
 
     Returns:
-            None
+            bought (bool): Boolean dictating whether the item was bought or not.
     """
 
     Client.send_message(f"pls buy {item}")

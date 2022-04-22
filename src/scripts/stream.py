@@ -1,4 +1,5 @@
 from random import choice, randint
+from scripts.item import has_item
 from scripts.buy import buy
 
 
@@ -14,6 +15,11 @@ def stream(Client) -> None:
             None
     """
 
+    (
+    bought_keyboard,
+    bought_mouse,
+    ) = True * 2
+
     while True:
         Client.send_message("pls stream")
 
@@ -23,35 +29,40 @@ def stream(Client) -> None:
             break
 
         if "Keyboard" in latest_message["embeds"][0]["description"]:
-            if Client.config["logging"]["debug"]:
-                Client.log(
-                    "DEBUG", "User does not have item `keyboard`. Buying keyboard now."
-                )
+            if not has_item(Client, "keyboard"):
+                if Client.config["logging"]["debug"]:
+                    Client.log(
+                        "DEBUG", "User does not have item `keyboard`. Buying keyboard now."
+                    )
 
-            if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
+                if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
+                        bought_keyboard = buy(Client, "keyboard")
 
-                buy(Client, "keyboard")
-
-            elif Client.config["logging"]["warning"]:
-                Client.log(
-                    "WARNING",
-                    f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
-                )
+                elif Client.config["logging"]["warning"]:
+                    Client.log(
+                        "WARNING",
+                        f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                    )
 
         if "Mouse" in latest_message["embeds"][0]["description"]:
-            if Client.config["logging"]["debug"]:
-                Client.log(
-                    "DEBUG", "User does not have item `mouse`. Buying mouse now."
-                )
+            if not has_item(Client, "mouse"):
+                if Client.config["logging"]["debug"]:
+                    Client.log(
+                        "DEBUG", "User does not have item `mouse`. Buying mouse now."
+                    )
 
-            if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
-                buy(Client, "mouse")
+                if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
+                        bought_mouse = buy(Client, "mouse")
 
-            elif Client.config["logging"]["warning"]:
-                Client.log(
-                    "WARNING",
-                    f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
-                )
+                elif Client.config["logging"]["warning"]:
+                    Client.log(
+                        "WARNING",
+                        f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                    )
+
+    if not bought_keyboard or not bought_mouse:
+        return False
+
     if len(latest_message["components"][0]["components"]) == 3:
         Client.interact_button(
             "pls stream",
