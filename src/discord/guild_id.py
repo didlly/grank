@@ -45,4 +45,6 @@ def guild_id(Client):
                 "guild_id"
             ]
     else:
-        data[f"{Client.channel_id}_guild"] = data["messages"][Client.channel_id][0]["guild_id"]
+        data[f"{Client.channel_id}_guild"] = data["messages"][Client.channel_id][0][
+            "guild_id"
+        ]

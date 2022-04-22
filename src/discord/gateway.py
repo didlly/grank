@@ -11,14 +11,7 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
         with suppress(Exception):
             sleep(heartbeat_interval)
-            ws.send(
-                dumps(
-                    {
-                        "op": 1,
-                        "d": "null"
-                    }
-                )
-            )
+            ws.send(dumps({"op": 1, "d": "null"}))
 
 
 def receive_messages(ws, event: dict, channel_id: int) -> None:
@@ -30,7 +23,7 @@ def receive_messages(ws, event: dict, channel_id: int) -> None:
     while True:
         with suppress(Exception):
             event = loads(ws.recv())
-            
+
             if event["t"] == "MESSAGE_CREATE":
 
                 if event["d"]["channel_id"] == str_channel_id:

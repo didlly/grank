@@ -13,7 +13,7 @@ def has_item(Client, item: str) -> None:
 
     latest_message = Client.retreive_message(f"pls item {item}")
 
-    num_items = wallet = int(
+    num_items = int(
         "".join(
             filter(
                 str.isdigit,

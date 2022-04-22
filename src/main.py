@@ -495,10 +495,14 @@ def run(credentials: dict, index: int):
                         exec(
                             f"if (datetime.strptime(datetime.now().strftime('%x-%X'), '%x-%X') - datetime.strptime(custom_{key.replace(' ', '_')}, '%x-%X')).total_seconds() > Client.config['custom commands'][key]['cooldown']: custom(Client, key)"
                         )
-                        exec(f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')")
+                        exec(
+                            f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
+                        )
                     except NameError:
                         custom(Client, key)
-                        exec(f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')")
+                        exec(
+                            f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
+                        )
 
         while not data[username]:
             pass

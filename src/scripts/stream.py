@@ -15,10 +15,9 @@ def stream(Client) -> None:
             None
     """
 
-    (
-    bought_keyboard,
-    bought_mouse,
-    ) = True * 2
+    (bought_keyboard, bought_mouse) = (
+        True * 2
+    )
 
     while True:
         Client.send_message("pls stream")
@@ -32,11 +31,12 @@ def stream(Client) -> None:
             if not has_item(Client, "keyboard"):
                 if Client.config["logging"]["debug"]:
                     Client.log(
-                        "DEBUG", "User does not have item `keyboard`. Buying keyboard now."
+                        "DEBUG",
+                        "User does not have item `keyboard`. Buying keyboard now.",
                     )
 
                 if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
-                        bought_keyboard = buy(Client, "keyboard")
+                    bought_keyboard = buy(Client, "keyboard")
 
                 elif Client.config["logging"]["warning"]:
                     Client.log(
@@ -52,7 +52,7 @@ def stream(Client) -> None:
                     )
 
                 if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
-                        bought_mouse = buy(Client, "mouse")
+                    bought_mouse = buy(Client, "mouse")
 
                 elif Client.config["logging"]["warning"]:
                     Client.log(
