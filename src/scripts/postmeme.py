@@ -14,7 +14,7 @@ def postmeme(Client) -> None:
     """
 
     Client.send_message("pls postmeme")
-
+    
     latest_message = Client.retreive_message("pls postmeme")
 
     Client.interact_button(

@@ -9,9 +9,9 @@ def dig(Client):
     Returns:
             None
     """
-
+    
     Client.send_message("pls dig")
-
+    
     latest_message = Client.retreive_message("pls dig")
 
     if (

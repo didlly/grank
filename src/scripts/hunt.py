@@ -11,7 +11,7 @@ def hunt(Client) -> None:
     """
 
     Client.send_message("pls hunt")
-
+    
     latest_message = Client.retreive_message("pls hunt")
 
     if "Dodge the Fireball" in latest_message["content"]:
@@ -64,7 +64,7 @@ def hunt(Client) -> None:
     if latest_message["content"] in [
         "Imagine going into the woods to hunt something, and coming out empty handed",
         "All that time in the woods, and you couldn't catch a single thing hahaha",
-        "You might be the only hunter in the world to never hit anything, just like this time"
+        "You might be the only hunter in the world to never hit anything, just like this time",
     ]:
         return
     else:

@@ -21,10 +21,10 @@ def blackjack(Client) -> None:
         else Client.config["blackjack"]["amount"]
     )
 
-    Client.send_message(f"pls bj {amount}")
+    Client.send_message(f"pls blackjack {amount}")
 
-    while True:
-        latest_message = Client.retreive_message(f"pls bj {amount}")
+    while True:       
+        latest_message = Client.retreive_message(f"pls blackjack {amount}")
 
         if (
             "coins, dont try and lie to me hoe." in latest_message["content"]
@@ -39,9 +39,9 @@ def blackjack(Client) -> None:
 
         if (
             "description" in latest_message["embeds"][0].keys()
-            and "You lost" in latest_message["embeds"][0]["description"]
         ):
-            return
+            if "You lost" or "You won" in latest_message["embeds"][0]["description"]:
+                return
 
         total = int(
             "".join(

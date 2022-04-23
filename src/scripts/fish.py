@@ -11,7 +11,7 @@ def fish(Client) -> None:
     """
 
     Client.send_message("pls fish")
-
+    
     latest_message = Client.retreive_message("pls fish")
 
     if "Catch the fish" in latest_message["content"]:
@@ -51,10 +51,10 @@ def fish(Client) -> None:
             )
             return
 
-    if (
-        latest_message["content"]
-        == "Your fishing trip came up empty, shoes for dinner again tonight!"
-    ):
+    if latest_message["content"] in [
+        "Your fishing trip came up empty, shoes for dinner again tonight!",
+        "Awh man, no fish wanted your rod today",
+    ]:
         return
     else:
         item = (

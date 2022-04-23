@@ -168,7 +168,7 @@ def run(credentials: dict, index: int):
                         except Exception:
                             Client.log(
                                 "WARNING",
-                                f"Failed to clear lag from the `pls blackjack` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                                f"Failed to clear lag from the `pls blackjack` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
                 last_blackjack = datetime.now().strftime("%x-%X")
@@ -200,7 +200,7 @@ def run(credentials: dict, index: int):
                         except Exception:
                             Client.log(
                                 "WARNING",
-                                f"Failed to clear lag from the `pls crime` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                                f"Failed to clear lag from the `pls crime` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
                 last_crime = datetime.now().strftime("%x-%X")
@@ -324,7 +324,7 @@ def run(credentials: dict, index: int):
                         except Exception:
                             Client.log(
                                 "WARNING",
-                                f"Failed to clear lag from the `pls highlow` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                                f"Failed to clear lag from the `pls highlow` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
                 last_highlow = datetime.now().strftime("%x-%X")
@@ -373,7 +373,7 @@ def run(credentials: dict, index: int):
                         except Exception:
                             Client.log(
                                 "WARNING",
-                                f"Failed to clear lag from the `pls lottery` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                                f"Failed to clear lag from the `pls lottery` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
                 Client.database["lottery"] = datetime.now().strftime("%x-%X")
@@ -413,7 +413,7 @@ def run(credentials: dict, index: int):
                         except Exception:
                             Client.log(
                                 "WARNING",
-                                f"Failed to clear lag from the `pls postmeme` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                                f"Failed to clear lag from the `pls postmeme` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
                 last_postmeme = datetime.now().strftime("%x-%X")
@@ -445,7 +445,7 @@ def run(credentials: dict, index: int):
                         except Exception:
                             Client.log(
                                 "WARNING",
-                                f"Failed to clear lag from the `pls search` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                                f"Failed to clear lag from the `pls search` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
                 last_search = datetime.now().strftime("%x-%X")
@@ -494,7 +494,7 @@ def run(credentials: dict, index: int):
                         except Exception:
                             Client.log(
                                 "WARNING",
-                                f"Failed to clear lag from the `pls stream` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                                f"Failed to clear lag from the `pls stream` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
                 Client.database["stream"] = datetime.now().strftime("%x-%X")
@@ -534,7 +534,7 @@ def run(credentials: dict, index: int):
                         except Exception:
                             Client.log(
                                 "WARNING",
-                                f"Failed to clear lag from the `pls trivia` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                                f"Failed to clear lag from the `pls trivia` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
                 last_trivia = datetime.now().strftime("%x-%X")

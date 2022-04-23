@@ -11,7 +11,7 @@ def highlow(Client) -> None:
     """
 
     Client.send_message("pls highlow")
-
+    
     latest_message = Client.retreive_message("pls highlow")
 
     number = int(latest_message["embeds"][0]["description"].split("**")[-2])

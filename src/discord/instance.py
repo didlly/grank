@@ -180,6 +180,7 @@ class Client(object):
                             latest_message["referenced_message"]["author"]["id"]
                             == self.user_id
                             and latest_message["author"]["id"] == "270904126974590976"
+                            and latest_message["referenced_message"]["content"] == command
                         ):
                             if self.config["logging"]["debug"]:
                                 self.log(
@@ -375,7 +376,7 @@ class Client(object):
                         )
                     sleep(request["retry_after"])
                     continue
-                
+
                 raise ButtonInteractError(
                     f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
@@ -491,13 +492,13 @@ class Client(object):
         sleep(1)
 
         messages = data["messages"][self.channel_id]
-        
+
         for index in range(1, len(messages)):
             latest_message = messages[-index]
-            
+
             if latest_message["author"]["id"] == "270904126974590976":
                 break
-            
+
         custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
 
         return self.interact_button(command, custom_id, latest_message)

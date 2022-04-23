@@ -14,7 +14,7 @@ def crime(Client) -> None:
     """
 
     Client.send_message("pls crime")
-
+    
     latest_message = Client.retreive_message("pls crime")
 
     custom_id = next(

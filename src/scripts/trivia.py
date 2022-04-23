@@ -1,6 +1,7 @@
 from random import choice
 from time import sleep
 
+
 def trivia(Client) -> None:
     """A trivia command - `pls trivia`.
 
@@ -14,7 +15,7 @@ def trivia(Client) -> None:
     """
 
     Client.send_message("pls trivia")
-
+    
     latest_message = Client.retreive_message("pls trivia")
 
     try:
@@ -51,9 +52,9 @@ def trivia(Client) -> None:
     Client.interact_button("pls trivia", custom_id, latest_message)
 
     sleep(0.5)
-    
+
     latest_message = Client.retreive_message("pls trivia")
-    
+
     try:
         coins = int(
             "".join(
