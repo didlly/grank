@@ -98,19 +98,16 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 
 #### Windows
 
-Skip this and download the latest version of Grank from [here](https://github.com/didlly/grank/releases)
+Download the latest version of Grank from [here](https://github.com/didlly/grank/releases)
 
 #### macOS and Linux
 
 Unfortunately, I do not have access to a Mac or Linux device, so you will have to run the program from the source code.
 
+* Install the latest version of Python from [here](https://www.python.org/downloads/).
 * Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
-* Navigate into the `/src/` folder of Grank.
-* Download and extract the files of the latest version of [`pypy`](https://www.pypy.org/download.html) for your platform into the folder. Make sure the files are in the `/src/` folder and not in a sub-folder, otherwise this will not work.
-* Download and save [this](https://bootstrap.pypa.io/get-pip.py) file in that directory.
-* Open a command prompt in that directory.
-* Run the command `pypy get-pip.py`. If you changed the name of the file when you downloaded it, please replace `get-pip.py` with the new name.
-* Run the command `pypy installer.py`.
+* Navigate into `/src`
+* Run pip install -r requirements.txt
 
 ### Getting your Discord token and channel ID
 

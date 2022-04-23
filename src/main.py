@@ -138,6 +138,7 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls beg` command: `{exc_info()}`.",
                         )
+
                 last_beg = datetime.now().strftime("%x-%X")
 
         if Client.config["blackjack"]["enabled"] and data[username]:
@@ -161,6 +162,15 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls blackjack` command: `{exc_info()}`.",
                         )
+
+                        try:
+                            Client.clear_lag("pls blackjack")
+                        except Exception:
+                            Client.log(
+                                "WARNING",
+                                f"Failed to clear lag from the `pls blackjack` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                            )
+
                 last_blackjack = datetime.now().strftime("%x-%X")
 
         if Client.config["commands"]["crime"] and data[username]:
@@ -184,6 +194,15 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls crime` command: `{exc_info()}`.",
                         )
+
+                        try:
+                            Client.clear_lag("pls crime")
+                        except Exception:
+                            Client.log(
+                                "WARNING",
+                                f"Failed to clear lag from the `pls crime` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                            )
+
                 last_crime = datetime.now().strftime("%x-%X")
 
         if Client.config["commands"]["daily"] and data[username]:
@@ -232,6 +251,7 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls dig` command: `{exc_info()}`.",
                         )
+
                 last_dig = datetime.now().strftime("%x-%X")
 
         if Client.config["commands"]["fish"] and data[username]:
@@ -255,6 +275,7 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls fish` command: `{exc_info()}`.",
                         )
+
                 last_fish = datetime.now().strftime("%x-%X")
 
         if Client.config["commands"]["guess"] and data[username]:
@@ -271,6 +292,9 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls guess` command: `{exc_info()}`.",
                         )
+
+                    Client.send_message("end")
+
                 last_guess = datetime.now().strftime("%x-%X")
 
         if Client.config["commands"]["highlow"] and data[username]:
@@ -294,6 +318,15 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls highlow` command: `{exc_info()}`.",
                         )
+
+                        try:
+                            Client.clear_lag("pls highlow")
+                        except Exception:
+                            Client.log(
+                                "WARNING",
+                                f"Failed to clear lag from the `pls highlow` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                            )
+
                 last_highlow = datetime.now().strftime("%x-%X")
 
         if Client.config["commands"]["hunt"] and data[username]:
@@ -317,6 +350,7 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls hunt` command: `{exc_info()}`.",
                         )
+
                 last_hunt = datetime.now().strftime("%x-%X")
 
         if Client.config["lottery"]["enabled"] and data[username]:
@@ -333,6 +367,14 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls lottery` command: `{exc_info()}`.",
                         )
+
+                        try:
+                            Client.clear_lag("pls lottery")
+                        except Exception:
+                            Client.log(
+                                "WARNING",
+                                f"Failed to clear lag from the `pls lottery` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                            )
 
                 Client.database["lottery"] = datetime.now().strftime("%x-%X")
                 Client.database_file.write(dumps(Client.database))
@@ -365,6 +407,15 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls postmeme` command: `{exc_info()}`.",
                         )
+
+                        try:
+                            Client.clear_lag("pls postmeme")
+                        except Exception:
+                            Client.log(
+                                "WARNING",
+                                f"Failed to clear lag from the `pls postmeme` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                            )
+
                 last_postmeme = datetime.now().strftime("%x-%X")
 
         if Client.config["commands"]["search"] and data[username]:
@@ -388,6 +439,15 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls search` command: `{exc_info()}`.",
                         )
+
+                        try:
+                            Client.clear_lag("pls search")
+                        except Exception:
+                            Client.log(
+                                "WARNING",
+                                f"Failed to clear lag from the `pls search` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                            )
+
                 last_search = datetime.now().strftime("%x-%X")
 
         if Client.config["snakeeyes"]["enabled"] and data[username]:
@@ -411,6 +471,7 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls snakeeyes` command: `{exc_info()}`.",
                         )
+
                 last_snakeeyes = datetime.now().strftime("%x-%X")
 
         if Client.config["stream"]["enabled"] and data[username]:
@@ -427,6 +488,14 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls stream` command: `{exc_info()}`.",
                         )
+
+                        try:
+                            Client.clear_lag("pls stream")
+                        except Exception:
+                            Client.log(
+                                "WARNING",
+                                f"Failed to clear lag from the `pls stream` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                            )
 
                 Client.database["stream"] = datetime.now().strftime("%x-%X")
                 Client.database_file.write(dumps(Client.database))
@@ -459,6 +528,15 @@ def run(credentials: dict, index: int):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls trivia` command: `{exc_info()}`.",
                         )
+
+                        try:
+                            Client.clear_lag("pls trivia")
+                        except Exception:
+                            Client.log(
+                                "WARNING",
+                                f"Failed to clear lag from the `pls trivia` command failing: `{exc_info()}`. Backlash expected (it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
+                            )
+
                 last_trivia = datetime.now().strftime("%x-%X")
 
         if Client.config["commands"]["vote"] and data[username]:

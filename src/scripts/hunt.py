@@ -60,3 +60,17 @@ def hunt(Client) -> None:
                 f"A hunting rifle is required for the command `pls fish`. However, since {'auto buy is off for hunting rifles,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
             )
             return
+
+    if latest_message["content"] in [
+        "Imagine going into the woods to hunt something, and coming out empty handed",
+        "All that time in the woods, and you couldn't catch a single thing hahaha",
+    ]:
+        return
+    else:
+        item = (
+            latest_message["content"]
+            .replace("You went hunting and brought back a ", "")
+            .split("<:")[0]
+        )
+
+        Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls hunt` command.")

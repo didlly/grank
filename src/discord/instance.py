@@ -28,49 +28,18 @@ class DropdownInteractError(Exception):
 class Client(object):
     """The Class containing all the code for the self-bot to interact with Discord.
 
-    Procedures:
-            retreive_message()
+    Contains:
 
-                    - Retreives the latest message from Dank Memer.
-                    Args:
-                            command (str): The command that the message is being retreived for.
+    5 Procedures:
+        send_message()
+        retreive_message()
+        interact_button()
+        interact_dropdown()
+        clear_lag()
 
-                    Returns:
-                            latest_message (dict / None): The dictionary version of Dank Memer's latest message (or NoneType if it couldn't be found).
+    1 Function:
+        log()
 
-    Functions:
-            send_message()
-                    - Sends a message.
-
-                    Args:
-                            command (str): The command that the message is being retreived for.
-
-                    Returns:
-                            sent (bool): A boolean value that tells Grank whether the message was sent succesfully or not.
-
-            interact_button()
-                    - Interacts with a button.
-
-                    Args:
-                            command (str): The command that the message is being retreived for.
-                            custom_id (str): The ID of the button to be clicked.
-                            latest_message (dict): The dictionary version of Dank Memer's message that contains the button.
-                            token (str) [OPTIONAL]: The token of the account that should interact with the button if it should not be the one initialized in the __init__ function of this Class.
-
-                    Returns:
-                            interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
-
-            interact_dropdown()
-                     - Interacts with a dropdown.
-
-                    Args:
-                            command (str): The command that the message is being retreived for.
-                            custom_id (str): The ID of the dropdown to be interacted with.
-                            custom_id (str): The ID of the dropdown choice to be selected.
-                            latest_message (dict): The dictionary version of Dank Memer's message that contains the dropdown.
-
-                    Returns:
-                            interacted (bool): A boolean value that tells Grank whether the dropdown was successfully interacted with or not.
     """
 
     def __init__(self, config, user_id, username, session_id, channel_id, token, cwd):
@@ -130,6 +99,18 @@ class Client(object):
         self.database_file = database
 
     def send_message(self, command):
+        """send_message()
+
+        - Sends a message.
+
+
+        Args:
+            command (str): The command that the message is being retreived for.
+
+        Returns:
+            sent (bool): A boolean value that tells Grank whether the message was sent succesfully or not.
+        """
+
         if self.config["typing indicator"]["enabled"]:
             request = post(
                 f"https://discord.com/api/v9/channels/{self.channel_id}/typing",
@@ -173,6 +154,17 @@ class Client(object):
                 )
 
     def retreive_message(self, command):
+        """retreive_message()
+
+        - Retreives the latest message from Dank Memer.
+
+        Args:
+            command (str): The command that the message is being retreived for.
+
+        Returns:
+            latest_message (dict / None): The dictionary version of Dank Memer's latest message (or NoneType if it couldn't be found).
+        """
+
         while True:
             time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
 
@@ -326,7 +318,21 @@ class Client(object):
         return latest_message
 
     def interact_button(self, command, custom_id, latest_message, token=None):
-        data = {
+        """interact_button()
+
+        - Interacts with a button.
+
+        Args:
+            command (str): The command that the message is being retreived for.
+            custom_id (str): The ID of the button to be clicked.
+            latest_message (dict): The dictionary version of Dank Memer's message that contains the button.
+            token (str) [OPTIONAL]: The token of the account that should interact with the button if it should not be the one initialized in the __init__ function of this Class.
+
+        Returns:
+            interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
+        """
+
+        payload = {
             "application_id": 270904126974590976,
             "channel_id": self.channel_id,
             "type": 3,
@@ -343,7 +349,7 @@ class Client(object):
             request = post(
                 "https://discord.com/api/v10/interactions",
                 headers={"authorization": self.token if token is None else token},
-                json=data,
+                json=payload,
             )
 
             if request.status_code in [200, 204]:
@@ -373,7 +379,21 @@ class Client(object):
                 )
 
     def interact_dropdown(self, command, custom_id, option_id, latest_message):
-        data = {
+        """interact_dropdown()
+
+        - Interacts with a dropdown.
+
+        Args:
+            command (str): The command that the message is being retreived for.
+            custom_id (str): The ID of the dropdown to be interacted with.
+            option_id (str): The ID of the dropdown choice to be selected.
+            latest_message (dict): The dictionary version of Dank Memer's message that contains the dropdown.
+
+        Returns:
+            interacted (bool): A boolean value that tells Grank whether the dropdown was successfully interacted with or not.
+        """
+
+        payload = {
             "application_id": 270904126974590976,
             "channel_id": self.channel_id,
             "type": 3,
@@ -395,7 +415,7 @@ class Client(object):
             request = post(
                 "https://discord.com/api/v10/interactions",
                 headers={"authorization": self.token},
-                json=data,
+                json=payload,
             )
 
             if request.status_code in [200, 204]:
@@ -425,14 +445,16 @@ class Client(object):
                 )
 
     def log(self, level: str, text: str) -> None:
-        """A function which logs messages to the console and to the log file.
+        """log()
+
+        - Logs the specified message to the console and to the log file.
 
         Args:
-                level (str): The type of message to be logged.
-                text (str): The message to be logged.
+            level (str): The level of the message to be logged.
+            text (str): The message to be logged.
 
         Returns:
-                None
+            None
         """
 
         time = datetime.now().strftime("[%x-%X]")
@@ -451,3 +473,23 @@ class Client(object):
                 f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}"
             )
             exit(1)
+
+    def clear_lag(self, command: str) -> None:
+        """clear_lag()
+
+        - Attempts to stop backlash from failed interactive commands by interacting with the `End Interaction` button on the embed.
+
+        Args:
+            command (str): The command that failed to successfully execute.
+
+        Returns:
+            interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
+        """
+
+        sleep(1)
+
+        latest_message = self.retreive_message(command)
+
+        custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
+
+        return self.interact_button(command, custom_id, latest_message)

@@ -49,3 +49,22 @@ def trivia(Client) -> None:
         custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
 
     Client.interact_button("pls trivia", custom_id, latest_message)
+
+    latest_message = Client.retreive_message("pls trivia")
+    
+    try:
+        coins = int(
+            "".join(
+                filter(
+                    str.isdigit,
+                    latest_message["content"],
+                )
+            )
+        )
+    except Exception:
+        coins = "no"
+
+    Client.log(
+        "DEBUG",
+        f"Received {coins} coin{'' if coins == 1 else 's'} from the `pls trivia` command.",
+    )

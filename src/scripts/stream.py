@@ -15,9 +15,7 @@ def stream(Client) -> None:
             None
     """
 
-    (bought_keyboard, bought_mouse) = (
-        True * 2
-    )
+    bought_keyboard, bought_mouse = [True] * 2
 
     while True:
         Client.send_message("pls stream")

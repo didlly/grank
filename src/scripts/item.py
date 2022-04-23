@@ -13,13 +13,16 @@ def has_item(Client, item: str) -> None:
 
     latest_message = Client.retreive_message(f"pls item {item}")
 
-    num_items = int(
-        "".join(
-            filter(
-                str.isdigit,
-                latest_message["embeds"][0]["title"],
+    try:
+        num_items = int(
+            "".join(
+                filter(
+                    str.isdigit,
+                    latest_message["embeds"][0]["title"],
+                )
             )
         )
-    )
+    except Exception:
+        coins = "no"
 
     return True if num_items > 0 else False

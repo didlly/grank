@@ -50,3 +50,17 @@ def fish(Client) -> None:
                 f"A fishing pole is required for the command `pls fish`. However, since {'auto buy is off for fishing poles,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
             )
             return
+
+    if (
+        latest_message["content"]
+        == "Your fishing trip came up empty, shoes for dinner again tonight!"
+    ):
+        return
+    else:
+        item = (
+            latest_message["content"]
+            .replace("You cast out your line and brought back 1 ", "")
+            .split("<:")[0]
+        )
+
+        Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls fish` command.")

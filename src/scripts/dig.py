@@ -32,3 +32,17 @@ def dig(Client):
                 f"A shovel is required for the command `pls dig`. However, since {'auto buy is off for shovels,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
             )
             return
+
+    if (
+        latest_message["content"]
+        == "LMAO you found nothing in the ground. SUCKS TO BE YOU!"
+    ):
+        return
+    else:
+        item = (
+            latest_message["content"]
+            .replace("You dig in the dirt and brought back 1 ", "")
+            .split("<:")[0]
+        )
+
+        Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls dig` command.")
