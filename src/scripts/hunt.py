@@ -72,6 +72,6 @@ def hunt(Client) -> None:
             latest_message["content"]
             .replace("You went hunting and brought back a ", "")
             .split("<:")[0]
-        )
+        ).strip()
 
         Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls hunt` command.")

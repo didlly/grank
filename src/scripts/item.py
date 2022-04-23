@@ -23,6 +23,6 @@ def has_item(Client, item: str) -> None:
             )
         )
     except Exception:
-        coins = "no"
+        num_items = 0
 
     return True if num_items > 0 else False

@@ -61,6 +61,6 @@ def fish(Client) -> None:
             latest_message["content"]
             .replace("You cast out your line and brought back 1 ", "")
             .split("<:")[0]
-        )
+        ).strip()
 
         Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls fish` command.")
