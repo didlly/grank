@@ -75,11 +75,14 @@ def search(Client) -> None:
     except Exception:
         coins = "no"
 
-    items = (
-        latest_message["embeds"][0]["description"].split("**")[-1]
-        if latest_message["embeds"][0]["description"].count("**") == 2
-        else "no items"
-    )
+    try:
+        items = (
+            latest_message["embeds"][0]["description"].split("**")[-1]
+            if latest_message["embeds"][0]["description"].count("**") == 2
+            else "no items"
+        )
+    except Exception:
+        items = "no items"
 
     Client.log(
         "DEBUG",

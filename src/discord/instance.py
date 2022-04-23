@@ -1,4 +1,5 @@
 from datetime import datetime
+from email import message
 from json import loads, dumps
 from json.decoder import JSONDecodeError
 from utils.console import fore, style
@@ -374,6 +375,7 @@ class Client(object):
                         )
                     sleep(request["retry_after"])
                     continue
+                
                 raise ButtonInteractError(
                     f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
@@ -488,8 +490,14 @@ class Client(object):
 
         sleep(1)
 
-        latest_message = self.retreive_message(command)
-
+        messages = data["messages"][self.channel_id]
+        
+        for index in range(1, len(messages)):
+            latest_message = messages[-index]
+            
+            if latest_message["author"]["id"] == "270904126974590976":
+                break
+            
         custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
 
         return self.interact_button(command, custom_id, latest_message)

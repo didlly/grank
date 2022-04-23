@@ -40,7 +40,10 @@ def postmeme(Client) -> None:
         except Exception:
             coins = "no"
 
-        items = latest_message["embeds"][0]["description"].split("**")[-2]
+        try:
+            items = latest_message["embeds"][0]["description"].split("**")[-2]
+        except Exception:
+            items = "no items"
     else:
         try:
             coins = int(
