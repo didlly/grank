@@ -64,6 +64,7 @@ def hunt(Client) -> None:
     if latest_message["content"] in [
         "Imagine going into the woods to hunt something, and coming out empty handed",
         "All that time in the woods, and you couldn't catch a single thing hahaha",
+        "You might be the only hunter in the world to never hit anything, just like this time"
     ]:
         return
     else:
