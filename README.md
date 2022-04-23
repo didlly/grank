@@ -1,6 +1,6 @@
 # Grank
 
-[![Join our Discord](https://www.oathro.com/themes/oathro/img/discord-button.png)](https://discord.gg/h7jK9pBkAs)
+[![Join our Discord](https://www.oathro.com/themes/oathro/img/discord-button.png)](https://discord.gg/X3JMC9FAgy)
 
 [![Stargazers](https://img.shields.io/github/stars/didlly/grank?style=for-the-badge&logo=Python&color=blue)](https://github.com/didlly/grank/stargazers)
 [![Forks](https://img.shields.io/github/forks/didlly/grank?style=for-the-badge&logo=Python&color=blue)](https://github.com/didlly/grank/network/members)
