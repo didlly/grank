@@ -123,7 +123,7 @@ To use Grank, you will have to provide your Discord token and a channel ID. Don'
 
 Since Grank supports multi-instancing, for every `token` you put in you will have to specify a `channel_id`. Open `src/credentials.json`. You should see a dictionary with two keys * `tokens` and `channel_ids`. As mentioned earlier, for every `token` you put in the list of `tokens`, you need to put a `channel id` in the list of `channel ids`. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
 
-You are now ready to use the program. Run ```pypy main.py``` in a command prompt in the `/src/` directory to start the program (or if you are on Windows run `main.exe`). You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
+You are now ready to use the program. Run ```python main.py``` in a command prompt in the `/src/` directory to start the program (or if you are on Windows run `main.exe`). You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things! Grank also supports multi-instancing, so you can run the program on different accounts at once!
 
 ## Config file
 
