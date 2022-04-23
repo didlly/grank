@@ -14,10 +14,10 @@ def guild_id(Client):
             None
     """
 
-    if len(data["messages"][Client.channel_id]) < 1:
+    if len(data["messages"][Client.channel_id]) == 0:
         response = loads(
             get(
-                f" https://discord.com/api/v10/channels/{Client.channel_id}/messages?limit=1",
+                f" https://discord.com/api/v10/channels/{Client.channel_id}/messages",
                 headers={"authorization": Client.token},
             ).content.decode()
         )
@@ -32,14 +32,11 @@ def guild_id(Client):
                         "message_reference"
                     ]["guild_id"]
                     break
-        elif not found:
+        
+        if not found:
             Client.send_message("pls beg")
 
-            while True:
-                latest_message = Client.retreive_message("pls beg")
-
-                if latest_message is not None:
-                    break
+            latest_message = Client.retreive_message("pls beg")
 
             data[f"{Client.channel_id}_guild"] = latest_message["message_reference"][
                 "guild_id"

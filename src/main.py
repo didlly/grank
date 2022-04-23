@@ -34,7 +34,7 @@ print(
 {style.Italic + style.Bold}GITHUB: {style.RESET_ALL}https://github.com/didlly/grank
 {style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}{version}
 {style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{get("https://raw.githubusercontent.com/didlly/grank/main/src/current_version").content.decode()}
-{style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/h7jK9pBkAs
+{style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.gg/X3JMC9FAgy
 """
 )
 

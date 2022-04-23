@@ -63,7 +63,7 @@ class Client(object):
                 break
             except JSONDecodeError:
                 self.log(
-                    None, "WARNING", "Database file is corrupted. Re-downloading now."
+                    "WARNING", "Database file is corrupted. Re-downloading now."
                 )
 
                 req = loads(
@@ -75,21 +75,21 @@ class Client(object):
                 req["shifts"]["active"] = datetime.now().strftime("%x-%X")
                 req["shifts"]["passive"] = datetime.now().strftime("%x-%X")
 
-                self.log(None, "DEBUG", "Retreived new database file.")
+                self.log("DEBUG", "Retreived new database file.")
 
                 with open(f"{cwd}database.json", "w") as db:
-                    self.log(None, "DEBUG", f"Opened `{cwd}database.json`.")
+                    self.log("DEBUG", f"Opened `{cwd}database.json`.")
                     db.seek(0)
                     db.truncate()
                     db.write(dumps(req))
                     self.log(
-                        None, "DEBUG", f"Wrote new database to `{cwd}database.json`."
+                        "DEBUG", f"Wrote new database to `{cwd}database.json`."
                     )
 
-                self.log(None, "DEBUG", f"Closed `{cwd}database.json`.")
+                self.log("DEBUG", f"Closed `{cwd}database.json`.")
 
         if count == 5:
-            self.log(None, "ERROR", "Database error. Please close and re-open Grank.")
+            self.log("ERROR", "Database error. Please close and re-open Grank.")
 
         class database:
             def write(content: str):
