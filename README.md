@@ -104,7 +104,7 @@ Download the latest version of Grank from [here](https://github.com/didlly/grank
 
 Unfortunately, I do not have access to a Mac or Linux device, so you will have to run the program from the source code.
 
-* Install the latest version of Python from [here](https://www.python.org/downloads/).
+* Install the latest version of Python from [here](https://www.python.org/downloads/). Make sure to have the `Install Pip` option ticked.
 * Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
 * Navigate into `/src`
 * Run pip install -r requirements.txt
