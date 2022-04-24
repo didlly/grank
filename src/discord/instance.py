@@ -284,13 +284,13 @@ class Client(object):
                     )
 
                     latest_message = self.retreive_message(
-                        f"pls trade 1 {key} {self.username}",
+                        f"pls trade 1, 1{key} {self.username}",
                         self.config["auto trade"]["trader token"],
                         False,
                     )
 
                     self.interact_button(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}",
+                        f"pls trade 1, 1 {key} {self.config['auto trade']['trader']['username']}",
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                         self.config["auto trade"]["trader token"],
@@ -300,11 +300,11 @@ class Client(object):
                     sleep(1)
 
                     latest_message = self.retreive_message(
-                        f"pls trade 1 {key} {self.username}", check=False
+                        f"pls trade 1, 1 {key} {self.username}", check=False
                     )
 
                     self.interact_button(
-                        f"pls trade 1 {key} {self.username}",
+                        f"pls trade 1, 1 {key} {self.username}",
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                     )
