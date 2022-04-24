@@ -19,7 +19,7 @@ def trivia(Client) -> None:
     latest_message = Client.retreive_message("pls trivia")
 
     try:
-        answer = Client.trivia["trivia"][
+        answer = Client.trivia[
             latest_message["embeds"][0]["description"]
             .split("\n")[0]
             .replace("*", "")
