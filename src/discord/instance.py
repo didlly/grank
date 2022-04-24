@@ -266,6 +266,8 @@ class Client(object):
                         found = True
                         
                 if found:
+                    self.log("DEBUG", "Received an item to be autotraded.")
+
                     self.send_message(
                         f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}"
                     )
