@@ -19,12 +19,12 @@ def trivia(Client) -> None:
     latest_message = Client.retreive_message("pls trivia")
 
     try:
-        answer = Client.database["trivia"][
+        answer = Client.trivia["trivia"][
             latest_message["embeds"][0]["description"]
             .split("\n")[0]
             .replace("*", "")
             .replace('"', "&quot;")
-        ]
+        ].replace("&quot;", '"')
     except KeyError:
         answer = None
         Client.log(

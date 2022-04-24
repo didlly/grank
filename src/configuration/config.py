@@ -68,9 +68,6 @@ def load_config(cwd: str) -> dict:
         "['cooldowns']",
         "['cooldowns']['patron']",
         "['cooldowns']['timeout']",
-        "['auto update']",
-        "['auto update']['enabled']",
-        "['auto update']['config']",
         "['logging']['debug']",
         "['logging']['warning']",
     ]

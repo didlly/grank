@@ -70,10 +70,6 @@ cooldowns:
   patron: False
   timeout: 5
 
-auto update:
-  enabled: False
-  config: False
-
 logging:
   debug: True
   warning: True

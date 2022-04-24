@@ -257,15 +257,6 @@ Values in the ```cooldowns``` category tell the program whether to use cooldowns
 | ```patron```  | ```Boolean``` | ```False```  | Changes cooldowns to reflect the cooldowns of ```patrons```. |
 | ```timeout```  | ```Integer``` | ```5```  | Timeout for waiting for responses from Dank Memer to commands that require user interaction (like ```pls search```). |
 
-### ```auto update``` category
-
-Values in the ```auto update``` category tell the program whether or not to *automatically update the loaded configuration* and *how often to do so*.
-
-| Name  | Type | Default Value | Description |
-| ------------- | ------------- | ------------- | ------------- |
-| ```enabled```  | ```Boolean``` | ```False```  | If this is set to ```True```, the program will auto update the specified options. If it is set to ```False``` the program will not auto update them. |
-| ```config```  | ```Boolean``` | ```True```  | If this is set to ```True```, the program will auto update the loaded config. If it is set to ```False``` the program will not auto update the loaded config. |
-
 ### ```logging``` category
 
 Values in the ```logging``` category tell the program whether or not to log *```debug```* and *```warning```* messages. We would recommend having *at least* ```warning``` set to ```True```. Fatal errors will be logged regardless of the configuration.

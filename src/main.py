@@ -92,8 +92,11 @@ def run(credentials: dict, index: int):
         try:
             Client.send_message("pls settings confirmations nah")
         except MessageSendError:
-            Client.log("ERROR", f"Cannot send messages in channel {Client.channel_id}.")
-            
+            Client.log(
+                "WARNING",
+                f"An unexpected error occured during the running of the `pls settings confirmations nah` command: `{exc_info()}`.",
+            )
+
         Client.database[f"{user_id}_confirmation"] = True
         Client.database_file.write(dumps(Client.database))
 

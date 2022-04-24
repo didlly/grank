@@ -97,6 +97,13 @@ class Client(object):
 
         self.database_file = database
 
+        self.trivia = loads(
+            get(
+                "https://raw.githubusercontent.com/didlly/grank/main/src/trivia.json",
+                allow_redirects=True,
+            ).content
+        )
+
     def send_message(self, command, token=None):
         """send_message()
 
@@ -256,29 +263,32 @@ class Client(object):
                     or not self.config["auto trade"][key]
                 ):
                     continue
-                
+
                 found = False
-                
+
                 if key.lower() in latest_message["content"].lower():
                     found = True
                 elif len(latest_message["embeds"]) != 0:
-                    if key.lower() in latest_message["embeds"][0]["description"].lower():
+                    if (
+                        key.lower()
+                        in latest_message["embeds"][0]["description"].lower()
+                    ):
                         found = True
-                        
+
                 if found:
                     self.log("DEBUG", "Received an item to be autotraded.")
 
                     self.send_message(
                         f"pls trade 1, 1 {key} {self.username}",
-                        self.config["auto trade"]["trader token"]
+                        self.config["auto trade"]["trader token"],
                     )
 
                     latest_message = self.retreive_message(
                         f"pls trade 1 {key} {self.username}",
                         self.config["auto trade"]["trader token"],
-                        False
+                        False,
                     )
-                    
+
                     self.interact_button(
                         f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}",
                         latest_message["components"][0]["components"][-1]["custom_id"],
@@ -288,18 +298,16 @@ class Client(object):
                     )
 
                     sleep(1)
-                    
+
                     latest_message = self.retreive_message(
-                        f"pls trade 1 {key} {self.username}",
-                        check=False
+                        f"pls trade 1 {key} {self.username}", check=False
                     )
-                    
+
                     self.interact_button(
                         f"pls trade 1 {key} {self.username}",
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                     )
-                    
 
         return latest_message
 
@@ -319,7 +327,7 @@ class Client(object):
         Returns:
             interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
         """
-        
+
         payload = {
             "application_id": 270904126974590976,
             "channel_id": self.channel_id,
