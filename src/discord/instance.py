@@ -96,7 +96,7 @@ class Client(object):
                 data.write(content)
 
         self.database_file = database
-
+    
     def send_message(self, command):
         """send_message()
 
@@ -256,17 +256,26 @@ class Client(object):
                     or not self.config["auto trade"][key]
                 ):
                     continue
-                elif key in latest_message["content"].lower():
+                
+                found = False
+                
+                if key.lower() in latest_message["content"].lower():
+                    found = True
+                elif len(latest_message["embeds"]) != 0:
+                    if key.lower() in latest_message["embeds"][0]["description"].lower():
+                        found = True
+                        
+                if found:
                     self.send_message(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}"
+                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}"
                     )
 
                     latest_message = self.retreive_message(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}"
+                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}"
                     )
 
                     self.interact_button(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}",
+                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}",
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                     )
@@ -274,47 +283,16 @@ class Client(object):
                     sleep(1)
 
                     latest_message = self.retreive_message(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}"
+                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}"
                     )
 
                     self.interact_button(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}",
+                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}",
                         latest_message["components"][0]["components"][-1]["custom_id"],
+                        latest_message,
+                        self.config["auto trade"]["trader token"],
                         self.config["auto trade"]["trader"]["session_id"],
-                        self.config["auto trade"]["trader"]["self.username"],
                     )
-                elif len(latest_message["embeds"]) != 0:
-                    if key in latest_message["embeds"][0]["description"]:
-                        self.send_message(
-                            f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}"
-                        )
-
-                        latest_message = self.retreive_message(
-                            f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}"
-                        )
-
-                        self.interact_button(
-                            f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}",
-                            latest_message["components"][0]["components"][-1][
-                                "custom_id"
-                            ],
-                            latest_message,
-                        )
-
-                        sleep(1)
-
-                        latest_message = self.retreive_message(
-                            f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}"
-                        )
-
-                        self.interact_button(
-                            f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}",
-                            latest_message["components"][0]["components"][-1][
-                                "custom_id"
-                            ],
-                            self.config["auto trade"]["trader"]["session_id"],
-                            self.config["auto trade"]["trader"]["self.username"],
-                        )
 
         return latest_message
 
