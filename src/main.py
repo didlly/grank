@@ -592,12 +592,5 @@ def run(credentials: dict, index: int):
         while not data[username]:
             pass
 
-        if Client.config["auto update"]:
-            if Client.config["auto update"]["config"]:
-                Client = client(
-                    config, user_id, username, session_id, channel_id, token, cwd
-                )
-
-
 for index in range(len(credentials)):
     Thread(target=run, args=[credentials, index]).start()
