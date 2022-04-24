@@ -11,7 +11,7 @@ def hunt(Client) -> None:
     """
 
     Client.send_message("pls hunt")
-    
+
     latest_message = Client.retreive_message("pls hunt")
 
     if "Dodge the Fireball" in latest_message["content"]:

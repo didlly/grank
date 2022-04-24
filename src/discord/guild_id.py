@@ -32,7 +32,7 @@ def guild_id(Client):
                         "message_reference"
                     ]["guild_id"]
                     break
-        
+
         if not found:
             Client.send_message("pls beg")
 

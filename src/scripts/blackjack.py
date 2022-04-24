@@ -1,4 +1,5 @@
 from random import randint
+from time import sleep
 
 
 def blackjack(Client) -> None:
@@ -23,24 +24,41 @@ def blackjack(Client) -> None:
 
     Client.send_message(f"pls blackjack {amount}")
 
-    while True:       
-        latest_message = Client.retreive_message(f"pls blackjack {amount}")
-
-        if (
-            "coins, dont try and lie to me hoe." in latest_message["content"]
-            or "You have no coins in your wallet to gamble with lol."
-            in latest_message["content"]
-        ):
-            Client.log(
-                "WARNING",
-                f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.",
-            )
-            return
-
-        if (
-            "description" in latest_message["embeds"][0].keys()
-        ):
-            if "You lost" or "You won" in latest_message["embeds"][0]["description"]:
+    latest_message = Client.retreive_message(f"pls blackjack {amount}")
+    
+    if (
+        "coins, dont try and lie to me hoe." in latest_message["content"]
+        or "You have no coins in your wallet to gamble with lol."
+        in latest_message["content"]
+    ):
+        Client.log(
+            "WARNING",
+            f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.",
+        )
+        return
+        
+    while True:
+        if "description" in latest_message["embeds"][0].keys():
+            if "You lost" in latest_message["embeds"][0]["description"] or "You didn't" in latest_message["embeds"][0]["description"]:
+                Client.log("DEBUG", f"Lost {amount} through the `pls blackjack` command.")
+                return
+            elif "You win" in latest_message["embeds"][0]["description"]:
+                try:
+                    coins = int(
+                        "".join(
+                            filter(
+                                str.isdigit,
+                                coins = latest_message['embeds'][0]['description'].split('**')[4],
+                            )
+                        )
+                    )
+                except Exception:
+                    coins = "no"
+                    
+                Client.log("DEBUG", f"Won {coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.")
+                return
+            elif "Tied" in latest_message["embeds"][0]["description"]:
+                Client.log("DEBUG", "Tied with the dealer in the `pls blackjack` command.")
                 return
 
         total = int(
@@ -52,7 +70,7 @@ def blackjack(Client) -> None:
             )
         )
 
-        if total < 18:
+        if total < 17:
             Client.interact_button(
                 f"pls bj {amount}",
                 latest_message["components"][0]["components"][0]["custom_id"],
@@ -65,3 +83,7 @@ def blackjack(Client) -> None:
                 latest_message,
             )
             break
+        
+        sleep(0.5)
+        
+        latest_message = Client.retreive_message(f"pls blackjack {amount}")

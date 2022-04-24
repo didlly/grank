@@ -62,9 +62,7 @@ class Client(object):
                 self.database = loads(data.read())
                 break
             except JSONDecodeError:
-                self.log(
-                    "WARNING", "Database file is corrupted. Re-downloading now."
-                )
+                self.log("WARNING", "Database file is corrupted. Re-downloading now.")
 
                 req = loads(
                     get(
@@ -82,9 +80,7 @@ class Client(object):
                     db.seek(0)
                     db.truncate()
                     db.write(dumps(req))
-                    self.log(
-                        "DEBUG", f"Wrote new database to `{cwd}database.json`."
-                    )
+                    self.log("DEBUG", f"Wrote new database to `{cwd}database.json`.")
 
                 self.log("DEBUG", f"Closed `{cwd}database.json`.")
 
@@ -180,7 +176,8 @@ class Client(object):
                             latest_message["referenced_message"]["author"]["id"]
                             == self.user_id
                             and latest_message["author"]["id"] == "270904126974590976"
-                            and latest_message["referenced_message"]["content"] == command
+                            and latest_message["referenced_message"]["content"]
+                            == command
                         ):
                             if self.config["logging"]["debug"]:
                                 self.log(
@@ -488,8 +485,6 @@ class Client(object):
         Returns:
             interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
         """
-
-        sleep(1)
 
         messages = data["messages"][self.channel_id]
 

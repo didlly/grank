@@ -11,7 +11,7 @@ def fish(Client) -> None:
     """
 
     Client.send_message("pls fish")
-    
+
     latest_message = Client.retreive_message("pls fish")
 
     if "Catch the fish" in latest_message["content"]:
@@ -54,6 +54,7 @@ def fish(Client) -> None:
     if latest_message["content"] in [
         "Your fishing trip came up empty, shoes for dinner again tonight!",
         "Awh man, no fish wanted your rod today",
+        "You cast out your line and sadly didn't get a bite",
     ]:
         return
     else:

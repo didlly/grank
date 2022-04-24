@@ -25,12 +25,27 @@ def receive_messages(ws, event: dict, channel_id: int) -> None:
             event = loads(ws.recv())
 
             if event["t"] == "MESSAGE_CREATE":
-
                 if event["d"]["channel_id"] == str_channel_id:
                     data["messages"][channel_id].append(event["d"])
-
+                
+            if event["t"] == "MESSAGE_UPDATE":
+                if event["d"]["channel_id"] == str_channel_id:
+                    found = False
+                    
+                    for index in range(1, len(data["messages"][channel_id][0])):
+                        latest_message = data["messages"][channel_id][-index]
+                        
+                        if latest_message["id"] == event["d"]["id"]:
+                            data["messages"][channel_id][-index] = event["d"]
+                            found = True
+                            break
+                        
+                    if not found:
+                        data["messages"][channel_id].append(event["d"])
+                    
             if len(data["messages"][channel_id]) > 10:
                 del data["messages"][channel_id][0]
+                
 
 
 def gateway(token: str, channel_id: int) -> str:
@@ -70,6 +85,7 @@ def gateway(token: str, channel_id: int) -> str:
 
     event = loads(ws.recv())
 
-    Thread(target=receive_messages, args=[ws, event, channel_id]).start()
+    if channel_id is not None:
+        Thread(target=receive_messages, args=[ws, event, channel_id]).start()
 
     return event["d"]["sessions"][0]["session_id"]

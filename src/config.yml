@@ -23,7 +23,7 @@ stream:
   donations: True
 
 blackjack:
-  enabled: False
+  enabled: True
   random: False
   amount: 1500
   minimum: 1500

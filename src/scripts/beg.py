@@ -11,9 +11,9 @@ def beg(Client) -> None:
     """
 
     Client.send_message("pls beg")
-    
+
     latest_message = Client.retreive_message("pls beg")
-                
+
     try:
         coins = int(
             "".join(

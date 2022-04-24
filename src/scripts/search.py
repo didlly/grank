@@ -14,7 +14,7 @@ def search(Client) -> None:
     """
 
     Client.send_message("pls search")
-    
+
     latest_message = Client.retreive_message("pls search")
 
     custom_id = None
