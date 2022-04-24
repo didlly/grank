@@ -309,14 +309,18 @@ class Client(object):
 
                         self.interact_button(
                             f"pls trade 1 {key} {self.config['auto trade']['trader']['self.username']}",
-                            latest_message["components"][0]["components"][-1]["custom_id"],
+                            latest_message["components"][0]["components"][-1][
+                                "custom_id"
+                            ],
                             self.config["auto trade"]["trader"]["session_id"],
                             self.config["auto trade"]["trader"]["self.username"],
                         )
 
         return latest_message
 
-    def interact_button(self, command, custom_id, latest_message, token=None, session_id=None):
+    def interact_button(
+        self, command, custom_id, latest_message, token=None, session_id=None
+    ):
         """interact_button()
 
         - Interacts with a button.
