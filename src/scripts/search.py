@@ -1,4 +1,5 @@
 from random import choice
+from time import sleep
 
 
 def search(Client) -> None:
@@ -61,6 +62,8 @@ def search(Client) -> None:
         latest_message,
     )
 
+    sleep(0.5)
+
     latest_message = Client.retreive_message("pls search")
 
     try:
@@ -86,5 +89,5 @@ def search(Client) -> None:
 
     Client.log(
         "DEBUG",
-        f"Received {coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls search` command.",
+        f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls search` command.",
     )

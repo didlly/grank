@@ -1,4 +1,5 @@
 from random import choice, randint
+from time import sleep
 from scripts.item import has_item
 from scripts.buy import buy
 
@@ -62,11 +63,19 @@ def stream(Client) -> None:
         return False
 
     if len(latest_message["components"][0]["components"]) == 3:
+        if "footer" in latest_message["embeds"][0].keys():
+            if "text" in latest_message["embeds"][0]["footer"].keys():
+                if "Wait" in latest_message["embeds"][0]["footer"]["text"]:
+                    Client.log("DEBUG", "Cannot stream yet - awaiting cooldown end.")
+                    return
+
         Client.interact_button(
             "pls stream",
             latest_message["components"][0]["components"][0]["custom_id"],
             latest_message,
         )
+
+        sleep(0.5)
 
         latest_message = Client.retreive_message("pls stream")
 
@@ -84,6 +93,8 @@ def stream(Client) -> None:
             latest_message["components"][-1]["components"][0]["custom_id"],
             latest_message,
         )
+
+    sleep(0.5)
 
     latest_message = Client.retreive_message("pls stream")
 

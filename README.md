@@ -106,8 +106,8 @@ Unfortunately, I do not have access to a Mac or Linux device, so you will have t
 
 * Install the latest version of Python from [here](https://www.python.org/downloads/). Make sure to have the `Install Pip` option ticked.
 * Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
-* Navigate into `/src`
-* Run pip install -r requirements.txt
+* Navigate into `/src`.
+* Run `python installer.py`.
 
 ### Getting your Discord token and channel ID
 

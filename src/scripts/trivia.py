@@ -51,7 +51,7 @@ def trivia(Client) -> None:
 
     Client.interact_button("pls trivia", custom_id, latest_message)
 
-    sleep(0.75)
+    sleep(0.5)
 
     latest_message = Client.retreive_message("pls trivia")
 
@@ -69,5 +69,5 @@ def trivia(Client) -> None:
 
     Client.log(
         "DEBUG",
-        f"Received {coins} coin{'' if coins == 1 else 's'} from the `pls trivia` command.",
+        f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} from the `pls trivia` command.",
     )

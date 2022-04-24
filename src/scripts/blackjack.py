@@ -25,7 +25,7 @@ def blackjack(Client) -> None:
     Client.send_message(f"pls blackjack {amount}")
 
     latest_message = Client.retreive_message(f"pls blackjack {amount}")
-    
+
     if (
         "coins, dont try and lie to me hoe." in latest_message["content"]
         or "You have no coins in your wallet to gamble with lol."
@@ -36,11 +36,16 @@ def blackjack(Client) -> None:
             f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.",
         )
         return
-        
+
     while True:
         if "description" in latest_message["embeds"][0].keys():
-            if "You lost" in latest_message["embeds"][0]["description"] or "You didn't" in latest_message["embeds"][0]["description"]:
-                Client.log("DEBUG", f"Lost {amount} through the `pls blackjack` command.")
+            if (
+                "You lost" in latest_message["embeds"][0]["description"]
+                or "You didn't" in latest_message["embeds"][0]["description"]
+            ):
+                Client.log(
+                    "DEBUG", f"Lost {amount} through the `pls blackjack` command."
+                )
                 return
             elif "You win" in latest_message["embeds"][0]["description"]:
                 try:
@@ -48,17 +53,24 @@ def blackjack(Client) -> None:
                         "".join(
                             filter(
                                 str.isdigit,
-                                coins = latest_message['embeds'][0]['description'].split('**')[4],
+                                coins=latest_message["embeds"][0]["description"].split(
+                                    "**"
+                                )[4],
                             )
                         )
                     )
                 except Exception:
                     coins = "no"
-                    
-                Client.log("DEBUG", f"Won {coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.")
+
+                Client.log(
+                    "DEBUG",
+                    f"Won {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.",
+                )
                 return
             elif "Tied" in latest_message["embeds"][0]["description"]:
-                Client.log("DEBUG", "Tied with the dealer in the `pls blackjack` command.")
+                Client.log(
+                    "DEBUG", "Tied with the dealer in the `pls blackjack` command."
+                )
                 return
 
         total = int(
@@ -83,7 +95,7 @@ def blackjack(Client) -> None:
                 latest_message,
             )
             break
-        
+
         sleep(0.5)
-        
+
         latest_message = Client.retreive_message(f"pls blackjack {amount}")

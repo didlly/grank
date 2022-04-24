@@ -1,3 +1,6 @@
+from random import choice
+
+
 def hunt(Client) -> None:
     """One of the basic 7 currency commands - `pls hunt`.
 
@@ -65,13 +68,23 @@ def hunt(Client) -> None:
         "Imagine going into the woods to hunt something, and coming out empty handed",
         "All that time in the woods, and you couldn't catch a single thing hahaha",
         "You might be the only hunter in the world to never hit anything, just like this time",
+        "You went hunting the woods and brought back literally nothing lol",
     ]:
+        responses = [
+            "nothing in the woods",
+            "no animals slow enough to be caught",
+            "that the woods seemed a bit barren",
+            "no animals in the woods - you wooden believe it",
+        ]
+
+        Client.log("DEBUG", f"Found {choice(responses)} from the `pls hunt` command.")
         return
     else:
         item = (
             latest_message["content"]
             .replace("You went hunting and brought back a ", "")
             .split("<:")[0]
+            .split("<a:")[0]
         ).strip()
 
         Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls hunt` command.")

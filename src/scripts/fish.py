@@ -1,3 +1,6 @@
+from random import choice
+
+
 def fish(Client) -> None:
     """One of the basic 7 currency commands - `pls fish`.
 
@@ -56,12 +59,21 @@ def fish(Client) -> None:
         "Awh man, no fish wanted your rod today",
         "You cast out your line and sadly didn't get a bite",
     ]:
+        responses = [
+            "the lake was a bit empty",
+            "no marine life in the waters",
+            "the water was too bright",
+            "out that the lil fishies rejected you",
+        ]
+
+        Client.log("DEBUG", f"Found {choice(responses)} from the `pls fish` command.")
         return
     else:
         item = (
             latest_message["content"]
             .replace("You cast out your line and brought back 1 ", "")
             .split("<:")[0]
+            .split("<a:")[0]
         ).strip()
 
         Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls fish` command.")

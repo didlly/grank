@@ -1,3 +1,6 @@
+from time import sleep
+
+
 def highlow(Client) -> None:
     """One of the 2 guess the number commands - `pls highlow`.
 
@@ -26,6 +29,10 @@ def highlow(Client) -> None:
         latest_message,
     )
 
+    sleep(0.5)
+
+    latest_message = Client.retreive_message("pls highlow")
+
     if "You won" in latest_message["embeds"][0]["description"]:
         try:
             coins = int(
@@ -41,5 +48,9 @@ def highlow(Client) -> None:
 
         Client.log(
             "DEBUG",
-            f"Received {coins} coin{'' if coins == 1 else 's'} from the `pls highlow` command.",
+            f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} from the `pls highlow` command.",
+        )
+    else:
+        Client.log(
+            "DEBUG", "Lost the `pls highlow` command (no negative balance impacts)."
         )

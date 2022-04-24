@@ -1,3 +1,4 @@
+from time import sleep
 from random import choice
 
 
@@ -33,6 +34,8 @@ def crime(Client) -> None:
         latest_message,
     )
 
+    sleep(0.5)
+
     latest_message = Client.retreive_message("pls crime")
 
     try:
@@ -49,7 +52,7 @@ def crime(Client) -> None:
 
     try:
         items = (
-            latest_message["embeds"][0]["description"].split("**")[-1]
+            latest_message["embeds"][0]["description"].split("**")[-2]
             if latest_message["embeds"][0]["description"].count("**") == 2
             else "no items"
         )
@@ -58,5 +61,5 @@ def crime(Client) -> None:
 
     Client.log(
         "DEBUG",
-        f"Received {coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls crime` command.",
+        f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls crime` command.",
     )

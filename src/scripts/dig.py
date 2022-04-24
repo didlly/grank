@@ -1,3 +1,6 @@
+from random import choice
+
+
 def dig(Client):
     """One of the basic 7 currency commands - `pls dig`.
 
@@ -37,12 +40,21 @@ def dig(Client):
         latest_message["content"]
         == "LMAO you found nothing in the ground. SUCKS TO BE YOU!"
     ):
+        responses = [
+            "the ground was too hard to be searched",
+            "no edible life forms in the ground",
+            "the ground was a bit barren",
+            "the ground was a bit sus",
+        ]
+
+        Client.log("DEBUG", f"Found {choice(responses)} from the `pls dig` command.")
         return
     else:
         item = (
             latest_message["content"]
             .replace("You dig in the dirt and brought back 1 ", "")
             .split("<:")[0]
+            .split("<a:")[0]
         ).strip()
 
         Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls dig` command.")

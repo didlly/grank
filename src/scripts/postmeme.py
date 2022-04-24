@@ -1,4 +1,5 @@
 from random import choice
+from time import sleep
 
 
 def postmeme(Client) -> None:
@@ -22,6 +23,8 @@ def postmeme(Client) -> None:
         choice(latest_message["components"][0]["components"])["custom_id"],
         latest_message,
     )
+
+    sleep(0.5)
 
     latest_message = Client.retreive_message("pls postmeme")
 
@@ -61,5 +64,5 @@ def postmeme(Client) -> None:
 
         Client.log(
             "DEBUG",
-            f"Received {coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls crime` command.",
+            f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls crime` command.",
         )
