@@ -96,8 +96,8 @@ class Client(object):
                 data.write(content)
 
         self.database_file = database
-    
-    def send_message(self, command):
+
+    def send_message(self, command, token=None):
         """send_message()
 
         - Sends a message.
@@ -113,7 +113,7 @@ class Client(object):
         if self.config["typing indicator"]["enabled"]:
             request = post(
                 f"https://discord.com/api/v9/channels/{self.channel_id}/typing",
-                headers={"authorization": self.token},
+                headers={"authorization": self.token if token is None else token},
             )
             sleep(
                 uniform(
@@ -125,7 +125,7 @@ class Client(object):
         while True:
             request = post(
                 f"https://discord.com/api/v10/channels/{self.channel_id}/messages?limit=1",
-                headers={"authorization": self.token},
+                headers={"authorization": self.token if token is None else token},
                 json={"content": command},
             )
 
@@ -152,7 +152,7 @@ class Client(object):
                     f"Failed to send command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
 
-    def retreive_message(self, command):
+    def retreive_message(self, command, token=None, check=True):
         """retreive_message()
 
         - Retreives the latest message from Dank Memer.
@@ -233,7 +233,7 @@ class Client(object):
                         f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
                     )
                 sleep(cooldown)
-                self.send_message(command)
+                self.send_message(command, token if token is not None else None)
             else:
                 break
 
@@ -248,7 +248,7 @@ class Client(object):
                 "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.",
             )
 
-        if self.config["auto trade"]["enabled"]:
+        if self.config["auto trade"]["enabled"] and check:
             for key in self.config["auto trade"]:
                 if (
                     key == "enabled"
@@ -269,25 +269,16 @@ class Client(object):
                     self.log("DEBUG", "Received an item to be autotraded.")
 
                     self.send_message(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}"
+                        f"pls trade 1, 1 {key} {self.username}",
+                        self.config["auto trade"]["trader token"]
                     )
 
                     latest_message = self.retreive_message(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}"
+                        f"pls trade 1 {key} {self.username}",
+                        self.config["auto trade"]["trader token"],
+                        False
                     )
-
-                    self.interact_button(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}",
-                        latest_message["components"][0]["components"][-1]["custom_id"],
-                        latest_message,
-                    )
-
-                    sleep(1)
-
-                    latest_message = self.retreive_message(
-                        f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}"
-                    )
-
+                    
                     self.interact_button(
                         f"pls trade 1 {key} {self.config['auto trade']['trader']['username']}",
                         latest_message["components"][0]["components"][-1]["custom_id"],
@@ -295,6 +286,20 @@ class Client(object):
                         self.config["auto trade"]["trader token"],
                         self.config["auto trade"]["trader"]["session_id"],
                     )
+
+                    sleep(1)
+                    
+                    latest_message = self.retreive_message(
+                        f"pls trade 1 {key} {self.username}",
+                        check=False
+                    )
+                    
+                    self.interact_button(
+                        f"pls trade 1 {key} {self.username}",
+                        latest_message["components"][0]["components"][-1]["custom_id"],
+                        latest_message,
+                    )
+                    
 
         return latest_message
 
@@ -314,7 +319,7 @@ class Client(object):
         Returns:
             interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
         """
-
+        
         payload = {
             "application_id": 270904126974590976,
             "channel_id": self.channel_id,
