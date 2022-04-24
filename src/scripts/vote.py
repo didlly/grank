@@ -27,6 +27,10 @@ def vote(Client) -> None:
 
     req = get(f"https://discordbotlist.com/api/v1/oauth?code={code}")
 
+    if "captcha" in req.content.decode():
+        Client.log("WARNING", "Failed to vote for Dank Memer on Discord Bot List due to captcha.")
+        return False
+    
     dbl_token = loads(req.content.decode())["token"]
 
     req = loads(

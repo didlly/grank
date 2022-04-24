@@ -87,7 +87,7 @@ def run(credentials: dict, index: int):
         mkdir(f"{cwd}logs/{token}")
 
     Client = client(config, user_id, username, session_id, channel_id, token, cwd)
-
+    
     if f"{user_id}_confirmation" not in Client.database.keys():
         try:
             Client.send_message("pls settings confirmations nah")
