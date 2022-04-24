@@ -47,7 +47,7 @@ from threading import Thread
 from configuration.config import load_config
 from configuration.credentials import load_credentials
 from discord.guild_id import guild_id
-from discord.instance import Client as client
+from discord.instance import Client as client, MessageSendError
 from scripts.beg import beg
 from scripts.blackjack import blackjack
 from scripts.crime import crime
@@ -89,7 +89,11 @@ def run(credentials: dict, index: int):
     Client = client(config, user_id, username, session_id, channel_id, token, cwd)
 
     if f"{user_id}_confirmation" not in Client.database.keys():
-        Client.send_message("pls settings confirmations nah")
+        try:
+            Client.send_message("pls settings confirmations nah")
+        except MessageSendError:
+            Client.log("ERROR", f"Cannot send messages in channel {Client.channel_id}.")
+            
         Client.database[f"{user_id}_confirmation"] = True
         Client.database_file.write(dumps(Client.database))
 
