@@ -22,5 +22,4 @@
   * [```typing indicator``` category](https://github.com/didlly/grank#typing-indicator-category)
   * [```cooldowns``` category](https://github.com/didlly/grank#cooldowns-category)
   * [```logging``` category](https://github.com/didlly/grank#logging-category)
-  * [```auto update``` category](https://github.com/didlly/grank#auto-update-category)
 * [Disclaimer](https://github.com/didlly/grank#disclaimer)
