@@ -94,6 +94,7 @@ class Client(object):
                 data.seek(0)
                 data.truncate()
                 data.write(content)
+                data.flush()
 
         self.database_file = database
 
