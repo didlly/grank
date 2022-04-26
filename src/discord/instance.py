@@ -43,11 +43,10 @@ class Client(object):
 
     """
 
-    def __init__(self, config, user_id, username, session_id, channel_id, token, cwd):
+    def __init__(self, config, user_id, username, channel_id, token, cwd):
         self.config = config
         self.user_id = user_id
         self.username = username
-        self.session_id = session_id
         self.channel_id = channel_id
         self.token = token
         self.cwd = cwd

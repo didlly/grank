@@ -95,9 +95,6 @@ def load_credentials(cwd: str) -> dict:
             [
                 request["id"],
                 f"{request['username']}#{request['discriminator']}",
-                gateway(
-                    credentials["tokens"][index], credentials["channel ids"][index]
-                ),
                 credentials["channel ids"][index],
                 credentials["tokens"][index],
             ]

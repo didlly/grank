@@ -47,6 +47,7 @@ from threading import Thread
 from configuration.config import load_config
 from configuration.credentials import load_credentials
 from discord.guild_id import guild_id
+from discord.gateway import gateway
 from discord.instance import Client as client, MessageSendError
 from scripts.beg import beg
 from scripts.blackjack import blackjack
@@ -79,14 +80,15 @@ credentials = load_credentials(cwd)
 def run(credentials: dict, index: int):
     user_id = credentials[index][0]
     username = credentials[index][1]
-    session_id = credentials[index][2]
-    channel_id = credentials[index][3]
-    token = credentials[index][4]
+    channel_id = credentials[index][2]
+    token = credentials[index][3]
 
     with suppress(FileExistsError):
         mkdir(f"{cwd}logs/{token}")
 
-    Client = client(config, user_id, username, session_id, channel_id, token, cwd)
+    Client = client(config, user_id, username, channel_id, token, cwd)
+
+    Client.session_id = gateway(Client)
 
     if f"{user_id}_confirmation" not in Client.database.keys():
         try:
