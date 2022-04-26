@@ -35,7 +35,7 @@ def receive_messages(Client, ws, event: dict) -> None:
 
     str_channel_id = str(Client.channel_id)
 
-    session_id = event["d"]["sessions"][0]["session_id"]
+    Client.session_id = event["d"]["sessions"][0]["session_id"]
 
     while True:
         with suppress(Exception):
@@ -54,7 +54,7 @@ def receive_messages(Client, ws, event: dict) -> None:
                             "op": 6,
                             "d": {
                                 "token": Client.token,
-                                "session_id": session_id,
+                                "session_id": Client.session_id,
                                 "seq": "null",
                             },
                         }
