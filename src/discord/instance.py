@@ -180,6 +180,14 @@ class Client(object):
             ).total_seconds() < self.config["cooldowns"]["timeout"]:
                 latest_message = data["messages"][self.channel_id][-1]
 
+                if "op" in latest_message:
+                    if latest_message["op"] == 6 or latest_message["op"] == 7:
+                        sleep(5)
+                        time = datetime.strptime(
+                            datetime.now().strftime("%x-%X"), "%x-%X"
+                        )
+                        continue
+
                 if "referenced_message" in latest_message.keys():
                     if latest_message["referenced_message"] != None:
                         if (

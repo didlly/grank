@@ -1,6 +1,8 @@
 from json import dumps, loads
 
+from typing import Union
 from websocket import WebSocket
+from utils.logger import log
 from threading import Thread
 from time import sleep
 from utils.shared import data
@@ -14,11 +16,13 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
             ws.send(dumps({"op": 1, "d": "null"}))
 
 
-def receive_messages(ws, event: dict, channel_id: int) -> None:
+def receive_messages(ws, event: dict, channel_id: int, username: str) -> None:
     if channel_id not in data["messages"].keys():
         data["messages"][channel_id] = []
 
     str_channel_id = str(channel_id)
+
+    session_id = event["d"]["sessions"][0]["session_id"]
 
     while True:
         with suppress(Exception):
@@ -43,11 +47,45 @@ def receive_messages(ws, event: dict, channel_id: int) -> None:
                     if not found:
                         data["messages"][channel_id].append(event["d"])
 
+            if event["op"] == 6:
+                data["messages"][channel_id].append({"op": 6})
+                log(
+                    username,
+                    "WARNING",
+                    "Websocket connection closed (Received opcode `6`). Resuming connection.",
+                )
+                gateway(token, channel_id, username)
+                ws.send(
+                    dumps(
+                        {
+                            "op": 6,
+                            "d": {
+                                "token": token,
+                                "session_id": session_id,
+                                "seq": "null",
+                            },
+                        }
+                    )
+                )
+                return
+
+            if event["op"] == 7:
+                data["messages"][channel_id].append({"op": 7})
+                log(
+                    username,
+                    "WARNING",
+                    "Websocket connection closed (Received opcode `7`). Re-connecting.",
+                )
+                gateway(token, channel_id, username)
+                return
+
             if len(data["messages"][channel_id]) > 10:
                 del data["messages"][channel_id][0]
 
 
-def gateway(token: str, channel_id: int) -> str:
+def gateway(
+    token: str, channel_id: Union[int, None] = None, username: Union[str, None] = None
+) -> str:
     """Gets the first `session_id` received from Discord during the websocket connection process.
 
     Args:
@@ -84,7 +122,10 @@ def gateway(token: str, channel_id: int) -> str:
 
     event = loads(ws.recv())
 
+    if event["op"] == 9:
+        return gateway(token, channel_id, username)
+
     if channel_id is not None:
-        Thread(target=receive_messages, args=[ws, event, channel_id]).start()
+        Thread(target=receive_messages, args=[ws, event, channel_id, username]).start()
 
     return event["d"]["sessions"][0]["session_id"]
