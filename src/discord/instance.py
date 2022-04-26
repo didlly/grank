@@ -280,18 +280,18 @@ class Client(object):
                     self.log("DEBUG", "Received an item to be autotraded.")
 
                     self.send_message(
-                        f"pls trade 1, 1 {key} {self.username}",
+                        f"pls trade 1, 1 {key} <@!{self.user_id}>",
                         self.config["auto trade"]["trader token"],
                     )
 
                     latest_message = self.retreive_message(
-                        f"pls trade 1, 1{key} {self.username}",
+                        f"pls trade 1, 1 {key} <@!{self.user_id}>",
                         self.config["auto trade"]["trader token"],
                         False,
                     )
 
                     self.interact_button(
-                        f"pls trade 1, 1 {key} {self.config['auto trade']['trader']['username']}",
+                        f"pls trade 1, 1 {key} <@!{self.user_id}>",
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                         self.config["auto trade"]["trader token"],
@@ -301,11 +301,11 @@ class Client(object):
                     sleep(1)
 
                     latest_message = self.retreive_message(
-                        f"pls trade 1, 1 {key} {self.username}", check=False
+                        f"pls trade 1, 1 {key} <@!{self.user_id}>", check=False
                     )
 
                     self.interact_button(
-                        f"pls trade 1, 1 {key} {self.username}",
+                        f"pls trade 1, 1 {key} <@!{self.user_id}>",
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                     )
@@ -456,34 +456,6 @@ class Client(object):
         """
 
         time = datetime.now().strftime("[%x-%X]")
-
-        emojis = {
-            "Worm": "\U0001FAB1  Worm",
-            "Skunk": "\U0001F9A8 Skunk",
-            "Apple": "\U0001F34E Apple",
-            "Padlock": "\U0001F512 Padlock",
-            "Common fish": "\U0001F41F Common fish",
-            "Rare fish": "\U0001F420 Rare fish",
-            "Ant": "\U0001F41C Ant",
-            "Garbage": "\U0001F5D1 Garbage",
-            "Rabbit": "\U0001F407 Rabbit",
-            "Cell Phone": "\U0001F4F1 Cell Phone",
-            "Landmine": "\U0001F4FA Landmine",
-            "Fake ID": "\U0001F0CF Fake ID",
-            "Alcohol": "\U0001F37A Alcohol",
-            "Fishing Pole": "\U0001F3A3 Fishing Pole",
-            "Hunting Rifle": "\U0001F946 Hunting Rifle",
-            "Horseshoe": "\U0001F9F2 Horseshoe",
-            "Life Saver": "\u2763\ufe0f Life Saver",
-            "Robbers Wishlist": "\U0001F4FA Robbers Wishlist",
-            "Shredded Cheese": "\U0001F9C0 Shredded Cheese",
-            "Bank Note": "\U0001F4B7 Bank Note",
-            "Seaweed": "\U0001F331 Seaweed",
-        }
-
-        for key in emojis:
-            text = text.replace(key, emojis[key])
-            text = text.replace(key.lower(), emojis[key])
 
         print(
             f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}"
