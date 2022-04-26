@@ -1,5 +1,6 @@
 from json import dumps, loads
 
+from scripts.buy import buy
 from typing import Union
 from websocket import WebSocket
 from threading import Thread
@@ -7,6 +8,16 @@ from time import sleep
 from utils.shared import data
 from contextlib import suppress
 
+def anti_heist(Client) -> None:
+    sleep(1)
+    
+    Client.send_message("pls use phone")
+    latest_message = Client.retreive_message("pls use phone")
+    
+    if "You don't own this item??" in latest_message:
+        buy(Client, "phone")
+        
+    Client.send_message("p")
 
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
@@ -16,6 +27,9 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
 
 
 def receive_messages(Client, ws, event: dict) -> None:
+    if "messages" not in data.keys():
+        data["messages"] = {}
+
     if Client.channel_id not in data["messages"].keys():
         data["messages"][Client.channel_id] = []
 
@@ -26,25 +40,6 @@ def receive_messages(Client, ws, event: dict) -> None:
     while True:
         with suppress(Exception):
             event = loads(ws.recv())
-
-            if event["t"] == "MESSAGE_CREATE":
-                if event["d"]["channel_id"] == str_channel_id:
-                    data["messages"][Client.channel_id].append(event["d"])
-
-            if event["t"] == "MESSAGE_UPDATE":
-                if event["d"]["channel_id"] == str_channel_id:
-                    found = False
-
-                    for index in range(1, len(data["messages"][Client.channel_id][0])):
-                        latest_message = data["messages"][Client.channel_id][-index]
-
-                        if latest_message["id"] == event["d"]["id"]:
-                            data["messages"][Client.channel_id][-index] = event["d"]
-                            found = True
-                            break
-
-                    if not found:
-                        data["messages"][Client.channel_id].append(event["d"])
 
             if event["op"] == 6:
                 data["messages"][Client.channel_id].append({"op": 6})
@@ -67,7 +62,7 @@ def receive_messages(Client, ws, event: dict) -> None:
                 )
                 return
 
-            if event["op"] == 7:
+            elif event["op"] == 7:
                 data["messages"][Client.channel_id].append({"op": 7})
                 Client.log(
                     "WARNING",
@@ -75,6 +70,28 @@ def receive_messages(Client, ws, event: dict) -> None:
                 )
                 gateway(Client)
                 return
+
+            if event["t"] == "MESSAGE_CREATE":
+                if event["d"]["channel_id"] == str_channel_id:
+                    data["messages"][Client.channel_id].append(event["d"])
+                
+                if event["d"]["content"].lower() in [f"pls bankrob <@{Client.user_id}>", f"pls bankrob {Client.username.lower()}", f"pls heist <@{Client.user_id}>", f"pls heist {Client.username}".lower()]:
+                    Thread(target=anti_heist, args=[Client]).start()
+
+            elif event["t"] == "MESSAGE_UPDATE":
+                if event["d"]["channel_id"] == str_channel_id:
+                    found = False
+
+                    for index in range(1, len(data["messages"][Client.channel_id][0])):
+                        latest_message = data["messages"][Client.channel_id][-index]
+
+                        if latest_message["id"] == event["d"]["id"]:
+                            data["messages"][Client.channel_id][-index] = event["d"]
+                            found = True
+                            break
+
+                    if not found:
+                        data["messages"][Client.channel_id].append(event["d"])
 
             if len(data["messages"][Client.channel_id]) > 10:
                 del data["messages"][Client.channel_id][0]
@@ -89,9 +106,6 @@ def gateway(Client, token: Union[None, str] = None) -> str:
     Returns:
             session_id (str): The `session_id` for the account specified by the token passed to this function.
     """
-
-    if "messages" not in data.keys():
-        data["messages"] = {}
 
     ws = WebSocket()
     ws.connect("wss://gateway.discord.gg/?v=10&encoding=json")

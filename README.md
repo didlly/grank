@@ -51,6 +51,7 @@ Grank is a feature-rich script that automatically grinds Dank Memer for you. It 
 * Detects special events like `Dodge the fireball`.
 * Custom commands.
 * Autovote.
+* Antiheist.
 
 ## Supported commands
 

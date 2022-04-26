@@ -287,18 +287,18 @@ class Client(object):
                     self.log("DEBUG", "Received an item to be autotraded.")
 
                     self.send_message(
-                        f"pls trade 1, 1 {key} <@!{self.user_id}>",
+                        f"pls trade 1, 1 {key} <@{self.user_id}>",
                         self.config["auto trade"]["trader token"],
                     )
 
                     latest_message = self.retreive_message(
-                        f"pls trade 1, 1 {key} <@!{self.user_id}>",
+                        f"pls trade 1, 1 {key} <@{self.user_id}>",
                         self.config["auto trade"]["trader token"],
                         False,
                     )
 
                     self.interact_button(
-                        f"pls trade 1, 1 {key} <@!{self.user_id}>",
+                        f"pls trade 1, 1 {key} <@{self.user_id}>",
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                         self.config["auto trade"]["trader token"],
@@ -308,11 +308,11 @@ class Client(object):
                     sleep(1)
 
                     latest_message = self.retreive_message(
-                        f"pls trade 1, 1 {key} <@!{self.user_id}>", check=False
+                        f"pls trade 1, 1 {key} <@{self.user_id}>", check=False
                     )
 
                     self.interact_button(
-                        f"pls trade 1, 1 {key} <@!{self.user_id}>",
+                        f"pls trade 1, 1 {key} <@{self.user_id}>",
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                     )
