@@ -75,12 +75,6 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | `start`  | Starts the grinder. |
 | `start -help`  | Shows help about the `start` command. |
 
-### `stop` category
-| Name | Description |
-| ------------- | ------------- |
-| `stop`  | Starts the grinder. |
-| `stop -help`  | Shows help about the `stop` command. |
-
 ### `controllers` category
 | Name | Description |
 | ------------- | ------------- |
