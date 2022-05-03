@@ -2,17 +2,6 @@ from random import randint
 
 
 def guess(Client) -> None:
-    """One of the 2 guess the number commands - `pls guess`.
-
-    Required item(s): None
-
-    Args:
-            Client (class): The Client for the user.
-
-    Returns:
-            None
-    """
-
     Client.send_message("pls guess")
 
     latest_message = Client.retreive_message("pls guess")

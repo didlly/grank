@@ -3,23 +3,13 @@ from time import sleep
 
 
 def blackjack(Client) -> None:
-    """One of the 3 gamble commands - `pls blackjack`.
-
-    Required item(s): None
-
-    Args:
-            Client (class): The Client for the user.
-
-    Returns:
-            None
-    """
-
     amount = (
         randint(
-            Client.config["blackjack"]["minimum"], Client.config["blackjack"]["maximum"]
+            Client.Repository.config["blackjack"]["minimum"],
+            Client.Repository.config["blackjack"]["maximum"],
         )
-        if Client.config["blackjack"]["random"]
-        else Client.config["blackjack"]["amount"]
+        if Client.Repository.config["blackjack"]["random"]
+        else Client.Repository.config["blackjack"]["amount"]
     )
 
     Client.send_message(f"pls blackjack {amount}")

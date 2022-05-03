@@ -3,17 +3,6 @@ from time import sleep
 
 
 def postmeme(Client) -> None:
-    """One of the basic 7 currency commands - `pls postmeme`.
-
-    Required item(s): None
-
-    Args:
-            Client (class): The Client for the user.
-
-    Returns:
-            None
-    """
-
     Client.send_message("pls postmeme")
 
     latest_message = Client.retreive_message("pls postmeme")

@@ -2,17 +2,6 @@ from time import sleep
 
 
 def highlow(Client) -> None:
-    """One of the 2 guess the number commands - `pls highlow`.
-
-    Required item(s): None
-
-    Args:
-            Client (class): The Client for the user.
-
-    Returns:
-            None
-    """
-
     Client.send_message("pls highlow")
 
     latest_message = Client.retreive_message("pls highlow")

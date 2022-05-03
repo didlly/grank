@@ -3,17 +3,6 @@ from time import sleep
 
 
 def search(Client) -> None:
-    """One of the basic 7 currency commands - `pls search`.
-
-    Required item(s): None
-
-    Args:
-            Client (class): The Client for the user.
-
-    Returns:
-            None
-    """
-
     Client.send_message("pls search")
 
     latest_message = Client.retreive_message("pls search")

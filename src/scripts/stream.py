@@ -5,17 +5,6 @@ from scripts.buy import buy
 
 
 def stream(Client) -> None:
-    """A streaming command - `pls stream`.
-
-    Required item(s): keyboard, mouse
-
-    Args:
-            Client (class): The Client for the user.
-
-    Returns:
-            None
-    """
-
     bought_keyboard, bought_mouse = [True] * 2
 
     while True:
@@ -28,35 +17,41 @@ def stream(Client) -> None:
 
         if "Keyboard" in latest_message["embeds"][0]["description"]:
             if not has_item(Client, "keyboard"):
-                if Client.config["logging"]["debug"]:
+                if Client.Repository.config["logging"]["debug"]:
                     Client.log(
                         "DEBUG",
                         "User does not have item `keyboard`. Buying keyboard now.",
                     )
 
-                if Client.config["auto buy"] and Client.config["auto buy"]["keyboard"]:
+                if (
+                    Client.Repository.config["auto buy"]
+                    and Client.Repository.config["auto buy"]["keyboard"]
+                ):
                     bought_keyboard = buy(Client, "keyboard")
 
-                elif Client.config["logging"]["warning"]:
+                elif Client.Repository.config["logging"]["warning"]:
                     Client.log(
                         "WARNING",
-                        f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                        f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.Repository.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
                     )
 
         if "Mouse" in latest_message["embeds"][0]["description"]:
             if not has_item(Client, "mouse"):
-                if Client.config["logging"]["debug"]:
+                if Client.Repository.config["logging"]["debug"]:
                     Client.log(
                         "DEBUG", "User does not have item `mouse`. Buying mouse now."
                     )
 
-                if Client.config["auto buy"] and Client.config["auto buy"]["mouse"]:
+                if (
+                    Client.Repository.config["auto buy"]
+                    and Client.Repository.config["auto buy"]["mouse"]
+                ):
                     bought_mouse = buy(Client, "mouse")
 
-                elif Client.config["logging"]["warning"]:
+                elif Client.Repository.config["logging"]["warning"]:
                     Client.log(
                         "WARNING",
-                        f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                        f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.Repository.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
                     )
 
     if not bought_keyboard or not bought_mouse:
@@ -75,7 +70,7 @@ def stream(Client) -> None:
             latest_message,
         )
 
-        sleep(0.5)
+        sleep(1)
 
         latest_message = Client.retreive_message("pls stream")
 
@@ -94,13 +89,13 @@ def stream(Client) -> None:
             latest_message,
         )
 
-    sleep(0.5)
+    sleep(1)
 
     latest_message = Client.retreive_message("pls stream")
 
     if (
         int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0
-        and Client.config["stream"]["ads"]
+        and Client.Repository.config["stream"]["ads"]
     ):
         Client.interact_button(
             "pls stream",
@@ -110,11 +105,12 @@ def stream(Client) -> None:
     else:
         button = (
             randint(1, 2)
-            if Client.config["stream"]["chat"] and Client.config["stream"]["donations"]
+            if Client.Repository.config["stream"]["chat"]
+            and Client.Repository.config["stream"]["donations"]
             else 1
-            if Client.config["stream"]["chat"]
+            if Client.Repository.config["stream"]["chat"]
             else 2
-            if Client.config["stream"]["donations"]
+            if Client.Repository.config["stream"]["donations"]
             else None
         )
 

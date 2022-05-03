@@ -1,0 +1,75 @@
+commands:
+  beg: True
+  crime: True
+  daily: True
+  dig: True
+  fish: True
+  guess: True
+  highlow: True
+  hunt: True
+  postmeme: True
+  search: True
+  trivia: True
+  vote: True
+
+lottery:
+  enabled: False
+  cooldown: 3600
+
+stream:
+  enabled: True
+  ads: True
+  chat: True
+  donations: True
+
+blackjack:
+  enabled: False
+  random: False
+  amount: 1500
+  minimum: 1500
+  maximum: 3000
+
+snakeeyes:
+  enabled: False
+  random: False
+  amount: 1500
+  minimum: 1500
+  maximum: 3000
+
+custom commands:
+  enabled: False
+  pls dep max:
+    enabled: True
+    cooldown: 300
+
+shifts:
+  enabled: False
+  active: 7200
+  passive: 3600
+  
+auto buy:
+  enabled: True
+  shovel: True
+  fishing pole: True
+  hunting rifle: True
+  keyboard: True
+  mouse: True
+
+auto trade:
+  enabled: False
+  trader token: None
+  bank note: True
+  tidepod: True
+
+typing indicator:
+  enabled: False
+  minimum: 0
+  maximum: 0.5
+  
+cooldowns:
+  patron: False
+  timeout: 5
+
+logging:
+  debug: True
+  warning: True

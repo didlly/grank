@@ -1,1 +1,1 @@
-data = {}
+data = {"channels": {}, "running": [], "stats": {}}

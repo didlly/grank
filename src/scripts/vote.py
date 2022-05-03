@@ -4,17 +4,6 @@ from requests import get, post
 
 
 def vote(Client) -> None:
-    """A function that votes for Dank Memer on Discord Bot List.
-
-    Required item(s): None
-
-    Args:
-            Client (class): The Client for the user.
-
-    Returns:
-            None
-    """
-
     json = {"authorize": True, "permissions": 0}
 
     req = post(
@@ -44,15 +33,15 @@ def vote(Client) -> None:
     )
 
     if req["success"]:
-        if Client.config["logging"]["debug"]:
+        if Client.Repository.config["logging"]["debug"]:
             Client.log("DEBUG", "Succesfully voted for Dank Memer on Discord Bot List")
     else:
         if req["message"] == "User has already voted.":
-            if Client.config["logging"]["warning"]:
+            if Client.Repository.config["logging"]["warning"]:
                 Client.log(
                     "WARNING",
                     "Already voted for Dank Memer on Discord Bot List in the past 24 hours.",
                 )
-        elif Client.config["logging"]["warning"]:
+        elif Client.Repository.config["logging"]["warning"]:
             Client.log("WARNING", "Failed to vote for Dank Memer on Discord Bot List.")
         return

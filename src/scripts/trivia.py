@@ -3,17 +3,6 @@ from time import sleep
 
 
 def trivia(Client) -> None:
-    """A trivia command - `pls trivia`.
-
-    Required item(s): None
-
-    Args:
-            Client (class): The Client for the user.
-
-    Returns:
-            None
-    """
-
     Client.send_message("pls trivia")
 
     latest_message = Client.retreive_message("pls trivia")
@@ -56,13 +45,17 @@ def trivia(Client) -> None:
     latest_message = Client.retreive_message("pls trivia")
 
     try:
-        coins = int(
-            "".join(
-                filter(
-                    str.isdigit,
-                    latest_message["content"],
+        coins = (
+            int(
+                "".join(
+                    filter(
+                        str.isdigit,
+                        latest_message["content"],
+                    )
                 )
             )
+            if custom_id is not None
+            else "no"
         )
     except Exception:
         coins = "no"

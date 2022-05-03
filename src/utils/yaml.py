@@ -1,13 +1,4 @@
 def is_float(string: str) -> bool:
-    """Checks whether the inputted string can be converted into a float.
-
-    Args:
-        string (str): The string to be checked.
-
-    Returns:
-        check (bool): A value which tells the program whether or not the inputted string can be converted into a float.
-    """
-
     try:
         float(string)
         return True
@@ -16,15 +7,6 @@ def is_float(string: str) -> bool:
 
 
 def is_integer(string: str) -> bool:
-    """Checks whether the inputted string can be converted into a integer.
-
-    Args:
-        string (str): The string to be checked.
-
-    Returns:
-        check (bool): A value which tells the program whether or not the inputted string can be converted into a integer.
-    """
-
     try:
         int(string)
         return True
@@ -33,15 +15,6 @@ def is_integer(string: str) -> bool:
 
 
 def load(path: str) -> dict:
-    """A procedure which converts the yaml file at the path specified into a dictionary.
-
-    Args:
-        path (str): The path of the yaml file.
-
-    Returns:
-        config (dict): The yaml file in dictionary form.
-    """
-
     with open(path, "r") as yaml:
         levels = []
         data = {}
@@ -49,7 +22,7 @@ def load(path: str) -> dict:
 
         for line in yaml.readlines():
             if line.replace(line.lstrip(), "") != "" and indentation_str == "":
-                indentation_str = line.replace(line.lstrip(), "")
+                indentation_str = line.replace(line.lstrip(), "").rstrip("\n")
             if line.strip() == "":
                 continue
             elif line.rstrip()[-1] == ":":
@@ -82,5 +55,66 @@ def load(path: str) -> dict:
                 exec(
                     f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.split(':')[0].strip()}'] = '{value}'"
                 )
+
+    return data
+
+
+def loads(yaml: str) -> dict:
+    levels = []
+    data = {}
+    indentation_str = ""
+
+    for line in yaml.split("\n"):
+        if line.replace(line.lstrip(), "") != "" and indentation_str == "":
+            indentation_str = line.replace(line.lstrip(), "")
+        if line.strip() == "":
+            continue
+        elif line.rstrip()[-1] == ":":
+            if len(line.replace(line.strip(), "")) // 2 < len(levels):
+                levels[
+                    len(line.replace(line.strip(), "")) // 2
+                ] = f"['{line.strip()[:-1]}']"
+            else:
+                levels.append(f"['{line.strip()[:-1]}']")
+            exec(
+                f"data{''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.strip()[:-1]}']"
+                + " = {}"
+            )
+
+            continue
+
+        value = line.split(":")[-1].strip()
+
+        if is_float(value) or is_integer(value) or value == "True" or value == "False":
+            exec(
+                f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.split(':')[0].strip()}'] = {value}"
+            )
+
+        else:
+            exec(
+                f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.split(':')[0].strip()}'] = '{value}'"
+            )
+
+    return data
+
+
+def dumps(yaml: dict, indent="") -> str:
+    """A procedure which converts the dictionary passed to the procedure into it's yaml equivalent.
+
+    Args:
+        yaml (dict): The dictionary to be converted.
+
+    Returns:
+        data (str): The dictionary in yaml form.
+    """
+
+    data = ""
+
+    for key in yaml.keys():
+        if type(yaml[key]) == dict:
+            data += f"\n{indent}{key}:\n"
+            data += dumps(yaml[key], f"{indent}  ")
+        else:
+            data += f"{indent}{key}: {yaml[key]}\n"
 
     return data

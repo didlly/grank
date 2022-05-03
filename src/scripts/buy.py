@@ -1,16 +1,4 @@
 def buy(Client, item: str) -> None:
-    """Buys an item
-
-    Required item(s): None
-
-    Args:
-            Client (class): The Client for the user.
-            item (str): The item to be bought.
-
-    Returns:
-            bought (bool): Boolean dictating whether the item was bought or not.
-    """
-
     Client.send_message(f"pls buy {item}")
 
     latest_message = Client.retreive_message(f"pls buy {item}")
@@ -43,19 +31,19 @@ def buy(Client, item: str) -> None:
             )
         )
 
-        if (wallet + bank) - Client.database["price"][item] > 0:
-            amount = (wallet + bank) - Client.database["price"][item]
+        if (wallet + bank) - Client.Repository.database["price"][item] > 0:
+            amount = Client.Repository.database["price"][item] - wallet
 
             Client.send_message(f"pls with {amount}")
             Client.send_message(f"pls buy {item}")
         else:
-            if Client.config["logging"]["warning"]:
+            if Client.Repository.config["logging"]["warning"]:
                 Client.log("WARNING", f"Insufficient funds to buy a {item}.")
             return False
     elif (
         latest_message["embeds"][0]["author"]["name"].lower()
         == f"successful {item} purchase"
     ):
-        if Client.config["logging"]["debug"]:
+        if Client.Repository.config["logging"]["debug"]:
             Client.log("DEBUG", f"Successfully bought {item}.")
         return True
