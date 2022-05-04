@@ -11,7 +11,7 @@
 Grank is a feature rich Dank Memer automation program that automtaically grinds Dank Memer for you. It is inspired by [dankgrinder](https://github.com/dankgrinder/dankgrinder). Since dankgrinder has been discontinued and the [recommended fork](https://github.com/V4NSH4J/dankgrinder) has also been discontinued, I decided to make my own version from scratch in Python. Grank is as good as, if not better, thank dankgrinder.
 
 ## Features
-* Ease of use - Once Grank has been setup, you can controll it through Discord using many different and useful commands.
+* Ease of use - Once Grank has been setup, you can control it through Discord using many different and useful commands.
 * Smart - If Grank detects that the user does not have an item required for a command (e.g. not having a `hunting rifle` for the `pls hunt` command), Grank will automatically buy the item. What if the account doesn't have enough money in it's wallet? Then Grank checks the amount of money in the account's bank. If the two combined provide sufficient funds to buy the item, Grank will withdraw the required amount (and no more), and will buy the item. If the account doesn't have enough money in it's wallet and bank combined, Grank logs a warning stating this.
 * Anti-detection features - Grank has many features to prevent detection by Dank Memer, Discord or other users. One of these such features is a Typing Indicator. When you start typing a message on Discord, a typing indicator appears, which lets everyone else in the channel know you are typing a message. If enabled, Grank will trigger the Typing Indicator, wait a random amount (which can be controlled in the config), and send the command. This also adds a random gap between commands that makes the self-bot more human.
 * Custom commamds - Want to periodically run a command like `pls bet 1000`? Well you can with Grank. Either add the command to the config file, or take advantage of Grank's self-bot commands feature and run the command `grank command add {command} {interval}` (where `command` is the command to be run and `interval` is how often it should be run).
@@ -49,7 +49,7 @@ Unfortunately, I do not have access to a Mac or Linux device, so you will have t
 ### Setting up Grank
 To use Grank, you will have to provide your Discord token. Don't worry, your token is never shared with anyone else.
 
-[Useful Youtube video on how to get your Discord Token](https://www.youtube.com/watch?v=WWHZoa0SxCc).
+[Useful Youtube video on how to get your Discord Token](https://www.youtube.com/watch?v=WWHZoa0SxCc)
 
 #### How to enter these details.
 
@@ -72,7 +72,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 ### `stop` category
 | Name | Description |
 | ------------- | ------------- |
-| `stop`  | Starts the grinder. |
+| `stop`  | Stops the grinder. |
 | `stop -help`  | Shows help about the `stop` command. |
 
 ### `controllers` category
@@ -84,6 +84,8 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | `controllers info 0`  | Provides information about the controller. This includes information such as when the controller was added, which account added the controller, and what commands the controller has run. |
 | `controllers add 0:`  | Adds the account with the ID of `0` to the list of controllers. |
 | `controllers remove 0`  | Removes the account with the ID of `0` from the list of controllers. |
+
+***NOTE:*** You can also @mention the user you want to interact with.
 
 ### `config` category
 | Name | Description |
