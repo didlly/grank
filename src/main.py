@@ -44,4 +44,4 @@ for account in accounts:
         data[Client.username] = True
 
     Client.Repository = Repository
-    gateway(Client, Repository)
+    gateway(Client)

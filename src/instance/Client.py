@@ -32,9 +32,6 @@ class Instance(object):
         self.id = account.id
         self.username = f"{account.username}#{account.discriminator}"
         self.startup_time = int(time())
-        self.commands_ran = 0
-        self.buttons_clicked = 0
-        self.dropdowns_selected = 0
         self.log_file = open(
             f"{cwd}logs/{account.token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
             "a",
@@ -74,19 +71,14 @@ class Instance(object):
 
                 while True:
                     self.Repository.info["stats"]["commands_ran"] = (
-                        self.lifetime_commands_ran + self.commands_ran
+                        self.lifetime_commands_ran + data["stats"][self.token]["commands_ran"]
                     )
                     self.Repository.info["stats"]["buttons_clicked"] = (
-                        self.lifetime_buttons_clicked + self.buttons_clicked
+                        self.lifetime_buttons_clicked + data["stats"][self.token]["buttons_clicked"]
                     )
                     self.Repository.info["stats"]["dropdowns_selected"] = (
-                        self.lifetime_dropdowns_selected + self.dropdowns_selected
+                        self.lifetime_dropdowns_selected + data["stats"][self.token]["dropdowns_selected"]
                     )
-                    data["stats"][self.token]["commands_ran"] = self.commands_ran
-                    data["stats"][self.token]["buttons_clicked"] = self.buttons_clicked
-                    data["stats"][self.token][
-                        "dropdowns_selected"
-                    ] = self.dropdowns_selected
                     self.Repository.info_write()
                     sleep(10)
 
@@ -124,7 +116,7 @@ class Instance(object):
             if request.status_code in [200, 204]:
                 if self.Repository.config["logging"]["debug"]:
                     if "pls" in command:
-                        self.commands_ran += 1
+                        data["stats"][self.token]["commands_ran"] += 1
 
                     self.log(
                         "DEBUG",
@@ -324,7 +316,7 @@ class Instance(object):
 
             if request.status_code in [200, 204]:
                 if self.Repository.config["logging"]["debug"]:
-                    self.buttons_clicked += 1
+                    data["stats"][self.token]["buttons_clicked"] += 1
 
                     self.log(
                         "DEBUG",
@@ -379,7 +371,7 @@ class Instance(object):
 
             if request.status_code in [200, 204]:
                 if self.Repository.config["logging"]["debug"]:
-                    self.dropdowns_selected += 1
+                    data["stats"][self.token]["dropdowns_selected"] += 1
 
                     self.log(
                         "DEBUG",
@@ -440,7 +432,7 @@ class Instance(object):
             f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n"
         )
         self.log_file.flush()
-
+      
         if level == "ERROR":
             _ = input(
                 f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}"

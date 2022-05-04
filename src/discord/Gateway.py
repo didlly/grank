@@ -450,14 +450,12 @@ def event_handler(Client, ws, event: dict) -> None:
                     del data["channels"][event["d"]["channel_id"]]["messages"][0]
 
 
-def gateway(
-    Client: Union[Instance, str], Repository: Optional[Database] = None
-) -> Optional[str]:
+def gateway(Client: Union[Instance, str]) -> Optional[str]:
     ws = WebSocket()
     ws.connect("wss://gateway.discord.gg/?v=10&encoding=json")
     heartbeat_interval = loads(ws.recv())["d"]["heartbeat_interval"] / 1000
 
-    if Repository is not None:
+    if type(Client) != str:
         Thread(target=send_heartbeat, args=[ws, heartbeat_interval]).start()
 
     ws.send(
@@ -465,7 +463,7 @@ def gateway(
             {
                 "op": 2,
                 "d": {
-                    "token": Client.token if Repository is not None else Client,
+                    "token": Client if type(Client) == str else Client.token,
                     "properties": {
                         "$os": "windows",
                         "$browser": "chrome",
@@ -476,17 +474,17 @@ def gateway(
         )
     )
 
-    if Repository is not None and Client.Repository.config["auto trade"]["enabled"]:
+    if type(Client) != str and Client.Repository.config["auto trade"]["enabled"]:
         Client.trader_token_session_id = gateway(
             Client.Repository.config["auto trade"]["trader token"]
         )
-
+        
     event = loads(ws.recv())
 
     if event["op"] == 9:
-        return gateway(Client.token)
+        return gateway(Client if type(Client) == str else Client.token)
 
-    if Repository is not None:
+    if type(Client) != str:
         Thread(target=event_handler, args=[Client, ws, event]).start()
 
     return event["d"]["sessions"][0]["session_id"]
