@@ -272,6 +272,26 @@ class Instance(object):
                         False,
                     )
 
+                    if (
+                        latest_message["content"]
+                        == "You have 0 coins, you can't give them 1."
+                    ):
+                        self.send_message(
+                            f"pls with 1",
+                            self.Repository.config["auto trade"]["trader token"],
+                        )
+
+                        self.send_message(
+                            f"pls trade 1, 1 {key} <@{self.id}>",
+                            self.Repository.config["auto trade"]["trader token"],
+                        )
+
+                        latest_message = self.retreive_message(
+                            f"pls trade 1, 1 {key} <@{self.id}>",
+                            self.Repository.config["auto trade"]["trader token"],
+                            False,
+                        )
+
                     self.interact_button(
                         f"pls trade 1, 1 {key} <@{self.id}>",
                         latest_message["components"][0]["components"][-1]["custom_id"],
