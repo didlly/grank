@@ -478,7 +478,7 @@ def gateway(Client: Union[Instance, str]) -> Optional[str]:
         Client.trader_token_session_id = gateway(
             Client.Repository.config["auto trade"]["trader token"]
         )
-        
+
     event = loads(ws.recv())
 
     if event["op"] == 9:

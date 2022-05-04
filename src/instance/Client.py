@@ -71,13 +71,16 @@ class Instance(object):
 
                 while True:
                     self.Repository.info["stats"]["commands_ran"] = (
-                        self.lifetime_commands_ran + data["stats"][self.token]["commands_ran"]
+                        self.lifetime_commands_ran
+                        + data["stats"][self.token]["commands_ran"]
                     )
                     self.Repository.info["stats"]["buttons_clicked"] = (
-                        self.lifetime_buttons_clicked + data["stats"][self.token]["buttons_clicked"]
+                        self.lifetime_buttons_clicked
+                        + data["stats"][self.token]["buttons_clicked"]
                     )
                     self.Repository.info["stats"]["dropdowns_selected"] = (
-                        self.lifetime_dropdowns_selected + data["stats"][self.token]["dropdowns_selected"]
+                        self.lifetime_dropdowns_selected
+                        + data["stats"][self.token]["dropdowns_selected"]
                     )
                     self.Repository.info_write()
                     sleep(10)
@@ -432,7 +435,7 @@ class Instance(object):
             f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n"
         )
         self.log_file.flush()
-      
+
         if level == "ERROR":
             _ = input(
                 f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}"

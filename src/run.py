@@ -552,11 +552,6 @@ def run(Client):
             or not data["channels"][Client.channel_id][Client.token]
         ):
             if not data["channels"][Client.channel_id][Client.token]:
-                data["stats"][Client.token]["commands_ran"] = Client.commands_ran
-                data["stats"][Client.token]["buttons_clicked"] = Client.buttons_clicked
-                data["stats"][Client.token][
-                    "dropdowns_selected"
-                ] = Client.dropdowns_selected
                 Client.Repository.info["stats"]["commands_ran"] = (
                     Client.lifetime_commands_ran + Client.commands_ran
                 )
