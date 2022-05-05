@@ -121,7 +121,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         Client.Repository.config_write()
 
                                         Client.send_message(
-                                            f"The custom command `{args.subcommand[1]}` was successfully added with a cooldown of `{cooldown}` to the list of custom commands.\n\n**NOTE:** To enable the custom command, run `grank config.custom_commands.{args.subcommand[1]}.enabled = True`. To disable the custom command, run `grank config.custom_commands.{args.subcommand[1].replace(' ', '_')}.enabled = False`. To edit the cooldown for the custom command, run `grank config.custom_commands.{args.subcommand[1].replace(' ', '_')}.cooldown = 0`, replacing `0` with the cooldown you want.",
+                                            f"The custom command `{args.subcommand[1]}` was successfully added with a cooldown of `{cooldown}` to the list of custom commands.\n\n**NOTE:** To enable the custom command, run `grank config.custom_commands.{args.subcommand[1].replace(' ', '_')}.enabled = True`. To disable the custom command, run `grank config.custom_commands.{args.subcommand[1].replace(' ', '_')}.enabled = False`. To edit the cooldown for the custom command, run `grank config.custom_commands.{args.subcommand[1].replace(' ', '_')}.cooldown = 0`, replacing `0` with the cooldown you want.",
                                             latest_message=event["d"],
                                         )
                                     except TypeError:
