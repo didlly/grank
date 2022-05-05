@@ -553,13 +553,13 @@ def run(Client):
         ):
             if not data["channels"][Client.channel_id][Client.token]:
                 Client.Repository.info["stats"]["commands_ran"] = (
-                    Client.lifetime_commands_ran + data["stats"][self.token]["commands_ran"]
+                    Client.lifetime_commands_ran + data["stats"][Client.token]["commands_ran"]
                 )
                 Client.Repository.info["stats"]["buttons_clicked"] = (
-                    Client.lifetime_buttons_clicked + data["stats"][self.token]["buttons_clicked"]
+                    Client.lifetime_buttons_clicked + data["stats"][Client.token]["buttons_clicked"]
                 )
                 Client.Repository.info["stats"]["dropdowns_selected"] = (
-                    Client.lifetime_dropdowns_selected + data["stats"][self.token]["dropdowns_selected"]
+                    Client.lifetime_dropdowns_selected + data["stats"][Client.token]["dropdowns_selected"]
                 )
                 Client.Repository.info_write()
                 return
