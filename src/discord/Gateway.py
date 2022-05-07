@@ -42,7 +42,7 @@ def event_handler(Client, ws, event: dict) -> None:
                 ):
                     if (
                         event["d"]["author"]["id"]
-                        in Client.Repository.info["controllers"]
+                        in Client.Repository.info["controllers"] and event ["d"]["guild_id"] != 967458611586547733
                     ):
 
                         Client.channel_id = event["d"]["channel_id"]
