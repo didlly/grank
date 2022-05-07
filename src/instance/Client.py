@@ -7,9 +7,13 @@ from json import loads
 from random import uniform
 from time import sleep, time
 from threading import Thread
-
+from copy import copy
 
 class MessageSendError(Exception):
+    pass
+
+
+class WebhookSendError(Exception):
     pass
 
 
@@ -145,6 +149,72 @@ class Instance(object):
                     f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
 
+    def webhook_send(self, command: dict, fallback_message: str) -> None:       
+        request = get(
+            f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+            headers={"authorization": self.token},
+        )
+
+        if request.status_code not in [200, 204]:
+            self.log(
+                "WARNING",
+                f"Cannot send webhook in channel {self.channel_id} - Missing Permissions. Resorting to normal message.",
+            )
+            self.send_message(fallback_message)
+            return
+
+        response = loads(request.content)
+
+        if len(response) > 0:
+            token = response[0]["token"]
+            channel_id = response[0]["id"]
+        else:
+            request = post(
+                f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+                headers={"authorization": self.token},
+                json={"name": "Spidey Bot"},
+            )
+            token = loads(request.content)["token"]
+
+            request = get(
+                f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+                headers={"authorization": self.token},
+            )
+            channel_id = loads(request.content)[0]["id"]
+
+        while True:
+            request = post(
+                f"https://discord.com/api/webhooks/{channel_id}/{token}",
+                headers={"authorization": self.token},
+                json=command
+            )
+            
+            if request.status_code in [200, 204]:
+                if self.Repository.config["logging"]["debug"]:
+                    self.log(
+                        "DEBUG",
+                        f"Successfully sent webhook `{command}`.",
+                    )
+                return
+            else:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204).",
+                    )
+                if request.status_code == 429:
+                    request = loads(request.content)
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
+                        )
+                    sleep(request["retry_after"])
+                    continue
+                raise WebhookSendError(
+                    f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                )
+
     def retreive_message(self, command, token=None, check=True):
         while True:
             time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
@@ -239,6 +309,8 @@ class Instance(object):
             )
 
         if self.Repository.config["auto trade"]["enabled"] and check:
+            old_latest_message = copy(latest_message)
+            
             for key in self.Repository.config["auto trade"]:
                 if (
                     key == "enabled"
@@ -311,6 +383,8 @@ class Instance(object):
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                     )
+                    
+            return old_latest_message
 
         return latest_message
 

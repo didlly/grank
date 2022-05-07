@@ -131,18 +131,18 @@ class Database(object):
                     return (
                         False,
                         ExistingUserID,
-                        "The ID you provided already is in the list of controllers for this account.",
+                        "The ID you provided **is already** in the list of controllers for this account.",
                     )
 
                 info = user_info(self.token, data)
 
                 if info is None:
-                    message = "The ID you provided does not belong to any user."
+                    message = "The ID you provided does **not belong to any user**."
 
                     try:
                         data = int(data)
                     except ValueError:
-                        message = "IDs contain only numbers. The ID you provided contained other characters."
+                        message = "IDs contain **only numbers**. The ID you provided contained **other characters**."
 
                     return False, InvalidUserID, message
                 else:
@@ -159,7 +159,7 @@ class Database(object):
                     return (
                         False,
                         IDNotFound,
-                        "The ID you provided was not found in the list of controllers.",
+                        "The ID you provided was **not found** in the list of controllers.",
                     )
                 else:
                     self.info["controllers"].remove(data)
