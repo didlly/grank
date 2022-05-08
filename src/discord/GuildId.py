@@ -15,7 +15,7 @@ def guild_id(Client):
 
     response = loads(
         get(
-            f" https://discord.com/api/v10/channels/{Client.channel_id}/messages",
+            f"https://discord.com/api/v10/channels/{Client.channel_id}/messages",
             headers={"authorization": Client.token},
         ).content.decode()
     )
@@ -27,7 +27,6 @@ def guild_id(Client):
             if "message_reference" in latest_message.keys():
                 found = True
                 return latest_message["message_reference"]["guild_id"]
-                break
 
     if not found:
         Client.send_message("pls beg")

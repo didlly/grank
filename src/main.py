@@ -35,7 +35,7 @@ for account in accounts:
         mkdir(f"{cwd}logs/{account.token}")
 
     Client = Instance(cwd, account)
-    verify(cwd, Client)
+    verify(cwd, account, Client)
     Repository = Database(cwd, account, Client)
 
     if Repository.config["shifts"]["enabled"]:
@@ -46,4 +46,3 @@ for account in accounts:
 
     Client.Repository = Repository
     Thread(target=gateway, args=[Client]).start()
-    

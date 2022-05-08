@@ -531,7 +531,7 @@ def run(Client):
 
         if Client.Repository.config["custom commands"]["enabled"]:
             for key in Client.Repository.config["custom commands"]:
-                
+
                 if key == "enabled":
                     continue
                 if Client.Repository.config["custom commands"][key]["enabled"]:
@@ -539,16 +539,16 @@ def run(Client):
                         exec(
                             f"if (datetime.strptime(datetime.now().strftime('%x-%X'), '%x-%X') - datetime.strptime(custom_{key.replace(' ', '_')}, '%x-%X')).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key)"
                         )
-                        
+
                         exec(
                             f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
                         )
-                        
+
                     except NameError:
                         custom(Client, key)
                         exec(
                             f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
-                        )  
+                        )
 
         while (
             not data[Client.username]

@@ -73,3 +73,11 @@ cooldowns:
 logging:
   debug: True
   warning: True
+
+servers:
+  enabled: False
+  blacklisted: ["guild_id_1", "guild_id_2"]
+
+auto start:
+  enabled: False
+  channels: ["guild_id_1", "guild_id_2"]
