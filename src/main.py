@@ -10,6 +10,7 @@ from instance.Client import Instance
 from instance.Shifts import shifts
 from utils.Shared import data
 from discord.Gateway import gateway
+from threading import Thread
 
 if system().lower() == "windows":
     import ctypes
@@ -39,9 +40,10 @@ for account in accounts:
 
     if Repository.config["shifts"]["enabled"]:
         data[Client.username] = False
-        shifts(Client, Repository)
+        Thread(target=shifts, args=[Client, Repository]).start()
     else:
         data[Client.username] = True
 
     Client.Repository = Repository
-    gateway(Client)
+    Thread(target=gateway, args=[Client]).start()
+    
