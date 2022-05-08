@@ -9,6 +9,7 @@ from time import sleep, time
 from threading import Thread
 from copy import copy
 
+
 class MessageSendError(Exception):
     pass
 
@@ -149,7 +150,7 @@ class Instance(object):
                     f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
 
-    def webhook_send(self, command: dict, fallback_message: str) -> None:       
+    def webhook_send(self, command: dict, fallback_message: str) -> None:
         request = get(
             f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
             headers={"authorization": self.token},
@@ -186,9 +187,9 @@ class Instance(object):
             request = post(
                 f"https://discord.com/api/webhooks/{channel_id}/{token}",
                 headers={"authorization": self.token},
-                json=command
+                json=command,
             )
-            
+
             if request.status_code in [200, 204]:
                 if self.Repository.config["logging"]["debug"]:
                     self.log(
@@ -223,14 +224,6 @@ class Instance(object):
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time
             ).total_seconds() < self.Repository.config["cooldowns"]["timeout"]:
                 latest_message = data["channels"][self.channel_id]["messages"][-1]
-
-                if "op" in latest_message:
-                    if latest_message["op"] == 6 or latest_message["op"] == 7:
-                        sleep(5)
-                        time = datetime.strptime(
-                            datetime.now().strftime("%x-%X"), "%x-%X"
-                        )
-                        continue
 
                 if "referenced_message" in latest_message.keys():
                     if latest_message["referenced_message"] != None:
@@ -310,7 +303,7 @@ class Instance(object):
 
         if self.Repository.config["auto trade"]["enabled"] and check:
             old_latest_message = copy(latest_message)
-            
+
             for key in self.Repository.config["auto trade"]:
                 if (
                     key == "enabled"
@@ -383,7 +376,7 @@ class Instance(object):
                         latest_message["components"][0]["components"][-1]["custom_id"],
                         latest_message,
                     )
-                    
+
             return old_latest_message
 
         return latest_message

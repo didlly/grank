@@ -46,4 +46,3 @@ for account in accounts:
 
     Client.Repository = Repository
     Thread(target=gateway, args=[Client]).start()
-    

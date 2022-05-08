@@ -1,14 +1,13 @@
-from os import listdir
 from os.path import isdir, isfile
 from shutil import rmtree
 import utils.Yaml
 from json import loads
 from typing import Union, Optional
 from instance.Client import Instance
-from database.Handler import create_config, create_database
+from database.Handler import create_config, create_database, create_controllers
 
 
-def verify(cwd: str, Client: Instance) -> None:
+def verify(cwd: str, account, Client: Instance) -> None:
     if not isdir(f"{cwd}database/{Client.id}"):
         return
 
@@ -24,20 +23,22 @@ def verify(cwd: str, Client: Instance) -> None:
     else:
         statuses.append(verify_database(cwd, Client.id))
 
-    if not isfile(f"{cwd}database/{Client.id}/info.json"):
+    if not isfile(f"{cwd}database/{Client.id}/controllers.json"):
         statuses.append(False)
     else:
-        statuses.append(verify_info(cwd, Client.id))
+        statuses.append(verify_controllers(cwd, Client.id))
 
     if False in statuses:
-        if statuses[-1] is False:
-            rmtree(f"{cwd}database/{Client.id}")
+        Client.log("WARNING", "Database is corrupted. Rebuilding now.")
 
         if statuses[0] is False:
             create_config(cwd, Client.id)
 
         if statuses[1] is False:
             create_database(cwd, Client.id)
+
+        if statuses[-1] is False:
+            create_controllers(cwd, account)
 
 
 def verify_config(cwd: str, folder: str) -> bool:
@@ -93,6 +94,10 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['cooldowns']['timeout']",
         "['logging']['debug']",
         "['logging']['warning']",
+        "['servers']",
+        "['servers']['blacklisted']",
+        "['auto start']",
+        "['auto start']['channels']",
     ]
 
     config = utils.Yaml.load(f"{cwd}database/{folder}/config.yml")
@@ -134,13 +139,16 @@ def verify_database(
     return True
 
 
-def verify_info(
+def verify_controllers(
     cwd: str,
     folder: Union[None, str],
-    info_template: Optional[dict] = None,
-    info: Optional[dict] = None,
 ) -> bool:
-    with open(f"{cwd}database/{folder}/info.json", "r") as info_file:
-        info = loads(info_file.read())
+    with open(f"{cwd}database/{folder}/controllers.json", "r") as controllers_file:
+        controllers = loads(controllers_file.read())
 
-    return True if "controllers" in info.keys() else False
+    return (
+        True
+        if "controllers" in controllers.keys()
+        and "controllers_info" in controllers.keys()
+        else False
+    )

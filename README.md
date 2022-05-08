@@ -249,6 +249,24 @@ Values in the `logging` category tell the program whether or not to log *`debug`
 
 ***NOTE***: Values in the `logging` category do not affect logging messages sent when the configuration file is being loaded and the token is being verified.
 
+### `servers` category
+
+Values in the `logging` category tell the program whether or not to *ignore messages from certain servers* and *which servers to ignore the messages from*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `False`  | Tells the program whether or not to ignore messages in the specified channel. |
+| `blacklisted`  | `List` | `["guild_id_1", "guild_id_2"]`  | Tells the program which servers to ingore messages from. |
+
+### `auto start` category
+
+Values in the `auto start` category tell the program whether or not to *automatically start the grinder* and *which channels to automatically start the grinder in*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `False`  | Tells the program whether or not to automatically start the grinder. |
+| `channels`  | `List` | `["guild_id_1", "guild_id_2"]`  | Tells the program which channels to automatically start the grinder inv. |
+
 ## Disclaimer
 
 This is a self-bot. Self-bots are against Discord's TOS. Automation of Dank Memer commands also breaks Dank Memer's rules. By using this program you acknowledge that I can take no responsibility for actions taken against you if you are caught.

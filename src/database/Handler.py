@@ -2,7 +2,7 @@ from json import loads, dumps
 from utils.Logger import log
 from contextlib import suppress
 from os import listdir, mkdir
-from os.path import isdir, isfile
+from os.path import isdir
 from typing import Optional, Union
 from utils.Converter import DictToClass
 from discord.UserInfo import user_info
@@ -39,26 +39,38 @@ def create_database(cwd: str, folder: int) -> open:
     return database_file, loads(database_template)
 
 
-def create_info(cwd: str, account) -> open:
-    info_template = account.__dict__
-    info_template["controllers"] = [account.id]
-    info_template["controllers_info"] = {
-        account.id: {"added": int(time()), "added_by": account.id, "commands": []}
-    }
-    info_template["stats"] = {
+def create_info(cwd: str, account):
+    with suppress(FileExistsError):
+        open(f"{cwd}database/{account.id}/info.json", "x").close()
+
+    account.stats = {
         "commands_ran": 0,
         "buttons_clicked": 0,
         "dropdowns_selected": 0,
     }
 
-    with suppress(FileExistsError):
-        open(f"{cwd}database/{account.id}/info.json", "x").close()
-
     info_file = open(f"{cwd}database/{account.id}/info.json", "r+")
-    info_file.write(dumps(info_template))
+    info_file.write(dumps(account.__dict__))
     info_file.flush()
 
-    return info_file, info_template
+    return info_file, account.__dict__
+
+
+def create_controllers(cwd: str, account) -> open:
+    controllers_template = {}
+    controllers_template["controllers"] = [account.id]
+    controllers_template["controllers_info"] = {
+        account.id: {"added": int(time()), "added_by": account.id, "commands": []}
+    }
+
+    with suppress(FileExistsError):
+        open(f"{cwd}database/{account.id}/controllers.json", "x").close()
+
+    controllers_file = open(f"{cwd}database/{account.id}/controllers.json", "r+")
+    controllers_file.write(dumps(controllers_template))
+    controllers_file.flush()
+
+    return controllers_file, controllers_template
 
 
 class Database(object):
@@ -75,16 +87,24 @@ class Database(object):
             self.config_file = open(f"{cwd}database/{Client.id}/config.yml", "r+")
             self.config = utils.Yaml.loads(self.config_file.read())
 
+            exec(
+                f"self.config['auto start']['channels'] = {self.config['auto start']['channels']}"
+            )
+
+            exec(
+                f"self.config['servers']['blacklisted'] = {self.config['servers']['blacklisted']}"
+            )
+
             self.database_file = open(f"{cwd}database/{Client.id}/database.json", "r+")
             self.database = loads(self.database_file.read())
 
             self.info_file = open(f"{cwd}database/{Client.id}/info.json", "r+")
-            old_info = loads(self.info_file.read())
-            account.controllers = old_info["controllers"]
-            account.controllers_info = old_info["controllers_info"]
-            account.stats = old_info["stats"]
-            self.info = account.__dict__
-            self.info_write()
+            self.info = loads(self.info_file.read())
+
+            self.controllers_file = open(
+                f"{cwd}database/{Client.id}/controllers.json", "r+"
+            )
+            self.controllers = loads(self.controllers_file.read())
         else:
             log(
                 f"{Client.username}",
@@ -99,6 +119,14 @@ class Database(object):
             self.database_file, self.database = create_database(cwd, Client.id)
 
             self.info_file, self.info = create_info(cwd, account)
+
+            self.controllers_file, self.controllers = create_controllers(cwd, account)
+
+            log(
+                f"{Client.username}",
+                "DEBUG",
+                f"Created database.",
+            )
 
     def config_write(self) -> None:
         self.config_file.seek(0)
@@ -118,6 +146,12 @@ class Database(object):
         self.info_file.write(dumps(self.info))
         self.info_file.flush()
 
+    def controllers_write(self) -> None:
+        self.controllers_file.seek(0)
+        self.controllers_file.truncate()
+        self.controllers_file.write(dumps(self.controllers))
+        self.controllers_file.flush()
+
     def database_handler(
         self,
         command: str,
@@ -127,16 +161,16 @@ class Database(object):
     ) -> Optional[bool]:
         if command == "write":
             if arg == "controller add":
-                if data in self.info["controllers"]:
+                if data in self.controllers["controllers"]:
                     return (
                         False,
                         ExistingUserID,
                         "The ID you provided **is already** in the list of controllers for this account.",
                     )
 
-                info = user_info(self.token, data)
+                controllers = user_info(self.token, data)
 
-                if info is None:
+                if controllers is None:
                     message = "The ID you provided does **not belong to any user**."
 
                     try:
@@ -146,28 +180,28 @@ class Database(object):
 
                     return False, InvalidUserID, message
                 else:
-                    self.info["controllers"].append(data)
-                    self.info["controllers_info"][data] = {
+                    self.controllers["controllers"].append(data)
+                    self.controllers["controllers_info"][data] = {
                         "added": int(time()),
                         "added_by": ID,
                         "commands": [],
                     }
-                    self.info_write()
+                    self.controllers_write()
                     return True, None
             elif arg == "controller remove":
-                if data not in self.info["controllers"]:
+                if data not in self.controllers["controllers"]:
                     return (
                         False,
                         IDNotFound,
                         "The ID you provided was **not found** in the list of controllers.",
                     )
                 else:
-                    self.info["controllers"].remove(data)
-                    self.info_write()
+                    self.controllers["controllers"].remove(data)
+                    self.controllers_write()
                     return True, None
 
     def log_command(self, command: str, message: dict) -> None:
-        self.info["controllers_info"][message["author"]["id"]]["commands"].append(
-            [round(int(time())), command]
-        )
-        self.info_write()
+        self.controllers["controllers_info"][message["author"]["id"]][
+            "commands"
+        ].append([round(int(time())), command])
+        self.controllers_write()

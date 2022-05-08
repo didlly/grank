@@ -1,7 +1,5 @@
-from re import S, sub
 from typing import Union, Optional
 from instance.Client import Instance
-from database.Handler import Database
 from websocket import WebSocket
 from json import loads, dumps
 from threading import Thread
@@ -9,11 +7,11 @@ from utils.Shared import data
 import utils.Yaml
 from contextlib import suppress
 from instance.ArgumentHandler import parse_args
+from discord.GuildId import guild_id
 from discord.UserInfo import user_info
 from instance.Exceptions import InvalidUserID, IDNotFound, ExistingUserID
 from run import run
 from utils.Shared import data
-from discord.GuildId import guild_id
 from time import sleep
 from platform import python_version
 from datetime import datetime
@@ -23,26 +21,66 @@ import sys
 
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
-        with suppress(Exception):
-            sleep(heartbeat_interval)
-            ws.send(dumps({"op": 1, "d": "None"}))
+        sleep(heartbeat_interval)
+        ws.send(dumps({"op": 1, "d": "None"}))
 
 
 def event_handler(Client, ws, event: dict) -> None:
     Client.session_id = event["d"]["sessions"][0]["session_id"]
 
+    if Client.Repository.config["auto start"]["enabled"]:
+        for channel in Client.Repository.config["auto start"]["channels"]:
+            Client.channel_id = str(channel)
+            Client.guild_id = guild_id(Client)
+
+            if Client.channel_id not in data["channels"]:
+                data["channels"][Client.channel_id] = {}
+
+            data["channels"][Client.channel_id][Client.token] = True
+            data["running"].append(Client.channel_id)
+            data["channels"][Client.channel_id]["messages"] = []
+            New_Client = copy(Client)
+            Thread(target=run, args=[New_Client]).start()
+
     while True:
         with suppress(FileExistsError):
             event = loads(ws.recv())
 
-            if event["t"] == "MESSAGE_CREATE":
+            if event["op"] == 6:
+                Client.log(
+                    "WARNING",
+                    "Websocket connection resume was requested (opcode `6`). Resuming connection now.",
+                )
+                ws.send(
+                    {
+                        "op": 6,
+                        "d": {
+                            "token": Client.token,
+                            "session_id": Client.session_id,
+                            "seq": None,
+                        },
+                    }
+                )
+            elif event["op"] == 7:
+                Client.log(
+                    "WARNING",
+                    "Websocket connection reconnecta & resume was requested (opcode `7`). Reconnecting & resuming connection now.",
+                )
+                ws.send_close()
+                ws.close()
+                gateway(Client)
+            elif event["t"] == "MESSAGE_CREATE":
                 if (
                     event["d"]["content"][:5].lower() == "grank"
                     and len(event["d"]["content"]) > 6
                 ):
-                    if (
-                        event["d"]["author"]["id"]
-                        in Client.Repository.info["controllers"] and event ["d"]["guild_id"] != 967458611586547733
+
+                    if event["d"]["author"]["id"] in Client.Repository.controllers[
+                        "controllers"
+                    ] and (
+                        not Client.Repository.config["servers"]["enabled"]
+                        or int(event["d"]["guild_id"])
+                        not in Client.Repository.config["servers"]["blacklisted"]
                     ):
 
                         Client.channel_id = event["d"]["channel_id"]
@@ -107,12 +145,6 @@ def event_handler(Client, ws, event: dict) -> None:
                                 f"**Grank** is a Discord self-bot made to automate Dank Memer commands. It supports many of Dank Memer's commands and includes many useful features such as auto-buy and anti-detection.\n\n__**Commands:**__\n```yaml\nstart: Starts the grinder. Run 'grank start -help' for more information.\nstop: Stops the grinder. Run 'grank stop -help' for more information.\ncontrollers: Edits the controllers for this account. Run 'grank controllers -help' for more information.\nconfig: Edits the config for this account. Run 'grank config -help' for more information.\ncommands: Edits the custom commands for this account. Run 'grank commands -help' for more information.```\n__**Useful Links:**__\nGithub: https://github.com/didlly/grank\nDiscord: https://discord.com/invite/X3JMC9FAgy",
                             )
                         elif args.command == "info":
-                            Client.Repository.info = loads(
-                                open(
-                                    f"{Client.cwd}database/{Client.id}/info.json", "r"
-                                ).read()
-                            )
-
                             Client.webhook_send(
                                 {
                                     "content": f"**Grank `{Client.current_version}`** runnning on **`Python {python_version()}`**",
@@ -454,7 +486,9 @@ def event_handler(Client, ws, event: dict) -> None:
                                     "attachments": [],
                                 }
 
-                                for controller in Client.Repository.info["controllers"]:
+                                for controller in Client.Repository.controllers[
+                                    "controllers"
+                                ]:
                                     info = user_info(Client.token, controller)
                                     controllers += f"\n{info.username}#{info.discriminator} - ID: {controller}"
                                     embed["embeds"].append(
@@ -475,7 +509,8 @@ def event_handler(Client, ws, event: dict) -> None:
                                     "icon_url": "https://avatars.githubusercontent.com/u/94558954",
                                 }
 
-                                Client.webhook_send(embed,
+                                Client.webhook_send(
+                                    embed,
                                     f"__**Controllers for this account:**__```yaml{controllers}```",
                                 )
 
@@ -490,23 +525,23 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "fields": [
                                                     {
                                                         "name": "*- `controllers`*",
-                                                        "value": "Shows a list of all the controllers for this account."
+                                                        "value": "Shows a list of all the controllers for this account.",
                                                     },
                                                     {
                                                         "name": "*- `controllers purge 0`*",
-                                                        "value": "Removes all the logged messages from the controller with the ID of `0`."
+                                                        "value": "Removes all the logged messages from the controller with the ID of `0`.",
                                                     },
                                                     {
                                                         "name": "*- `controllers info 0`*",
-                                                        "value": "Provides information about the controller. This includes information such as when the controller was added, which account added the controller, and what commands the controller has run."
+                                                        "value": "Provides information about the controller. This includes information such as when the controller was added, which account added the controller, and what commands the controller has run.",
                                                     },
                                                     {
                                                         "name": "*- `controllers add 0`*",
-                                                        "value": "Adds the account with the ID of `0` to the list of controllers."
+                                                        "value": "Adds the account with the ID of `0` to the list of controllers.",
                                                     },
                                                     {
                                                         "name": "*- `controllers remove 0`*",
-                                                        "value": "Removes the account with the ID of `0` from the list of controllers."
+                                                        "value": "Removes the account with the ID of `0` from the list of controllers.",
                                                     },
                                                 ],
                                             },
@@ -539,9 +574,9 @@ def event_handler(Client, ws, event: dict) -> None:
                             if "info" in args.subcommand:
                                 if (
                                     args.subcommand[-1]
-                                    in Client.Repository.info["controllers"]
+                                    in Client.Repository.controllers["controllers"]
                                 ):
-                                    controller_info = Client.Repository.info[
+                                    controller_info = Client.Repository.controllers[
                                         "controllers_info"
                                     ][args.subcommand[-1]]
 
@@ -559,7 +594,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "fields": [
                                                     {
                                                         "name": "ID:",
-                                                        "value": f"`{args.subcommand[-1]}`",   
+                                                        "value": f"`{args.subcommand[-1]}`",
                                                     },
                                                     {
                                                         "name": "Added by:",
@@ -578,16 +613,21 @@ def event_handler(Client, ws, event: dict) -> None:
                                             {
                                                 "title": "",
                                                 "fields": [],
-                                            }
+                                            },
                                         ],
                                         "username": "Grank",
                                         "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                        "attachments": []
+                                        "attachments": [],
                                     }
 
                                     for command in controller_info["commands"][::-1]:
                                         commands += f"\n{datetime.utcfromtimestamp(command[0]).strftime('%Y-%m-%d %H:%M:%S')}: {command[-1]}"
-                                        embed["embeds"][-1]["fields"].append({"name": f"`{command[-1]}`", "value": f"<t:{command[0]}:R>"})
+                                        embed["embeds"][-1]["fields"].append(
+                                            {
+                                                "name": f"`{command[-1]}`",
+                                                "value": f"<t:{command[0]}:R>",
+                                            }
+                                        )
 
                                     if len(commands) > 1500:
                                         commands = "".join(
@@ -597,7 +637,9 @@ def event_handler(Client, ws, event: dict) -> None:
                                             ]
                                         )
 
-                                    embed["embeds"][-1]["title"] += f"Showing {len(embed['embeds'][-1]['fields'])} commands ran."
+                                    embed["embeds"][-1][
+                                        "title"
+                                    ] += f"Showing {len(embed['embeds'][-1]['fields'])} commands ran."
 
                                     Client.webhook_send(
                                         embed,
@@ -627,12 +669,12 @@ def event_handler(Client, ws, event: dict) -> None:
                             elif "purge" in args.subcommand:
                                 if (
                                     args.subcommand[-1]
-                                    in Client.Repository.info["controllers"]
+                                    in Client.Repository.controllers["controllers"]
                                 ):
-                                    Client.Repository.info["controllers_info"][
+                                    Client.Repository.controllers["controllers_info"][
                                         args.subcommand[-1]
                                     ]["commands"] = []
-                                    Client.Repository.info_write()
+                                    Client.Repository.controllers_write()
 
                                     Client.webhook_send(
                                         {
@@ -684,24 +726,30 @@ def event_handler(Client, ws, event: dict) -> None:
                                 )
 
                                 if not output[0]:
-                                    if output[1] == InvalidUserID or output[1] == ExistingUserID:
-                                        Client.webhook_send({
-                                            "content": f"An error occured while adding the controller **`{args.subcommand[-1]}`**.",
-                                            "embeds": [
-                                                {
-                                                    "title": "Error!",
-                                                    "description": output[-1],
-                                                    "color": 16711680,
-                                                    "footer": {
-                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
-                                                    },
-                                                }
-                                            ],
-                                            "username": "Grank",
-                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                            "attachments": [],
-                                        },f"{output[-1]}")
+                                    if (
+                                        output[1] == InvalidUserID
+                                        or output[1] == ExistingUserID
+                                    ):
+                                        Client.webhook_send(
+                                            {
+                                                "content": f"An error occured while adding the controller **`{args.subcommand[-1]}`**.",
+                                                "embeds": [
+                                                    {
+                                                        "title": "Error!",
+                                                        "description": output[-1],
+                                                        "color": 16711680,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            f"{output[-1]}",
+                                        )
                                 else:
                                     Client.webhook_send(
                                         {
@@ -730,23 +778,26 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                 if not output[0]:
                                     if output[1] == IDNotFound:
-                                        Client.webhook_send({
-                                            "content": f"An error occured while removing the controller **`{args.subcommand[-1]}`**.",
-                                            "embeds": [
-                                                {
-                                                    "title": "Error!",
-                                                    "description": output[-1],
-                                                    "color": 16711680,
-                                                    "footer": {
-                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
-                                                    },
-                                                }
-                                            ],
-                                            "username": "Grank",
-                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                            "attachments": [],
-                                        }, f"{output[-1]}")
+                                        Client.webhook_send(
+                                            {
+                                                "content": f"An error occured while removing the controller **`{args.subcommand[-1]}`**.",
+                                                "embeds": [
+                                                    {
+                                                        "title": "Error!",
+                                                        "description": output[-1],
+                                                        "color": 16711680,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            f"{output[-1]}",
+                                        )
                                 else:
                                     Client.webhook_send(
                                         {
@@ -784,7 +835,6 @@ def event_handler(Client, ws, event: dict) -> None:
                                 if event["d"]["channel_id"] in data["running"]:
                                     Client.webhook_send(
                                         {
-                                            "content": f"",
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
@@ -810,11 +860,10 @@ def event_handler(Client, ws, event: dict) -> None:
                                         Client.token
                                     ] = True
 
-                                    Client.guild_id = guild_id(Client)
+                                    Client.guild_id = event["d"]["guild_id"]
 
                                     Client.webhook_send(
                                         {
-                                            "content": f"",
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
@@ -862,7 +911,6 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                     Client.webhook_send(
                                         {
-                                            "content": f"",
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
@@ -885,7 +933,6 @@ def event_handler(Client, ws, event: dict) -> None:
                                 else:
                                     Client.webhook_send(
                                         {
-                                            "content": f"",
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
@@ -916,7 +963,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                         "attachments": [],
                                     },
-                                    f"""Config settings.\n```yaml\n{utils.Yaml.dumps(Client.Repository.config)}```"""
+                                    f"""Config settings.\n```yaml\n{utils.Yaml.dumps(Client.Repository.config)}```""",
                                 )
                             elif "help" in args.flags:
                                 Client.webhook_send(
@@ -954,15 +1001,16 @@ def event_handler(Client, ws, event: dict) -> None:
                                         "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                         "attachments": [],
                                     },
-                                    f"Help for the command **`config`**. This command is used to modify and view the config for this account. The config changes how Grank behaves. For example, you can switch commands on and off using the config command. The config is saved in the config file, and is remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\nconfig: Shows a list of all the config options and their values for this account.\nconfig reset: Resets the config to the default settings.\nconfig.cooldowns.patron: Displays the value of the patron key in the subconfig cooldowns.\nconfig.cooldowns.patrons = True: Sets the patron key in the subconfig cooldowns to True.\n```\n**NOTE:** To access keys containing a space character, replace the space with an underscore (`_`)."
+                                    f"Help for the command **`config`**. This command is used to modify and view the config for this account. The config changes how Grank behaves. For example, you can switch commands on and off using the config command. The config is saved in the config file, and is remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\nconfig: Shows a list of all the config options and their values for this account.\nconfig reset: Resets the config to the default settings.\nconfig.cooldowns.patron: Displays the value of the patron key in the subconfig cooldowns.\nconfig.cooldowns.patrons = True: Sets the patron key in the subconfig cooldowns to True.\n```\n**NOTE:** To access keys containing a space character, replace the space with an underscore (`_`).",
                                 )
                             elif "reset" in args.subcommand:
-                                Client.Repository.config = utils.Yaml.load(f"{Client.cwd}database/templates/config.yml")
+                                Client.Repository.config = utils.Yaml.load(
+                                    f"{Client.cwd}database/templates/config.yml"
+                                )
                                 Client.Repository.config_write()
-                                
+
                                 Client.webhook_send(
                                     {
-                                        "content": f"",
                                         "embeds": [
                                             {
                                                 "title": "Success!",
@@ -974,7 +1022,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                         "attachments": [],
                                     },
-                                    "Successfully reset the config!"
+                                    "Successfully reset the config!",
                                 )
                             elif len(args.variables) > 0:
                                 args.variables = [
@@ -995,24 +1043,42 @@ def event_handler(Client, ws, event: dict) -> None:
                                         )
                                         Client.webhook_send(
                                             {
-                                                "content": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** is set to **`{value['var']}`**.",
-                                                "embeds": None,
+                                                "embeds": [
+                                                    {
+                                                        "title": "Success!",
+                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** is set to **`{value['var']}`**.",
+                                                        "color": 65423,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
                                                 "username": "Grank",
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Config value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** is set to **`{value['var']}`**."
+                                            f"Config value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** is set to **`{value['var']}`**.",
                                         )
                                     except KeyError:
                                         Client.webhook_send(
                                             {
-                                                "content": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
-                                                "embeds": None,
+                                                "embeds": [
+                                                    {
+                                                        "title": "Error!",
+                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
+                                                        "color": 16711680,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
                                                 "username": "Grank",
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**."
+                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
                                         )
                                 else:
                                     args.variables = [
@@ -1025,25 +1091,43 @@ def event_handler(Client, ws, event: dict) -> None:
                                         )
                                         Client.webhook_send(
                                             {
-                                                "content": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **successfully set** to **`{args.var}`**.",
-                                                "embeds": None,
+                                                "embeds": [
+                                                    {
+                                                        "title": "Error!",
+                                                        "description": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **successfully set** to **`{args.var}`**.",
+                                                        "color": 65423,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
                                                 "username": "Grank",
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **successfully set** to **`{args.var}`**."
+                                            f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **successfully set** to **`{args.var}`**.",
                                         )
                                         Client.Repository.config_write()
                                     except KeyError:
                                         Client.webhook_send(
                                             {
-                                                "content": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
-                                                "embeds": None,
+                                                "embeds": [
+                                                    {
+                                                        "title": "Error!",
+                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
+                                                        "color": 16711680,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
                                                 "username": "Grank",
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**."
+                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
                                         )
                 else:
                     if event["d"]["channel_id"] in data["running"]:
@@ -1123,5 +1207,3 @@ def gateway(Client: Union[Instance, str]) -> Optional[str]:
 
     if type(Client) != str:
         Thread(target=event_handler, args=[Client, ws, event]).start()
-
-    return event["d"]["sessions"][0]["session_id"]
