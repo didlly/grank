@@ -148,6 +148,14 @@ def event_handler(Client, ws, event: dict) -> None:
                                                     "name": "*- `commands`*",
                                                     "value": "Edits the custom commands for this account. Run `grank commands -help` for more information.",
                                                 },
+                                                {
+                                                    "name": "*- `servers`*",
+                                                    "value": "Edits the blacklisted servers for this account. Run `grank servers -help` for more information.",
+                                                },
+                                                {
+                                                    "name": "*- `autostart`*",
+                                                    "value": "Edits the auto start channels for this account. Run `grank autostart -help` for more information.",
+                                                },
                                             ],
                                         },
                                         {
@@ -252,6 +260,220 @@ def event_handler(Client, ws, event: dict) -> None:
                                 },
                                 f"**Grank `{Client.current_version}`** running on **`Python {python_version()}`**.\n\n__**Grank Information:**__\nActive since: `{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`\nBecame active: <t:{round(Client.startup_time)}:R>\nRunning from source: `{False if getattr(sys, 'frozen', False) else True}`\n\n__**Client Information:**__\nUsername: `{Client.username}`\nID: `{Client.id}`\n\n__**Session Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected']}`\n\n__**Lifetime Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked'] + Client.Repository.info['stats']['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected'] + Client.Repository.info['stats']['dropdowns_selected']}`",
                             )
+                        elif args.command == "servers":
+                            if (
+                                len(args.subcommand) == 0
+                                and len(args.variables) == 0
+                                and len(args.flags) == 0
+                            ):
+                                if Client.Repository.config["blacklisted servers"]:
+                                    servers = ""
+                                    embed = {
+                                        "content": "All **blacklisted servers** for this account.",
+                                        "embeds": [],
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    }
+
+                                    for server in Client.Repository.config[
+                                        "blacklisted servers"
+                                    ]["servers"]:
+                                        if server == "enabled":
+                                            continue
+
+                                        servers += f"\n{server}"
+                                        embed["embeds"].append(
+                                            {
+                                                "title": f"`{server}`",
+                                                "description": "",
+                                                "color": None,
+                                            }
+                                        )
+
+                                    embed["embeds"][-1]["footer"] = {
+                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                    }
+
+                                    Client.webhook_send(
+                                        embed,
+                                        f"__**All blacklisted servers for this account**__\n```yaml{servers}```",
+                                    )
+                                else:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": f"The blacklisted servers option is not enabled, so there are no blacklisted servers!",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        "The blacklisted servers option is not enabled, so there are no blacklisted servers!",
+                                    )
+                                    
+                            elif "help" in args.flags:
+                                Client.webhook_send(
+                                    {
+                                        "content": "Help for the command **`servers`**. This command is used to modify the blacklisted servers for this account. Blacklisted servers are saved in the config file, and so are remembered even if you close Grank.",
+                                        "embeds": [
+                                            {
+                                                "title": "Commands",
+                                                "color": None,
+                                                "fields": [
+                                                    {
+                                                        "name": "- *`servers`*",
+                                                        "value": "Shows a list of all the blacklisted servers for this account.",
+                                                    },
+                                                    {
+                                                        "name": "- *`servers add 0`*",
+                                                        "value": "Adds the server with the ID of `0` to the list of blacklisted servers.",
+                                                    },
+                                                    {
+                                                        "name": "- *`servers remove 0`*",
+                                                        "value": "Removes the server with the ID of `0` from the list of blacklisted servers.",
+                                                    },
+                                                ],
+                                                "footer": {
+                                                    "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                    "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                },
+                                            }
+                                        ],
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    },
+                                    f"Help for the command **`servers`**. This command is used to modify the blacklisted servers for this account. Blacklisted servers are saved in the config file, and so are remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\nservers: Shows a list of all the blacklisted servers for this account.\nservers add 0: Adds the server with the ID of 0 to the list of blacklisted servers.\nRemoves the server with the ID of 0 from the list of blacklisted servers.\n```",
+                                )
+                            elif "add" in args.subcommand:
+                                try:
+                                    args.subcommand[-1] = int(args.subcommand[-1])
+                                    
+                                    Client.Repository.config["blacklisted servers"]["servers"].append(args.subcommand[-1])
+                                    Client.Repository.config_write()
+                                    
+                                    Client.webhook_send(
+                                        {
+                                            "content": f"Successfull addition!",
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}`** was **successfully added**.",
+                                                    "color": 65423,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                },
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The ID **`{args.subcommand[-1]}`** was successfully added to the list of controllers for this account.",
+                                    )
+                                except ValueError:
+                                    Client.webhook_send(
+                                        {
+                                            "content": f"An error occured while adding the server **`{args.subcommand[-1]}`**.",
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                    )
+                            elif "remove" in args.subcommand:
+                                try:
+                                    args.subcommand[-1] = int(args.subcommand[-1])
+                                    
+                                    if args.subcommand[-1] in Client.Repository.config["blacklisted servers"]["servers"]:
+                                        Client.Repository.config["blacklisted servers"]["servers"].remove(args.subcommand[-1])
+                                        Client.Repository.config_write()
+                                    
+                                        Client.webhook_send(
+                                            {
+                                                "content": f"Successfull removal!",
+                                                "embeds": [
+                                                    {
+                                                        "title": "Success!",
+                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}`** was **successfully removed**.",
+                                                        "color": 65423,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    },
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            f"The ID **`{args.subcommand[-1]}`** was successfully removed from the list of blacklisted servers for this account.",
+                                        )
+                                    else:
+                                        Client.webhook_send(
+                                        {
+                                            "content": f"An error occured while removing the server **`{args.subcommand[-1]}`**.",
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "The ID you provided was **not found** in the list of blacklisted servers.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                    )
+                                except ValueError:
+                                    Client.webhook_send(
+                                        {
+                                            "content": f"An error occured while removing the server **`{args.subcommand[-1]}`**.",
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                    )
+                                
                         elif args.command == "commands":
                             if (
                                 len(args.subcommand) == 0

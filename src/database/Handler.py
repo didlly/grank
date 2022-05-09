@@ -87,14 +87,6 @@ class Database(object):
             self.config_file = open(f"{cwd}database/{Client.id}/config.yml", "r+")
             self.config = utils.Yaml.loads(self.config_file.read())
 
-            exec(
-                f"self.config['auto start']['channels'] = {self.config['auto start']['channels']}"
-            )
-
-            exec(
-                f"self.config['blacklisted servers']['servers'] = {self.config['blacklisted servers']['servers']}"
-            )
-
             self.database_file = open(f"{cwd}database/{Client.id}/database.json", "r+")
             self.database = loads(self.database_file.read())
 
@@ -127,6 +119,14 @@ class Database(object):
                 "DEBUG",
                 f"Created database.",
             )
+            
+        exec(
+            f"self.config['auto start']['channels'] = {self.config['auto start']['channels']}"
+        )
+        
+        exec(
+            f"self.config['blacklisted servers']['servers'] = {self.config['blacklisted servers']['servers']}"
+        )
 
     def config_write(self) -> None:
         self.config_file.seek(0)

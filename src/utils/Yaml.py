@@ -46,6 +46,7 @@ def load(path: str) -> dict:
                 or is_integer(value)
                 or value == "True"
                 or value == "False"
+                or ("[" in value and "]" in value)
             ):
                 exec(
                     f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.split(':')[0].strip()}'] = {value}"
@@ -85,7 +86,7 @@ def loads(yaml: str) -> dict:
 
         value = line.split(":")[-1].strip()
 
-        if is_float(value) or is_integer(value) or value == "True" or value == "False":
+        if is_float(value) or is_integer(value) or value == "True" or value == "False" or ("[" in value and "]" in value):
             exec(
                 f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.split(':')[0].strip()}'] = {value}"
             )
