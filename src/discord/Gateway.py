@@ -339,6 +339,14 @@ def event_handler(Client, ws, event: dict) -> None:
                                                         "value": "Shows a list of all the blacklisted servers for this account.",
                                                     },
                                                     {
+                                                        "name": "- *`servers enable`*",
+                                                        "value": "Enables the blacklisted server function.",
+                                                    },
+                                                    {
+                                                        "name": "- *`servers disable`*",
+                                                        "value": "Disables the blacklisted server function.",
+                                                    },
+                                                    {
                                                         "name": "- *`servers add 0`*",
                                                         "value": "Adds the server with the ID of `0` to the list of blacklisted servers.",
                                                     },
@@ -359,6 +367,94 @@ def event_handler(Client, ws, event: dict) -> None:
                                     },
                                     f"Help for the command **`servers`**. This command is used to modify the blacklisted servers for this account. Blacklisted servers are saved in the config file, and so are remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\nservers: Shows a list of all the blacklisted servers for this account.\nservers add 0: Adds the server with the ID of 0 to the list of blacklisted servers.\nRemoves the server with the ID of 0 from the list of blacklisted servers.\n```",
                                 )
+                            elif "enable" in args.subcommand:
+                                if Client.Repository.config["blacklisted servers"]["enabled"]:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "The blacklisted servers option is **already disabled**.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The blacklisted servers option is **already disabled**.",
+                                    )
+                                else:
+                                    Client.Repository.config["blacklisted servers"]["enabled"] = True
+                                    Client.Repository.config_write()
+                                    
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The blacklisted server option **successfully set to `True`**.",
+                                                    "color": 65423,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                },
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The blacklisted server option **successfully set to `True`**.",
+                                    )
+                            elif "disable" in args.subcommand:
+                                if not Client.Repository.config["blacklisted servers"]["enabled"]:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "The blacklisted servers option is **already enabled**.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The blacklisted servers option is **already enabled**.",
+                                    )
+                                else:
+                                    Client.Repository.config["blacklisted servers"]["enabled"] = False
+                                    Client.Repository.config_write()
+                                    
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The blacklisted server option **successfully set to `False`**.",
+                                                    "color": 65423,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                },
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The blacklisted server option **successfully set to `False`**.",
+                                    )
                             elif "add" in args.subcommand:
                                 try:
                                     args.subcommand[-1] = int(args.subcommand[-1])
@@ -544,7 +640,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        "The auto start channels option is not enabled, so there are no auto start!",
+                                        "The auto start channels option is not enabled, so there are no auto start channels!",
                                     )
 
                             elif "help" in args.flags:
@@ -559,6 +655,14 @@ def event_handler(Client, ws, event: dict) -> None:
                                                     {
                                                         "name": "- *`autostart`*",
                                                         "value": "Shows a list of all the auto start channels for this account.",
+                                                    },
+                                                    {
+                                                        "name": "- *`autostart enable`*",
+                                                        "value": "Enables the autostart server function.",
+                                                    },
+                                                    {
+                                                        "name": "- *`autostart disable`*",
+                                                        "value": "Disables the autostart server function.",
                                                     },
                                                     {
                                                         "name": "- *`autostart add 0`*",
@@ -581,6 +685,94 @@ def event_handler(Client, ws, event: dict) -> None:
                                     },
                                     f"Help for the command **`channels`**. This command is used to modify the auto start channels for this account. auto start channels are saved in the config file, and so are remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\nchannels: Shows a list of all the auto start channels for this account.\nchannels add 0: Adds the channel with the ID of 0 to the list of auto start channels.\nRemoves the channel with the ID of 0 from the list of auto start channels.\n```",
                                 )
+                            elif "enable" in args.subcommand:
+                                if Client.Repository.config["auto start"]["enabled"]:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "The auto start option is **already disabled**.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The auto start option is **already disabled**.",
+                                    )
+                                else:
+                                    Client.Repository.config["auto start"]["enabled"] = True
+                                    Client.Repository.config_write()
+                                    
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The auto start option **successfully set to `True`**.",
+                                                    "color": 65423,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                },
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The auto start option **successfully set to `True`**.",
+                                    )
+                            elif "disable" in args.subcommand:
+                                if not Client.Repository.config["auto start"]["enabled"]:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The auto start option is **already enabled**.",
+                                    )
+                                else:
+                                    Client.Repository.config["auto start"]["enabled"] = False
+                                    Client.Repository.config_write()
+                                    
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The auto start option **successfully set to `False`**.",
+                                                    "color": 65423,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                },
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The auto start option **successfully set to `False`**.",
+                                    )
                             elif "add" in args.subcommand:
                                 try:
                                     args.subcommand[-1] = int(args.subcommand[-1])
