@@ -92,7 +92,7 @@ class Database(object):
             )
 
             exec(
-                f"self.config['servers']['blacklisted'] = {self.config['servers']['blacklisted']}"
+                f"self.config['blacklisted ervers']['servers'] = {self.config['blacklisted servers']['servers']}"
             )
 
             self.database_file = open(f"{cwd}database/{Client.id}/database.json", "r+")
