@@ -1167,52 +1167,53 @@ def event_handler(Client, ws, event: dict) -> None:
                         event["d"]["author"]["id"] == "270904126974590976"
                         and len(event["d"]["embeds"]) > 0
                     ):
-                        if (
+                        if "description" in event["d"]["embeds"].keys():   
+                            if (
                             "They're trying to break into"
                             in event["d"]["embeds"][0]["description"]
-                        ):
-                            Client.channel_id = event["d"]["channel_id"]
-                            Client.guild_id = guild_id(Client)
-
-                            if (
-                                f"**{Client.user}**'s"
-                                in event["d"]["embeds"][0]["description"]
-                                and heist
-                                and Client.Repository.config["anti heist"]["enabled"]
                             ):
-                                Client.log(
-                                    "WARNING", "Heist detected. Calling the cops."
-                                )
+                                Client.channel_id = event["d"]["channel_id"]
+                                Client.guild_id = guild_id(Client)
 
-                                reset = False
+                                if (
+                                    f"**{Client.user}**'s"
+                                    in event["d"]["embeds"][0]["description"]
+                                    and heist
+                                    and Client.Repository.config["anti heist"]["enabled"]
+                                ):
+                                    Client.log(
+                                        "WARNING", "Heist detected. Calling the cops."
+                                    )
 
-                                if Client.channel_id not in data["channels"]:
-                                    data["channels"][Client.channel_id] = {
-                                        "messages": []
-                                    }
-                                    data["running"].append(Client.channel_id)
+                                    reset = False
 
-                                    reset = True
+                                    if Client.channel_id not in data["channels"]:
+                                        data["channels"][Client.channel_id] = {
+                                            "messages": []
+                                        }
+                                        data["running"].append(Client.channel_id)
 
-                                Thread(
-                                    target=anti_heist, args=[Client, event, reset]
-                                ).start()
+                                        reset = True
 
-                                heist = False
-                            elif Client.Repository.config["auto heist"]["enabled"]:
-                                Client.log(
-                                    "DEBUG",
-                                    "Heist detected for another user. Joining now.",
-                                )
+                                    Thread(
+                                        target=anti_heist, args=[Client, event, reset]
+                                    ).start()
 
-                                custom_id = event["d"]["components"][0]["components"][
-                                    0
-                                ]["custom_id"]
-                                Client.interact_button(
+                                    heist = False
+                                elif Client.Repository.config["auto heist"]["enabled"]:
+                                    Client.log(
+                                        "DEBUG",
+                                        "Heist detected for another user. Joining now.",
+                                    )
+
+                                    custom_id = event["d"]["components"][0]["components"][
+                                        0
+                                    ]["custom_id"]
+                                    Client.interact_button(
                                     "pls heist", custom_id, event["d"]
-                                )
+                                    )
 
-                                Client.log("DEBUG", "Joined heist.")
+                                    Client.log("DEBUG", "Joined heist.")
 
                     if event["d"]["channel_id"] in data["running"]:
                         data["channels"][event["d"]["channel_id"]]["messages"].append(
