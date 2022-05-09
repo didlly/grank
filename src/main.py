@@ -12,6 +12,7 @@ from utils.Shared import data
 from utils.Console import fore, style
 from discord.Gateway import gateway
 from threading import Thread
+from requests import get
 
 if system().lower() == "windows":
     import ctypes
@@ -26,6 +27,23 @@ elif __file__:
 
 cwd = f"{cwd}/" if cwd != "" else cwd
 
+with open(f"{cwd}current_version", "r") as f:
+    current_version = f.read()
+            
+print(f"""{fore.Magenta}
+░██████╗░██████╗░░█████╗░███╗░░██╗██╗░░██╗
+██╔════╝░██╔══██╗██╔══██╗████╗░██║██║░██╔╝
+██║░░██╗░██████╔╝███████║██╔██╗██║█████═╝░
+{fore.Bright_Magenta}██║░░╚██╗██╔══██╗██╔══██║██║╚████║██╔═██╗░
+╚██████╔╝██║░░██║██║░░██║██║░╚███║██║░╚██╗
+░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝
+{style.RESET_ALL}
+{style.Italic + style.Bold}GITHUB: {style.RESET_ALL}https://github.com/didlly/grank
+{style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}{current_version}
+{style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{get("https://raw.githubusercontent.com/didlly/grank/main/src/current_version").content.decode()}
+{style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/X3JMC9FAgy
+""")
+
 with suppress(FileExistsError):
     mkdir(f"{cwd}logs/")
 
@@ -35,7 +53,7 @@ for account in accounts:
     with suppress(FileExistsError):
         mkdir(f"{cwd}logs/{account.token}")
 
-    Client = Instance(cwd, account)
+    Client = Instance(cwd, account, current_version)
     verify(cwd, account, Client)
     Repository = Database(cwd, account, Client)
 

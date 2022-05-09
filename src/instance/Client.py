@@ -31,7 +31,7 @@ class DropdownInteractError(Exception):
 
 
 class Instance(object):
-    def __init__(self, cwd: str, account: DictToClass) -> None:
+    def __init__(self, cwd: str, account: DictToClass, current_version) -> None:
         self.cwd = cwd
         self.token = account.token
         self.id = account.id
@@ -39,6 +39,7 @@ class Instance(object):
         self.user = account.username
         self.discriminator = account.discriminator
         self.startup_time = int(time())
+        self.current_version = current_version
         self.log_file = open(
             f"{cwd}logs/{account.token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
             "a",
