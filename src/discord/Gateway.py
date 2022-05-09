@@ -100,9 +100,9 @@ def event_handler(Client, ws, event: dict) -> None:
                     if event["d"]["author"]["id"] in Client.Repository.controllers[
                         "controllers"
                     ] and (
-                        not Client.Repository.config["servers"]["enabled"]
+                        not Client.Repository.config["blacklisted servers"]["enabled"]
                         or int(event["d"]["guild_id"])
-                        not in Client.Repository.config["servers"]["blacklisted"]
+                        not in Client.Repository.config["blacklisted servers"]["servers"]
                     ):
 
                         Client.channel_id = event["d"]["channel_id"]
