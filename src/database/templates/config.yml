@@ -74,13 +74,13 @@ logging:
   debug: True
   warning: True
 
-servers:
+blacklisted servers:
   enabled: False
-  blacklisted: ["guild_id_1", "guild_id_2"]
+  servers: ["guild_id_1", "guild_id_2"]
 
 auto start:
   enabled: False
-  channels: ["guild_id_1", "guild_id_2"]
+  channels: ["channel_id_1", "channel_id_2"]
 
 anti heist:
   enabled: True
