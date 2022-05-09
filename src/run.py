@@ -1,3 +1,4 @@
+from msilib.schema import File
 from scripts.beg import beg
 from scripts.blackjack import blackjack
 from scripts.crime import crime
@@ -537,15 +538,12 @@ def run(Client):
                 if Client.Repository.config["custom commands"][key]["enabled"]:
                     try:
                         exec(
-                            f"if (datetime.strptime(datetime.now().strftime('%x-%X'), '%x-%X') - datetime.strptime(custom_{key.replace(' ', '_')}, '%x-%X')).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key)"
-                        )
-
-                        exec(
-                            f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
+                            f"if (datetime.strptime(datetime.now().strftime('%x-%X'), '%x-%X') - datetime.strptime(custom_{key.replace(' ', '_')}, '%x-%X')).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
                         )
 
                     except NameError:
                         custom(Client, key)
+                        
                         exec(
                             f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
                         )
