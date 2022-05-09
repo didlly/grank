@@ -374,7 +374,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": "The blacklisted servers option is **already disabled**.",
+                                                    "description": "The blacklisted servers option is **already enabled**.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -386,7 +386,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The blacklisted servers option is **already disabled**.",
+                                        f"The blacklisted servers option is **already enabled**.",
                                     )
                                 else:
                                     Client.Repository.config["blacklisted servers"]["enabled"] = True
@@ -397,7 +397,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The blacklisted server option **successfully set to `True`**.",
+                                                    "description": f"The blacklisted server option ** was successfully set to `True`**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -409,7 +409,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The blacklisted server option **successfully set to `True`**.",
+                                        f"The blacklisted server option ** was successfully set to `True`**.",
                                     )
                             elif "disable" in args.subcommand:
                                 if not Client.Repository.config["blacklisted servers"]["enabled"]:
@@ -418,7 +418,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": "The blacklisted servers option is **already enabled**.",
+                                                    "description": "The blacklisted servers option is **already disabled**.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -441,7 +441,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The blacklisted server option **successfully set to `False`**.",
+                                                    "description": f"The blacklisted server option ** was successfully set to `False`**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -453,7 +453,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The blacklisted server option **successfully set to `False`**.",
+                                        f"The blacklisted server option ** was successfully set to `False`**.",
                                     )
                             elif "add" in args.subcommand:
                                 try:
@@ -692,7 +692,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": "The auto start option is **already disabled**.",
+                                                    "description": "The auto start option is **already enabled**.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -715,7 +715,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The auto start option **successfully set to `True`**.",
+                                                    "description": f"The auto start option ** was successfully set to `True`**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -727,7 +727,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The auto start option **successfully set to `True`**.",
+                                        f"The auto start option ** was successfully set to `True`**.",
                                     )
                             elif "disable" in args.subcommand:
                                 if not Client.Repository.config["auto start"]["enabled"]:
@@ -736,7 +736,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": "",
+                                                    "description": "The auto start option is **already disabled**.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -748,7 +748,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The auto start option is **already enabled**.",
+                                        f"The auto start option is **already disabled**.",
                                     )
                                 else:
                                     Client.Repository.config["auto start"]["enabled"] = False
@@ -759,7 +759,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The auto start option **successfully set to `False`**.",
+                                                    "description": f"The auto start option ** was successfully set to `False`**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -771,7 +771,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The auto start option **successfully set to `False`**.",
+                                        f"The auto start option ** was successfully set to `False`**.",
                                     )
                             elif "add" in args.subcommand:
                                 try:
@@ -1765,7 +1765,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "embeds": [
                                                     {
                                                         "title": "Error!",
-                                                        "description": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **successfully set** to **`{args.var}`**.",
+                                                        "description": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was ** was successfully set** to **`{args.var}`**.",
                                                         "color": 65423,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1777,7 +1777,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **successfully set** to **`{args.var}`**.",
+                                            f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was ** was successfully set** to **`{args.var}`**.",
                                         )
                                         Client.Repository.config_write()
                                     except KeyError:
