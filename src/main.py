@@ -29,8 +29,9 @@ cwd = f"{cwd}/" if cwd != "" else cwd
 
 with open(f"{cwd}current_version", "r") as f:
     current_version = f.read()
-            
-print(f"""{fore.Magenta}
+
+print(
+    f"""{fore.Magenta}
 ░██████╗░██████╗░░█████╗░███╗░░██╗██╗░░██╗
 ██╔════╝░██╔══██╗██╔══██╗████╗░██║██║░██╔╝
 ██║░░██╗░██████╔╝███████║██╔██╗██║█████═╝░
@@ -42,7 +43,8 @@ print(f"""{fore.Magenta}
 {style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}{current_version}
 {style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{get("https://raw.githubusercontent.com/didlly/grank/main/src/current_version").content.decode()}
 {style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/X3JMC9FAgy
-""")
+"""
+)
 
 with suppress(FileExistsError):
     mkdir(f"{cwd}logs/")

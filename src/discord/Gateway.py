@@ -102,7 +102,9 @@ def event_handler(Client, ws, event: dict) -> None:
                     ] and (
                         not Client.Repository.config["blacklisted servers"]["enabled"]
                         or int(event["d"]["guild_id"])
-                        not in Client.Repository.config["blacklisted servers"]["servers"]
+                        not in Client.Repository.config["blacklisted servers"][
+                            "servers"
+                        ]
                     ):
 
                         Client.channel_id = event["d"]["channel_id"]
@@ -266,7 +268,9 @@ def event_handler(Client, ws, event: dict) -> None:
                                 and len(args.variables) == 0
                                 and len(args.flags) == 0
                             ):
-                                if Client.Repository.config["blacklisted servers"]:
+                                if Client.Repository.config["blacklisted servers"][
+                                    "enabled"
+                                ]:
                                     servers = ""
                                     embed = {
                                         "content": "All **blacklisted servers** for this account.",
@@ -306,7 +310,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": f"The blacklisted servers option is not enabled, so there are no blacklisted servers!",
+                                                    "description": f"The blacklisted servers option is **not enabled**, so there are **no blacklisted servers!",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -320,7 +324,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         },
                                         "The blacklisted servers option is not enabled, so there are no blacklisted servers!",
                                     )
-                                    
+
                             elif "help" in args.flags:
                                 Client.webhook_send(
                                     {
@@ -358,10 +362,12 @@ def event_handler(Client, ws, event: dict) -> None:
                             elif "add" in args.subcommand:
                                 try:
                                     args.subcommand[-1] = int(args.subcommand[-1])
-                                    
-                                    Client.Repository.config["blacklisted servers"]["servers"].append(args.subcommand[-1])
+
+                                    Client.Repository.config["blacklisted servers"][
+                                        "servers"
+                                    ].append(args.subcommand[-1])
                                     Client.Repository.config_write()
-                                    
+
                                     Client.webhook_send(
                                         {
                                             "content": f"Successfull addition!",
@@ -406,11 +412,18 @@ def event_handler(Client, ws, event: dict) -> None:
                             elif "remove" in args.subcommand:
                                 try:
                                     args.subcommand[-1] = int(args.subcommand[-1])
-                                    
-                                    if args.subcommand[-1] in Client.Repository.config["blacklisted servers"]["servers"]:
-                                        Client.Repository.config["blacklisted servers"]["servers"].remove(args.subcommand[-1])
+
+                                    if (
+                                        args.subcommand[-1]
+                                        in Client.Repository.config[
+                                            "blacklisted servers"
+                                        ]["servers"]
+                                    ):
+                                        Client.Repository.config["blacklisted servers"][
+                                            "servers"
+                                        ].remove(args.subcommand[-1])
                                         Client.Repository.config_write()
-                                    
+
                                         Client.webhook_send(
                                             {
                                                 "content": f"Successfull removal!",
@@ -433,25 +446,25 @@ def event_handler(Client, ws, event: dict) -> None:
                                         )
                                     else:
                                         Client.webhook_send(
-                                        {
-                                            "content": f"An error occured while removing the server **`{args.subcommand[-1]}`**.",
-                                            "embeds": [
-                                                {
-                                                    "title": "Error!",
-                                                    "description": "The ID you provided was **not found** in the list of blacklisted servers.",
-                                                    "color": 16711680,
-                                                    "footer": {
-                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
-                                                    },
-                                                }
-                                            ],
-                                            "username": "Grank",
-                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                            "attachments": [],
-                                        },
-                                        f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
-                                    )
+                                            {
+                                                "content": f"An error occured while removing the server **`{args.subcommand[-1]}`**.",
+                                                "embeds": [
+                                                    {
+                                                        "title": "Error!",
+                                                        "description": "The ID you provided was **not found** in the list of blacklisted servers.",
+                                                        "color": 16711680,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                        )
                                 except ValueError:
                                     Client.webhook_send(
                                         {
@@ -473,7 +486,229 @@ def event_handler(Client, ws, event: dict) -> None:
                                         },
                                         f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
                                     )
-                                
+                        elif args.command == "autostart":
+                            if (
+                                len(args.subcommand) == 0
+                                and len(args.variables) == 0
+                                and len(args.flags) == 0
+                            ):
+                                if Client.Repository.config["auto start"]["enabled"]:
+                                    channels = ""
+                                    embed = {
+                                        "content": "All **auto start channels** for this account.",
+                                        "embeds": [],
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    }
+
+                                    for channel in Client.Repository.config[
+                                        "auto start"
+                                    ]["channels"]:
+                                        if channel == "enabled":
+                                            continue
+
+                                        channels += f"\n{channel}"
+                                        embed["embeds"].append(
+                                            {
+                                                "title": f"`{channel}`",
+                                                "description": "",
+                                                "color": None,
+                                            }
+                                        )
+
+                                    embed["embeds"][-1]["footer"] = {
+                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                    }
+
+                                    Client.webhook_send(
+                                        embed,
+                                        f"__**All auto start channels for this account**__\n```yaml{channels}```",
+                                    )
+                                else:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": f"The auto start channels option is **not enabled**, so there are **no auto start channels**!",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        "The auto start channels option is not enabled, so there are no auto start!",
+                                    )
+
+                            elif "help" in args.flags:
+                                Client.webhook_send(
+                                    {
+                                        "content": "Help for the command **`channels`**. This command is used to modify the auto start channels for this account. auto start channels are saved in the config file, and so are remembered even if you close Grank.",
+                                        "embeds": [
+                                            {
+                                                "title": "Commands",
+                                                "color": None,
+                                                "fields": [
+                                                    {
+                                                        "name": "- *`autostart`*",
+                                                        "value": "Shows a list of all the auto start channels for this account.",
+                                                    },
+                                                    {
+                                                        "name": "- *`autostart add 0`*",
+                                                        "value": "Adds the channel with the ID of `0` to the list of auto start channels.",
+                                                    },
+                                                    {
+                                                        "name": "- *`autostart remove 0`*",
+                                                        "value": "Removes the channel with the ID of `0` from the list of auto start channels.",
+                                                    },
+                                                ],
+                                                "footer": {
+                                                    "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                    "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                },
+                                            }
+                                        ],
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    },
+                                    f"Help for the command **`channels`**. This command is used to modify the auto start channels for this account. auto start channels are saved in the config file, and so are remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\nchannels: Shows a list of all the auto start channels for this account.\nchannels add 0: Adds the channel with the ID of 0 to the list of auto start channels.\nRemoves the channel with the ID of 0 from the list of auto start channels.\n```",
+                                )
+                            elif "add" in args.subcommand:
+                                try:
+                                    args.subcommand[-1] = int(args.subcommand[-1])
+
+                                    Client.Repository.config["auto start"][
+                                        "channels"
+                                    ].append(args.subcommand[-1])
+                                    Client.Repository.config_write()
+
+                                    Client.webhook_send(
+                                        {
+                                            "content": f"Successfull addition!",
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}`** was **successfully added**.",
+                                                    "color": 65423,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                },
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The ID **`{args.subcommand[-1]}`** was successfully added to the list of controllers for this account.",
+                                    )
+                                except ValueError:
+                                    Client.webhook_send(
+                                        {
+                                            "content": f"An error occured while adding the channel **`{args.subcommand[-1]}`**.",
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                    )
+                            elif "remove" in args.subcommand:
+                                try:
+                                    args.subcommand[-1] = int(args.subcommand[-1])
+
+                                    if (
+                                        args.subcommand[-1]
+                                        in Client.Repository.config["auto start"][
+                                            "channels"
+                                        ]
+                                    ):
+                                        Client.Repository.config["auto start"][
+                                            "channels"
+                                        ].remove(args.subcommand[-1])
+                                        Client.Repository.config_write()
+
+                                        Client.webhook_send(
+                                            {
+                                                "content": f"Successfull removal!",
+                                                "embeds": [
+                                                    {
+                                                        "title": "Success!",
+                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}`** was **successfully removed**.",
+                                                        "color": 65423,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    },
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            f"The ID **`{args.subcommand[-1]}`** was successfully removed from the list of auto start channels channels for this account.",
+                                        )
+                                    else:
+                                        Client.webhook_send(
+                                            {
+                                                "content": f"An error occured while removing the channel **`{args.subcommand[-1]}`**.",
+                                                "embeds": [
+                                                    {
+                                                        "title": "Error!",
+                                                        "description": "The ID you provided was **not found** in the list of auto start channels.",
+                                                        "color": 16711680,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                        )
+                                except ValueError:
+                                    Client.webhook_send(
+                                        {
+                                            "content": f"An error occured while removing the channel **`{args.subcommand[-1]}`**.",
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                    )
+
                         elif args.command == "commands":
                             if (
                                 len(args.subcommand) == 0
@@ -1389,10 +1624,10 @@ def event_handler(Client, ws, event: dict) -> None:
                         event["d"]["author"]["id"] == "270904126974590976"
                         and len(event["d"]["embeds"]) > 0
                     ):
-                        if "description" in event["d"]["embeds"][0].keys():   
+                        if "description" in event["d"]["embeds"][0].keys():
                             if (
-                            "They're trying to break into"
-                            in event["d"]["embeds"][0]["description"]
+                                "They're trying to break into"
+                                in event["d"]["embeds"][0]["description"]
                             ):
                                 Client.channel_id = event["d"]["channel_id"]
                                 Client.guild_id = guild_id(Client)
@@ -1401,7 +1636,9 @@ def event_handler(Client, ws, event: dict) -> None:
                                     f"**{Client.user}**'s"
                                     in event["d"]["embeds"][0]["description"]
                                     and heist
-                                    and Client.Repository.config["anti heist"]["enabled"]
+                                    and Client.Repository.config["anti heist"][
+                                        "enabled"
+                                    ]
                                 ):
                                     Client.log(
                                         "WARNING", "Heist detected. Calling the cops."
@@ -1428,11 +1665,11 @@ def event_handler(Client, ws, event: dict) -> None:
                                         "Heist detected for another user. Joining now.",
                                     )
 
-                                    custom_id = event["d"]["components"][0]["components"][
-                                        0
-                                    ]["custom_id"]
+                                    custom_id = event["d"]["components"][0][
+                                        "components"
+                                    ][0]["custom_id"]
                                     Client.interact_button(
-                                    "pls heist", custom_id, event["d"]
+                                        "pls heist", custom_id, event["d"]
                                     )
 
                                     Client.log("DEBUG", "Joined heist.")

@@ -119,11 +119,11 @@ class Database(object):
                 "DEBUG",
                 f"Created database.",
             )
-            
+
         exec(
             f"self.config['auto start']['channels'] = {self.config['auto start']['channels']}"
         )
-        
+
         exec(
             f"self.config['blacklisted servers']['servers'] = {self.config['blacklisted servers']['servers']}"
         )

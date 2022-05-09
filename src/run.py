@@ -543,7 +543,7 @@ def run(Client):
 
                     except NameError:
                         custom(Client, key)
-                        
+
                         exec(
                             f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
                         )
