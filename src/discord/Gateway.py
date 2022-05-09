@@ -1167,7 +1167,7 @@ def event_handler(Client, ws, event: dict) -> None:
                         event["d"]["author"]["id"] == "270904126974590976"
                         and len(event["d"]["embeds"]) > 0
                     ):
-                        if "description" in event["d"]["embeds"].keys():   
+                        if "description" in event["d"]["embeds"][0].keys():   
                             if (
                             "They're trying to break into"
                             in event["d"]["embeds"][0]["description"]
