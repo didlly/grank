@@ -81,3 +81,9 @@ servers:
 auto start:
   enabled: False
   channels: ["guild_id_1", "guild_id_2"]
+
+anti heist:
+  enabled: True
+
+auto join heist:
+  enabled: True

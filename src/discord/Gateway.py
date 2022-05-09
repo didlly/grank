@@ -5,6 +5,7 @@ from json import loads, dumps
 from threading import Thread
 from utils.Shared import data
 import utils.Yaml
+from scripts.buy import buy
 from contextlib import suppress
 from instance.ArgumentHandler import parse_args
 from discord.GuildId import guild_id
@@ -18,6 +19,25 @@ from datetime import datetime
 from copy import copy
 import sys
 
+def anti_heist(Client, event, reset) -> None:
+    sleep(2.5)
+    
+    Client.channel_id = event["d"]["channel_id"]
+    Client.send_message("pls use phone")
+    latest_message = Client.retreive_message("pls use phone")
+    
+    if "You don't own this item??" in latest_message["content"]:
+        buy(Client, "phone")
+        Client.send_message("pls use phone")
+        
+    Client.send_message("p")
+    
+    if reset:
+        del data["channels"][Client.channel_id]
+        data["running"].remove(Client.channel_id)
+        
+    Client.log("DEBUG", "Successfully averted heist.")
+
 
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
@@ -27,6 +47,7 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
 
 def event_handler(Client, ws, event: dict) -> None:
     Client.session_id = event["d"]["sessions"][0]["session_id"]
+    heist = False
 
     if Client.Repository.config["auto start"]["enabled"]:
         for channel in Client.Repository.config["auto start"]["channels"]:
@@ -1130,6 +1151,38 @@ def event_handler(Client, ws, event: dict) -> None:
                                             f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
                                         )
                 else:
+                    if f"pls bankrob {Client.username}" in event["d"]["content"] or f"pls heist {Client.username}" in event["d"]["content"] or f"pls bankrob <@{Client.id}>" in event["d"]["content"] or f"pls heist <@{Client.id}>" in event["d"]["content"]:
+                        Client.log("WARNING", "Possible heist detected - awaiting Dank Memer confirmation.")
+                        heist = True
+                    elif event["d"]["author"]["id"] == "270904126974590976" and len(event["d"]["embeds"]) > 0:
+                        if "They're trying to break into" in event["d"]["embeds"][0]["description"]:
+                            Client.channel_id = event["d"]["channel_id"]
+                            Client.guild_id = guild_id(Client)
+                                
+                            if f"**{Client.user}**'s" in event["d"]["embeds"][0]["description"] and heist and Client.Repository.config["anti heist"]["enabled"]:
+                                Client.log("WARNING", "Heist detected. Calling the cops.")
+
+                                reset = False
+
+                                if Client.channel_id not in data["channels"]:
+                                    data["channels"][Client.channel_id] = {"messages": []}
+                                    data["running"].append(Client.channel_id)
+                                    
+                                    reset = True
+                                    
+                                Thread(target=anti_heist, args=[Client, event, reset]).start()
+                                
+                                heist = False
+                            elif Client.Repository.config["auto heist"]["enabled"]:                               
+                                Client.log("DEBUG", "Heist detected for another user. Joining now.")
+                                
+                                custom_id = event["d"]["components"][0]["components"][0][
+                "custom_id"
+            ]
+                                Client.interact_button("pls heist", custom_id, event["d"])
+                                
+                                Client.log("DEBUG", "Joined heist.")
+                        
                     if event["d"]["channel_id"] in data["running"]:
                         data["channels"][event["d"]["channel_id"]]["messages"].append(
                             event["d"]
@@ -1137,7 +1190,7 @@ def event_handler(Client, ws, event: dict) -> None:
 
                         if (
                             len(data["channels"][event["d"]["channel_id"]]["messages"])
-                            > 10
+                            > 1
                         ):
                             del data["channels"][event["d"]["channel_id"]]["messages"][
                                 0

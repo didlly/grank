@@ -98,6 +98,10 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['servers']['blacklisted']",
         "['auto start']",
         "['auto start']['channels']",
+        "['anti heist']",
+        "['anti heist']['enabled']",
+        "['auto join heist']",
+        "['auto join heist']['enabled']",
     ]
 
     config = utils.Yaml.load(f"{cwd}database/{folder}/config.yml")

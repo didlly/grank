@@ -9,6 +9,7 @@ from database.Handler import Database
 from instance.Client import Instance
 from instance.Shifts import shifts
 from utils.Shared import data
+from utils.Console import fore, style
 from discord.Gateway import gateway
 from threading import Thread
 

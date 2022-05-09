@@ -267,6 +267,22 @@ Values in the `auto start` category tell the program whether or not to *automati
 | `enabled`  | `Boolean` | `False`  | Tells the program whether or not to automatically start the grinder. |
 | `channels`  | `List` | `["guild_id_1", "guild_id_2"]`  | Tells the program which channels to automatically start the grinder inv. |
 
+### `anti heist` category
+
+Values in the `anti heist` category tell the program whether or not to *automatically avert heists* by *calling the police*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically avert heists. |
+
+### `auto join heist` category
+
+Values in the `anti heist` category tell the program whether or not to *automatically join heists* directed to *other users*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically join heists directed to other users. |
+
 ## Disclaimer
 
 This is a self-bot. Self-bots are against Discord's TOS. Automation of Dank Memer commands also breaks Dank Memer's rules. By using this program you acknowledge that I can take no responsibility for actions taken against you if you are caught.
