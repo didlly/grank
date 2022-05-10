@@ -104,6 +104,9 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['anti heist']['enabled']",
         "['auto join heist']",
         "['auto join heist']['enabled']",
+        "['auto accept trade']",
+        "['auto accept trade']['enabled']",
+        "['auto accept trade']['traders']",
     ]
 
     config = utils.Yaml.load(f"{cwd}database/{folder}/config.yml")

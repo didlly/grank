@@ -1,5 +1,5 @@
 from typing import Union, Optional
-from instance.Client import Instance
+from instance.Client import ButtonInteractError, Instance
 from websocket import WebSocket
 from json import loads, dumps
 from threading import Thread
@@ -20,10 +20,9 @@ from copy import copy
 import sys
 
 
-def anti_heist(Client, event, reset) -> None:
+def anti_heist(Client, reset) -> None:
     sleep(2.5)
 
-    Client.channel_id = event["d"]["channel_id"]
     Client.send_message("pls use phone")
     latest_message = Client.retreive_message("pls use phone")
 
@@ -40,6 +39,53 @@ def anti_heist(Client, event, reset) -> None:
     Client.log("DEBUG", "Successfully averted heist.")
 
 
+def join_heist(Client, latest_message) -> None:
+    Client.log(
+        "DEBUG",
+        "Heist detected for another user. Joining now.",
+    )
+
+    custom_id = latest_message["components"][0]["components"][0]["custom_id"]
+    Client.interact_button("pls heist", custom_id, latest_message)
+
+    Client.log("DEBUG", "Joined heist.")
+
+
+def receive_trade(Client, latest_message) -> None:
+    sleep(2.5)
+
+    Client.log(
+        "DEBUG",
+        f"Received a trade from {latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']} - accepting now.",
+    )
+
+    custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
+
+    Client.interact_button(
+        f"{latest_message['referenced_message']['content']}", custom_id, latest_message
+    )
+
+    Client.log(
+        "DEBUG",
+        f"Successfully accepted trade from {latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']}.",
+    )
+
+
+def event_1(Client, latest_message) -> None:
+    custom_id = custom_id = latest_message["components"][0]["components"][0][
+        "custom_id"
+    ]
+
+    while True:
+        try:
+            Client.interact_button(
+                "Immune System attack event", custom_id, latest_message
+            )
+            sleep(1)
+        except ButtonInteractError:
+            return
+
+
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
         sleep(heartbeat_interval)
@@ -51,18 +97,35 @@ def event_handler(Client, ws, event: dict) -> None:
     heist = False
 
     if Client.Repository.config["auto start"]["enabled"]:
-        for channel in Client.Repository.config["auto start"]["channels"]:
-            Client.channel_id = str(channel)
-            Client.guild_id = guild_id(Client)
+        write = False
 
-            if Client.channel_id not in data["channels"]:
-                data["channels"][Client.channel_id] = {}
+        for channel, index in enumerate(
+            Client.Repository.config["auto start"]["channels"]
+        ):
+            try:
+                Client.channel_id = int(channel)
+                Client.guild_id = guild_id(Client)
 
-            data["channels"][Client.channel_id][Client.token] = True
-            data["running"].append(Client.channel_id)
-            data["channels"][Client.channel_id]["messages"] = []
-            New_Client = copy(Client)
-            Thread(target=run, args=[New_Client]).start()
+                if Client.channel_id not in data["channels"]:
+                    data["channels"][Client.channel_id] = {}
+
+                data["channels"][Client.channel_id][Client.token] = True
+                data["running"].append(Client.channel_id)
+                data["channels"][Client.channel_id]["messages"] = []
+                New_Client = copy(Client)
+                Thread(target=run, args=[New_Client]).start()
+            except ValueError:
+                Client.log(
+                    "WARNING",
+                    f"Autostart channel id {index + 1} is invalid. Deleting it.",
+                )
+                del Client.Repsitory.config["auto start"]["channels"]["index"]
+                write = True
+
+        if write:
+            Client.Repository.config_write()
+
+        del write
 
     while True:
         with suppress(FileExistsError):
@@ -368,7 +431,9 @@ def event_handler(Client, ws, event: dict) -> None:
                                     f"Help for the command **`servers`**. This command is used to modify the blacklisted servers for this account. Blacklisted servers are saved in the config file, and so are remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\nservers: Shows a list of all the blacklisted servers for this account.\nservers add 0: Adds the server with the ID of 0 to the list of blacklisted servers.\nRemoves the server with the ID of 0 from the list of blacklisted servers.\n```",
                                 )
                             elif "enable" in args.subcommand:
-                                if Client.Repository.config["blacklisted servers"]["enabled"]:
+                                if Client.Repository.config["blacklisted servers"][
+                                    "enabled"
+                                ]:
                                     Client.webhook_send(
                                         {
                                             "embeds": [
@@ -389,9 +454,11 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"The blacklisted servers option is **already enabled**.",
                                     )
                                 else:
-                                    Client.Repository.config["blacklisted servers"]["enabled"] = True
+                                    Client.Repository.config["blacklisted servers"][
+                                        "enabled"
+                                    ] = True
                                     Client.Repository.config_write()
-                                    
+
                                     Client.webhook_send(
                                         {
                                             "embeds": [
@@ -412,7 +479,9 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"The blacklisted server option ** was successfully set to `True`**.",
                                     )
                             elif "disable" in args.subcommand:
-                                if not Client.Repository.config["blacklisted servers"]["enabled"]:
+                                if not Client.Repository.config["blacklisted servers"][
+                                    "enabled"
+                                ]:
                                     Client.webhook_send(
                                         {
                                             "embeds": [
@@ -433,9 +502,11 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"The blacklisted servers option is **already enabled**.",
                                     )
                                 else:
-                                    Client.Repository.config["blacklisted servers"]["enabled"] = False
+                                    Client.Repository.config["blacklisted servers"][
+                                        "enabled"
+                                    ] = False
                                     Client.Repository.config_write()
-                                    
+
                                     Client.webhook_send(
                                         {
                                             "embeds": [
@@ -707,9 +778,11 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"The auto start option is **already disabled**.",
                                     )
                                 else:
-                                    Client.Repository.config["auto start"]["enabled"] = True
+                                    Client.Repository.config["auto start"][
+                                        "enabled"
+                                    ] = True
                                     Client.Repository.config_write()
-                                    
+
                                     Client.webhook_send(
                                         {
                                             "embeds": [
@@ -730,7 +803,9 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"The auto start option ** was successfully set to `True`**.",
                                     )
                             elif "disable" in args.subcommand:
-                                if not Client.Repository.config["auto start"]["enabled"]:
+                                if not Client.Repository.config["auto start"][
+                                    "enabled"
+                                ]:
                                     Client.webhook_send(
                                         {
                                             "embeds": [
@@ -751,9 +826,11 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"The auto start option is **already disabled**.",
                                     )
                                 else:
-                                    Client.Repository.config["auto start"]["enabled"] = False
+                                    Client.Repository.config["auto start"][
+                                        "enabled"
+                                    ] = False
                                     Client.Repository.config_write()
-                                    
+
                                     Client.webhook_send(
                                         {
                                             "embeds": [
@@ -1812,59 +1889,82 @@ def event_handler(Client, ws, event: dict) -> None:
                             "Possible heist detected - awaiting Dank Memer confirmation.",
                         )
                         heist = True
-                    elif (
-                        event["d"]["author"]["id"] == "270904126974590976"
-                        and len(event["d"]["embeds"]) > 0
-                    ):
-                        if "description" in event["d"]["embeds"][0].keys():
-                            if (
-                                "They're trying to break into"
-                                in event["d"]["embeds"][0]["description"]
-                            ):
-                                Client.channel_id = event["d"]["channel_id"]
-                                Client.guild_id = guild_id(Client)
+                    elif event["d"]["author"]["id"] == "270904126974590976":
+                        Client.channel_id = event["d"]["channel_id"]
 
+                        if (
+                            "Attack the boss by clicking `disinfect`"
+                            in event["d"]["content"]
+                        ):
+                            Client.log(
+                                "DEBUG",
+                                "Detected the `Your immune system is under attack from Covid-19` event. Participating now.",
+                            )
+
+                            Thread(target=event_1, args=[Client, event["d"]]).start()
+
+                        if len(event["d"]["embeds"]) > 0:
+                            if (
+                                f"<@{Client.id}>" in event["d"]["content"]
+                                and "title" in event["d"]["embeds"][0].keys()
+                            ):
                                 if (
-                                    f"**{Client.user}**'s"
-                                    in event["d"]["embeds"][0]["description"]
-                                    and heist
-                                    and Client.Repository.config["anti heist"][
+                                    "Pending Confirmation"
+                                    in event["d"]["embeds"][0]["title"]
+                                    and Client.Repository.config["auto accept trade"][
                                         "enabled"
                                     ]
+                                    and event["d"]["referenced_message"]["author"]["id"]
+                                    in Client.Repository.config["auto accept trade"][
+                                        "traders"
+                                    ]
                                 ):
-                                    Client.log(
-                                        "WARNING", "Heist detected. Calling the cops."
-                                    )
-
-                                    reset = False
-
-                                    if Client.channel_id not in data["channels"]:
-                                        data["channels"][Client.channel_id] = {
-                                            "messages": []
-                                        }
-                                        data["running"].append(Client.channel_id)
-
-                                        reset = True
-
                                     Thread(
-                                        target=anti_heist, args=[Client, event, reset]
+                                        target=receive_trade, args=[Client, event["d"]]
                                     ).start()
+                            if "description" in event["d"]["embeds"][0].keys():
+                                if (
+                                    "They're trying to break into"
+                                    in event["d"]["embeds"][0]["description"]
+                                ):
+                                    Client.guild_id = guild_id(Client)
 
-                                    heist = False
-                                elif Client.Repository.config["auto heist"]["enabled"]:
-                                    Client.log(
-                                        "DEBUG",
-                                        "Heist detected for another user. Joining now.",
-                                    )
+                                    if (
+                                        f"**{Client.user}**'s"
+                                        in event["d"]["embeds"][0]["description"]
+                                        and heist
+                                        and Client.Repository.config["anti heist"][
+                                            "enabled"
+                                        ]
+                                    ):
+                                        Client.log(
+                                            "WARNING",
+                                            "Heist detected. Calling the cops.",
+                                        )
 
-                                    custom_id = event["d"]["components"][0][
-                                        "components"
-                                    ][0]["custom_id"]
-                                    Client.interact_button(
-                                        "pls heist", custom_id, event["d"]
-                                    )
+                                        reset = False
 
-                                    Client.log("DEBUG", "Joined heist.")
+                                        if Client.channel_id not in data["channels"]:
+                                            data["channels"][Client.channel_id] = {
+                                                "messages": []
+                                            }
+                                            data["running"].append(Client.channel_id)
+
+                                            reset = True
+
+                                        Thread(
+                                            target=anti_heist,
+                                            args=[Client, reset],
+                                        ).start()
+
+                                        heist = False
+                                    elif Client.Repository.config["auto heist"][
+                                        "enabled"
+                                    ]:
+                                        Thread(
+                                            target=join_heist,
+                                            args=[Client, event["d"]],
+                                        ).start()
 
                     if event["d"]["channel_id"] in data["running"]:
                         data["channels"][event["d"]["channel_id"]]["messages"].append(

@@ -128,6 +128,10 @@ class Database(object):
             f"self.config['blacklisted servers']['servers'] = {self.config['blacklisted servers']['servers']}"
         )
 
+        exec(
+            f"self.config['auto accept trade']['traders'] = {[str(trader) for trader in self.config['auto accept trade']['traders']]}"
+        )
+
     def config_write(self) -> None:
         self.config_file.seek(0)
         self.config_file.truncate()

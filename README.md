@@ -60,7 +60,7 @@ You are now ready to use the program. Run `python main.py` in a command prompt i
 ## How to use Grank
 Now you have Grank set-up, you are probably wondering how to use Grank. Grank is controlled through Discord. You can view all the commands below, or run `grank help` to get started on your journey using Grank. You will find more information by running the specific `-help` command for each command category.
 
-### Support commands
+### Supported commands
 `grank help` - Displays the help command.
 
 ### `start` category
@@ -74,6 +74,11 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | ------------- | ------------- |
 | `stop`  | Stops the grinder. |
 | `stop -help`  | Shows help about the `stop` command. |
+
+### `info` category
+| Name | Description |
+| ------------- | ------------- |
+| `info`  | Shows info about the grinder. |
 
 ### `controllers` category
 | Name | Description |
@@ -103,8 +108,28 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | ------------- | ------------- |
 | `commands`  | Shows a list of all the custom commands for this account. |
 | `commands -help`  | Shows help about the `commands` command. |
-| `commands add pls_help 69:` |Adds the custom command 'pls help' to the list of custom commands and tells Grank it needs to be run every 69 seconds. |
-| `commands remove pls_help 69:`  | Removes the custom commands called 'pls help' from the list of custom commands. |
+| `commands add pls_help 69` | Adds the custom command 'pls help' to the list of custom commands and tells Grank it needs to be run every 69 seconds. |
+| `commands remove pls_help 69` | Removes the custom commands called 'pls help' from the list of custom commands. |
+
+### `servers` category
+| Name | Description |
+| ------------- | ------------- |
+| `servers`  | Shows a list of all the blacklisted servers for this account. |
+| `servers -help`  | Shows help about the `servers` command. |
+| `servers enable` | Enables the blacklisted servers function. |
+| `servers disable` | Disables the blacklisted servers function. |
+| `servers add 0` | Adds the server with the ID of `0` to the list of blacklisted servers. |
+| `servers remove 0` | Removes the server with the ID of `0` from the list of blacklisted servers. |
+
+### `autostart` category
+| Name | Description |
+| ------------- | ------------- |
+| `autostart`  | Shows a list of all the auto-start channels for this account. |
+| `autostart -help`  | Shows help about the `autostart` command. |
+| `autostart enable` | Enables the auto-start channels function. |
+| `autostart disable` | Disables the auto-start channels function. |
+| `autostart add 0` | Adds the channel with the ID of `0` to the list of auto-start channels. |
+| `autostart remove 0` | Removes the channel with the ID of `0` from the list of auto-start channels. |
 
 ## Config file
 
@@ -277,11 +302,20 @@ Values in the `anti heist` category tell the program whether or not to *automati
 
 ### `auto join heist` category
 
+Values in the `anti heist` category tell the program whether or not to *automatically accept trades* and *who to accept them from*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically accept trades from other users. |
+
+### `auto join heist` category
+
 Values in the `anti heist` category tell the program whether or not to *automatically join heists* directed to *other users*.
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically join heists directed to other users. |
+| `traders`  | `List` | `[0, 0]`  | Tells the program which accounts to automatically accept trades from. |
 
 ## Disclaimer
 

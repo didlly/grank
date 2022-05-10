@@ -87,3 +87,7 @@ anti heist:
 
 auto join heist:
   enabled: True
+
+auto accept trade:
+  enabled: True
+  traders: [0, 0]
