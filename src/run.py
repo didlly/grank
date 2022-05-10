@@ -15,6 +15,7 @@ from scripts.snakeeyes import snakeeyes
 from scripts.stream import stream
 from scripts.trivia import trivia
 from scripts.vote import vote
+from scripts.work import work
 
 from utils.Shared import data
 from datetime import datetime
@@ -527,6 +528,41 @@ def run(Client):
                     Client.log(
                         "DEBUG",
                         "Successfully updated latest command run of `pls vote`.",
+                    )
+        if (
+            Client.Repository.config["commands"]["work"]
+            and data[Client.username]
+            and data["channels"][Client.channel_id][Client.token]
+        ):
+            if (
+                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
+                - datetime.strptime(Client.Repository.database["work"], "%x-%X")
+            ).total_seconds() > 3600:
+                try:
+                    output = work(Client)
+
+                    if output is None:
+                        cooldown = datetime.now().strftime("%x-%X")
+                    else:
+                        cooldown = datetime.strptime(
+                            output, "%Y-%m-%d %H:%M:%S"
+                        ).strftime("%x-%X")
+                except Exception:
+                    if Client.Repository.config["logging"]["warning"]:
+                        cooldown = datetime.now().strftime("%x-%X")
+
+                        Client.log(
+                            "WARNING",
+                            f"An unexpected error occured during the running of the `pls work` command: `{exc_info()}`.",
+                        )
+
+                Client.Repository.database["work"] = cooldown
+                Client.Repository.database_write()
+
+                if Client.Repository.config["logging"]["debug"]:
+                    Client.log(
+                        "DEBUG",
+                        "Successfully updated latest command run of `pls work`.",
                     )
 
         if Client.Repository.config["custom commands"]["enabled"]:

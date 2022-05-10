@@ -39,6 +39,7 @@ Grank is a feature rich Dank Memer automation program that automtaically grinds 
 * `pls snakeeyes`
 * `pls stream`
 * `pls trivia`
+* `pls work` (Partial support)
 
 ### Getting Started
 
@@ -159,6 +160,7 @@ Values in the `commands` category tell the program whether or not to *run certai
 | `search`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls search`. |
 | `trivia`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls trivia`. |
 | `vote`  | `Boolean` | `True`  | Tells the program whether or not to vote for Dank Memer on Discord Bot List. |
+| `work`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls work`. |
 
 ### `lottery` category
 

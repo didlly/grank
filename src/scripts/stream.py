@@ -12,6 +12,11 @@ def stream(Client) -> None:
 
         latest_message = Client.retreive_message("pls stream")
 
+        if "You were inactive" in latest_message["content"]:
+            Client.log("WARNING", "Stream ended due to inactivity. Re-starting stream.")
+            sleep(2)
+            latest_message = Client.retreive_message("pls stream")
+
         if "title" not in latest_message["embeds"][0].keys():
             break
 

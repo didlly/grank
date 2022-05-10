@@ -1,5 +1,5 @@
 from os.path import isdir, isfile
-from shutil import rmtree
+from json.decoder import JSONDecodeError
 import utils.Yaml
 from json import loads
 from typing import Union, Optional
@@ -56,6 +56,7 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['commands']['postmeme']",
         "['commands']['trivia']",
         "['commands']['vote']",
+        "['commands']['work']",
         "['lottery']",
         "['lottery']['enabled']",
         "['lottery']['cooldown']",
@@ -133,7 +134,10 @@ def verify_database(
             database_template = loads(database_template_file.read())
 
         with open(f"{cwd}database/{folder}/database.json", "r") as database_file:
-            database = loads(database_file.read())
+            try:
+                database = loads(database_file.read())
+            except JSONDecodeError:
+                return False
 
     for key in database_template.keys():
         if type(key) == dict:

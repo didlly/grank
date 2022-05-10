@@ -11,6 +11,7 @@ commands:
   search: True
   trivia: True
   vote: True
+  work: True
 
 lottery:
   enabled: False
