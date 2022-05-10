@@ -503,6 +503,8 @@ class Instance(object):
         """
 
         messages = data["channels"][self.channel_id]["messages"]
+        
+        latest_message = messages[0]
 
         for index in range(1, len(messages)):
             latest_message = messages[-index]
