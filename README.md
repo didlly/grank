@@ -18,7 +18,7 @@ Grank is a feature rich Dank Memer automation program that automtaically grinds 
 * Anti-heist - If someone is heisting you, Grank will stop it.
 * Auto-join-heist - If someone else is being heisted, Grank will join the heist.
 * Auto trade - Automatically trades specified items to an alt account upon receiving the item.
-* Auto accept trade - If someone sends a trade request to Grank, Grank will automatically accept it (provided they are in the allows user list to do so).
+* Auto accept trade - If someone sends a trade request to Grank, Grank will automatically accept it (provided they are in the allowed user list to do so).
 
 ***NOTE:*** All these options can be toggled and customised in the config.
 
