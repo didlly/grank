@@ -21,7 +21,7 @@ def guild_id(Client):
     if req.status_code == 404:
         return False
     
-    request = loads(req.content.decode())
+    response = loads(req.content.decode())
     
     found = False
 
