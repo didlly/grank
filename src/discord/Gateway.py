@@ -72,6 +72,11 @@ def receive_trade(Client, latest_message) -> None:
 
 
 def event_1(Client, latest_message) -> None:
+    Client.log(
+        "DEBUG",
+        "Detected the `Your immune system is under attack from Covid-19` event. Participating now.",
+    )
+
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
     ]
@@ -80,6 +85,46 @@ def event_1(Client, latest_message) -> None:
         try:
             Client.interact_button(
                 "Immune System attack event", custom_id, latest_message
+            )
+            sleep(1)
+        except ButtonInteractError:
+            return
+
+
+def event_2(Client, latest_message) -> None:
+    Client.log(
+        "DEBUG",
+        "Detected the `Microsoft is trying to buy Discord again!` event. Participating now.",
+    )
+
+    custom_id = custom_id = latest_message["components"][0]["components"][0][
+        "custom_id"
+    ]
+
+    while True:
+        try:
+            Client.interact_button(
+                "Microsoft buying Discord event", custom_id, latest_message
+            )
+            sleep(1)
+        except ButtonInteractError:
+            return
+
+
+def event_3(Client, latest_message) -> None:
+    Client.log(
+        "DEBUG",
+        "Detected the `pls rich cmd doesn't work` event. Participating now.",
+    )
+
+    custom_id = custom_id = latest_message["components"][0]["components"][0][
+        "custom_id"
+    ]
+
+    while True:
+        try:
+            Client.interact_button(
+                "The pls rich cmd doesn't work event", custom_id, latest_message
             )
             sleep(1)
         except ButtonInteractError:
@@ -103,9 +148,12 @@ def event_handler(Client, ws, event: dict) -> None:
             try:
                 Client.channel_id = int(channel)
                 Client.guild_id = guild_id(Client)
-                
+
                 if Client.guild_id == False:
-                    Client.log("ERROR", f"Autostart channel ID {index + 1} (`{channel}`) is invalid.")
+                    Client.log(
+                        "ERROR",
+                        f"Autostart channel ID {index + 1} (`{channel}`) is invalid.",
+                    )
 
                 if Client.channel_id not in data["channels"]:
                     data["channels"][Client.channel_id] = {}
@@ -122,7 +170,7 @@ def event_handler(Client, ws, event: dict) -> None:
                 )
 
     while True:
-        with suppress(FileExistsError):
+        with suppress(Exception):
             event = loads(ws.recv())
 
             if event["op"] == 6:
@@ -163,12 +211,11 @@ def event_handler(Client, ws, event: dict) -> None:
                             "servers"
                         ]
                     ):
-
                         Client.channel_id = event["d"]["channel_id"]
                         Client.Repository.log_command(event["d"]["content"], event["d"])
                         args = parse_args(event["d"]["content"])
 
-                        # Client.webhook_send(f"***DEBUG:***  `{dumps(parse_args(event['d']['content']).__dict__)}`")
+                        # Client.send_message(f"***DEBUG:***  `{dumps(parse_args(event['d']['content']).__dict__)}`")
 
                         if args.command == "help":
                             Client.webhook_send(
@@ -1890,13 +1937,17 @@ def event_handler(Client, ws, event: dict) -> None:
                             "Attack the boss by clicking `disinfect`"
                             in event["d"]["content"]
                         ):
-                            Client.log(
-                                "DEBUG",
-                                "Detected the `Your immune system is under attack from Covid-19` event. Participating now.",
-                            )
-
                             Thread(target=event_1, args=[Client, event["d"]]).start()
-
+                        elif (
+                            "Attack the boss by clicking `windows sucks lol`"
+                            in event["d"]["content"]
+                        ):
+                            Thread(target=event_2, args=[Client, event["d"]]).start()
+                        elif (
+                            "Attack the boss by clicking `why my pls rich no work?`"
+                            in event["d"]["content"]
+                        ):
+                            Thread(target=event_3, args=[Client, event["d"]]).start()
                         if len(event["d"]["embeds"]) > 0:
                             if (
                                 f"<@{Client.id}>" in event["d"]["content"]

@@ -14,15 +14,15 @@ def guild_id(Client):
     """
 
     req = get(
-            f"https://discord.com/api/v10/channels/{Client.channel_id}/messages",
-            headers={"authorization": Client.token},
-        )
-    
+        f"https://discord.com/api/v10/channels/{Client.channel_id}/messages",
+        headers={"authorization": Client.token},
+    )
+
     if req.status_code == 404:
         return False
-    
+
     response = loads(req.content.decode())
-    
+
     found = False
 
     if len(response) != 0:
