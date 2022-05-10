@@ -1,4 +1,3 @@
-from msilib.schema import File
 from scripts.beg import beg
 from scripts.blackjack import blackjack
 from scripts.crime import crime
