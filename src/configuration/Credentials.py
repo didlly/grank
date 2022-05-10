@@ -27,7 +27,7 @@ def verify_credentials(cwd: str) -> list:
         info = user_info(credentials["TOKENS"][index])
 
         if info is None:
-            log(None, "ERROR", f"Token {index + 1} is invalid.")
+            log(None, "ERROR", f"Token {index + 1} (`{credentials['TOKENS'][index]}`) is invalid.")
         else:
             data.append(info)
             log(

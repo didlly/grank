@@ -13,13 +13,16 @@ def guild_id(Client):
             None
     """
 
-    response = loads(
-        get(
+    req = get(
             f"https://discord.com/api/v10/channels/{Client.channel_id}/messages",
             headers={"authorization": Client.token},
-        ).content.decode()
-    )
-
+        )
+    
+    if req.status_code == 404:
+        return False
+    
+    request = loads(req.content.decode())
+    
     found = False
 
     if len(response) != 0:
@@ -34,3 +37,5 @@ def guild_id(Client):
         latest_message = Client.retreive_message("pls beg")
 
         return latest_message["message_reference"]["guild_id"]
+
+    return True

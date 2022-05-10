@@ -97,14 +97,15 @@ def event_handler(Client, ws, event: dict) -> None:
     heist = False
 
     if Client.Repository.config["auto start"]["enabled"]:
-        write = False
-
-        for channel, index in enumerate(
+        for index, channel in enumerate(
             Client.Repository.config["auto start"]["channels"]
         ):
             try:
                 Client.channel_id = int(channel)
                 Client.guild_id = guild_id(Client)
+                
+                if Client.guild_id == False:
+                    Client.log("ERROR", f"Autostart channel ID {index + 1} (`{channel}`) is invalid.")
 
                 if Client.channel_id not in data["channels"]:
                     data["channels"][Client.channel_id] = {}
@@ -116,16 +117,9 @@ def event_handler(Client, ws, event: dict) -> None:
                 Thread(target=run, args=[New_Client]).start()
             except ValueError:
                 Client.log(
-                    "WARNING",
-                    f"Autostart channel id {index + 1} is invalid. Deleting it.",
+                    "ERROR",
+                    f"Autostart channel ID {index + 1} (`{channel}`) is invalid.",
                 )
-                del Client.Repsitory.config["auto start"]["channels"]["index"]
-                write = True
-
-        if write:
-            Client.Repository.config_write()
-
-        del write
 
     while True:
         with suppress(FileExistsError):
