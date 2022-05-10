@@ -20,6 +20,8 @@ Grank is a feature rich Dank Memer automation program that automtaically grinds 
 * Auto trade - Automatically trades specified items to an alt account upon receiving the item.
 * Auto accept trade - If someone sends a trade request to Grank, Grank will automatically accept it (provided they are in the allows user list to do so).
 
+***NOTE:*** All these options can be toggled and customised in the config.
+
 ## Supported commands
 
 * `pls beg`
