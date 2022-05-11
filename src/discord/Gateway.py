@@ -147,6 +147,7 @@ def event_handler(Client, ws, event: dict) -> None:
         ):
             try:
                 Client.channel_id = int(channel)
+                Client.channel_id = channel
                 Client.guild_id = guild_id(Client)
 
                 if Client.guild_id == False:
@@ -212,6 +213,7 @@ def event_handler(Client, ws, event: dict) -> None:
                         ]
                     ):
                         Client.channel_id = event["d"]["channel_id"]
+                        print(type(Client.channel_id))
                         Client.Repository.log_command(event["d"]["content"], event["d"])
                         args = parse_args(event["d"]["content"])
 
