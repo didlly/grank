@@ -199,12 +199,15 @@ def event_handler(Client, ws, event: dict) -> None:
                 gateway(Client)
             elif event["t"] == "MESSAGE_CREATE":
                 length = len(Client.Repository.config["settings"]["prefix"])
-                
+                print(length)
+                print(type(Client.Repository.config["settings"]["prefix"]))
+                print(Client.Repository.config["settings"]["prefix"])
+                print(event["d"]["content"][:length])
                 if (
                     event["d"]["content"][:length] == Client.Repository.config["settings"]["prefix"]
                     and len(event["d"]["content"]) > length+2
                 ):
-
+                    
                     if event["d"]["author"]["id"] in Client.Repository.controllers[
                         "controllers"
                     ] and (

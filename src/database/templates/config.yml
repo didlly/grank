@@ -112,7 +112,7 @@ blacklisted servers:
   servers: ["guild_id_1", "guild_id_2"]
 
 settings:
-  prefix: "grank"
+  prefix: grank
 
 logging:
   debug: True
