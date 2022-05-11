@@ -45,6 +45,9 @@ def adventure(Client) -> None:
             Client.send_message("pls adv")
     
             latest_message = Client.retreive_message("pls adv")
+        elif "You can interact with the adventure again" in latest_message["embeds"][0]["description"]:
+            Client.log("WARNING", "Cannot interact with adventure yet - awaiting cooldown end.")
+            return
     
     if "author" in latest_message["embeds"][0].keys():
         if "Choose an Adventure" in latest_message["embeds"][0]["author"]["name"]:

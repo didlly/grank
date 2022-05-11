@@ -563,19 +563,20 @@ class Instance(object):
         return self.interact_button(command, custom_id, latest_message)
 
     def log(self, level: str, text: str) -> None:
-        time = datetime.now().strftime("[%x-%X]")
+        if level == "ERROR" or (level == "DEBUG" and self.Repository.config["logging"]["debug"]) or (level == "WARNING" and self.Repository.config["logging"]["warning"]):
+            time = datetime.now().strftime("[%x-%X]")
 
-        print(
-            f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}"
-        )
-
-        self.log_file.write(
-            f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n"
-        )
-        self.log_file.flush()
-
-        if level == "ERROR":
-            _ = input(
-                f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}"
+            print(
+                f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}"
             )
-            exit(1)
+
+            self.log_file.write(
+                f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n"
+            )
+            self.log_file.flush()
+
+            if level == "ERROR":
+                _ = input(
+                    f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}"
+                )
+                exit(1)
