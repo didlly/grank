@@ -72,23 +72,27 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 `grank help` - Displays the help command.
 
 ### `start` category
+
 | Name | Description |
 | ------------- | ------------- |
 | `start`  | Starts the grinder. |
 | `start -help`  | Shows help about the `start` command. |
 
 ### `stop` category
+
 | Name | Description |
 | ------------- | ------------- |
 | `stop`  | Stops the grinder. |
 | `stop -help`  | Shows help about the `stop` command. |
 
 ### `info` category
+
 | Name | Description |
 | ------------- | ------------- |
 | `info`  | Shows info about the grinder. |
 
 ### `controllers` category
+
 | Name | Description |
 | ------------- | ------------- |
 | `controllers`  | Shows a list of all the controllers for this account. |
@@ -101,6 +105,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 ***NOTE:*** You can also @mention the user you want to interact with.
 
 ### `config` category
+
 | Name | Description |
 | ------------- | ------------- |
 | `config`  | Shows a list of all the config options and their values for this account. |
@@ -112,6 +117,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 ***NOTE***: To access keys containing a space character, replace the space with an underscore (_).
 
 ### `commands` category
+
 | Name | Description |
 | ------------- | ------------- |
 | `commands`  | Shows a list of all the custom commands for this account. |
@@ -120,6 +126,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | `commands remove pls_help 69` | Removes the custom commands called 'pls help' from the list of custom commands. |
 
 ### `servers` category
+
 | Name | Description |
 | ------------- | ------------- |
 | `servers`  | Shows a list of all the blacklisted servers for this account. |
@@ -130,6 +137,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | `servers remove 0` | Removes the server with the ID of `0` from the list of blacklisted servers. |
 
 ### `autostart` category
+
 | Name | Description |
 | ------------- | ------------- |
 | `autostart`  | Shows a list of all the auto-start channels for this account. |
