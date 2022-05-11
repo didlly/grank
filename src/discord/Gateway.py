@@ -198,9 +198,11 @@ def event_handler(Client, ws, event: dict) -> None:
                 ws.close()
                 gateway(Client)
             elif event["t"] == "MESSAGE_CREATE":
+                length = len(Client.Repository.config["settings"]["prefix"])
+                
                 if (
-                    event["d"]["content"][:5].lower() == "grank"
-                    and len(event["d"]["content"]) > 6
+                    event["d"]["content"][:length] == Client.Repository.config["settings"]["prefix"]
+                    and len(event["d"]["content"]) > length+2
                 ):
 
                     if event["d"]["author"]["id"] in Client.Repository.controllers[

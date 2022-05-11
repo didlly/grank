@@ -121,6 +121,8 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['auto accept trade']",
         "['auto accept trade']['enabled']",
         "['auto accept trade']['traders']",
+        "['settings']",
+        "['settings']['prefix']",
     ]
 
     config = utils.Yaml.load(f"{cwd}database/{folder}/config.yml")

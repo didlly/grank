@@ -111,6 +111,9 @@ blacklisted servers:
   enabled: False
   servers: ["guild_id_1", "guild_id_2"]
 
+settings:
+  prefix: "grank"
+
 logging:
   debug: True
   warning: True

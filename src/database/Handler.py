@@ -121,14 +121,6 @@ class Database(object):
             )
 
         exec(
-            f"self.config['auto start']['channels'] = {self.config['auto start']['channels']}"
-        )
-
-        exec(
-            f"self.config['blacklisted servers']['servers'] = {self.config['blacklisted servers']['servers']}"
-        )
-
-        exec(
             f"self.config['auto accept trade']['traders'] = {[str(trader) for trader in self.config['auto accept trade']['traders']]}"
         )
 
