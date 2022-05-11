@@ -108,6 +108,14 @@ class Instance(object):
                 )
             )
 
+        if self.Repository.config["message delay"]["enabled"]:
+            sleep(
+                uniform(
+                    self.Repository.config["message delay"]["minimum"],
+                    self.Repository.config["message delay"]["maximum"],
+                )
+            )
+
         while True:
             request = post(
                 f"https://discord.com/api/v10/channels/{self.channel_id if channel_id is None else channel_id}/messages?limit=1",
@@ -319,7 +327,7 @@ class Instance(object):
 
                 if key.lower() in latest_message["content"].lower():
                     found = True
-                elif len(latest_message["embeds"]) != 0:
+                elif len(latest_message["embeds"]) > 0:
                     if (
                         key.lower()
                         in latest_message["embeds"][0]["description"].lower()
@@ -382,6 +390,28 @@ class Instance(object):
 
             return old_latest_message
 
+        elif self.Repository.config["auto sell"]["enabled"] and check:
+            for key in self.Repository.config["auto sell"]:
+                if (
+                    key == "enabled"
+                    or not self.Repository.config["auto sell"][key]
+                ):
+                    continue
+
+                found = False
+
+                if key.lower() in latest_message["content"].lower():
+                    found = True
+                elif len(latest_message["embeds"]) > 0:
+                    if (
+                        key.lower()
+                        in latest_message["embeds"][0]["description"].lower()
+                    ):
+                        found = True
+                        
+                if found:
+                    self.send_message(f"pls sell {key}")
+                        
         return latest_message
 
     def interact_button(
@@ -400,6 +430,14 @@ class Instance(object):
             "session_id": self.session_id if session_id is None else session_id,
         }
 
+        if self.Repository.config["button delay"]["enabled"]:
+            sleep(
+                uniform(
+                    self.Repository.config["button delay"]["minimum"],
+                    self.Repository.config["button delay"]["maximum"],
+                )
+            )
+            
         while True:
             request = post(
                 "https://discord.com/api/v10/interactions",
@@ -455,6 +493,14 @@ class Instance(object):
             "session_id": self.session_id,
         }
 
+        if self.Repository.config["dropdown delay"]["enabled"]:
+            sleep(
+                uniform(
+                    self.Repository.config["dropdown delay"]["minimum"],
+                    self.Repository.config["dropdown delay"]["maximum"],
+                )
+            )
+            
         while True:
             request = post(
                 "https://discord.com/api/v10/interactions",

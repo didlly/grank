@@ -38,6 +38,10 @@ snakeeyes:
   minimum: 1500
   maximum: 3000
 
+cooldowns:
+  patron: False
+  timeout: 5
+
 custom commands:
   enabled: False
   pls dep max:
@@ -64,26 +68,34 @@ auto trade:
   bank note: True
   tidepod: True
 
+auto accept trade:
+  enabled: True
+  traders: [0, 0]
+
+auto sell:
+  enabled: False
+  apple: True
+  common fish: True
+
 typing indicator:
   enabled: False
   minimum: 0
   maximum: 0.5
-  
-cooldowns:
-  patron: False
-  timeout: 5
 
-logging:
-  debug: True
-  warning: True
-
-blacklisted servers:
+message delay:
   enabled: False
-  servers: ["guild_id_1", "guild_id_2"]
+  minimum: 0
+  maximum: 0.5
 
-auto start:
+button delay:
   enabled: False
-  channels: ["channel_id_1", "channel_id_2"]
+  minimum: 0
+  maximum: 0.5
+
+dropdown delay:
+  enabled: False
+  minimum: 0
+  maximum: 0.5
 
 anti heist:
   enabled: True
@@ -91,6 +103,14 @@ anti heist:
 auto join heist:
   enabled: True
 
-auto accept trade:
-  enabled: True
-  traders: [0, 0]
+auto start:
+  enabled: False
+  channels: ["channel_id_1", "channel_id_2"]
+
+blacklisted servers:
+  enabled: False
+  servers: ["guild_id_1", "guild_id_2"]
+
+logging:
+  debug: True
+  warning: True
