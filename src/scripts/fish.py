@@ -42,7 +42,7 @@ def fish(Client) -> None:
         elif Client.Repository.config["logging"]["warning"]:
             Client.log(
                 "WARNING",
-                f"A fishing pole is required for the command `pls fish`. However, since {'auto buy is off for fishing poles,' if Client.Repository.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                f"A fishing pole is required for the command `pls fish`. However, since {'auto buy is off for fishing poles,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
             )
             return
 

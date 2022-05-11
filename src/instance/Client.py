@@ -406,7 +406,7 @@ class Instance(object):
                 headers={"authorization": self.token if token is None else token},
                 json=payload,
             )
-
+            
             if request.status_code in [200, 204]:
                 if self.Repository.config["logging"]["debug"]:
                     data["stats"][self.token]["buttons_clicked"] += 1

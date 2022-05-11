@@ -1,3 +1,4 @@
+from scripts.adventure import adventure
 from scripts.beg import beg
 from scripts.blackjack import blackjack
 from scripts.crime import crime
@@ -24,6 +25,7 @@ from sys import exc_info
 
 def run(Client):
     (
+        last_adventure,
         last_beg,
         last_blackjack,
         last_crime,
@@ -36,9 +38,32 @@ def run(Client):
         last_search,
         last_snakeeyes,
         last_trivia,
-    ) = ["01/01/22-00:00:00"] * 12
+    ) = ["01/01/22-00:00:00"] * 13
 
     while True:
+        if (
+            Client.Repository.config["commands"]["adventure"]
+            and data[Client.username]
+            and data["channels"][Client.channel_id][Client.token]
+        ):
+            if (
+                (
+                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
+                    - datetime.strptime(last_adventure, "%x-%X")
+                ).total_seconds()
+                > 60
+            ):
+                try:
+                    adventure(Client)
+                except Exception:
+                    if Client.Repository.config["logging"]["warning"]:
+                        Client.log(
+                            "WARNING",
+                            f"An unexpected error occured during the running of the `pls adventure` command: `{exc_info()}`.",
+                        )
+
+                last_adventure = datetime.now().strftime("%x-%X")
+                
         if (
             Client.Repository.config["commands"]["beg"]
             and data[Client.username]

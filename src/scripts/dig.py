@@ -24,7 +24,7 @@ def dig(Client):
         elif Client.Repository.config["logging"]["warning"]:
             Client.log(
                 "WARNING",
-                f"A shovel is required for the command `pls dig`. However, since {'auto buy is off for shovels,' if Client.Repository.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                f"A shovel is required for the command `pls dig`. However, since {'auto buy is off for shovels,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
             )
             return
 

@@ -18,7 +18,7 @@ def trivia(Client) -> None:
         answer = None
         Client.log(
             "WARNING",
-            f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.",
+            f"Unknown trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`.",
         )
 
     custom_id = None
@@ -34,7 +34,7 @@ def trivia(Client) -> None:
     if custom_id is None:
         Client.log(
             "WARNING",
-            f"Unknown answer to trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`. Please create an issue on Grank highlighting this.",
+            f"Unknown answer to trivia question `{latest_message['embeds'][0]['description'].replace('*', '')}`. Answers: `{latest_message['components'][0]['components']}`.",
         )
         custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
 
@@ -54,8 +54,6 @@ def trivia(Client) -> None:
                     )
                 )
             )
-            if custom_id is not None
-            else "no"
         )
     except Exception:
         coins = "no"

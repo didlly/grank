@@ -54,7 +54,7 @@ def hunt(Client) -> None:
         elif Client.Repository.config["logging"]["warning"]:
             Client.log(
                 "WARNING",
-                f"A hunting rifle is required for the command `pls fish`. However, since {'auto buy is off for hunting rifles,' if Client.Repository.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                f"A hunting rifle is required for the command `pls fish`. However, since {'auto buy is off for hunting rifles,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
             )
             return
 

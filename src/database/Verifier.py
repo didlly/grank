@@ -44,6 +44,7 @@ def verify(cwd: str, account, Client: Instance) -> None:
 def verify_config(cwd: str, folder: str) -> bool:
     options = [
         "['commands']",
+        "['commands']['adventure']",
         "['commands']['crime']",
         "['commands']['daily']",
         "['commands']['beg']",
@@ -83,6 +84,7 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['auto buy']['hunting rifle']",
         "['auto buy']['keyboard']",
         "['auto buy']['mouse']",
+        "['auto buy']['adventure ticket']",
         "['auto trade']",
         "['auto trade']['enabled']",
         "['auto trade']['trader token']",

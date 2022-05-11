@@ -39,7 +39,8 @@ Grank is a feature rich Dank Memer automation program that automtaically grinds 
 * `pls snakeeyes`
 * `pls stream`
 * `pls trivia`
-* `pls work` (Partial support)
+* `pls work`
+* `pls adv` (Partial support)
 
 ### Getting Started
 
@@ -148,6 +149,7 @@ Values in the `commands` category tell the program whether or not to *run certai
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
+| `adventure`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls adventure`. |
 | `beg`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls beg`. |
 | `crime`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls crime`. |
 | `daily`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls daily`. |
@@ -237,7 +239,9 @@ Values in the `auto buy` category tell the program whether or not to *buy certai
 | `fishing pole`  | `Boolean` | `True`  | Tells the program whether or not to try and buy the item `fishing pole` if needed and the user doesn't have it. |
 | `hunting rifle`  | `Boolean` | `True`  | Tells the program whether or not to try and buy the `hunting rifle` if needed and the user doesn't have it. |
 | `keyboard`  | `Boolean` | `True`  | Tells the program whether or not to try and buy the item `keyboard` if needed and the user doesn't have it. |
-| `mouse`  | `Boolean` | `True`  | Tells the program whether or not to try and buy the item `mouse` if needed and the user doesn't have it. |
+| `mouse`  | `Boolean` | `True`  | Tells the program whether or not to try and buy the item `mouse` if 
+needed and the user doesn't have it. |
+| `adventure ticket`  | `Boolean` | `True`  | Tells the program whether or not to try and buy the item `adventure ticket` if needed and the user doesn't have it. |
 
 ### `auto trade` category
 

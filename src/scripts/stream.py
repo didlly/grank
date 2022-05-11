@@ -37,7 +37,7 @@ def stream(Client) -> None:
                 elif Client.Repository.config["logging"]["warning"]:
                     Client.log(
                         "WARNING",
-                        f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.Repository.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                        f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
                     )
 
         if "Mouse" in latest_message["embeds"][0]["description"]:
@@ -56,7 +56,7 @@ def stream(Client) -> None:
                 elif Client.Repository.config["logging"]["warning"]:
                     Client.log(
                         "WARNING",
-                        f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.Repository.config['auto buy']['parent'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                        f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
                     )
 
     if not bought_keyboard or not bought_mouse:
