@@ -2050,7 +2050,7 @@ def event_handler(Client, ws, event: dict) -> None:
                         event["d"]
                     )
 
-                if len(data["channels"][event["d"]["channel_id"]]["messages"]) > 10:
+                if len(data["channels"][event["d"]["channel_id"]]["messages"]) > 1:
                     del data["channels"][event["d"]["channel_id"]]["messages"][0]
 
 

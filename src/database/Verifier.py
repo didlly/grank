@@ -157,7 +157,10 @@ def verify_controllers(
     folder: Union[None, str],
 ) -> bool:
     with open(f"{cwd}database/{folder}/controllers.json", "r") as controllers_file:
-        controllers = loads(controllers_file.read())
+        try:
+            controllers = loads(controllers_file.read())
+        except JSONDecodeError:
+            return False
 
     return (
         True
