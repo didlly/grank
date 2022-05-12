@@ -6,11 +6,11 @@ from threading import Thread
 from utils.Shared import data
 import utils.Yaml
 from scripts.buy import buy
-from contextlib import suppress
 from instance.ArgumentHandler import parse_args
 from discord.GuildId import guild_id
 from discord.UserInfo import user_info
 from instance.Exceptions import InvalidUserID, IDNotFound, ExistingUserID
+from instance.Shifts import shifts
 from run import run
 from utils.Shared import data
 from time import sleep
@@ -133,11 +133,19 @@ def event_3(Client, latest_message) -> None:
 
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
-        sleep(heartbeat_interval)
-        ws.send(dumps({"op": 1, "d": "None"}))
-
-
+        try:
+            sleep(heartbeat_interval)
+            ws.send(dumps({"op": 1, "d": "None"}))
+        except Exception:
+            return
+        
 def event_handler(Client, ws, event: dict) -> None:
+    if Client.Repository.config["shifts"]["enabled"]:
+        data[Client.username] = False
+        Thread(target=shifts, args=[Client]).start()
+    else:
+        data[Client.username] = True
+        
     Client.session_id = event["d"]["sessions"][0]["session_id"]
     heist = False
 
@@ -171,33 +179,10 @@ def event_handler(Client, ws, event: dict) -> None:
                 )
 
     while True:
-        with suppress(Exception):
+        try:
             event = loads(ws.recv())
 
-            if event["op"] == 6:
-                Client.log(
-                    "WARNING",
-                    "Websocket connection resume was requested (opcode `6`). Resuming connection now.",
-                )
-                ws.send(
-                    {
-                        "op": 6,
-                        "d": {
-                            "token": Client.token,
-                            "session_id": Client.session_id,
-                            "seq": None,
-                        },
-                    }
-                )
-            elif event["op"] == 7:
-                Client.log(
-                    "WARNING",
-                    "Websocket connection reconnecta & resume was requested (opcode `7`). Reconnecting & resuming connection now.",
-                )
-                ws.send_close()
-                ws.close()
-                gateway(Client)
-            elif event["t"] == "MESSAGE_CREATE":
+            if event["t"] == "MESSAGE_CREATE":
                 length = len(Client.Repository.config["settings"]["prefix"])
 
                 if (
@@ -2053,7 +2038,9 @@ def event_handler(Client, ws, event: dict) -> None:
 
                 if len(data["channels"][event["d"]["channel_id"]]["messages"]) > 1:
                     del data["channels"][event["d"]["channel_id"]]["messages"][0]
-
+        except Exception as exc:
+            Client.log("WARNING", f"An unexpected error occured during the websocket connection (`{exc}`). Assuming gateway disconnect and creating a new connection.")
+            gateway(Client)
 
 def gateway(Client: Union[Instance, str]) -> Optional[str]:
     ws = WebSocket()

@@ -233,8 +233,13 @@ Values in the `shifts` category tell the program *whether or not to run Grank in
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | `enabled`  | `Boolean` | `False`  | Tells the program whether or not to run in shifts. |
+
+#### Example shifts config
+You can add as many shift configs as you want, so long as you number them in order starting from `1`.
+
 | `active`  | `Integer` | `7200`  | Tells the program how long the program should run before sleeping (in seconds). |
 | `passive`  | `Integer` | `3600`  | Tells the program how long the program should sleep before running again (in seconds). |
+| `variation`  | `Integer` | `3600`  | Tells the program how much to vary the shifts by. |
 
 ### `auto buy` category
 

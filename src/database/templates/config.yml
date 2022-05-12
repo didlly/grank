@@ -50,8 +50,12 @@ custom commands:
 
 shifts:
   enabled: False
-  active: 7200
-  passive: 3600
+
+  1:
+    enabled: True
+    active: 7200
+    passive: 3600
+    variation: 60
   
 auto buy:
   enabled: True

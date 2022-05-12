@@ -65,33 +65,34 @@ class Instance(object):
             "dropdowns_selected": 0,
         }
 
-        while True:
-            if "Repository" in self.__dict__.keys():
-                self.lifetime_commands_ran = self.Repository.info["stats"][
-                    "commands_ran"
-                ]
-                self.lifetime_buttons_clicked = self.Repository.info["stats"][
-                    "buttons_clicked"
-                ]
-                self.lifetime_dropdowns_selected = self.Repository.info["stats"][
-                    "dropdowns_selected"
-                ]
+        while "Repository" not in self.__dict__.keys():
+            continue
+        
+        self.lifetime_commands_ran = self.Repository.info["stats"][
+            "commands_ran"
+        ]
+        self.lifetime_buttons_clicked = self.Repository.info["stats"][
+            "buttons_clicked"
+        ]
+        self.lifetime_dropdowns_selected = self.Repository.info["stats"][
+            "dropdowns_selected"
+        ]
 
-                while True:
-                    self.Repository.info["stats"]["commands_ran"] = (
-                        self.lifetime_commands_ran
-                        + data["stats"][self.token]["commands_ran"]
-                    )
-                    self.Repository.info["stats"]["buttons_clicked"] = (
-                        self.lifetime_buttons_clicked
-                        + data["stats"][self.token]["buttons_clicked"]
-                    )
-                    self.Repository.info["stats"]["dropdowns_selected"] = (
-                        self.lifetime_dropdowns_selected
-                        + data["stats"][self.token]["dropdowns_selected"]
-                    )
-                    self.Repository.info_write()
-                    sleep(10)
+        while True:
+            self.Repository.info["stats"]["commands_ran"] = (
+                self.lifetime_commands_ran
+                + data["stats"][self.token]["commands_ran"]
+            )
+            self.Repository.info["stats"]["buttons_clicked"] = (
+                self.lifetime_buttons_clicked
+                + data["stats"][self.token]["buttons_clicked"]
+            )
+            self.Repository.info["stats"]["dropdowns_selected"] = (
+                self.lifetime_dropdowns_selected
+                + data["stats"][self.token]["dropdowns_selected"]
+            )
+            self.Repository.info_write()
+            sleep(10)
 
     def send_message(self, command, token=None, latest_message=None, channel_id=None):
         command = str(command)
@@ -563,20 +564,25 @@ class Instance(object):
         return self.interact_button(command, custom_id, latest_message)
 
     def log(self, level: str, text: str) -> None:
-        if level == "ERROR" or (level == "DEBUG" and self.Repository.config["logging"]["debug"]) or (level == "WARNING" and self.Repository.config["logging"]["warning"]):
-            time = datetime.now().strftime("[%x-%X]")
+        if "Repository" in self.__dict__.keys():
+            if level == "DEBUG" and not self.Repository.config["logging"]["debug"]:
+                return
+            elif level == "WARNING" and not self.Repository.config["logging"]["warning"]:
+                return
+        
+        time = datetime.now().strftime("[%x-%X]")
 
-            print(
-                f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}"
+        print(
+            f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}"
+        )
+
+        self.log_file.write(
+            f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n"
+        )
+        self.log_file.flush()
+
+        if level == "ERROR":
+            _ = input(
+                f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}"
             )
-
-            self.log_file.write(
-                f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n"
-            )
-            self.log_file.flush()
-
-            if level == "ERROR":
-                _ = input(
-                    f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}"
-                )
-                exit(1)
+            exit(1)

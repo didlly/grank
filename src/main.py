@@ -7,8 +7,6 @@ from database.Verifier import verify
 from configuration.Credentials import verify_credentials
 from database.Handler import Database
 from instance.Client import Instance
-from instance.Shifts import shifts
-from utils.Shared import data
 from utils.Console import fore, style
 from discord.Gateway import gateway
 from threading import Thread
@@ -58,12 +56,6 @@ for account in accounts:
     Client = Instance(cwd, account, current_version)
     verify(cwd, account, Client)
     Repository = Database(cwd, account, Client)
-
-    if Repository.config["shifts"]["enabled"]:
-        data[Client.username] = False
-        Thread(target=shifts, args=[Client, Repository]).start()
-    else:
-        data[Client.username] = True
 
     Client.Repository = Repository
     Thread(target=gateway, args=[Client]).start()

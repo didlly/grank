@@ -75,8 +75,6 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['custom commands']['enabled']",
         "['shifts']",
         "['shifts']['enabled']",
-        "['shifts']['active']",
-        "['shifts']['passive']",
         "['auto buy']",
         "['auto buy']['enabled']",
         "['auto buy']['shovel']",
@@ -155,15 +153,13 @@ def verify_database(
                 return False
 
     for key in database_template.keys():
-        if type(key) == dict:
-            output = verify_database(cwd, None, database_template[key], database[key])
-
-            if not output:
+        if type(database_template[key]) == dict:
+            if not verify_database(cwd, None, database_template[key], database[key]):
                 return False
 
         if key not in database.keys():
             return False
-
+        
     return True
 
 

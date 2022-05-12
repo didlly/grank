@@ -1,3 +1,6 @@
+from email.quoprimime import quote
+
+
 def is_float(string: str) -> bool:
     try:
         float(string)
@@ -26,21 +29,47 @@ def load(path: str) -> dict:
             if line.strip() == "":
                 continue
             elif line.rstrip()[-1] == ":":
-                if len(line.replace(line.strip(), "")) // 2 < len(levels):
-                    levels[
-                        len(line.replace(line.strip(), "")) // 2
-                    ] = f"['{line.strip()[:-1]}']"
-                else:
-                    levels.append(f"['{line.strip()[:-1]}']")
-                exec(
-                    f"data{''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.strip()[:-1]}']"
-                    + " = {}"
+                key = line.strip()[:-1]
+                quoteless = (
+                    is_float(key)
+                    or is_integer(key)
+                    or key == "True"
+                    or key == "False"
+                    or ("[" in key and "]" in key)
                 )
+                
+                if len(line.replace(line.strip(), "")) // 2 < len(levels):
+                    if quoteless:
+                        levels[
+                            len(line.replace(line.strip(), "")) // 2
+                        ] = f"[{key}]"
+                    else:
+                       levels[
+                            len(line.replace(line.strip(), "")) // 2
+                        ] = f"['{key}']" 
+                else:
+                    if quoteless:
+                        levels.append(f"[{line.strip()[:-1]}]")
+                    else:
+                        levels.append(f"['{line.strip()[:-1]}']")
+                if (
+                    quoteless
+                ):
+                    exec(
+                        f"data{''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}[{key}]"
+                        + " = {}"
+                    )
+                else:
+                    exec(
+                        f"data{''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{key}']"
+                        + " = {}"
+                    )
 
                 continue
 
+            key = line.split(':')[0].strip()
             value = line.split(":")[-1].strip()
-
+            
             if (
                 is_float(value)
                 or is_integer(value)
@@ -48,15 +77,35 @@ def load(path: str) -> dict:
                 or value == "False"
                 or ("[" in value and "]" in value)
             ):
-                exec(
-                    f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.split(':')[0].strip()}'] = {value}"
-                )
-
+                if (
+                    is_float(key)
+                    or is_integer(key)
+                    or key == "True"
+                    or key == "False"
+                    or ("[" in key and "]" in key)
+                ):
+                    exec(
+                        f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}[{key}] = {value}"
+                    )
+                else:
+                    exec(
+                        f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{key}'] = {value}"
+                    )
             else:
-                exec(
-                    f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.split(':')[0].strip()}'] = '{value}'"
-                )
-
+                if (
+                    is_float(key)
+                    or is_integer(key)
+                    or key == "True"
+                    or key == "False"
+                    or ("[" in key and "]" in key)
+                ):
+                    exec(
+                        f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}[{key}] = '{value}'"
+                    )
+                else:
+                    exec(
+                        f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{key}'] = '{value}'"
+                    )
     return data
 
 
@@ -71,21 +120,47 @@ def loads(yaml: str) -> dict:
         if line.strip() == "":
             continue
         elif line.rstrip()[-1] == ":":
-            if len(line.replace(line.strip(), "")) // 2 < len(levels):
-                levels[
-                    len(line.replace(line.strip(), "")) // 2
-                ] = f"['{line.strip()[:-1]}']"
-            else:
-                levels.append(f"['{line.strip()[:-1]}']")
-            exec(
-                f"data{''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.strip()[:-1]}']"
-                + " = {}"
+            key = line.strip()[:-1]
+            quoteless = (
+                is_float(key)
+                or is_integer(key)
+                or key == "True"
+                or key == "False"
+                or ("[" in key and "]" in key)
             )
+            
+            if len(line.replace(line.strip(), "")) // 2 < len(levels):
+                if quoteless:
+                    levels[
+                        len(line.replace(line.strip(), "")) // 2
+                    ] = f"[{key}]"
+                else:
+                    levels[
+                        len(line.replace(line.strip(), "")) // 2
+                    ] = f"['{key}']" 
+            else:
+                if quoteless:
+                    levels.append(f"[{line.strip()[:-1]}]")
+                else:
+                    levels.append(f"['{line.strip()[:-1]}']")
+            if (
+                quoteless
+            ):
+                exec(
+                    f"data{''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}[{key}]"
+                    + " = {}"
+                )
+            else:
+                exec(
+                    f"data{''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{key}']"
+                    + " = {}"
+                )
 
             continue
 
+        key = line.split(':')[0].strip()
         value = line.split(":")[-1].strip()
-
+        
         if (
             is_float(value)
             or is_integer(value)
@@ -93,14 +168,35 @@ def loads(yaml: str) -> dict:
             or value == "False"
             or ("[" in value and "]" in value)
         ):
-            exec(
-                f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.split(':')[0].strip()}'] = {value}"
-            )
-
+            if (
+                is_float(key)
+                or is_integer(key)
+                or key == "True"
+                or key == "False"
+                or ("[" in key and "]" in key)
+            ):
+                exec(
+                    f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}[{key}] = {value}"
+                )
+            else:
+                exec(
+                    f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{key}'] = {value}"
+                )
         else:
-            exec(
-                f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{line.split(':')[0].strip()}'] = '{value}'"
-            )
+            if (
+                is_float(key)
+                or is_integer(key)
+                or key == "True"
+                or key == "False"
+                or ("[" in key and "]" in key)
+            ):
+                exec(
+                    f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}[{key}] = '{value}'"
+                )
+            else:
+                exec(
+                    f"data{'' if line == line.strip() else ''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}['{key}'] = '{value}'"
+                )
 
     return data
 
