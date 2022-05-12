@@ -85,6 +85,7 @@ def shifts(Client: Instance) -> None:
             Client.log("DEBUG", "Moving to active mode.")
 
             data[Client.username] = True
+            
             Client.Repository.database["shifts"]["state"] = "active"
             Client.Repository.database["shifts"]["active"] = datetime.now().strftime(
                 "%x-%X"
