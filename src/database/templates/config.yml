@@ -115,11 +115,11 @@ auto join heist:
 
 auto start:
   enabled: False
-  channels: ["channel_id_1", "channel_id_2"]
+  channels: [0, 0]
 
 blacklisted servers:
   enabled: False
-  servers: ["guild_id_1", "guild_id_2"]
+  servers: [0, 0]
 
 settings:
   prefix: grank

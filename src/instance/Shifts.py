@@ -7,14 +7,14 @@ from random import uniform
 def shifts(Client: Instance) -> None:       
     index = Client.Repository.database["shifts"]["shift"]
        
-    index = 1 if index not in Client.Repository.config["shifts"].keys() else -index+1
+    index = 1 if index not in Client.Repository.config["shifts"].keys() else 1
          
     while True:
         Client.Repository.database["shifts"]["shift"] = index
         Client.Repository.database_write()
         
         if not Client.Repository.config["shifts"][index]["enabled"]:
-            index += 1 if index + 1 in Client.Repository.config["shifts"].keys() else 1
+            index += 1 if index + 1 in Client.Repository.config["shifts"].keys() else -index+1
             continue
                 
         if Client.Repository.database["shifts"]["state"] == "active":

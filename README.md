@@ -309,7 +309,7 @@ Values in the `logging` category tell the program whether or not to *ignore mess
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | `enabled`  | `Boolean` | `False`  | Tells the program whether or not to ignore messages in the specified channel. |
-| `servers`  | `List` | `["guild_id_1", "guild_id_2"]`  | Tells the program which servers to ingore messages from. |
+| `servers`  | `List` | `[0, 0]`  | Tells the program which servers to ingore messages from. |
 
 ### `auto start` category
 
@@ -318,7 +318,7 @@ Values in the `auto start` category tell the program whether or not to *automati
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | `enabled`  | `Boolean` | `False`  | Tells the program whether or not to automatically start the grinder. |
-| `channels`  | `List` | `["channel_id_1", "channel_id_2"]`  | Tells the program which channels to automatically start the grinder inv. |
+| `channels`  | `List` | `[0, 0]`  | Tells the program which channels to automatically start the grinder inv. |
 
 ### `anti heist` category
 
