@@ -47,12 +47,9 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_adventure, "%x-%X")
-                ).total_seconds()
-                > 60
-            ):
+                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
+                - datetime.strptime(last_adventure, "%x-%X")
+            ).total_seconds() > 60:
                 try:
                     adventure(Client)
                 except Exception:
@@ -63,7 +60,7 @@ def run(Client):
                         )
 
                 last_adventure = datetime.now().strftime("%x-%X")
-                
+
         if (
             Client.Repository.config["commands"]["beg"]
             and data[Client.username]

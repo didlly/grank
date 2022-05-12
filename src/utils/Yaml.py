@@ -37,24 +37,18 @@ def load(path: str) -> dict:
                     or key == "False"
                     or ("[" in key and "]" in key)
                 )
-                
+
                 if len(line.replace(line.strip(), "")) // 2 < len(levels):
                     if quoteless:
-                        levels[
-                            len(line.replace(line.strip(), "")) // 2
-                        ] = f"[{key}]"
+                        levels[len(line.replace(line.strip(), "")) // 2] = f"[{key}]"
                     else:
-                       levels[
-                            len(line.replace(line.strip(), "")) // 2
-                        ] = f"['{key}']" 
+                        levels[len(line.replace(line.strip(), "")) // 2] = f"['{key}']"
                 else:
                     if quoteless:
                         levels.append(f"[{line.strip()[:-1]}]")
                     else:
                         levels.append(f"['{line.strip()[:-1]}']")
-                if (
-                    quoteless
-                ):
+                if quoteless:
                     exec(
                         f"data{''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}[{key}]"
                         + " = {}"
@@ -67,9 +61,9 @@ def load(path: str) -> dict:
 
                 continue
 
-            key = line.split(':')[0].strip()
+            key = line.split(":")[0].strip()
             value = line.split(":")[-1].strip()
-            
+
             if (
                 is_float(value)
                 or is_integer(value)
@@ -128,24 +122,18 @@ def loads(yaml: str) -> dict:
                 or key == "False"
                 or ("[" in key and "]" in key)
             )
-            
+
             if len(line.replace(line.strip(), "")) // 2 < len(levels):
                 if quoteless:
-                    levels[
-                        len(line.replace(line.strip(), "")) // 2
-                    ] = f"[{key}]"
+                    levels[len(line.replace(line.strip(), "")) // 2] = f"[{key}]"
                 else:
-                    levels[
-                        len(line.replace(line.strip(), "")) // 2
-                    ] = f"['{key}']" 
+                    levels[len(line.replace(line.strip(), "")) // 2] = f"['{key}']"
             else:
                 if quoteless:
                     levels.append(f"[{line.strip()[:-1]}]")
                 else:
                     levels.append(f"['{line.strip()[:-1]}']")
-            if (
-                quoteless
-            ):
+            if quoteless:
                 exec(
                     f"data{''.join(str(i) for i in levels[:line.replace(line.lstrip(), '').count(indentation_str) if indentation_str != '' else 0])}[{key}]"
                     + " = {}"
@@ -158,9 +146,9 @@ def loads(yaml: str) -> dict:
 
             continue
 
-        key = line.split(':')[0].strip()
+        key = line.split(":")[0].strip()
         value = line.split(":")[-1].strip()
-        
+
         if (
             is_float(value)
             or is_integer(value)

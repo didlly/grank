@@ -159,7 +159,7 @@ def verify_database(
 
         if key not in database.keys():
             return False
-        
+
     return True
 
 

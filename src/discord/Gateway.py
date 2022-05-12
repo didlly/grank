@@ -138,14 +138,15 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
             ws.send(dumps({"op": 1, "d": "None"}))
         except Exception:
             return
-        
+
+
 def event_handler(Client, ws, event: dict) -> None:
     if Client.Repository.config["shifts"]["enabled"]:
         data[Client.username] = False
         Thread(target=shifts, args=[Client]).start()
     else:
         data[Client.username] = True
-        
+
     Client.session_id = event["d"]["sessions"][0]["session_id"]
     heist = False
 
@@ -186,10 +187,11 @@ def event_handler(Client, ws, event: dict) -> None:
                 length = len(Client.Repository.config["settings"]["prefix"])
 
                 if (
-                    event["d"]["content"][:length] == Client.Repository.config["settings"]["prefix"]
-                    and len(event["d"]["content"]) > length+2
+                    event["d"]["content"][:length]
+                    == Client.Repository.config["settings"]["prefix"]
+                    and len(event["d"]["content"]) > length + 2
                 ):
-                    
+
                     if event["d"]["author"]["id"] in Client.Repository.controllers[
                         "controllers"
                     ] and (
@@ -2039,8 +2041,12 @@ def event_handler(Client, ws, event: dict) -> None:
                 if len(data["channels"][event["d"]["channel_id"]]["messages"]) > 1:
                     del data["channels"][event["d"]["channel_id"]]["messages"][0]
         except Exception as exc:
-            Client.log("WARNING", f"An unexpected error occured during the websocket connection (`{exc}`). Assuming gateway disconnect and creating a new connection.")
+            Client.log(
+                "WARNING",
+                f"An unexpected error occured during the websocket connection (`{exc}`). Assuming gateway disconnect and creating a new connection.",
+            )
             gateway(Client)
+
 
 def gateway(Client: Union[Instance, str]) -> Optional[str]:
     ws = WebSocket()

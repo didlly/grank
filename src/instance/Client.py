@@ -67,21 +67,16 @@ class Instance(object):
 
         while "Repository" not in self.__dict__.keys():
             continue
-        
-        self.lifetime_commands_ran = self.Repository.info["stats"][
-            "commands_ran"
-        ]
-        self.lifetime_buttons_clicked = self.Repository.info["stats"][
-            "buttons_clicked"
-        ]
+
+        self.lifetime_commands_ran = self.Repository.info["stats"]["commands_ran"]
+        self.lifetime_buttons_clicked = self.Repository.info["stats"]["buttons_clicked"]
         self.lifetime_dropdowns_selected = self.Repository.info["stats"][
             "dropdowns_selected"
         ]
 
         while True:
             self.Repository.info["stats"]["commands_ran"] = (
-                self.lifetime_commands_ran
-                + data["stats"][self.token]["commands_ran"]
+                self.lifetime_commands_ran + data["stats"][self.token]["commands_ran"]
             )
             self.Repository.info["stats"]["buttons_clicked"] = (
                 self.lifetime_buttons_clicked
@@ -393,10 +388,7 @@ class Instance(object):
 
         elif self.Repository.config["auto sell"]["enabled"] and check:
             for key in self.Repository.config["auto sell"]:
-                if (
-                    key == "enabled"
-                    or not self.Repository.config["auto sell"][key]
-                ):
+                if key == "enabled" or not self.Repository.config["auto sell"][key]:
                     continue
 
                 found = False
@@ -409,10 +401,10 @@ class Instance(object):
                         in latest_message["embeds"][0]["description"].lower()
                     ):
                         found = True
-                        
+
                 if found:
                     self.send_message(f"pls sell {key}")
-                        
+
         return latest_message
 
     def interact_button(
@@ -438,14 +430,14 @@ class Instance(object):
                     self.Repository.config["button delay"]["maximum"],
                 )
             )
-            
+
         while True:
             request = post(
                 "https://discord.com/api/v10/interactions",
                 headers={"authorization": self.token if token is None else token},
                 json=payload,
             )
-            
+
             if request.status_code in [200, 204]:
                 if self.Repository.config["logging"]["debug"]:
                     data["stats"][self.token]["buttons_clicked"] += 1
@@ -501,7 +493,7 @@ class Instance(object):
                     self.Repository.config["dropdown delay"]["maximum"],
                 )
             )
-            
+
         while True:
             request = post(
                 "https://discord.com/api/v10/interactions",
@@ -567,9 +559,11 @@ class Instance(object):
         if "Repository" in self.__dict__.keys():
             if level == "DEBUG" and not self.Repository.config["logging"]["debug"]:
                 return
-            elif level == "WARNING" and not self.Repository.config["logging"]["warning"]:
+            elif (
+                level == "WARNING" and not self.Repository.config["logging"]["warning"]
+            ):
                 return
-        
+
         time = datetime.now().strftime("[%x-%X]")
 
         print(

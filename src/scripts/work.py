@@ -52,10 +52,10 @@ def work(Client) -> None:
 
         while True:
             latest_message = Client.retreive_message("pls work")
-            
+
             if len(latest_message["components"]) > 0:
                 break
-            
+
             sleep(2.5)
 
         word = latest_message["content"].split("`")[1].lower()
@@ -84,52 +84,52 @@ def work(Client) -> None:
             Client.interact_button("pls trivia", custom_id, latest_message)
     elif "Hit the ball!" in latest_message["content"]:
         Client.log("DEBUG", "Detected hit the ball game.")
-        
-        index = latest_message.split("\n")[2].count("       ")
+
+        index = latest_message["content"].split("\n")[2].count("       ")
 
         index -= 1 if index == 2 else -1
-        
-        custom_id = latest_message["components"][0]["components"][index][
-            "custom_id"
-        ]
+
+        custom_id = latest_message["components"][0]["components"][index]["custom_id"]
 
         Client.interact_button("pls work", custom_id, latest_message)
     elif "Repeat Order" in latest_message["content"]:
         Client.log("DEBUG", "Detected repeat the order game.")
-        
+
         words = latest_message["content"].split("\n")[1:]
-        
+
         while True:
             latest_message = Client.retreive_message("pls work")
-            
+
             if len(latest_message["components"]) > 0:
                 break
-            
+
             sleep(2.5)
-        
+
         for word in words:
             for option in latest_message["components"][0]["components"]:
                 if word == option["label"]:
-                    Client.interact_button("pls work", option["custom_id"], latest_message)
+                    Client.interact_button(
+                        "pls work", option["custom_id"], latest_message
+                    )
                     sleep(1)
                     break
     elif "Emoji Match" in latest_message["content"]:
-        Client.log("DEBUG", "Detecteed emoji match game.")
-        
+        Client.log("DEBUG", "Detected emoji match game.")
+
         emoji = latest_message["content"].split("\n")[-1]
-        
+
         while True:
             latest_message = Client.retreive_message("pls work")
-            
+
             if len(latest_message["components"]) > 0:
                 break
-            
+
             sleep(2.5)
-            
+
         for option in latest_message["components"][0]["components"]:
             if emoji == option["label"]:
                 Client.interact_button("pls work", option["custom_id"], latest_message)
-                break     
+                break
     else:
         Client.log("WARNING", "Unknown `pls work` game. Clicking a random button.")
 
@@ -140,10 +140,10 @@ def work(Client) -> None:
         else:
             while True:
                 latest_message = Client.retreive_message("pls work")
-                
+
                 if len(latest_message["components"]) > 0:
                     break
-                
+
                 sleep(2.5)
 
             custom_id = choice(latest_message["components"][0]["components"])[

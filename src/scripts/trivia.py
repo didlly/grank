@@ -45,13 +45,11 @@ def trivia(Client) -> None:
     latest_message = Client.retreive_message("pls trivia")
 
     try:
-        coins = (
-            int(
-                "".join(
-                    filter(
-                        str.isdigit,
-                        latest_message["content"],
-                    )
+        coins = int(
+            "".join(
+                filter(
+                    str.isdigit,
+                    latest_message["content"],
                 )
             )
         )
