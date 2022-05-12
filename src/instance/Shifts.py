@@ -43,11 +43,14 @@ def shifts(Client: Instance) -> None:
 
             Client.log("DEBUG", "Currently in active mode.")
 
+            data[Client.username] = True
+            
             sleep(sleep_len)
 
             Client.log("DEBUG", "Moving to passive mode.")
 
             data[Client.username] = False
+            
             Client.Repository.database["shifts"]["state"] = "passive"
             Client.Repository.database["shifts"]["passive"] = datetime.now().strftime(
                 "%x-%X"
@@ -72,6 +75,8 @@ def shifts(Client: Instance) -> None:
             ).total_seconds() + variation
 
             sleep_len = sleep_len if sleep_len > 0 else 1
+
+            data[Client.username] = False
 
             Client.log("DEBUG", "Currently in passive mode.")
 
