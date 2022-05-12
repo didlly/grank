@@ -56,6 +56,12 @@ shifts:
     active: 7200
     passive: 3600
     variation: 60
+
+  2:
+    enabled: True
+    active: 3600
+    passive: 7200
+    variation: 60
   
 auto buy:
   enabled: True
