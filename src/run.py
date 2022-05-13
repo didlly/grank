@@ -651,20 +651,24 @@ def run(Client):
                     )
 
         if Client.Repository.config["custom commands"]["enabled"]:
-            for key in Client.Repository.config["custom commands"]:
+            while True:
+                try:
+                    for key in Client.Repository.config["custom commands"]:
+                        if key == "enabled":
+                            continue
+                        if Client.Repository.config["custom commands"][key]["enabled"]:
+                            try:
+                                exec(
+                                    f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now()"
+                                )
 
-                if key == "enabled":
-                    continue
-                if Client.Repository.config["custom commands"][key]["enabled"]:
-                    try:
-                        exec(
-                            f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now()"
-                        )
+                            except NameError:
+                                custom(Client, key)
 
-                    except NameError:
-                        custom(Client, key)
-
-                        exec(f"custom_{key.replace(' ', '_')} = datetime.now()")
+                                exec(f"custom_{key.replace(' ', '_')} = datetime.now()")
+                    break
+                except RuntimeError:
+                    pass
 
         while (
             not data[Client.username]
