@@ -51,7 +51,7 @@ def run(Client):
         ):
             if datetime.now() - datetime.strptime(
                 Client.Repository.database["adventure"], "%Y-%m-%d %H:%M:%S.%f"
-            ):
+            ) > Client.Repository.config["cooldowns"]["adventure"]:
                 try:
                     adventure(Client)
                 except Exception:
