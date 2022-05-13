@@ -145,6 +145,15 @@ def adventure(Client) -> None:
 
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     elif (
+        "You found a strange looking object. What do you do?"
+        in latest_message["embeds"][0]["description"]
+    ):
+        Client.log(
+            "DEBUG", "Strange looking object adventure phase. Choosing `Ignore` option."
+        )
+
+        custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
+    elif (
         "A friendly alien approached you slowly."
         in latest_message["embeds"][0]["description"]
     ):

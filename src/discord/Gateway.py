@@ -156,7 +156,7 @@ def event_handler(Client, ws, event: dict) -> None:
         ):
             try:
                 Client.channel_id = int(channel)
-                Client.channel_id = channel
+                Client.channel_id = str(channel)
                 Client.guild_id = guild_id(Client)
 
                 if Client.guild_id == False:
