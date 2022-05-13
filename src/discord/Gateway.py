@@ -310,7 +310,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             ],
                                         },
                                         {
-                                            "title": "Session sats",
+                                            "title": "Session stats",
                                             "color": None,
                                             "fields": [
                                                 {
