@@ -49,9 +49,12 @@ def run(Client):
             and data[Client.username]
             and data["channels"][Client.channel_id][Client.token]
         ):
-            if datetime.now() - datetime.strptime(
-                Client.Repository.database["adventure"], "%Y-%m-%d %H:%M:%S.%f"
-            ) > Client.Repository.config["cooldowns"]["adventure"]:
+            if (
+                datetime.now()
+                - datetime.strptime(
+                    Client.Repository.database["adventure"], "%Y-%m-%d %H:%M:%S.%f"
+                )
+            ).total_seconds() > Client.Repository.config["cooldowns"]["adventure"]:
                 try:
                     adventure(Client)
                 except Exception:
