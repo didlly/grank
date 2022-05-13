@@ -172,7 +172,9 @@ Values in the `commands` category tell the program whether or not to *run certai
 | `vote`  | `Boolean` | `True`  | Tells the program whether or not to vote for Dank Memer on Discord Bot List. |
 | `work`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls work`. |
 
-COOLDOWNS CATEGORY
+### `cooldowns` category
+
+Values in the `cooldowns` category tell the program *the cooldowns for each command*. Edit them only if you know what you are doing. You have the most optimal settings by default.
 
 ### `lottery` category
 
