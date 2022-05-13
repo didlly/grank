@@ -328,7 +328,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             ],
                                         },
                                         {
-                                            "title": "Lifetime sats",
+                                            "title": "Lifetime stats",
                                             "color": None,
                                             "fields": [
                                                 {
