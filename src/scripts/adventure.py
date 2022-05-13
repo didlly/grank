@@ -129,7 +129,7 @@ def adventure(Client) -> None:
         Client.log("DEBUG", "Uneventful adventure phase.")
 
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
-    if "You ran out of fuel! What next?" in latest_message["embeds"][0]["description"]:
+    elif "You ran out of fuel! What next?" in latest_message["embeds"][0]["description"]:
         Client.log(
             "DEBUG", "Fuel loss adventure phase. Choosing `Search a planet` option."
         )
