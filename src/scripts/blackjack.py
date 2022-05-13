@@ -57,7 +57,7 @@ def blackjack(Client) -> None:
                     f"Won {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.",
                 )
                 return
-            elif "Tied" in latest_message["embeds"][0]["description"]:
+            elif "tied" in latest_message["embeds"][0]["description"]:
                 Client.log(
                     "DEBUG", "Tied with the dealer in the `pls blackjack` command."
                 )
