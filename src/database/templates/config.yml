@@ -15,7 +15,7 @@ commands:
   work: True
 
 cooldowns:
-  adventure: 62
+  adventure: 302
 
   beg:
     default: 47
