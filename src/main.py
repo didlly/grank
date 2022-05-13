@@ -13,9 +13,9 @@ from threading import Thread
 from requests import get
 
 if system().lower() == "windows":
-    import ctypes
+    from ctypes import windll
 
-    kernel32 = ctypes.windll.kernel32
+    kernel32 = windll.kernel32
     kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
 
 if getattr(sys, "frozen", False):
