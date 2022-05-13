@@ -35,7 +35,7 @@ def run(Client):
                     "WARNING",
                     f"An unexpected error occured during the running of the `pls settings confirmations nah` command: `{exc_info()}`.",
                 )
-    
+
     time = datetime.now() + timedelta(seconds=-31556926)
 
     (
@@ -622,26 +622,17 @@ def run(Client):
                 )
             ).total_seconds() > Client.Repository.config["cooldowns"]["work"]:
                 try:
-                    output = work(Client)
-
-                    if work(Client) is None:
-                        cooldown = datetime.strftime(
-                            datetime.now(), "%Y-%m-%d %H:%M:%S.%f"
-                        )
-                    else:
-                        cooldown = datetime.strftime(output, "%Y-%m-%d %H:%M:%S.%f")
+                    work(Client)
                 except Exception:
                     if Client.Repository.config["logging"]["warning"]:
-                        cooldown = datetime.strftime(
-                            datetime.now(), "%Y-%m-%d %H:%M:%S.%f"
-                        )
-
                         Client.log(
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls work` command: `{exc_info()}`.",
                         )
 
-                Client.Repository.database["work"] = cooldown
+                Client.Repository.database["work"] = datetime.strftime(
+                    datetime.now(), "%Y-%m-%d %H:%M:%S.%f"
+                )
                 Client.Repository.database_write()
 
                 if Client.Repository.config["logging"]["debug"]:

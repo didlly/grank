@@ -67,7 +67,7 @@ def stream(Client) -> None:
             if "text" in latest_message["embeds"][0]["footer"].keys():
                 if "Wait" in latest_message["embeds"][0]["footer"]["text"]:
                     Client.log("DEBUG", "Cannot stream yet - awaiting cooldown end.")
-                    
+
                     Client.interact_button(
                         "pls stream",
                         latest_message["components"][0]["components"][-1]["custom_id"],

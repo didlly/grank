@@ -22,9 +22,6 @@ def work(Client) -> None:
         Client.log(
             "WARNING", f"Cannot work - awaiting cooldown end ({time_left} left)."
         )
-
-        time_left = int(time_left.split("m ")[0]) * 60 if "m" in time_left else int(time_left.replace("s", ""))
-        return datetime.now() + timedelta(seconds=time_left - 3601)
     elif "Dunk the ball!" in latest_message["content"]:
         Client.log("DEBUG", "Detected dunk the ball game.")
 
