@@ -22,7 +22,6 @@ from utils.Shared import data
 from datetime import datetime
 from sys import exc_info
 
-
 def run(Client):
     (
         last_adventure,
@@ -49,7 +48,7 @@ def run(Client):
             if (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_adventure, "%x-%X")
-            ).total_seconds() > 60:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["adventure"]:
                 try:
                     adventure(Client)
                 except Exception:
@@ -67,16 +66,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_beg, "%x-%X")
                 ).total_seconds()
-                > 25
+                > Client.Repository.config["cooldowns"]["beg"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_beg, "%x-%X")
-            ).total_seconds() > 45:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["beg"]["default"]:
                 try:
                     beg(Client)
                 except Exception:
@@ -94,16 +93,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_blackjack, "%x-%X")
                 ).total_seconds()
-                > 5
+                > Client.Repository.config["cooldowns"]["blackjack"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_blackjack, "%x-%X")
-            ).total_seconds() > 10:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["blackjack"]["default"]:
                 try:
                     blackjack(Client)
                 except Exception:
@@ -129,16 +128,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_crime, "%x-%X")
                 ).total_seconds()
-                > 15
+                > Client.Repository.config["cooldowns"]["crime"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_crime, "%x-%X")
-            ).total_seconds() > 45:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["crime"]["default"]:
                 try:
                     crime(Client)
                 except Exception:
@@ -166,7 +165,7 @@ def run(Client):
             if (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(Client.Repository.database["daily"], "%x-%X")
-            ).total_seconds() > 23400:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["daily"]:
                 try:
                     daily(Client)
                 except Exception:
@@ -191,16 +190,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_dig, "%x-%X")
                 ).total_seconds()
-                > 25
+                > Client.Repository.config["cooldowns"]["dig"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_dig, "%x-%X")
-            ).total_seconds() > 45:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["dig"]["default"]:
                 try:
                     dig(Client)
                 except Exception:
@@ -218,16 +217,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_fish, "%x-%X")
                 ).total_seconds()
-                > 25
+                > Client.Repository.config["cooldowns"]["fish"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_fish, "%x-%X")
-            ).total_seconds() > 45:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["fish"]["default"]:
                 try:
                     fish(Client)
                 except Exception:
@@ -247,7 +246,7 @@ def run(Client):
             if (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_guess, "%x-%X")
-            ).total_seconds() > 60:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["guess"]:
                 try:
                     guess(Client)
                 except Exception:
@@ -267,16 +266,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_highlow, "%x-%X")
                 ).total_seconds()
-                > 15
+                > Client.Repository.config["cooldowns"]["highlow"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_highlow, "%x-%X")
-            ).total_seconds() > 30:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["highlow"]["default"]:
                 try:
                     highlow(Client)
                 except Exception:
@@ -302,16 +301,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_hunt, "%x-%X")
                 ).total_seconds()
-                > 25
+                > Client.Repository.config["cooldowns"]["hunt"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_hunt, "%x-%X")
-            ).total_seconds() > 40:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["hunt"]["patron"]:
                 try:
                     hunt(Client)
                 except Exception:
@@ -364,16 +363,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_postmeme, "%x-%X")
                 ).total_seconds()
-                > 45
+                > Client.Repository.config["cooldowns"]["postmeme"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_postmeme, "%x-%X")
-            ).total_seconds() > 50:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["postmeme"]["default"]:
                 try:
                     postmeme(Client)
                 except Exception:
@@ -399,16 +398,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_search, "%x-%X")
                 ).total_seconds()
-                > 15
+                > Client.Repository.config["cooldowns"]["search"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_search, "%x-%X")
-            ).total_seconds() > 30:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["search"]["default"]:
                 try:
                     search(Client)
                 except Exception:
@@ -434,16 +433,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_snakeeyes, "%x-%X")
                 ).total_seconds()
-                > 5
+                > Client.Repository.config["cooldowns"]["snakeeyes"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_snakeeyes, "%x-%X")
-            ).total_seconds() > 10:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["snakeeyes"]["default"]:
                 try:
                     snakeeyes(Client)
                 except Exception:
@@ -463,7 +462,7 @@ def run(Client):
             if (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(Client.Repository.database["stream"], "%x-%X")
-            ).total_seconds() > 600:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["stream"]:
                 try:
                     stream(Client)
                 except Exception:
@@ -496,16 +495,16 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                Client.Repository.config["cooldowns"]["patron"]
+                Client.Repository.config["settings"]["patron"]
                 and (
                     datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                     - datetime.strptime(last_trivia, "%x-%X")
                 ).total_seconds()
-                > 3
+                > Client.Repository.config["cooldowns"]["trivia"]["patron"]
             ) or (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(last_trivia, "%x-%X")
-            ).total_seconds() > 5:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["trivia"]["default"]:
                 try:
                     trivia(Client)
                 except Exception:
@@ -533,7 +532,7 @@ def run(Client):
             if (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(Client.Repository.database["vote"], "%x-%X")
-            ).total_seconds() > 43200:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["vote"]:
                 try:
                     vote(Client)
                 except Exception:
@@ -559,7 +558,7 @@ def run(Client):
             if (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
                 - datetime.strptime(Client.Repository.database["work"], "%x-%X")
-            ).total_seconds() > 3600:
+            ).total_seconds() > Client.Repository.config["cooldowns"]["work"]:
                 try:
                     output = work(Client)
 

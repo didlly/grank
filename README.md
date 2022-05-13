@@ -172,6 +172,8 @@ Values in the `commands` category tell the program whether or not to *run certai
 | `vote`  | `Boolean` | `True`  | Tells the program whether or not to vote for Dank Memer on Discord Bot List. |
 | `work`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls work`. |
 
+COOLDOWNS CATEGORY
+
 ### `lottery` category
 
 Values in the `lottery` category tell the program *whether lottery tickets should be bought*, and *how often they should be bought*.
@@ -265,10 +267,31 @@ Values in the `auto trade` category tell the program *who items should be traded
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| `enabled`  | `Boolean` | `False`  | If this is set to `True` no items will be traded. If it is set to `False` the program will try and trade the item if their respective config value is `True`. |
-| `trader_token`  | `String` | `None`  | The token of the user the items should be traded to. |
-| `bank note`  | `Boolean` | `True`  | Tells the program whether or not to try and trade the item `bank note` to the user specified in the `trader`option. |
-| `tidepod`  | `Boolean` | `True`  | Tells the program whether or not to try and trade the item `tidepod` to the user specified in the `trader`option. |
+| `enabled`  | `Boolean` | `False`  | If this is set to `False` no items will be traded. If it is set to `True` the program will try and trade the item if their respective config value is `True`. |
+| `trader token`  | `String` | `None`  | The token of the user the items should be traded to. |
+| `bank note`  | `Boolean` | `True`  | Tells the program whether or not to try and trade the item `bank note` to the user specified in the `trader` option. |
+| `tidepod`  | `Boolean` | `True`  | Tells the program whether or not to try and trade the item `tidepod` to the user specified in the `trader` option. |
+
+***NOTE:*** You can add your own items to be traded by following the layout for the default options.
+
+### `auto accept trade` category
+
+Values in the `anti heist` category tell the program whether or not to *automatically accept trades* and *who to accept them from*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically accept trades from other users. |
+| `traders`  | `List` | `[0, 0]`  | Tells the program which accounts to automatically accept trades from. |
+
+### `auto sell` category
+
+Values in the `auto sell` category tell the program *what items should be sold (upon receiving them).*
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `False`  | If this is set to `False` no items will be sold. If it is set to `False` the program will try and sell the item if their respective config value is `True`. |
+| `apple`  | `Boolean` | `True`  | Tells the program whether or not to try and sell the item `apple` (upon receiving it). |
+| `common fish`  | `Boolean` | `True`  | Tells the program whether or not to try and sell the item `common fish` (upon receiving it). |
 
 ***NOTE:*** You can add your own items to be traded by following the layout for the default options.
 
@@ -280,14 +303,79 @@ Values in the `typing indicator` category tell the program whether to make Disco
 | ------------- | ------------- | ------------- | ------------- |
 | `enabled`  | `Boolean` | `False`  | If this is set to `True`, the program will make Discord think the self-bot is typing. If it is set to `False` the program will not make Discord think the self-bot is typing, thus increasing command speed. |
 | `minimum`  | `Float` | `0`  | The minimum time for the program to sleep after Discord is told that the user is typing. |
-| `maximum`  | `Float` | `1`  | The maximum time for the program to sleep after Discord is told that the user is typing. |
+| `maximum`  | `Float` | `0.5`  | The maximum time for the program to sleep after Discord is told that the user is typing. |
 
-### `cooldowns` category
+### `message delay` category
 
-Values in the `cooldowns` category tell the program whether to use cooldowns for *`patrons`* and what the *timeout is for getting responses from Dank Memer*.
+Values in the `messge delay` category tell the program whether to *add random pauses before sending messages* and *how long the pauses should be for*.
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `False`  | If this is set to `True`, the program will add random pauses before sending messages. |
+| `minimum`  | `Float` | `0`  | The minimum time for the program to pause. |
+| `maximum`  | `Float` | `0.5`  | The maximum time for the program to pause. |
+
+### `button delay` category
+
+Values in the `button delay` category tell the program whether to *add random pauses before interacting with buttons* and *how long the pauses should be for*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `False`  | If this is set to `True`, the program will add random pauses before interacting with buttons. |
+| `minimum`  | `Float` | `0`  | The minimum time for the program to pause. |
+| `maximum`  | `Float` | `0.5`  | The maximum time for the program to pause. |
+
+### `dropdown delay` category
+
+Values in the `dropdown delay` category tell the program whether to *add random pauses before selecting dropdowns* and *how long the pauses should be for*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `False`  | If this is set to `True`, the program will add random pauses before selecting dropdowns. |
+| `minimum`  | `Float` | `0`  | The minimum time for the program to pause. |
+| `maximum`  | `Float` | `0.5`  | The maximum time for the program to pause. |
+
+### `anti heist` category
+
+Values in the `anti heist` category tell the program whether or not to *automatically avert heists* by *calling the police*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically avert heists. |
+
+### `auto join heist` category
+
+Values in the `auto join heist` category tell the program whether or not to *automatically join heists* directed to *other users*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically join heists directed to other users. |
+
+### `auto start` category
+
+Values in the `auto start` category tell the program whether or not to *automatically start the grinder* and *which channels to automatically start the grinder in*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `False`  | Tells the program whether or not to automatically start the grinder. |
+| `channels`  | `List` | `[0, 0]`  | Tells the program which channels to automatically start the grinder inv. |
+
+### `blacklisted servers` category
+
+Values in the `logging` category tell the program whether or not to *ignore messages from certain servers* and *which servers to ignore the messages from*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `False`  | Tells the program whether or not to ignore messages in the specified channel. |
+| `servers`  | `List` | `[0, 0]`  | Tells the program which servers to ingore messages from. |
+
+### `settings` category
+
+Values in the `settings` category  *change how Grank functions*.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `prefix`  | `String` | `grank`  | Granks self-bot commands prefix. |
 | `patron`  | `Boolean` | `False`  | Changes cooldowns to reflect the cooldowns of `patrons`. |
 | `timeout`  | `Integer` | `5`  | Timeout for waiting for responses from Dank Memer to commands that require user interaction (like `pls search`). |
 
@@ -301,49 +389,6 @@ Values in the `logging` category tell the program whether or not to log *`debug`
 | `warning`  | `Boolean` | `True`  | Tells the program whether or not to log `warning` messages. |
 
 ***NOTE***: Values in the `logging` category do not affect logging messages sent when the configuration file is being loaded and the token is being verified.
-
-### `blacklisted servers` category
-
-Values in the `logging` category tell the program whether or not to *ignore messages from certain servers* and *which servers to ignore the messages from*.
-
-| Name  | Type | Default Value | Description |
-| ------------- | ------------- | ------------- | ------------- |
-| `enabled`  | `Boolean` | `False`  | Tells the program whether or not to ignore messages in the specified channel. |
-| `servers`  | `List` | `[0, 0]`  | Tells the program which servers to ingore messages from. |
-
-### `auto start` category
-
-Values in the `auto start` category tell the program whether or not to *automatically start the grinder* and *which channels to automatically start the grinder in*.
-
-| Name  | Type | Default Value | Description |
-| ------------- | ------------- | ------------- | ------------- |
-| `enabled`  | `Boolean` | `False`  | Tells the program whether or not to automatically start the grinder. |
-| `channels`  | `List` | `[0, 0]`  | Tells the program which channels to automatically start the grinder inv. |
-
-### `anti heist` category
-
-Values in the `anti heist` category tell the program whether or not to *automatically avert heists* by *calling the police*.
-
-| Name  | Type | Default Value | Description |
-| ------------- | ------------- | ------------- | ------------- |
-| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically avert heists. |
-
-### `auto join heist` category
-
-Values in the `anti heist` category tell the program whether or not to *automatically accept trades* and *who to accept them from*.
-
-| Name  | Type | Default Value | Description |
-| ------------- | ------------- | ------------- | ------------- |
-| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically accept trades from other users. |
-
-### `auto join heist` category
-
-Values in the `anti heist` category tell the program whether or not to *automatically join heists* directed to *other users*.
-
-| Name  | Type | Default Value | Description |
-| ------------- | ------------- | ------------- | ------------- |
-| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to automatically join heists directed to other users. |
-| `traders`  | `List` | `[0, 0]`  | Tells the program which accounts to automatically accept trades from. |
 
 ## Disclaimer
 

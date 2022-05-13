@@ -14,6 +14,47 @@ commands:
   vote: True
   work: True
 
+cooldowns:
+  adventure: 62
+  beg:
+    default: 47
+    patron: 27
+  blackjack:
+    default: 12
+    patron: 7
+  crime:
+    default: 47
+    patron: 17
+  daily: 23402
+  dig:
+    default: 47
+    patron: 27
+  fish:
+    default: 47
+    patron: 27
+  guess: 62
+  highlow:
+    default: 32
+    patron: 17
+  hunt:
+    default: 42
+    patron: 27
+  postmeme:
+    default: 52
+    patron: 47
+  search:
+    default: 32
+    patron: 17
+  snakeeyes:
+    default: 12
+    patron: 7
+  stream: 602
+  trivia:
+    default: 7
+    patron: 5
+  vote: 43202
+  work: 3602
+
 lottery:
   enabled: False
   cooldown: 3600
@@ -37,10 +78,6 @@ snakeeyes:
   amount: 1500
   minimum: 1500
   maximum: 3000
-
-cooldowns:
-  patron: False
-  timeout: 5
 
 custom commands:
   enabled: False
@@ -123,6 +160,8 @@ blacklisted servers:
 
 settings:
   prefix: grank
+  timeout: 5
+  patron: False
 
 logging:
   debug: True

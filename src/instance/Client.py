@@ -229,7 +229,7 @@ class Instance(object):
 
             while (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time
-            ).total_seconds() < self.Repository.config["cooldowns"]["timeout"]:
+            ).total_seconds() < self.Repository.config["settings"]["timeout"]:
                 latest_message = data["channels"][self.channel_id]["messages"][-1]
 
                 if "referenced_message" in latest_message.keys():
@@ -264,7 +264,7 @@ class Instance(object):
 
             if latest_message["author"]["id"] != "270904126974590976":
                 raise TimeoutError(
-                    f"Timeout exceeded for response from Dank Memer ({self.Repository.config['cooldowns']['timeout']} {'second' if self.Repository.config['cooldowns']['timeout'] == 1 else 'seconds'}). Aborting command."
+                    f"Timeout exceeded for response from Dank Memer ({self.Repository.config['settings']['timeout']} {'second' if self.Repository.config['settings']['timeout'] == 1 else 'seconds'}). Aborting command."
                 )
 
             elif len(latest_message["embeds"]) > 0:
