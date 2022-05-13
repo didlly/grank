@@ -36,6 +36,8 @@ def buy(Client, item: str) -> None:
 
             Client.send_message(f"pls with {amount}")
             Client.send_message(f"pls buy {item}")
+
+            _ = Client.retreive_message(f"pls buy {item}")
         else:
             if Client.Repository.config["logging"]["warning"]:
                 Client.log("WARNING", f"Insufficient funds to buy a {item}.")

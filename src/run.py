@@ -19,10 +19,13 @@ from scripts.vote import vote
 from scripts.work import work
 
 from utils.Shared import data
-from datetime import datetime
+from datetime import datetime, timedelta
 from sys import exc_info
 
+
 def run(Client):
+    time = datetime.now() + timedelta(seconds=-31556926)
+
     (
         last_adventure,
         last_beg,
@@ -37,7 +40,9 @@ def run(Client):
         last_search,
         last_snakeeyes,
         last_trivia,
-    ) = ["01/01/22-00:00:00"] * 13
+    ) = [time] * 13
+
+    del time
 
     while True:
         if (
@@ -46,8 +51,7 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_adventure, "%x-%X")
+                datetime.now() - last_adventure
             ).total_seconds() > Client.Repository.config["cooldowns"]["adventure"]:
                 try:
                     adventure(Client)
@@ -58,7 +62,8 @@ def run(Client):
                             f"An unexpected error occured during the running of the `pls adventure` command: `{exc_info()}`.",
                         )
 
-                last_adventure = datetime.now().strftime("%x-%X")
+
+                last_adventure = datetime.now()
 
         if (
             Client.Repository.config["commands"]["beg"]
@@ -67,15 +72,15 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_beg, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_beg).total_seconds()
                 > Client.Repository.config["cooldowns"]["beg"]["patron"]
-            ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_beg, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["beg"]["default"]:
+            ) or (datetime.now() - last_beg).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "beg"
+            ][
+                "default"
+            ]:
                 try:
                     beg(Client)
                 except Exception:
@@ -85,7 +90,7 @@ def run(Client):
                             f"An unexpected error occured during the running of the `pls beg` command: `{exc_info()}`.",
                         )
 
-                last_beg = datetime.now().strftime("%x-%X")
+                last_beg = datetime.now()
 
         if (
             Client.Repository.config["blackjack"]["enabled"]
@@ -94,15 +99,17 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_blackjack, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_blackjack).total_seconds()
                 > Client.Repository.config["cooldowns"]["blackjack"]["patron"]
             ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_blackjack, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["blackjack"]["default"]:
+                datetime.now() - last_blackjack
+            ).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "blackjack"
+            ][
+                "default"
+            ]:
                 try:
                     blackjack(Client)
                 except Exception:
@@ -120,7 +127,7 @@ def run(Client):
                                 f"Failed to clear lag from the `pls blackjack` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
-                last_blackjack = datetime.now().strftime("%x-%X")
+                last_blackjack = datetime.now()
 
         if (
             Client.Repository.config["commands"]["crime"]
@@ -129,15 +136,17 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_crime, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_crime).total_seconds()
                 > Client.Repository.config["cooldowns"]["crime"]["patron"]
             ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_crime, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["crime"]["default"]:
+                datetime.now() - last_crime
+            ).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "crime"
+            ][
+                "default"
+            ]:
                 try:
                     crime(Client)
                 except Exception:
@@ -155,7 +164,7 @@ def run(Client):
                                 f"Failed to clear lag from the `pls crime` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
-                last_crime = datetime.now().strftime("%x-%X")
+                last_crime = datetime.now()
 
         if (
             Client.Repository.config["commands"]["daily"]
@@ -163,8 +172,10 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(Client.Repository.database["daily"], "%x-%X")
+                datetime.now()
+                - datetime.strptime(
+                    Client.Repository.database["daily"], "%Y-%m-%d %H:%M:%S.%f"
+                )
             ).total_seconds() > Client.Repository.config["cooldowns"]["daily"]:
                 try:
                     daily(Client)
@@ -175,7 +186,9 @@ def run(Client):
                             f"An unexpected error occured during the running of the `pls daily` command: `{exc_info()}`.",
                         )
 
-                Client.Repository.database["daily"] = datetime.now().strftime("%x-%X")
+                Client.Repository.database["daily"] = datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S.%f"
+                )
                 Client.Repository.database_write()
 
                 if Client.Repository.config["logging"]["debug"]:
@@ -191,15 +204,15 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_dig, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_dig).total_seconds()
                 > Client.Repository.config["cooldowns"]["dig"]["patron"]
-            ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_dig, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["dig"]["default"]:
+            ) or (datetime.now() - last_dig).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "dig"
+            ][
+                "default"
+            ]:
                 try:
                     dig(Client)
                 except Exception:
@@ -209,7 +222,7 @@ def run(Client):
                             f"An unexpected error occured during the running of the `pls dig` command: `{exc_info()}`.",
                         )
 
-                last_dig = datetime.now().strftime("%x-%X")
+                last_dig = datetime.now()
 
         if (
             Client.Repository.config["commands"]["fish"]
@@ -218,15 +231,17 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_fish, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_fish).total_seconds()
                 > Client.Repository.config["cooldowns"]["fish"]["patron"]
             ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_fish, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["fish"]["default"]:
+                datetime.now() - last_fish
+            ).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "fish"
+            ][
+                "default"
+            ]:
                 try:
                     fish(Client)
                 except Exception:
@@ -236,17 +251,16 @@ def run(Client):
                             f"An unexpected error occured during the running of the `pls fish` command: `{exc_info()}`.",
                         )
 
-                last_fish = datetime.now().strftime("%x-%X")
+                last_fish = datetime.now()
 
         if (
             Client.Repository.config["commands"]["guess"]
             and data[Client.username]
             and data["channels"][Client.channel_id][Client.token]
         ):
-            if (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_guess, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["guess"]:
+            if (datetime.now() - last_guess).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ]["guess"]:
                 try:
                     guess(Client)
                 except Exception:
@@ -258,7 +272,7 @@ def run(Client):
 
                     Client.send_message("end")
 
-                last_guess = datetime.now().strftime("%x-%X")
+                last_guess = datetime.now()
 
         if (
             Client.Repository.config["commands"]["highlow"]
@@ -267,15 +281,17 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_highlow, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_highlow).total_seconds()
                 > Client.Repository.config["cooldowns"]["highlow"]["patron"]
             ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_highlow, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["highlow"]["default"]:
+                datetime.now() - last_highlow
+            ).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "highlow"
+            ][
+                "default"
+            ]:
                 try:
                     highlow(Client)
                 except Exception:
@@ -293,7 +309,7 @@ def run(Client):
                                 f"Failed to clear lag from the `pls highlow` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
-                last_highlow = datetime.now().strftime("%x-%X")
+                last_highlow = datetime.now()
 
         if (
             Client.Repository.config["commands"]["hunt"]
@@ -302,15 +318,17 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_hunt, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_hunt).total_seconds()
                 > Client.Repository.config["cooldowns"]["hunt"]["patron"]
             ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_hunt, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["hunt"]["patron"]:
+                datetime.now() - last_hunt
+            ).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "hunt"
+            ][
+                "patron"
+            ]:
                 try:
                     hunt(Client)
                 except Exception:
@@ -320,7 +338,7 @@ def run(Client):
                             f"An unexpected error occured during the running of the `pls hunt` command: `{exc_info()}`.",
                         )
 
-                last_hunt = datetime.now().strftime("%x-%X")
+                last_hunt = datetime.now()
 
         if (
             Client.Repository.config["lottery"]["enabled"]
@@ -328,8 +346,10 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(Client.Repository.database["lottery"], "%x-%X")
+                datetime.now()
+                - datetime.strptime(
+                    Client.Repository.database["lottery"], "%Y-%m-%d %H:%M:%S.%f"
+                )
             ).total_seconds() > Client.Repository.config["lottery"]["cooldown"]:
                 try:
                     lottery(Client)
@@ -348,7 +368,9 @@ def run(Client):
                                 f"Failed to clear lag from the `pls lottery` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
-                Client.Repository.database["lottery"] = datetime.now().strftime("%x-%X")
+                Client.Repository.database["lottery"] = datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S.%f"
+                )
                 Client.Repository.database_write()
 
                 if Client.Repository.config["logging"]["debug"]:
@@ -364,15 +386,17 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_postmeme, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_postmeme).total_seconds()
                 > Client.Repository.config["cooldowns"]["postmeme"]["patron"]
             ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_postmeme, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["postmeme"]["default"]:
+                datetime.now() - last_postmeme
+            ).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "postmeme"
+            ][
+                "default"
+            ]:
                 try:
                     postmeme(Client)
                 except Exception:
@@ -390,7 +414,7 @@ def run(Client):
                                 f"Failed to clear lag from the `pls postmeme` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
-                last_postmeme = datetime.now().strftime("%x-%X")
+                last_postmeme = datetime.now()
 
         if (
             Client.Repository.config["commands"]["search"]
@@ -399,15 +423,17 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_search, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_search).total_seconds()
                 > Client.Repository.config["cooldowns"]["search"]["patron"]
             ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_search, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["search"]["default"]:
+                datetime.now() - last_search
+            ).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "search"
+            ][
+                "default"
+            ]:
                 try:
                     search(Client)
                 except Exception:
@@ -425,7 +451,7 @@ def run(Client):
                                 f"Failed to clear lag from the `pls search` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
-                last_search = datetime.now().strftime("%x-%X")
+                last_search = datetime.now()
 
         if (
             Client.Repository.config["snakeeyes"]["enabled"]
@@ -434,15 +460,17 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_snakeeyes, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_snakeeyes).total_seconds()
                 > Client.Repository.config["cooldowns"]["snakeeyes"]["patron"]
             ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_snakeeyes, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["snakeeyes"]["default"]:
+                datetime.now() - last_snakeeyes
+            ).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "snakeeyes"
+            ][
+                "default"
+            ]:
                 try:
                     snakeeyes(Client)
                 except Exception:
@@ -452,7 +480,7 @@ def run(Client):
                             f"An unexpected error occured during the running of the `pls snakeeyes` command: `{exc_info()}`.",
                         )
 
-                last_snakeeyes = datetime.now().strftime("%x-%X")
+                last_snakeeyes = datetime.now()
 
         if (
             Client.Repository.config["stream"]["enabled"]
@@ -460,8 +488,10 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(Client.Repository.database["stream"], "%x-%X")
+                datetime.now()
+                - datetime.strptime(
+                    Client.Repository.database["stream"], "%Y-%m-%d %H:%M:%S.%f"
+                )
             ).total_seconds() > Client.Repository.config["cooldowns"]["stream"]:
                 try:
                     stream(Client)
@@ -480,7 +510,9 @@ def run(Client):
                                 f"Failed to clear lag from the `pls stream` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
-                Client.Repository.database["stream"] = datetime.now().strftime("%x-%X")
+                Client.Repository.database["stream"] = datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S.%f"
+                )
                 Client.Repository.database_write()
 
                 if Client.Repository.config["logging"]["debug"]:
@@ -496,15 +528,17 @@ def run(Client):
         ):
             if (
                 Client.Repository.config["settings"]["patron"]
-                and (
-                    datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                    - datetime.strptime(last_trivia, "%x-%X")
-                ).total_seconds()
+                and (datetime.now() - last_trivia).total_seconds()
                 > Client.Repository.config["cooldowns"]["trivia"]["patron"]
             ) or (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(last_trivia, "%x-%X")
-            ).total_seconds() > Client.Repository.config["cooldowns"]["trivia"]["default"]:
+                datetime.now() - last_trivia
+            ).total_seconds() > Client.Repository.config[
+                "cooldowns"
+            ][
+                "trivia"
+            ][
+                "default"
+            ]:
                 try:
                     trivia(Client)
                 except Exception:
@@ -522,7 +556,7 @@ def run(Client):
                                 f"Failed to clear lag from the `pls trivia` command failing: `{exc_info()}`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank).",
                             )
 
-                last_trivia = datetime.now().strftime("%x-%X")
+                last_trivia = datetime.now()
 
         if (
             Client.Repository.config["commands"]["vote"]
@@ -530,8 +564,10 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(Client.Repository.database["vote"], "%x-%X")
+                datetime.now()
+                - datetime.strptime(
+                    Client.Repository.database["vote"], "%Y-%m-%d %H:%M:%S.%f"
+                )
             ).total_seconds() > Client.Repository.config["cooldowns"]["vote"]:
                 try:
                     vote(Client)
@@ -542,7 +578,9 @@ def run(Client):
                             f"An unexpected error occured during the running of the `pls vote` command: `{exc_info()}`.",
                         )
 
-                Client.Repository.database["vote"] = datetime.now().strftime("%x-%X")
+                Client.Repository.database["vote"] = datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S.%f"
+                )
                 Client.Repository.database_write()
 
                 if Client.Repository.config["logging"]["debug"]:
@@ -556,21 +594,25 @@ def run(Client):
             and data["channels"][Client.channel_id][Client.token]
         ):
             if (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-                - datetime.strptime(Client.Repository.database["work"], "%x-%X")
+                datetime.now()
+                - datetime.strptime(
+                    Client.Repository.database["work"], "%Y-%m-%d %H:%M:%S.%f"
+                )
             ).total_seconds() > Client.Repository.config["cooldowns"]["work"]:
                 try:
                     output = work(Client)
 
-                    if output is None:
-                        cooldown = datetime.now().strftime("%x-%X")
+                    if work(Client) is None:
+                        cooldown = datetime.strftime(
+                            datetime.now(), "%Y-%m-%d %H:%M:%S.%f"
+                        )
                     else:
-                        cooldown = datetime.strptime(
-                            output, "%Y-%m-%d %H:%M:%S"
-                        ).strftime("%x-%X")
+                        cooldown = datetime.strftime(output, "%Y-%m-%d %H:%M:%S.%f")
                 except Exception:
                     if Client.Repository.config["logging"]["warning"]:
-                        cooldown = datetime.now().strftime("%x-%X")
+                        cooldown = datetime.strftime(
+                            datetime.now(), "%Y-%m-%d %H:%M:%S.%f"
+                        )
 
                         Client.log(
                             "WARNING",
@@ -594,15 +636,13 @@ def run(Client):
                 if Client.Repository.config["custom commands"][key]["enabled"]:
                     try:
                         exec(
-                            f"if (datetime.strptime(datetime.now().strftime('%x-%X'), '%x-%X') - datetime.strptime(custom_{key.replace(' ', '_')}, '%x-%X')).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
+                            f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now()"
                         )
 
                     except NameError:
                         custom(Client, key)
 
-                        exec(
-                            f"custom_{key.replace(' ', '_')} = datetime.now().strftime('%x-%X')"
-                        )
+                        exec(f"custom_{key.replace(' ', '_')} = datetime.now()")
 
         while (
             not data[Client.username]

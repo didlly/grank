@@ -102,8 +102,8 @@ def adventure(Client) -> None:
                         f"An adventure ticket is required for the command `pls adv`. However, since {'auto buy is off for advenure tickets,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
                     )
                     return
-
-            custom_id = latest_message["components"][0]["components"][0]["custom_id"]
+            
+            custom_id = latest_message["components"][1]["components"][0]["custom_id"]
 
             Client.interact_button("pls adv", custom_id, latest_message)
 
@@ -158,6 +158,13 @@ def adventure(Client) -> None:
         Client.log("DEBUG", "Alien abduction adventure. Choosing `Flee` option.")
 
         custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
+    elif (
+        "You uh, just came across a pair of Odd Eyes floating around"
+        in latest_message["embeds"][0]["description"]
+    ):
+
+        Client.log("DEBUG", "Odd eye adventure phase. Choosing `Flee` option.")
+        custom_id = latest_message["components"][0]["components"][1]["custom_id"]
     else:
         Client.log(
             "WARNING", "Unknown `pls adventure` phase. Clicking a random button."

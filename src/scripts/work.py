@@ -24,9 +24,7 @@ def work(Client) -> None:
         )
 
         time_left = int(time_left.split("m ")[0])
-        time = str(datetime.now() + timedelta(minutes=time_left - 61)).split(".")[0]
-
-        return time
+        return datetime.now() + timedelta(minutes=time_left - 61)
     elif "Dunk the ball!" in latest_message["content"]:
         Client.log("DEBUG", "Detected dunk the ball game.")
 
