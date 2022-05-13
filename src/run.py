@@ -27,7 +27,6 @@ def run(Client):
     time = datetime.now() + timedelta(seconds=-31556926)
 
     (
-        last_adventure,
         last_beg,
         last_blackjack,
         last_crime,
@@ -40,7 +39,7 @@ def run(Client):
         last_search,
         last_snakeeyes,
         last_trivia,
-    ) = [time] * 13
+    ) = [time] * 12
 
     del time
 
@@ -50,9 +49,9 @@ def run(Client):
             and data[Client.username]
             and data["channels"][Client.channel_id][Client.token]
         ):
-            if (
-                datetime.now() - last_adventure
-            ).total_seconds() > Client.Repository.config["cooldowns"]["adventure"]:
+            if datetime.now() - datetime.strptime(
+                Client.Repository.database["adventure"], "%Y-%m-%d %H:%M:%S.%f"
+            ):
                 try:
                     adventure(Client)
                 except Exception:
@@ -62,8 +61,16 @@ def run(Client):
                             f"An unexpected error occured during the running of the `pls adventure` command: `{exc_info()}`.",
                         )
 
+                Client.Repository.database["adventure"] = datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S.%f"
+                )
+                Client.Repository.database_write()
 
-                last_adventure = datetime.now()
+                if Client.Repository.config["logging"]["debug"]:
+                    Client.log(
+                        "DEBUG",
+                        "Successfully updated latest command run of `pls adventure`.",
+                    )
 
         if (
             Client.Repository.config["commands"]["beg"]

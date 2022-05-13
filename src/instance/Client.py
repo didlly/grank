@@ -462,7 +462,7 @@ class Instance(object):
                         )
                     sleep(request["retry_after"])
                     continue
-                
+
                 raise ButtonInteractError(
                     f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
