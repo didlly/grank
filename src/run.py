@@ -24,6 +24,18 @@ from sys import exc_info
 
 
 def run(Client):
+    if Client.Repository.database["confirmations"] == "False":
+        try:
+            Client.send_message("pls settings confirmations nah")
+            Client.Repository.database["confirmations"] = "True"
+            Client.Repository.database_write()
+        except Exception:
+            if Client.Repository.config["logging"]["warning"]:
+                Client.log(
+                    "WARNING",
+                    f"An unexpected error occured during the running of the `pls settings confirmations nah` command: `{exc_info()}`.",
+                )
+    
     time = datetime.now() + timedelta(seconds=-31556926)
 
     (
