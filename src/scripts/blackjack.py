@@ -37,7 +37,7 @@ def blackjack(Client) -> None:
                     "DEBUG", f"Lost {amount} through the `pls blackjack` command."
                 )
                 return
-            elif "You win" in latest_message["embeds"][0]["description"]:
+            elif "You won" in latest_message["embeds"][0]["description"]:
                 try:
                     coins = int(
                         "".join(
@@ -57,7 +57,7 @@ def blackjack(Client) -> None:
                     f"Won {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.",
                 )
                 return
-            elif "tied" in latest_message["embeds"][0]["description"]:
+            elif "hasn't changed" in latest_message["embeds"][0]["description"]:
                 Client.log(
                     "DEBUG", "Tied with the dealer in the `pls blackjack` command."
                 )

@@ -327,7 +327,7 @@ def run(Client):
             ][
                 "hunt"
             ][
-                "patron"
+                "default"
             ]:
                 try:
                     hunt(Client)
