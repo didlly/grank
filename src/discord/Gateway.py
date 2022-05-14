@@ -2071,7 +2071,8 @@ def event_handler(Client, ws, event: dict) -> None:
                 "WARNING",
                 f"An unexpected error occured during the websocket connection (`{exc}`). Assuming gateway disconnect and creating a new connection.",
             )
-            gateway(Client)
+            Thread(target=gateway, args=[Client]).start()
+            return
 
 
 def gateway(Client: Union[Instance, str]) -> Optional[str]:
