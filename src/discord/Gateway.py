@@ -19,7 +19,7 @@ from datetime import datetime
 from copy import copy
 from psutil import Process
 from os import getpid
-import sys
+from sys import exc_info
 
 
 def convert_size(num, suffix="B"):
@@ -299,10 +299,6 @@ def event_handler(Client, ws, event: dict) -> None:
                                                     "name": "Became active:",
                                                     "value": f"<t:{round(Client.startup_time)}:R>",
                                                 },
-                                                {
-                                                    "name": "Running from source:",
-                                                    "value": f"`{False if getattr(sys, 'frozen', False) else True}`",
-                                                },
                                             ],
                                         },
                                         {
@@ -382,7 +378,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                     "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                     "attachments": [],
                                 },
-                                f"**Grank `{Client.current_version}`** running on **`Python {python_version()}`**.\n\n__**Grank Information:**__\nActive since: `{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`\nBecame active: <t:{round(Client.startup_time)}:R>\nRunning from source: `{False if getattr(sys, 'frozen', False) else True}`\n\n__**Client Information:**__\nUsername: `{Client.username}`\nID: `{Client.id}`\n\n__**Session Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected']}`\n\n__**Lifetime Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked'] + Client.Repository.info['stats']['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected'] + Client.Repository.info['stats']['dropdowns_selected']}`",
+                                f"**Grank `{Client.current_version}`** running on **`Python {python_version()}`**.\n\n__**Grank Information:**__\nActive since: `{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`\nBecame active: <t:{round(Client.startup_time)}:R>\n\n__**Client Information:**__\nUsername: `{Client.username}`\nID: `{Client.id}`\n\n__**Session Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected']}`\n\n__**Lifetime Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked'] + Client.Repository.info['stats']['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected'] + Client.Repository.info['stats']['dropdowns_selected']}`",
                             )
                         elif args.command == "servers":
                             if (
@@ -2071,7 +2067,7 @@ def event_handler(Client, ws, event: dict) -> None:
         except Exception as exc:
             Client.log(
                 "WARNING",
-                f"An unexpected error occured during the websocket connection (`{exc}`). Assuming gateway disconnect and creating a new connection.",
+                f"An unexpected error occured during the websocket connection (`{exc_info()}`). Assuming gateway disconnect and creating a new connection.",
             )
             Thread(target=gateway, args=[Client]).start()
             return
