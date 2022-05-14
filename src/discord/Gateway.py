@@ -19,7 +19,7 @@ from datetime import datetime
 from copy import copy
 from psutil import Process
 from os import getpid
-from traceback import format_stack
+from sys import exc_info
 
 
 def convert_size(num, suffix="B"):
@@ -2059,7 +2059,7 @@ def event_handler(Client, ws, event: dict) -> None:
         except Exception:
             Client.log(
                 "WARNING",
-                f"An unexpected error occured during the websocket connection (`{repr(format_stack())}`). Assuming gateway disconnect and creating a new connection.",
+                f"An unexpected error occured during the websocket connection (`{exc_info()}`). Assuming gateway disconnect and creating a new connection.",
             )
             Thread(target=gateway, args=[Client]).start()
             return
