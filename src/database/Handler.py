@@ -57,11 +57,7 @@ def create_info(cwd: str, account):
 
 
 def create_controllers(cwd: str, account) -> open:
-    controllers_template = {}
-    controllers_template["controllers"] = [account.id]
-    controllers_template["controllers_info"] = {
-        account.id: {"added": int(time()), "added_by": account.id, "commands": []}
-    }
+    controllers_template = {"controllers": [account.id], "controllers_info": {"added": int(time()), "added_by": account.id, "commands": []}}
 
     with suppress(FileExistsError):
         open(f"{cwd}database/{account.id}/controllers.json", "x").close()

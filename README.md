@@ -52,7 +52,7 @@ Unfortunately, I do not have access to a Mac or Linux device, so you will have t
 
 * Install the latest version of Python from [here](https://www.python.org/downloads/). Make sure to have the `Install Pip` option ticked.
 * Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
-* Run `pip install requests websocket-client`.
+* Run `pip install requests websocket-client psutil`.
 
 ### Setting up Grank
 To use Grank, you will have to provide your Discord token. Don't worry, your token is never shared with anyone else.
@@ -63,7 +63,7 @@ To use Grank, you will have to provide your Discord token. Don't worry, your tok
 
 Open `src/credentials.json`. You should see a dictionary with a key called `TOKEN`. Add your token into the list after this key. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
 
-You are now ready to use the program. Run `python main.py` in a command prompt in the `/src/` directory to start the program (or if you are on Windows run `main.exe`). You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things!
+You are now ready to use the program. Run `python main.py` (or `python3 main.py`) in a command prompt in the `/src/` directory to start the program (or if you are on Windows run `main.exe`). You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things!
 
 ## How to use Grank
 Now you have Grank set-up, you are probably wondering how to use Grank. Grank is controlled through Discord. You can view all the commands below, or run `grank help` to get started on your journey using Grank. You will find more information by running the specific `-help` command for each command category.
@@ -89,7 +89,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 
 | Name | Description |
 | ------------- | ------------- |
-| `info`  | Shows info about the grinder. |
+| `info`  | Shows info about the grinder (like session stats, resource usage stats, commands ran stats, etc). |
 
 ### `controllers` category
 

@@ -658,8 +658,8 @@ def run(Client):
 
                                 exec(f"custom_{key.replace(' ', '_')} = datetime.now()")
                     break
-                except RuntimeError:
-                    pass
+                except Exception:
+                    Client.log("WARNING", "User changed custom command settings while Grank was running the custom commands. Re-running the custom commands.")
 
         while (
             not data[Client.username]

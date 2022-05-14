@@ -32,12 +32,15 @@ def verify(cwd: str, account, Client: Instance) -> None:
         Client.log("WARNING", "Database is corrupted. Rebuilding now.")
 
         if statuses[0] is False:
+            Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/config.yml")
             create_config(cwd, Client.id)
 
         if statuses[1] is False:
+            Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/database.json")
             create_database(cwd, Client.id)
 
         if statuses[-1] is False:
+            Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/controllers.json")
             create_controllers(cwd, account)
 
 

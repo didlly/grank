@@ -121,10 +121,21 @@ def work(Client) -> None:
 
             sleep(2.5)
 
-        for option in latest_message["components"][0]["components"]:
-            if emoji == option["label"]:
-                Client.interact_button("pls work", option["custom_id"], latest_message)
-                break
+        found = False
+        
+        for row in latest_message["components"]:
+            for option in row["components"]:
+                if emoji == option["emoji"]["name"]:
+                    Client.interact_button("pls work", option["custom_id"], latest_message)
+                    found = True
+                    break
+                
+        if not found:
+            Client.log("WARNING", "Failed to match the emoji. Clicking a random emoji.")
+            custom_id = choice(latest_message["components"][0]["components"])[
+                "custom_id"
+            ]
+            Client.interact_button("pls work", custom_id, latest_message)
     else:
         Client.log("WARNING", "Unknown `pls work` game. Clicking a random button.")
 
