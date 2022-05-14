@@ -1,3 +1,5 @@
+from time import sleep
+
 def buy(Client, item: str) -> None:
     Client.send_message(f"pls buy {item}")
 
@@ -35,6 +37,9 @@ def buy(Client, item: str) -> None:
             amount = Client.Repository.database["price"][item] - wallet
 
             Client.send_message(f"pls with {amount}")
+            
+            sleep(0.5)
+            
             Client.send_message(f"pls buy {item}")
 
             _ = Client.retreive_message(f"pls buy {item}")
