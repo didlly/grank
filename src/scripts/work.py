@@ -66,15 +66,15 @@ def work(Client) -> None:
                 custom_id = button["custom_id"]
                 break
 
-            if custom_id is None:
-                Client.log(
-                    "WARNING",
-                    "Failed to get answer to the colour match game. Choosing a random button.",
-                )
+        if custom_id is None:
+            Client.log(
+                "WARNING",
+                "Failed to get answer to the colour match game. Choosing a random button.",
+            )
 
-                custom_id = choice(latest_message["components"][0]["components"])[
-                    "custom_id"
-                ]
+            custom_id = choice(latest_message["components"][0]["components"])[
+                "custom_id"
+            ]
 
             Client.interact_button("pls trivia", custom_id, latest_message)
     elif "Hit the ball!" in latest_message["content"]:
@@ -121,13 +121,14 @@ def work(Client) -> None:
 
             sleep(2.5)
 
-        found = False
+        custom_id = False
         
-        for row in latest_message["components"]:
-            for option in row["components"]:
-                if emoji == option["emoji"]["name"]:
-                    Client.interact_button("pls work", option["custom_id"], latest_message)
-                    found = True
+        for index in range(len(latest_message["components"])):
+            for index2 in range(len(latest_message["componenets"][index])):
+                if emoji == latest_message["componenets"][index]["components"][index2]["emoji"]["name"]:
+                    custom_id = latest_message["componenets"][index]["components"][index2]["custom_id"]
+                    Client.interact_button("pls work", custom_id, latest_message)
+                    custom_id = True
                     break
                 
         if not found:
