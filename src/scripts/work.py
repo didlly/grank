@@ -131,7 +131,7 @@ def work(Client) -> None:
                     custom_id = True
                     break
                 
-        if not found:
+        if not custom_id:
             Client.log("WARNING", "Failed to match the emoji. Clicking a random emoji.")
             custom_id = choice(latest_message["components"][0]["components"])[
                 "custom_id"
