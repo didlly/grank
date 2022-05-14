@@ -19,7 +19,7 @@ from datetime import datetime
 from copy import copy
 from psutil import Process
 from os import getpid
-from sys import exc_info
+from traceback import format_stack
 
 
 def convert_size(num, suffix="B"):
@@ -1657,11 +1657,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                     )
                                 else:
                                     if Client.channel_id not in data["channels"]:
-                                        data["channels"][Client.channel_id] = {}
-
-                                    data["channels"][Client.channel_id][
-                                        Client.token
-                                    ] = True
+                                        data["channels"][Client.channel_id] = {Client.token: True, "messages:": []}
 
                                     Client.guild_id = event["d"]["guild_id"]
 
@@ -1689,11 +1685,7 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                     Thread(target=run, args=[New_Client]).start()
 
-                                    data["running"].append(event["d"]["channel_id"])
-
-                                    data["channels"][event["d"]["channel_id"]][
-                                        "messages"
-                                    ] = []
+                                    data["running"].append(Client.channel_id)
                         elif args.command == "stop":
                             if "help" in args.flags:
                                 Client.webhook_send(
@@ -1707,7 +1699,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                     f"Help for the command **`stop`**. This commands stops the grinder in the channel the command was run. The grinder was stop after the currently executing command has finished, so if the grinder continues running for a little longer after you run this command, be aware it is intentional behaviour.",
                                 )
                             else:
-                                if event["d"]["channel_id"] in data["running"]:
+                                if Client.channel_id in data["running"]:
                                     data["channels"][Client.channel_id][
                                         Client.token
                                     ] = False
@@ -1732,7 +1724,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         "The grinder was **successfully stopped** in this channel!",
                                     )
 
-                                    data["running"].remove(event["d"]["channel_id"])
+                                    data["running"].remove(Client.channel_id)
                                 else:
                                     Client.webhook_send(
                                         {
@@ -2004,7 +1996,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         reset = False
 
                                         if Client.channel_id not in data["channels"]:
-                                            data["channels"][Client.channel_id] = {
+                                            data["channels"][Client.channel_id] = {Client.token: True,
                                                 "messages": []
                                             }
                                             data["running"].append(Client.channel_id)
@@ -2064,10 +2056,10 @@ def event_handler(Client, ws, event: dict) -> None:
 
                 if len(data["channels"][event["d"]["channel_id"]]["messages"]) > 1:
                     del data["channels"][event["d"]["channel_id"]]["messages"][0]
-        except Exception as exc:
+        except Exception:
             Client.log(
                 "WARNING",
-                f"An unexpected error occured during the websocket connection (`{exc_info()}`). Assuming gateway disconnect and creating a new connection.",
+                f"An unexpected error occured during the websocket connection (`{repr(format_stack())}`). Assuming gateway disconnect and creating a new connection.",
             )
             Thread(target=gateway, args=[Client]).start()
             return
