@@ -1657,7 +1657,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                     )
                                 else:
                                     if Client.channel_id not in data["channels"]:
-                                        data["channels"][Client.channel_id] = {Client.token: True, "messages:": []}
+                                        data["channels"][Client.channel_id] = {Client.token: True, "messages": []}
 
                                     Client.guild_id = event["d"]["guild_id"]
 

@@ -226,7 +226,7 @@ class Instance(object):
     def retreive_message(self, command, token=None, check=True):
         while True:
             time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
-
+            
             while (
                 datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time
             ).total_seconds() < self.Repository.config["settings"]["timeout"]:
