@@ -122,15 +122,22 @@ def work(Client) -> None:
             sleep(2.5)
 
         custom_id = False
-        
+
         for index in range(len(latest_message["components"])):
             for index2 in range(len(latest_message["componenets"][index])):
-                if emoji == latest_message["componenets"][index]["components"][index2]["emoji"]["name"]:
-                    custom_id = latest_message["componenets"][index]["components"][index2]["custom_id"]
+                if (
+                    emoji
+                    == latest_message["componenets"][index]["components"][index2][
+                        "emoji"
+                    ]["name"]
+                ):
+                    custom_id = latest_message["componenets"][index]["components"][
+                        index2
+                    ]["custom_id"]
                     Client.interact_button("pls work", custom_id, latest_message)
                     custom_id = True
                     break
-                
+
         if not custom_id:
             Client.log("WARNING", "Failed to match the emoji. Clicking a random emoji.")
             custom_id = choice(latest_message["components"][0]["components"])[
@@ -150,7 +157,7 @@ def work(Client) -> None:
 
                 if len(latest_message["components"]) > 0:
                     break
-                
+
                 sleep(2.5)
 
             custom_id = choice(latest_message["components"][0]["components"])[

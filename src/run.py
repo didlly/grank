@@ -629,7 +629,7 @@ def run(Client):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls work` command: `{exc_info()}`.",
                         )
-                        
+
                 Client.Repository.database["work"] = datetime.now().strftime(
                     "%Y-%m-%d %H:%M:%S.%f"
                 )
@@ -659,7 +659,10 @@ def run(Client):
                                 exec(f"custom_{key.replace(' ', '_')} = datetime.now()")
                     break
                 except Exception:
-                    Client.log("WARNING", "User changed custom command settings while Grank was running the custom commands. Re-running the custom commands.")
+                    Client.log(
+                        "WARNING",
+                        "User changed custom command settings while Grank was running the custom commands. Re-running the custom commands.",
+                    )
 
         while (
             not data[Client.username]

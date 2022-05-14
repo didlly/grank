@@ -1,4 +1,4 @@
-import sys
+from sys import argv
 from contextlib import suppress
 from os import mkdir
 from os.path import dirname
@@ -18,12 +18,9 @@ if system().lower() == "windows":
     kernel32 = windll.kernel32
     kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
 
-if getattr(sys, "frozen", False):
-    cwd = dirname(sys.executable)
-elif __file__:
-    cwd = dirname(__file__)
+cwd = dirname(argv[0])
 
-cwd = f"{cwd}/" if cwd != "" else cwd
+cwd = cwd if cwd == "" else f"{cwd}/"
 
 with open(f"{cwd}current_version", "r") as f:
     current_version = f.read()

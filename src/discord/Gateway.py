@@ -21,12 +21,14 @@ from psutil import Process
 from os import getpid
 import sys
 
+
 def convert_size(num, suffix="B"):
     for unit in ["B", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
         if abs(num) < 1024:
             return f"{num:3.1f} {unit}{suffix}"
         num /= 1024
     return f"{num:.1f}Yi{suffix}"
+
 
 def anti_heist(Client, reset) -> None:
     sleep(2.5)
@@ -151,7 +153,7 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
 def event_handler(Client, ws, event: dict) -> None:
     process = Process(getpid())
     process.cpu_percent()
-    
+
     if Client.Repository.config["shifts"]["enabled"]:
         data[Client.username] = False
         Thread(target=shifts, args=[Client]).start()
@@ -280,7 +282,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                 },
                                 f"**Grank** is a Discord self-bot made to automate Dank Memer commands. It supports many of Dank Memer's commands and includes many useful features such as auto-buy and anti-detection.\n\n__**Commands:**__\n```yaml\nstart: Starts the grinder. Run 'grank start -help' for more information.\nstop: Stops the grinder. Run 'grank stop -help' for more information.\ncontrollers: Edits the controllers for this account. Run 'grank controllers -help' for more information.\nconfig: Edits the config for this account. Run 'grank config -help' for more information.\ncommands: Edits the custom commands for this account. Run 'grank commands -help' for more information.```\n__**Useful Links:**__\nGithub: https://github.com/didlly/grank\nDiscord: https://discord.com/invite/X3JMC9FAgy",
                             )
-                        elif args.command == "info":                            
+                        elif args.command == "info":
                             Client.webhook_send(
                                 {
                                     "content": f"**Grank `{Client.current_version}`** runnning on **`Python {python_version()}`**",
