@@ -149,7 +149,7 @@ def work(Client) -> None:
 
                 if len(latest_message["components"]) > 0:
                     break
-
+                
                 sleep(2.5)
 
             custom_id = choice(latest_message["components"][0]["components"])[

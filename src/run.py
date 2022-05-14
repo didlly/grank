@@ -629,9 +629,9 @@ def run(Client):
                             "WARNING",
                             f"An unexpected error occured during the running of the `pls work` command: `{exc_info()}`.",
                         )
-
-                Client.Repository.database["work"] = datetime.strftime(
-                    datetime.now(), "%Y-%m-%d %H:%M:%S.%f"
+                        
+                Client.Repository.database["work"] = datetime.now().strftime(
+                    "%Y-%m-%d %H:%M:%S.%f"
                 )
                 Client.Repository.database_write()
 
