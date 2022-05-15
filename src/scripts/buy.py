@@ -51,10 +51,7 @@ def buy(Client, item: str) -> None:
             if Client.Repository.config["logging"]["warning"]:
                 Client.log("WARNING", f"Insufficient funds to buy a {item}.")
             return False
-    elif (
-        "successful" in 
-        latest_message["embeds"][0]["author"]["name"].lower()
-    ):
+    else:
         if Client.Repository.config["logging"]["debug"]:
             Client.log("DEBUG", f"Successfully bought {item}.")
         return True
