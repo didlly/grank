@@ -11,7 +11,7 @@ def user_info(token: str, user_id: Optional[int] = None) -> Optional[dict]:
         else f"https://discord.com/api/v10/users/{user_id}",
         headers={"authorization": token},
     )
-    
+
     if not req.ok:
         return None
 

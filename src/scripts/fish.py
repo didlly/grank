@@ -9,14 +9,14 @@ def fish(Client) -> None:
     if "Catch the fish" in latest_message["content"]:
         if Client.Repository.config["logging"]["debug"]:
             Client.log("DEBUG", "Detected catch the fish game.")
-            
+
         level = (
             latest_message["content"]
             .split("\n")[1]
             .replace(latest_message["content"].split("\n")[1].strip(), "")
             .count("       ")
         )
-        
+
         Client.interact_button(
             "pls fish",
             latest_message["components"][0]["components"][level]["custom_id"],

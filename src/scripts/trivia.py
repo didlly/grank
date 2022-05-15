@@ -2,6 +2,7 @@ from random import choice
 from time import sleep
 from utils.Shared import data
 
+
 def trivia(Client) -> None:
     Client.send_message("pls trivia")
 

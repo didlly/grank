@@ -34,11 +34,14 @@ try:
         ).content
     )
 except ConnectionError:
-    log("ERROR", "In case you didn't realise, Sherlock, you need an internet connection to run Grank ;-).")
+    log(
+        "ERROR",
+        "In case you didn't realise, Sherlock, you need an internet connection to run Grank ;-).",
+    )
 
 with open(f"{cwd}current_version", "r") as f:
     data["version"] = f.read()
-            
+
 print(
     f"""{fore.Magenta}
 ░██████╗░██████╗░░█████╗░███╗░░██╗██╗░░██╗

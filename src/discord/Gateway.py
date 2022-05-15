@@ -21,6 +21,7 @@ from psutil import Process
 from os import getpid
 from sys import exc_info
 
+
 def convert_size(num, suffix="B"):
     for unit in ["B", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
         if abs(num) < 1024:
@@ -727,9 +728,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         "attachments": [],
                                     }
 
-                                    for shift in Client.Repository.config[
-                                        "shifts"
-                                    ]:
+                                    for shift in Client.Repository.config["shifts"]:
                                         if shift == "enabled":
                                             continue
 
@@ -737,7 +736,11 @@ def event_handler(Client, ws, event: dict) -> None:
                                         embed["embeds"].append(
                                             {
                                                 "title": f"`{shift}`",
-                                                "description": "Enabled" if Client.Repository.config["shifts"][shift]["enabled"] else "Disabled",
+                                                "description": "Enabled"
+                                                if Client.Repository.config["shifts"][
+                                                    shift
+                                                ]["enabled"]
+                                                else "Disabled",
                                                 "fields": [
                                                     {
                                                         "name": "Active:",
@@ -849,9 +852,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"The shifts option is **already disabled**.",
                                     )
                                 else:
-                                    Client.Repository.config["shifts"][
-                                        "enabled"
-                                    ] = True
+                                    Client.Repository.config["shifts"]["enabled"] = True
                                     Client.Repository.config_write()
 
                                     Client.webhook_send(
@@ -874,9 +875,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"The shifts option **was successfully set to `True`**.",
                                     )
                             elif "disable" in args.subcommand:
-                                if not Client.Repository.config["shifts"][
-                                    "enabled"
-                                ]:
+                                if not Client.Repository.config["shifts"]["enabled"]:
                                     Client.webhook_send(
                                         {
                                             "embeds": [
@@ -925,64 +924,78 @@ def event_handler(Client, ws, event: dict) -> None:
                                 if len(args.subcommand) == 4:
                                     try:
                                         _ = [int(arg) for arg in args.subcommand[2:]]
-                                        
-                                        num = max(list(Client.Repository.config["shifts"].keys())[1:]) + 1
-                                        Client.Repository.config["shifts"][num] = {"enabled": False, "active": args.subcommand[1], "passive": args.subcommand[2], "variation": args.subcommand[-1]}
+
+                                        num = (
+                                            max(
+                                                list(
+                                                    Client.Repository.config[
+                                                        "shifts"
+                                                    ].keys()
+                                                )[1:]
+                                            )
+                                            + 1
+                                        )
+                                        Client.Repository.config["shifts"][num] = {
+                                            "enabled": False,
+                                            "active": args.subcommand[1],
+                                            "passive": args.subcommand[2],
+                                            "variation": args.subcommand[-1],
+                                        }
                                         Client.Repository.config_write()
-                                        
+
                                         Client.webhook_send(
-                                        {
-                                            "embeds": [
-                                                {
-                                                    "title": "Success!",
-                                                    "description": f"The shift was successfully added with the code number `{num}`.",
-                                                    "color": 65423,
-                                                },
-                                                {
-                                                    "title": "NOTE:",
-                                                    "color": None,
-                                                    "fields": [
-                                                        {
-                                                            "name": "To enable the shift:",
-                                                            "value": f"Run: `grank config.shifts.{num}.enabled = True`.",
-                                                        },
-                                                        {
-                                                            "name": "To edit the active length of the shift:",
-                                                            "value": f"Run `grank config.shifts.{num}.active = 0`, replacing `0` with the active length you want.",
-                                                        },
-                                                    ],
-                                                    "footer": {
-                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                            {
+                                                "embeds": [
+                                                    {
+                                                        "title": "Success!",
+                                                        "description": f"The shift was successfully added with the code number `{num}`.",
+                                                        "color": 65423,
                                                     },
-                                                }
-                                            ],
-                                            "username": "Grank",
-                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                            "attachments": [],
-                                        },
-                                        f"The shifts option **was successfully set to `False`**.",
-                                    )
+                                                    {
+                                                        "title": "NOTE:",
+                                                        "color": None,
+                                                        "fields": [
+                                                            {
+                                                                "name": "To enable the shift:",
+                                                                "value": f"Run: `grank config.shifts.{num}.enabled = True`.",
+                                                            },
+                                                            {
+                                                                "name": "To edit the active length of the shift:",
+                                                                "value": f"Run `grank config.shifts.{num}.active = 0`, replacing `0` with the active length you want.",
+                                                            },
+                                                        ],
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    },
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            f"The shifts option **was successfully set to `False`**.",
+                                        )
                                     except ValueError:
                                         Client.webhook_send(
-                                        {
-                                            "embeds": [
-                                                {
-                                                    "title": "Error!",
-                                                    "description": "All parameters have to be `integers`. You inputted parameters with other characters.",
-                                                    "color": 16711680,
-                                                    "footer": {
-                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
-                                                    },
-                                                }
-                                            ],
-                                            "username": "Grank",
-                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                            "attachments": [],
-                                        },
-                                        "All parameters have to be `integers`. You inputted parameters with other characters.",
-                                    )  
+                                            {
+                                                "embeds": [
+                                                    {
+                                                        "title": "Error!",
+                                                        "description": "All parameters have to be `integers`. You inputted parameters with other characters.",
+                                                        "color": 16711680,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            "All parameters have to be `integers`. You inputted parameters with other characters.",
+                                        )
                                 else:
                                     Client.webhook_send(
                                         {
@@ -1006,36 +1019,45 @@ def event_handler(Client, ws, event: dict) -> None:
                             elif "remove" in args.subcommand:
                                 try:
                                     remove = int(args.subcommand[1])
-                                    
-                                    if remove in Client.Repository.config["shifts"].keys():
+
+                                    if (
+                                        remove
+                                        in Client.Repository.config["shifts"].keys()
+                                    ):
                                         del Client.Repository.config["shifts"][remove]
                                         shift = 1
-                                        
-                                        for num in list(Client.Repository.config["shifts"].keys())[1:]:
-                                            temp = Client.Repository.config["shifts"][num]
+
+                                        for num in list(
+                                            Client.Repository.config["shifts"].keys()
+                                        )[1:]:
+                                            temp = Client.Repository.config["shifts"][
+                                                num
+                                            ]
                                             del Client.Repository.config["shifts"][num]
-                                            Client.Repository.config["shifts"][shift] = temp
-                                            
+                                            Client.Repository.config["shifts"][
+                                                shift
+                                            ] = temp
+
                                         Client.Repository.config_write()
-                                        
+
                                         Client.webhook_send(
-                                        {
-                                            "embeds": [
-                                                {
-                                                    "title": "Success!",
-                                                    "description": f"The shift with the code number `{remove}` was successfully removed.",
-                                                    "color": 65423,
-                                                    "footer": {
-                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
-                                                    },
-                                                }
-                                            ],
-                                            "username": "Grank",
-                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                            "attachments": [],
-                                        },
-                                        f"The shift with the code number `{remove}` was successfully removed.",
+                                            {
+                                                "embeds": [
+                                                    {
+                                                        "title": "Success!",
+                                                        "description": f"The shift with the code number `{remove}` was successfully removed.",
+                                                        "color": 65423,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            f"The shift with the code number `{remove}` was successfully removed.",
                                         )
                                     else:
                                         Client.webhook_send(
@@ -2026,7 +2048,10 @@ def event_handler(Client, ws, event: dict) -> None:
                                     )
                                 else:
                                     if Client.channel_id not in data["channels"]:
-                                        data["channels"][Client.channel_id] = {Client.token: True, "message": {}}
+                                        data["channels"][Client.channel_id] = {
+                                            Client.token: True,
+                                            "message": {},
+                                        }
 
                                     Client.guild_id = event["d"]["guild_id"]
 
@@ -2160,8 +2185,11 @@ def event_handler(Client, ws, event: dict) -> None:
                                     f"Help for the command **`database`**. This command is used to modify and view the database for this account. The database is where Grank saves information about last command runs. The database is saved in the database file, and is remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\ndatabase: Shows a list of all the database options and their values for this account.\ndatabase reset: Resets the database to the default settings.",
                                 )
                             elif "reset" in args.subcommand:
-                                Client.Repository.database = load(open(
-                                    f"{Client.cwd}database/templates/database.json", "r")
+                                Client.Repository.database = load(
+                                    open(
+                                        f"{Client.cwd}database/templates/database.json",
+                                        "r",
+                                    )
                                 )
                                 Client.Repository.database_write()
 
@@ -2431,8 +2459,9 @@ def event_handler(Client, ws, event: dict) -> None:
                                         reset = False
 
                                         if Client.channel_id not in data["channels"]:
-                                            data["channels"][Client.channel_id] = {Client.token: True,
-                                                "messages": []
+                                            data["channels"][Client.channel_id] = {
+                                                Client.token: True,
+                                                "messages": [],
                                             }
                                             data["running"].append(Client.channel_id)
 
@@ -2453,7 +2482,9 @@ def event_handler(Client, ws, event: dict) -> None:
                                         ).start()
 
                     if event["d"]["channel_id"] in data["running"]:
-                        data["channels"][event["d"]["channel_id"]]["message"] = event["d"]
+                        data["channels"][event["d"]["channel_id"]]["message"] = event[
+                            "d"
+                        ]
 
             elif (
                 event["t"] == "MESSAGE_UPDATE"

@@ -215,10 +215,10 @@ class Instance(object):
     def retreive_message(self, command, token=None, check=True):
         while True:
             time = datetime.now()
-            
-            while (
-                datetime.now() - time
-            ).total_seconds() < self.Repository.config["settings"]["timeout"]:
+
+            while (datetime.now() - time).total_seconds() < self.Repository.config[
+                "settings"
+            ]["timeout"]:
                 latest_message = data["channels"][self.channel_id]["message"]
 
                 if "referenced_message" in latest_message.keys():
