@@ -21,7 +21,7 @@ def hunt(Client) -> None:
                 .count("       ")
             )
 
-            if level == 1:
+            if level != 1:
                 sleep(1)
 
                 continue
