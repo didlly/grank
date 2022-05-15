@@ -16,7 +16,8 @@ def work(Client) -> None:
         Client.send_message("pls work")
 
         latest_message = Client.retreive_message("pls work")
-    elif "You need to wait" in latest_message["content"]:
+        
+    if "You need to wait" in latest_message["content"]:
         time_left = latest_message["content"].split("**")[1]
 
         Client.log(
