@@ -530,19 +530,11 @@ class Instance(object):
             interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
         """
 
-        messages = data["channels"][self.channel_id]["message"]
+        message = data["channels"][self.channel_id]["message"]
 
-        latest_message = messages[0]
+        custom_id = message["components"][0]["components"][-1]["custom_id"]
 
-        for index in range(1, len(messages)):
-            latest_message = messages[-index]
-
-            if latest_message["author"]["id"] == "270904126974590976":
-                break
-
-        custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
-
-        return self.interact_button(command, custom_id, latest_message)
+        return self.interact_button(command, custom_id, message)
 
     def log(self, level: str, text: str) -> None:
         if "Repository" in self.__dict__.keys():
