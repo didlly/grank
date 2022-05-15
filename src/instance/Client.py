@@ -40,7 +40,7 @@ class Instance(object):
         self.discriminator = account.discriminator
         self.startup_time = int(time())
         self.log_file = open(
-            f"{cwd}logs/{account.token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
+            f"{cwd}logs/{data['version']}/{account.token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
             "a",
             errors="ignore",
         )

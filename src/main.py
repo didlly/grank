@@ -61,11 +61,14 @@ print(
 with suppress(FileExistsError):
     mkdir(f"{cwd}logs/")
 
+with suppress(FileExistsError):
+    mkdir(f"{cwd}logs/{data['version']}")
+
 accounts = verify_credentials(cwd)
 
 for account in accounts:
     with suppress(FileExistsError):
-        mkdir(f"{cwd}logs/{account.token}")
+        mkdir(f"{cwd}logs/{data['version']}/{account.token}")
 
     Client = Instance(cwd, account)
     verify(cwd, account, Client)

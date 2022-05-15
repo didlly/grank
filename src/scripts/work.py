@@ -16,7 +16,7 @@ def work(Client) -> None:
         Client.send_message("pls work")
 
         latest_message = Client.retreive_message("pls work")
-        
+
     if "You need to wait" in latest_message["content"]:
         time_left = latest_message["content"].split("**")[1]
 
@@ -102,7 +102,9 @@ def work(Client) -> None:
             sleep(2.5)
 
         for word in words:
+            print(word)
             for option in latest_message["components"][0]["components"]:
+                print(option)
                 if word == option["label"]:
                     Client.interact_button(
                         "pls work", option["custom_id"], latest_message

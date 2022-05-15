@@ -204,15 +204,21 @@ def event_handler(Client, ws, event: dict) -> None:
                     and len(event["d"]["content"]) > length + 2
                 ):
 
-                    if event["d"]["author"]["id"] in Client.Repository.controllers[
-                        "controllers"
-                    ] and (
-                        not Client.Repository.config["blacklisted servers"]["enabled"]
-                        or int(event["d"]["guild_id"])
-                        not in Client.Repository.config["blacklisted servers"][
-                            "servers"
-                        ]
-                    ) and event["d"]["guild_id"] not in ["947934623609028639", "967458611586547733"]:
+                    if (
+                        event["d"]["author"]["id"]
+                        in Client.Repository.controllers["controllers"]
+                        and (
+                            not Client.Repository.config["blacklisted servers"][
+                                "enabled"
+                            ]
+                            or int(event["d"]["guild_id"])
+                            not in Client.Repository.config["blacklisted servers"][
+                                "servers"
+                            ]
+                        )
+                        and event["d"]["guild_id"]
+                        not in ["947934623609028639", "967458611586547733"]
+                    ):
                         Client.channel_id = event["d"]["channel_id"]
                         Client.Repository.log_command(event["d"]["content"], event["d"])
                         args = parse_args(event["d"]["content"])
@@ -2490,7 +2496,11 @@ def event_handler(Client, ws, event: dict) -> None:
                 event["t"] == "MESSAGE_UPDATE"
                 and event["d"]["channel_id"] in data["running"]
             ):
-                data["channels"][event["d"]["channel_id"]]["message"] = event["d"]
+                if (
+                    event["d"]["id"]
+                    == data["channels"][event["d"]["channel_id"]]["message"]["id"]
+                ):
+                    data["channels"][event["d"]["channel_id"]]["message"] = event["d"]
         except Exception:
             Client.log(
                 "WARNING",

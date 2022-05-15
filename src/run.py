@@ -21,6 +21,7 @@ from scripts.work import work
 from utils.Shared import data
 from datetime import datetime, timedelta
 from sys import exc_info
+from time import sleep
 
 
 def run(Client):
@@ -650,7 +651,7 @@ def run(Client):
                         if Client.Repository.config["custom commands"][key]["enabled"]:
                             try:
                                 exec(
-                                    f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now()"
+                                    f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now(); sleep(0.5)"
                                 )
 
                             except NameError:

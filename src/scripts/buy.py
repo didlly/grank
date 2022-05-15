@@ -1,5 +1,6 @@
 from time import sleep
 
+
 def buy(Client, item: str) -> None:
     Client.send_message(f"pls buy {item}")
 
@@ -37,7 +38,7 @@ def buy(Client, item: str) -> None:
 
         if (wallet + bank) - Client.Repository.database["price"][item] > 0:
             sleep(1)
-            
+
             amount = Client.Repository.database["price"][item] - wallet
 
             Client.send_message(f"pls with {amount}")
