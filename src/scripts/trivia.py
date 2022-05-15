@@ -1,6 +1,6 @@
 from random import choice
 from time import sleep
-
+from utils.Shared import data
 
 def trivia(Client) -> None:
     Client.send_message("pls trivia")
@@ -8,7 +8,7 @@ def trivia(Client) -> None:
     latest_message = Client.retreive_message("pls trivia")
 
     try:
-        answer = Client.trivia[
+        answer = data["trivia"][
             latest_message["embeds"][0]["description"]
             .split("\n")[0]
             .replace("*", "")

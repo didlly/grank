@@ -31,7 +31,7 @@ class DropdownInteractError(Exception):
 
 
 class Instance(object):
-    def __init__(self, cwd: str, account: DictToClass, current_version) -> None:
+    def __init__(self, cwd: str, account: DictToClass) -> None:
         self.cwd = cwd
         self.token = account.token
         self.id = account.id
@@ -39,22 +39,11 @@ class Instance(object):
         self.user = account.username
         self.discriminator = account.discriminator
         self.startup_time = int(time())
-        self.current_version = current_version
         self.log_file = open(
             f"{cwd}logs/{account.token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
             "a",
             errors="ignore",
         )
-
-        self.trivia = loads(
-            get(
-                "https://raw.githubusercontent.com/didlly/grank/main/src/trivia.json",
-                allow_redirects=True,
-            ).content
-        )
-
-        with open(f"{cwd}current_version", "r") as f:
-            self.current_version = f.read()
 
         Thread(target=self.update).start()
 
@@ -225,12 +214,12 @@ class Instance(object):
 
     def retreive_message(self, command, token=None, check=True):
         while True:
-            time = datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X")
+            time = datetime.now()
             
             while (
-                datetime.strptime(datetime.now().strftime("%x-%X"), "%x-%X") - time
+                datetime.now() - time
             ).total_seconds() < self.Repository.config["settings"]["timeout"]:
-                latest_message = data["channels"][self.channel_id]["messages"][-1]
+                latest_message = data["channels"][self.channel_id]["message"]
 
                 if "referenced_message" in latest_message.keys():
                     if latest_message["referenced_message"] != None:

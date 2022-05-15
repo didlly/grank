@@ -1,5 +1,5 @@
 from random import choice
-
+from time import sleep
 
 def hunt(Client) -> None:
     Client.send_message("pls hunt")

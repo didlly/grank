@@ -1,7 +1,7 @@
 from typing import Union, Optional
 from instance.Client import ButtonInteractError, Instance
 from websocket import WebSocket
-from json import loads, dumps
+from json import load, loads, dumps
 from threading import Thread
 from utils.Shared import data
 import utils.Yaml
@@ -10,7 +10,7 @@ from instance.ArgumentHandler import parse_args
 from discord.GuildId import guild_id
 from discord.UserInfo import user_info
 from instance.Exceptions import InvalidUserID, IDNotFound, ExistingUserID
-from instance.Shifts import shifts
+from instance import Shifts
 from run import run
 from utils.Shared import data
 from time import sleep
@@ -20,7 +20,6 @@ from copy import copy
 from psutil import Process
 from os import getpid
 from sys import exc_info
-
 
 def convert_size(num, suffix="B"):
     for unit in ["B", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
@@ -156,7 +155,7 @@ def event_handler(Client, ws, event: dict) -> None:
 
     if Client.Repository.config["shifts"]["enabled"]:
         data[Client.username] = False
-        Thread(target=shifts, args=[Client]).start()
+        Thread(target=Shifts.shifts, args=[Client]).start()
     else:
         data[Client.username] = True
 
@@ -182,7 +181,7 @@ def event_handler(Client, ws, event: dict) -> None:
 
                 data["channels"][Client.channel_id][Client.token] = True
                 data["running"].append(Client.channel_id)
-                data["channels"][Client.channel_id]["messages"] = []
+                data["channels"][Client.channel_id]["message"] = []
                 New_Client = copy(Client)
                 Thread(target=run, args=[New_Client]).start()
             except ValueError:
@@ -229,12 +228,36 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "color": None,
                                             "fields": [
                                                 {
-                                                    "name": "*- `help`*",
-                                                    "value": "Shows the help command.",
+                                                    "name": "*- `autostart`*",
+                                                    "value": "Edits the auto start channels for this account. Run `grank autostart -help` for more information.",
+                                                },
+                                                {
+                                                    "name": "*- `commands`*",
+                                                    "value": "Edits the custom commands for this account. Run `grank commands -help` for more information.",
+                                                },
+                                                {
+                                                    "name": "*- `config`*",
+                                                    "value": "Edits the config for this account. Run `grank config -help` for more information.",
+                                                },
+                                                {
+                                                    "name": "*- `controllers`*",
+                                                    "value": "Edits the controllers for this account. Run `grank controllers -help` for more information.",
+                                                },
+                                                {
+                                                    "name": "*- `database`*",
+                                                    "value": "Edits the database for this account. Run `grank database -help` for more information.",
                                                 },
                                                 {
                                                     "name": "*- `info`*",
                                                     "value": "Shows information about the bot and the instance.",
+                                                },
+                                                {
+                                                    "name": "*- `servers`*",
+                                                    "value": "Edits the blacklisted servers for this account. Run `grank servers -help` for more information.",
+                                                },
+                                                {
+                                                    "name": "*- `shifts`*",
+                                                    "value": "Edits the shifts for this account. Run `grank shifts -help` for more information.",
                                                 },
                                                 {
                                                     "name": "*- `start`*",
@@ -243,26 +266,6 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 {
                                                     "name": "*- `stop`*",
                                                     "value": "Stops the grinder. Run `grank stop -help` for more information.",
-                                                },
-                                                {
-                                                    "name": "*- `controllers`*",
-                                                    "value": "Edits the controllers for this account. Run `grank controllers -help` for more information.",
-                                                },
-                                                {
-                                                    "name": "*- `config`*",
-                                                    "value": "Edits the config for this account. Run `grank config -help` for more information.",
-                                                },
-                                                {
-                                                    "name": "*- `commands`*",
-                                                    "value": "Edits the custom commands for this account. Run `grank commands -help` for more information.",
-                                                },
-                                                {
-                                                    "name": "*- `servers`*",
-                                                    "value": "Edits the blacklisted servers for this account. Run `grank servers -help` for more information.",
-                                                },
-                                                {
-                                                    "name": "*- `autostart`*",
-                                                    "value": "Edits the auto start channels for this account. Run `grank autostart -help` for more information.",
                                                 },
                                             ],
                                         },
@@ -285,7 +288,7 @@ def event_handler(Client, ws, event: dict) -> None:
                         elif args.command == "info":
                             Client.webhook_send(
                                 {
-                                    "content": f"**Grank `{Client.current_version}`** runnning on **`Python {python_version()}`**",
+                                    "content": f"**Grank `{data['version']}`** runnning on **`Python {python_version()}`**",
                                     "embeds": [
                                         {
                                             "title": "Grank information",
@@ -378,7 +381,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                     "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                     "attachments": [],
                                 },
-                                f"**Grank `{Client.current_version}`** running on **`Python {python_version()}`**.\n\n__**Grank Information:**__\nActive since: `{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`\nBecame active: <t:{round(Client.startup_time)}:R>\n\n__**Client Information:**__\nUsername: `{Client.username}`\nID: `{Client.id}`\n\n__**Session Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected']}`\n\n__**Lifetime Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked'] + Client.Repository.info['stats']['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected'] + Client.Repository.info['stats']['dropdowns_selected']}`",
+                                f"**Grank `{data['version']}`** running on **`Python {python_version()}`**.\n\n__**Grank Information:**__\nActive since: `{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`\nBecame active: <t:{round(Client.startup_time)}:R>\n\n__**Client Information:**__\nUsername: `{Client.username}`\nID: `{Client.id}`\n\n__**Session Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected']}`\n\n__**Lifetime Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked'] + Client.Repository.info['stats']['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected'] + Client.Repository.info['stats']['dropdowns_selected']}`",
                             )
                         elif args.command == "servers":
                             if (
@@ -519,7 +522,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The blacklisted server option ** was successfully set to `True`**.",
+                                                    "description": f"The blacklisted server option **was successfully set to `True`**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -531,7 +534,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The blacklisted server option ** was successfully set to `True`**.",
+                                        f"The blacklisted server option **was successfully set to `True`**.",
                                     )
                             elif "disable" in args.subcommand:
                                 if not Client.Repository.config["blacklisted servers"][
@@ -567,7 +570,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The blacklisted server option ** was successfully set to `False`**.",
+                                                    "description": f"The blacklisted server option **was successfully set to `False`**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -579,7 +582,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The blacklisted server option ** was successfully set to `False`**.",
+                                        f"The blacklisted server option **was successfully set to `False`**.",
                                     )
                             elif "add" in args.subcommand:
                                 try:
@@ -596,7 +599,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}`** was **successfully added**.",
+                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}`**was **successfully added**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -608,7 +611,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}`** was successfully added to the list of controllers for this account.",
+                                        f"The ID **`{args.subcommand[-1]}`**was successfully added to the list of controllers for this account.",
                                     )
                                 except ValueError:
                                     Client.webhook_send(
@@ -652,7 +655,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "embeds": [
                                                     {
                                                         "title": "Success!",
-                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}`** was **successfully removed**.",
+                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}`**was **successfully removed**.",
                                                         "color": 65423,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -664,7 +667,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"The ID **`{args.subcommand[-1]}`** was successfully removed from the list of blacklisted servers for this account.",
+                                            f"The ID **`{args.subcommand[-1]}`**was successfully removed from the list of blacklisted servers for this account.",
                                         )
                                     else:
                                         Client.webhook_send(
@@ -707,6 +710,372 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "attachments": [],
                                         },
                                         f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
+                                    )
+                        elif args.command == "shifts":
+                            if (
+                                len(args.subcommand) == 0
+                                and len(args.variables) == 0
+                                and len(args.flags) == 0
+                            ):
+                                if Client.Repository.config["shifts"]["enabled"]:
+                                    shifts = ""
+                                    embed = {
+                                        "content": "All **shifts** for this account.",
+                                        "embeds": [],
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    }
+
+                                    for shift in Client.Repository.config[
+                                        "shifts"
+                                    ]:
+                                        if shift == "enabled":
+                                            continue
+
+                                        shifts += f"\n{shift}"
+                                        embed["embeds"].append(
+                                            {
+                                                "title": f"`{shift}`",
+                                                "description": "Enabled" if Client.Repository.config["shifts"][shift]["enabled"] else "Disabled",
+                                                "fields": [
+                                                    {
+                                                        "name": "Active:",
+                                                        "value": f"`{Client.Repository.config['shifts'][shift]['active']}`",
+                                                    },
+                                                    {
+                                                        "name": "Passive:",
+                                                        "value": f"`{Client.Repository.config['shifts'][shift]['passive']}`",
+                                                    },
+                                                    {
+                                                        "name": "Variation:",
+                                                        "value": f"`{Client.Repository.config['shifts'][shift]['variation']}`",
+                                                    },
+                                                ],
+                                                "color": None,
+                                            }
+                                        )
+
+                                    embed["embeds"][-1]["footer"] = {
+                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                    }
+
+                                    Client.webhook_send(
+                                        embed,
+                                        f"__**All shifts for this account**__\n```yaml{shifts}```",
+                                    )
+                                else:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": f"The shifts option is **not enabled**, so there are **no shifts**!",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        "The shifts option is not enabled, so there are no shifts!",
+                                    )
+                            elif "help" in args.flags:
+                                Client.webhook_send(
+                                    {
+                                        "content": "Help for the command **`shifts`**. This command is used to modify and view the shifts for this account. Shifts are saved in the database file, and so are remembered even if you close Grank.",
+                                        "embeds": [
+                                            {
+                                                "title": "Commands",
+                                                "color": None,
+                                                "fields": [
+                                                    {
+                                                        "name": "- *`shifts`*",
+                                                        "value": "Shows a list of all the shifts for this account.",
+                                                    },
+                                                    {
+                                                        "name": "- *`shifts enable`*",
+                                                        "value": "Enables the shifts function.",
+                                                    },
+                                                    {
+                                                        "name": "- *`shifts disable`*",
+                                                        "value": "Disables the shifts function.",
+                                                    },
+                                                    {
+                                                        "name": "- *`shifts add 7200 3600 60`*",
+                                                        "value": "Adds a shift with an active length of `7200`, a passive length of `3600`, and a variation of `60`.",
+                                                    },
+                                                    {
+                                                        "name": "- *`shifts remove 1`*",
+                                                        "value": "Removes the 1st shift profile.",
+                                                    },
+                                                ],
+                                                "footer": {
+                                                    "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                    "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                },
+                                            }
+                                        ],
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    },
+                                    f"Help for the command **`channels`**. This command is used to modify the auto start channels for this account. auto start channels are saved in the config file, and so are remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\nchannels: Shows a list of all the auto start channels for this account.\nchannels add 0: Adds the channel with the ID of 0 to the list of auto start channels.\nRemoves the channel with the ID of 0 from the list of auto start channels.\n```",
+                                )
+                            elif "enable" in args.subcommand:
+                                if Client.Repository.config["shifts"]["enabled"]:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "The shifts option is **already enabled**.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The shifts option is **already disabled**.",
+                                    )
+                                else:
+                                    Client.Repository.config["shifts"][
+                                        "enabled"
+                                    ] = True
+                                    Client.Repository.config_write()
+
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The shifts option **was successfully set to `True`**.",
+                                                    "color": 65423,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                },
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The shifts option **was successfully set to `True`**.",
+                                    )
+                            elif "disable" in args.subcommand:
+                                if not Client.Repository.config["shifts"][
+                                    "enabled"
+                                ]:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "The shifts option is **already disabled**.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The shifts option is **already disabled**.",
+                                    )
+                                else:
+                                    Client.Repository.config["shifts"][
+                                        "enabled"
+                                    ] = False
+                                    Client.Repository.config_write()
+
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The shifts option **was successfully set to `False`**.",
+                                                    "color": 65423,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                },
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The shifts option **was successfully set to `False`**.",
+                                    )
+                            elif "add" in args.subcommand:
+                                if len(args.subcommand) == 4:
+                                    try:
+                                        _ = [int(arg) for arg in args.subcommand[2:]]
+                                        
+                                        num = max(list(Client.Repository.config["shifts"].keys())[1:]) + 1
+                                        Client.Repository.config["shifts"][num] = {"enabled": False, "active": args.subcommand[1], "passive": args.subcommand[2], "variation": args.subcommand[-1]}
+                                        Client.Repository.config_write()
+                                        
+                                        Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The shift was successfully added with the code number `{num}`.",
+                                                    "color": 65423,
+                                                },
+                                                {
+                                                    "title": "NOTE:",
+                                                    "color": None,
+                                                    "fields": [
+                                                        {
+                                                            "name": "To enable the shift:",
+                                                            "value": f"Run: `grank config.shifts.{num}.enabled = True`.",
+                                                        },
+                                                        {
+                                                            "name": "To edit the active length of the shift:",
+                                                            "value": f"Run `grank config.shifts.{num}.active = 0`, replacing `0` with the active length you want.",
+                                                        },
+                                                    ],
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The shifts option **was successfully set to `False`**.",
+                                    )
+                                    except ValueError:
+                                        Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "All parameters have to be `integers`. You inputted parameters with other characters.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        "All parameters have to be `integers`. You inputted parameters with other characters.",
+                                    )  
+                                else:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "To add a shift, 3 parameters are required. They are: `active length`; `passive length`; `variation`.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        "To add a shift, 3 parameters are required. They are: `active length`; `passive length`; `variation`.",
+                                    )
+                            elif "remove" in args.subcommand:
+                                try:
+                                    remove = int(args.subcommand[1])
+                                    
+                                    if remove in Client.Repository.config["shifts"].keys():
+                                        del Client.Repository.config["shifts"][remove]
+                                        shift = 1
+                                        
+                                        for num in list(Client.Repository.config["shifts"].keys())[1:]:
+                                            temp = Client.Repository.config["shifts"][num]
+                                            del Client.Repository.config["shifts"][num]
+                                            Client.Repository.config["shifts"][shift] = temp
+                                            
+                                        Client.Repository.config_write()
+                                        
+                                        Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Success!",
+                                                    "description": f"The shift with the code number `{remove}` was successfully removed.",
+                                                    "color": 65423,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        f"The shift with the code number `{remove}` was successfully removed.",
+                                        )
+                                    else:
+                                        Client.webhook_send(
+                                            {
+                                                "embeds": [
+                                                    {
+                                                        "title": "Error!",
+                                                        "description": "That shift was not found.",
+                                                        "color": 16711680,
+                                                        "footer": {
+                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                        },
+                                                    }
+                                                ],
+                                                "username": "Grank",
+                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                                "attachments": [],
+                                            },
+                                            "That shift was not found.",
+                                        )
+                                except ValueError:
+                                    Client.webhook_send(
+                                        {
+                                            "embeds": [
+                                                {
+                                                    "title": "Error!",
+                                                    "description": "All parameters have to be `integers`. You inputted parameters with other characters.",
+                                                    "color": 16711680,
+                                                    "footer": {
+                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                    },
+                                                }
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
+                                        },
+                                        "All parameters have to be `integers`. You inputted parameters with other characters.",
                                     )
                         elif args.command == "autostart":
                             if (
@@ -772,7 +1141,7 @@ def event_handler(Client, ws, event: dict) -> None:
                             elif "help" in args.flags:
                                 Client.webhook_send(
                                     {
-                                        "content": "Help for the command **`channels`**. This command is used to modify the auto start channels for this account. auto start channels are saved in the config file, and so are remembered even if you close Grank.",
+                                        "content": "Help for the command **`autostart`**. This command is used to modify the auto start channels for this account. Auto start channels are saved in the config file, and so are remembered even if you close Grank.",
                                         "embeds": [
                                             {
                                                 "title": "Commands",
@@ -784,11 +1153,11 @@ def event_handler(Client, ws, event: dict) -> None:
                                                     },
                                                     {
                                                         "name": "- *`autostart enable`*",
-                                                        "value": "Enables the autostart server function.",
+                                                        "value": "Enables the autostart channel function.",
                                                     },
                                                     {
                                                         "name": "- *`autostart disable`*",
-                                                        "value": "Disables the autostart server function.",
+                                                        "value": "Disables the autostart channel function.",
                                                     },
                                                     {
                                                         "name": "- *`autostart add 0`*",
@@ -843,7 +1212,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The auto start option ** was successfully set to `True`**.",
+                                                    "description": f"The auto start option **was successfully set to `True`**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -855,7 +1224,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The auto start option ** was successfully set to `True`**.",
+                                        f"The auto start option **was successfully set to `True`**.",
                                     )
                             elif "disable" in args.subcommand:
                                 if not Client.Repository.config["auto start"][
@@ -891,7 +1260,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The auto start option ** was successfully set to `False`**.",
+                                                    "description": f"The auto start option **was successfully set to `False`**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -903,7 +1272,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The auto start option ** was successfully set to `False`**.",
+                                        f"The auto start option **was successfully set to `False`**.",
                                     )
                             elif "add" in args.subcommand:
                                 try:
@@ -920,7 +1289,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}`** was **successfully added**.",
+                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}`**was **successfully added**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -932,7 +1301,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}`** was successfully added to the list of controllers for this account.",
+                                        f"The ID **`{args.subcommand[-1]}`**was successfully added to the list of controllers for this account.",
                                     )
                                 except ValueError:
                                     Client.webhook_send(
@@ -976,7 +1345,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "embeds": [
                                                     {
                                                         "title": "Success!",
-                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}`** was **successfully removed**.",
+                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}`**was **successfully removed**.",
                                                         "color": 65423,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -988,7 +1357,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"The ID **`{args.subcommand[-1]}`** was successfully removed from the list of auto start channels channels for this account.",
+                                            f"The ID **`{args.subcommand[-1]}`**was successfully removed from the list of auto start channels channels for this account.",
                                         )
                                     else:
                                         Client.webhook_send(
@@ -1162,11 +1531,11 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                         Client.webhook_send(
                                             {
-                                                "content": f"The custom command **`{args.subcommand[1]}`** was **successfully added**.",
+                                                "content": f"The custom command **`{args.subcommand[1]}`**was **successfully added**.",
                                                 "embeds": [
                                                     {
                                                         "title": "Success!",
-                                                        "description": f"The custom command  **`{args.subcommand[1]}`** was **successfully added** with a cooldown of **`{cooldown}`**.",
+                                                        "description": f"The custom command  **`{args.subcommand[1]}`**was **successfully added** with a cooldown of **`{cooldown}`**.",
                                                         "color": 65423,
                                                     },
                                                     {
@@ -1234,11 +1603,11 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                     Client.webhook_send(
                                         {
-                                            "content": f"The custom command **`{args.subcommand[1]}`** was **successfully removed**.",
+                                            "content": f"The custom command **`{args.subcommand[1]}`**was **successfully removed**.",
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The custom command  **`{args.subcommand[1]}`** was **successfully removed**.",
+                                                    "description": f"The custom command  **`{args.subcommand[1]}`**was **successfully removed**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1259,7 +1628,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": f"The custom command **`{args.subcommand[1]}`** was not found.",
+                                                    "description": f"The custom command **`{args.subcommand[1]}`**was not found.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1455,7 +1824,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": f"The controller **`{args.subcommand[-1]}`** was not found in the list of controllers.",
+                                                    "description": f"The controller **`{args.subcommand[-1]}`**was not found in the list of controllers.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1506,7 +1875,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": f"The ID **`{args.subcommand[-1]}`** was not found in the list of controllers.",
+                                                    "description": f"The ID **`{args.subcommand[-1]}`**was not found in the list of controllers.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1560,7 +1929,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The controller **`{args.subcommand[1]}`** was **successfully added**.",
+                                                    "description": f"The controller **`{args.subcommand[1]}`**was **successfully added**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1572,7 +1941,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}`** was successfully added to the list of controllers for this account.",
+                                        f"The ID **`{args.subcommand[-1]}`**was successfully added to the list of controllers for this account.",
                                     )
                             elif "remove" in args.subcommand:
                                 output = Client.Repository.database_handler(
@@ -1608,7 +1977,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The controller **`{args.subcommand[1]}`** was **successfully removed**.",
+                                                    "description": f"The controller **`{args.subcommand[1]}`**was **successfully removed**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1620,7 +1989,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}`** was successfully removed from the list of controllers for this account.",
+                                        f"The ID **`{args.subcommand[-1]}`**was successfully removed from the list of controllers for this account.",
                                     )
                         elif args.command == "start":
                             if "help" in args.flags:
@@ -1657,7 +2026,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                     )
                                 else:
                                     if Client.channel_id not in data["channels"]:
-                                        data["channels"][Client.channel_id] = {Client.token: True, "messages": []}
+                                        data["channels"][Client.channel_id] = {Client.token: True, "message": {}}
 
                                     Client.guild_id = event["d"]["guild_id"]
 
@@ -1745,6 +2114,72 @@ def event_handler(Client, ws, event: dict) -> None:
                                         },
                                         "The grinder **cannot stop** in this channel since it is **not running**!",
                                     )
+                        elif args.command == "database":
+                            if (
+                                len(args.subcommand) == 0
+                                and len(args.variables) == 0
+                                and len(args.flags) == 0
+                            ):
+                                Client.webhook_send(
+                                    {
+                                        "content": f"Database file (`/database/{Client.id}/database.json`):\n```json\n{dumps(Client.Repository.database)}```",
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    },
+                                    f"""Database settings.\n```json\n{dumps(Client.Repository.database)}```""",
+                                )
+                            elif "help" in args.flags:
+                                Client.webhook_send(
+                                    {
+                                        "content": "Help for the command **`database`**. This command is used to modify and view the database for this account. The database is where Grank saves information about last command runs. The database is saved in the database file, and is remembered even if you close Grank.\n\n",
+                                        "embeds": [
+                                            {
+                                                "title": "Commands",
+                                                "color": None,
+                                                "fields": [
+                                                    {
+                                                        "name": "*- `database`*",
+                                                        "value": "Shows a list of all the database options and their values for this account.",
+                                                    },
+                                                    {
+                                                        "name": "*- `database reset`*",
+                                                        "value": "Resets the database to the default settings.",
+                                                    },
+                                                ],
+                                                "footer": {
+                                                    "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                    "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                },
+                                            }
+                                        ],
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    },
+                                    f"Help for the command **`database`**. This command is used to modify and view the database for this account. The database is where Grank saves information about last command runs. The database is saved in the database file, and is remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\ndatabase: Shows a list of all the database options and their values for this account.\ndatabase reset: Resets the database to the default settings.",
+                                )
+                            elif "reset" in args.subcommand:
+                                Client.Repository.database = load(open(
+                                    f"{Client.cwd}database/templates/database.json", "r")
+                                )
+                                Client.Repository.database_write()
+
+                                Client.webhook_send(
+                                    {
+                                        "embeds": [
+                                            {
+                                                "title": "Success!",
+                                                "description": f"The database was **reset** successfully.",
+                                                "color": 65423,
+                                            },
+                                        ],
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    },
+                                    "Successfully reset the databae!",
+                                )
                         elif args.command == "config":
                             if (
                                 len(args.subcommand) == 0
@@ -1861,7 +2296,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "embeds": [
                                                     {
                                                         "title": "Error!",
-                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
+                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **not found**.",
                                                         "color": 16711680,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1873,7 +2308,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
+                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **not found**.",
                                         )
                                 else:
                                     args.variables = [
@@ -1888,8 +2323,8 @@ def event_handler(Client, ws, event: dict) -> None:
                                             {
                                                 "embeds": [
                                                     {
-                                                        "title": "Error!",
-                                                        "description": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was ** was successfully set** to **`{args.var}`**.",
+                                                        "title": "Success!",
+                                                        "description": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **was successfully set** to **`{args.var}`**.",
                                                         "color": 65423,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1901,7 +2336,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was ** was successfully set** to **`{args.var}`**.",
+                                            f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **was successfully set** to **`{args.var}`**.",
                                         )
                                         Client.Repository.config_write()
                                     except KeyError:
@@ -1910,7 +2345,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "embeds": [
                                                     {
                                                         "title": "Error!",
-                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
+                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **not found**.",
                                                         "color": 16711680,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1922,7 +2357,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`** was **not found**.",
+                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **not found**.",
                                         )
                 else:
                     if (
@@ -2018,44 +2453,13 @@ def event_handler(Client, ws, event: dict) -> None:
                                         ).start()
 
                     if event["d"]["channel_id"] in data["running"]:
-                        data["channels"][event["d"]["channel_id"]]["messages"].append(
-                            event["d"]
-                        )
+                        data["channels"][event["d"]["channel_id"]]["message"] = event["d"]
 
-                        if (
-                            len(data["channels"][event["d"]["channel_id"]]["messages"])
-                            > 1
-                        ):
-                            del data["channels"][event["d"]["channel_id"]]["messages"][
-                                0
-                            ]
             elif (
                 event["t"] == "MESSAGE_UPDATE"
                 and event["d"]["channel_id"] in data["running"]
             ):
-                found = False
-
-                for index in range(
-                    1, len(data["channels"][event["d"]["channel_id"]]["messages"])
-                ):
-                    latest_message = data["channels"][event["d"]["channel_id"]][
-                        "messages"
-                    ][-index]
-
-                    if latest_message["id"] == event["d"]["id"]:
-                        data["channels"][event["d"]["channel_id"]]["messages"][
-                            -index
-                        ] = event["d"]
-                        found = True
-                        break
-
-                if not found:
-                    data["channels"][event["d"]["channel_id"]]["messages"].append(
-                        event["d"]
-                    )
-
-                if len(data["channels"][event["d"]["channel_id"]]["messages"]) > 1:
-                    del data["channels"][event["d"]["channel_id"]]["messages"][0]
+                data["channels"][event["d"]["channel_id"]]["message"] = event["d"]
         except Exception:
             Client.log(
                 "WARNING",

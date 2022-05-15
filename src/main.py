@@ -8,9 +8,13 @@ from configuration.Credentials import verify_credentials
 from database.Handler import Database
 from instance.Client import Instance
 from utils.Console import fore, style
+from utils.Logger import log
 from discord.Gateway import gateway
 from threading import Thread
 from requests import get
+from requests.exceptions import ConnectionError
+from utils.Shared import data
+from json import loads
 
 if system().lower() == "windows":
     from ctypes import windll
@@ -22,9 +26,19 @@ cwd = dirname(argv[0])
 
 cwd = cwd if cwd == "" else f"{cwd}/"
 
-with open(f"{cwd}current_version", "r") as f:
-    current_version = f.read()
+try:
+    data["trivia"] = loads(
+        get(
+            "https://raw.githubusercontent.com/didlly/grank/main/src/trivia.json",
+            allow_redirects=True,
+        ).content
+    )
+except ConnectionError:
+    log("ERROR", "In case you didn't realise, Sherlock, you need an internet connection to run Grank ;-).")
 
+with open(f"{cwd}current_version", "r") as f:
+    data["version"] = f.read()
+            
 print(
     f"""{fore.Magenta}
 ░██████╗░██████╗░░█████╗░███╗░░██╗██╗░░██╗
@@ -35,7 +49,7 @@ print(
 ░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝
 {style.RESET_ALL}
 {style.Italic + style.Bold}GITHUB: {style.RESET_ALL}https://github.com/didlly/grank
-{style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}{current_version}
+{style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}{data['version']}
 {style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{get("https://raw.githubusercontent.com/didlly/grank/main/src/current_version").content.decode()}
 {style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/X3JMC9FAgy
 """
@@ -50,7 +64,7 @@ for account in accounts:
     with suppress(FileExistsError):
         mkdir(f"{cwd}logs/{account.token}")
 
-    Client = Instance(cwd, account, current_version)
+    Client = Instance(cwd, account)
     verify(cwd, account, Client)
     Repository = Database(cwd, account, Client)
 

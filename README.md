@@ -71,25 +71,37 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 ### Supported commands
 `grank help` - Displays the help command.
 
-### `start` category
+### `autostart` category
 
 | Name | Description |
 | ------------- | ------------- |
-| `start`  | Starts the grinder. |
-| `start -help`  | Shows help about the `start` command. |
+| `autostart`  | Shows a list of all the auto-start channels for this account. |
+| `autostart -help`  | Shows help about the `autostart` command. |
+| `autostart enable` | Enables the auto-start channels function. |
+| `autostart disable` | Disables the auto-start channels function. |
+| `autostart add 0` | Adds the channel with the ID of `0` to the list of auto-start channels. |
+| `autostart remove 0` | Removes the channel with the ID of `0` from the list of auto-start channels. |
 
-### `stop` category
-
-| Name | Description |
-| ------------- | ------------- |
-| `stop`  | Stops the grinder. |
-| `stop -help`  | Shows help about the `stop` command. |
-
-### `info` category
+### `commands` category
 
 | Name | Description |
 | ------------- | ------------- |
-| `info`  | Shows info about the grinder (like session stats, resource usage stats, commands ran stats, etc). |
+| `commands`  | Shows a list of all the custom commands for this account. |
+| `commands -help`  | Shows help about the `commands` command. |
+| `commands add pls_help 69` | Adds the custom command 'pls help' to the list of custom commands and tells Grank it needs to be run every 69 seconds. |
+| `commands remove pls_help 69` | Removes the custom commands called 'pls help' from the list of custom commands. |
+
+### `config` category
+
+| Name | Description |
+| ------------- | ------------- |
+| `config`  | Shows a list of all the config options and their values for this account. |
+| `config -help`  | Shows help about the `config` command. |
+| `config reset` | Resets the config to the default settings. |
+| `config.cooldowns.patron`  | Displays the value of the patron key in the subconfig cooldowns. |
+| `config.cooldowns.patron = True`  | Sets the patron key in the subconfig cooldowns to True. |
+
+***NOTE***: To access keys containing a space character, replace the space with an underscore (_).
 
 ### `controllers` category
 
@@ -104,26 +116,19 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 
 ***NOTE:*** You can also @mention the user you want to interact with.
 
-### `config` category
+### `database` category
 
 | Name | Description |
 | ------------- | ------------- |
-| `config`  | Shows a list of all the config options and their values for this account. |
-| `config -help`  | Shows help about the `config` command. |
-| `config reset` | Resets the config to the default settings. |
-| `config.cooldowns.patron`  | Displays the value of the patron key in the subconfig cooldowns. |
-| `config.cooldowns.patron = True`  | Sets the patron key in the subconfig cooldowns to True. |
+| `database`  | Shows a list of all the database options and their values for this account. |
+| `database -help`  | Shows help about the `database` command. |
+| `database reset`  | Resets the database to the default settings. |
 
-***NOTE***: To access keys containing a space character, replace the space with an underscore (_).
-
-### `commands` category
+### `info` category
 
 | Name | Description |
 | ------------- | ------------- |
-| `commands`  | Shows a list of all the custom commands for this account. |
-| `commands -help`  | Shows help about the `commands` command. |
-| `commands add pls_help 69` | Adds the custom command 'pls help' to the list of custom commands and tells Grank it needs to be run every 69 seconds. |
-| `commands remove pls_help 69` | Removes the custom commands called 'pls help' from the list of custom commands. |
+| `info`  | Shows info about the grinder (like session stats, resource usage stats, commands ran stats, etc). |
 
 ### `servers` category
 
@@ -136,16 +141,30 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | `servers add 0` | Adds the server with the ID of `0` to the list of blacklisted servers. |
 | `servers remove 0` | Removes the server with the ID of `0` from the list of blacklisted servers. |
 
-### `autostart` category
+### `shifts` category
 
 | Name | Description |
 | ------------- | ------------- |
-| `autostart`  | Shows a list of all the auto-start channels for this account. |
-| `autostart -help`  | Shows help about the `autostart` command. |
-| `autostart enable` | Enables the auto-start channels function. |
-| `autostart disable` | Disables the auto-start channels function. |
-| `autostart add 0` | Adds the channel with the ID of `0` to the list of auto-start channels. |
-| `autostart remove 0` | Removes the channel with the ID of `0` from the list of auto-start channels. |
+| `shifts`  | Shows a list of all the shifts for this account. |
+| `shifts -help`  | Shows help about the `shifts` command. |
+| `shifts enable` | Enables the shifts function. |
+| `shifts disable` | Disables the shifts function. |
+| `shifts add 7200 3600 60` | Adds a shift with an active length of `7200`, a passive length of `3600`, and a variation of `60`. |
+| `shifts remove 1` | Removes the 1st shift profile. |
+
+### `start` category
+
+| Name | Description |
+| ------------- | ------------- |
+| `start`  | Starts the grinder. |
+| `start -help`  | Shows help about the `start` command. |
+
+### `stop` category
+
+| Name | Description |
+| ------------- | ------------- |
+| `stop`  | Stops the grinder. |
+| `stop -help`  | Shows help about the `stop` command. |
 
 ## Config file
 
