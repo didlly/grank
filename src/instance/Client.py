@@ -530,7 +530,7 @@ class Instance(object):
             interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
         """
 
-        messages = data["channels"][self.channel_id]["messages"]
+        messages = data["channels"][self.channel_id]["message"]
 
         latest_message = messages[0]
 

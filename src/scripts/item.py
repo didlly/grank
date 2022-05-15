@@ -1,5 +1,9 @@
+from time import sleep
+
 def has_item(Client, item: str) -> None:
     Client.send_message(f"pls item {item}")
+
+    sleep(0.5)
 
     latest_message = Client.retreive_message(f"pls item {item}")
 
