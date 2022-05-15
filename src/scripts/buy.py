@@ -4,6 +4,8 @@ from time import sleep
 def buy(Client, item: str) -> None:
     Client.send_message(f"pls buy {item}")
 
+    sleep(0.5)
+
     latest_message = Client.retreive_message(f"pls buy {item}")
 
     if latest_message["content"] in [
