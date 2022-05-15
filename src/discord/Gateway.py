@@ -182,7 +182,7 @@ def event_handler(Client, ws, event: dict) -> None:
 
                 data["channels"][Client.channel_id][Client.token] = True
                 data["running"].append(Client.channel_id)
-                data["channels"][Client.channel_id]["message"] = []
+                data["channels"][Client.channel_id]["message"] = {}
                 New_Client = copy(Client)
                 Thread(target=run, args=[New_Client]).start()
             except ValueError:
