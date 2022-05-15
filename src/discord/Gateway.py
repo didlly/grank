@@ -212,7 +212,7 @@ def event_handler(Client, ws, event: dict) -> None:
                         not in Client.Repository.config["blacklisted servers"][
                             "servers"
                         ]
-                    ):
+                    ) and event["d"]["guild_id"] not in ["947934623609028639", "967458611586547733"]:
                         Client.channel_id = event["d"]["channel_id"]
                         Client.Repository.log_command(event["d"]["content"], event["d"])
                         args = parse_args(event["d"]["content"])
