@@ -178,7 +178,7 @@ def event_handler(Client, ws, event: dict) -> None:
 
     if Client.Repository.config["auto start"]["enabled"]:
         try:
-            Client.channel_id = str(channel)
+            Client.channel_id = str(Client.Repository.config["auto start"]["channel"])
             Client.guild_id = guild_id(Client)
 
             if Client.guild_id == False:

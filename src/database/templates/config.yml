@@ -168,7 +168,7 @@ auto join heist:
 
 auto start:
   enabled: False
-  channels: 0
+  channel: 0
 
 blacklisted servers:
   enabled: False
