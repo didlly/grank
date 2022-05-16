@@ -58,8 +58,8 @@ def run(Client):
 
     while True:
         if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
-                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
-        
+            sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
+
         if (
             Client.Repository.config["commands"]["adventure"]
             and data[Client.username]
@@ -112,7 +112,7 @@ def run(Client):
                         )
 
                 last_beg = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -152,7 +152,7 @@ def run(Client):
                             )
 
                 last_blackjack = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -192,7 +192,7 @@ def run(Client):
                             )
 
                 last_crime = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -255,7 +255,7 @@ def run(Client):
                         )
 
                 last_dig = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -287,7 +287,7 @@ def run(Client):
                         )
 
                 last_fish = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -311,7 +311,7 @@ def run(Client):
                     Client.send_message("end")
 
                 last_guess = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -351,7 +351,7 @@ def run(Client):
                             )
 
                 last_highlow = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -383,7 +383,7 @@ def run(Client):
                         )
 
                 last_hunt = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -425,7 +425,7 @@ def run(Client):
                         "DEBUG",
                         "Successfully updated latest command run of `pls lottery`.",
                     )
-                    
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -465,7 +465,7 @@ def run(Client):
                             )
 
                 last_postmeme = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -505,7 +505,7 @@ def run(Client):
                             )
 
                 last_search = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -537,7 +537,7 @@ def run(Client):
                         )
 
                 last_snakeeyes = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -618,7 +618,7 @@ def run(Client):
                             )
 
                 last_trivia = datetime.now()
-                
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -652,7 +652,7 @@ def run(Client):
                         "DEBUG",
                         "Successfully updated latest command run of `pls vote`.",
                     )
-                    
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
         if (
@@ -685,7 +685,7 @@ def run(Client):
                         "DEBUG",
                         "Successfully updated latest command run of `pls work`.",
                     )
-                    
+
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
