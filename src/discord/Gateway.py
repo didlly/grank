@@ -17,8 +17,6 @@ from time import sleep
 from platform import python_version
 from datetime import datetime
 from copy import copy
-from psutil import Process
-from os import getpid
 from sys import exc_info
 
 
@@ -170,9 +168,6 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
 
 
 def event_handler(Client, ws, event: dict) -> None:
-    process = Process(getpid())
-    process.cpu_percent()
-
     if Client.Repository.config["shifts"]["enabled"]:
         data[Client.username] = False
         Thread(target=Shifts.shifts, args=[Client]).start()
@@ -327,22 +322,6 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 {
                                                     "name": "Became active:",
                                                     "value": f"<t:{round(Client.startup_time)}:R>",
-                                                },
-                                            ],
-                                        },
-                                        {
-                                            "title": "Resource usage information",
-                                            "color": None,
-                                            "fields": [
-                                                {
-                                                    "name": "CPU Load:",
-                                                    "value": f"`{process.cpu_percent()}%`",
-                                                    "inline": True,
-                                                },
-                                                {
-                                                    "name": "Memory Usage:",
-                                                    "value": f"`{convert_size(process.memory_info()[0])}`",
-                                                    "inline": True,
                                                 },
                                             ],
                                         },
@@ -2239,15 +2218,24 @@ def event_handler(Client, ws, event: dict) -> None:
                                 and len(args.variables) == 0
                                 and len(args.flags) == 0
                             ):
-                                Client.webhook_send(
-                                    {
-                                        "content": f"Configuration file (`/database/{Client.id}/config.yml`):\n```yaml\n{utils.Yaml.dumps(Client.Repository.config)}```",
-                                        "username": "Grank",
-                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                        "attachments": [],
+                                for key in Client.Repository.config.keys():                               
+                                    Client.webhook_send(
+                                        {
+                                    "embeds": [
+                                        {
+                                            "title": key,
+                                            "description": "" if type(Client.Repository.config[key]) == dict else f"`{Client.Repository.config[key]}`",
+                                            "fields": [{"name": key2, "value": f"`{Client.Repository.config[key][key2]}`"} for key2 in Client.Repository.config[key].keys()] if type(Client.Repository.config[key]) == dict else None,
+                                            "color": None,
+                                        },
+                                    ],
+                                    "username": "Grank",
+                                    "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                    "attachments": [],
                                     },
-                                    f"""Config settings.\n```yaml\n{utils.Yaml.dumps(Client.Repository.config)}```""",
-                                )
+                                        f"```json\n{Client.Repository.config[key]}\n```",
+                                    )
+                                    sleep(0.1)
                             elif "help" in args.flags:
                                 Client.webhook_send(
                                     {

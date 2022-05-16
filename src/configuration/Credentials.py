@@ -1,4 +1,6 @@
 from json import load
+from json.decoder import JSONDecodeError
+from sys import exc_info
 from utils.Logger import log
 from discord.UserInfo import user_info
 
@@ -11,6 +13,8 @@ def verify_credentials(cwd: str) -> list:
         log(
             None, "ERROR", "Unable to find `credentials.json`. Make sure it is present."
         )
+    except JSONDecodeError:
+        log(None, "ERROR", f"Credentials file is invalidly formatted - {exc_info()}.")
 
     if "TOKENS" in credentials.keys():
         log(None, "DEBUG", "Found key `TOKENS` in `credentials.json`.")

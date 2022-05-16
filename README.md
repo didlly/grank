@@ -128,7 +128,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 
 | Name | Description |
 | ------------- | ------------- |
-| `info`  | Shows info about the grinder (like session stats, resource usage stats, commands ran stats, etc). |
+| `info`  | Shows info about the grinder (like session stats, commands ran stats, etc). |
 
 ### `servers` category
 
