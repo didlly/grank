@@ -16,7 +16,7 @@ from requests.exceptions import ConnectionError
 from utils.Shared import data
 from json import loads
 from utils.Logger import log
-"""SWITCHING SCREEN WHILE PUSHING BUG FIX"""
+
 if system().lower() == "windows":
     from ctypes import windll
 
