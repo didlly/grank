@@ -193,7 +193,7 @@ Values in the `commands` category tell the program whether or not to *run certai
 
 ### `cooldowns` category
 
-Values in the `cooldowns` category tell the program *the cooldowns for each command*. Edit them only if you know what you are doing. You have the most optimal settings by default.
+Values in the `cooldowns` category tell the program *the cooldowns for each command* & *cooldowns between commands*. Edit them only if you know what you are doing. You have the most optimal settings by default.
 
 ### `lottery` category
 

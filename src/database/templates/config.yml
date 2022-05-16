@@ -70,6 +70,10 @@ cooldowns:
   vote: 43202
   work: 3602
 
+  commands:
+    enabled: True
+    value: 0.5
+
 lottery:
   enabled: False
   cooldown: 3600

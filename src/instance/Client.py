@@ -220,7 +220,7 @@ class Instance(object):
                 "settings"
             ]["timeout"]:
                 latest_message = data["channels"][self.channel_id]["message"]
-
+                
                 if "referenced_message" in latest_message.keys():
                     if latest_message["referenced_message"] != None:
                         if (
@@ -397,7 +397,7 @@ class Instance(object):
         return latest_message
 
     def interact_button(
-        self, command, custom_id, latest_message, token=None, session_id=None
+        self, command, custom_id, latest_message, token=None, session_id=None, check=0
     ):
         payload = {
             "application_id": 270904126974590976,
@@ -444,19 +444,23 @@ class Instance(object):
                     )
                 if request.status_code == 429:
                     request = loads(request.content)
+                    
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
                             f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
                         )
                     sleep(request["retry_after"])
+                    
                     continue
+                if request.status_code == 400 and check == 0:
+                    self.interact_button(command, custom_id, latest_message, token, session_id, 1)
+                else:
+                    raise ButtonInteractError(
+                        f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                    )
 
-                raise ButtonInteractError(
-                    f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
-                )
-
-    def interact_dropdown(self, command, custom_id, option_id, latest_message):
+    def interact_dropdown(self, command, custom_id, option_id, latest_message, check=0):
         payload = {
             "application_id": 270904126974590976,
             "channel_id": self.channel_id,
@@ -507,16 +511,21 @@ class Instance(object):
                     )
                 if request.status_code == 429:
                     request = loads(request.content)
+                    
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
                             f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
                         )
                     sleep(request["retry_after"])
+                    
                     continue
-                raise DropdownInteractError(
-                    f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
-                )
+                if request.status_code == 400 and check == 0:
+                    self.interact_dropdown(self, command, custom_id, option_id, latest_message, 1)
+                else:
+                    raise DropdownInteractError(
+                        f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                    )
 
     def clear_lag(self, command: str) -> None:
         """clear_lag()

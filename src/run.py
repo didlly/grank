@@ -57,6 +57,9 @@ def run(Client):
     del time
 
     while True:
+        if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
+        
         if (
             Client.Repository.config["commands"]["adventure"]
             and data[Client.username]
@@ -68,14 +71,7 @@ def run(Client):
                     Client.Repository.database["adventure"], "%Y-%m-%d %H:%M:%S.%f"
                 )
             ).total_seconds() > Client.Repository.config["cooldowns"]["adventure"]:
-                try:
-                    adventure(Client)
-                except Exception:
-                    if Client.Repository.config["logging"]["warning"]:
-                        Client.log(
-                            "WARNING",
-                            f"An unexpected error occured during the running of the `pls adventure` command: `{exc_info()}`.",
-                        )
+                adventure(Client)
 
                 Client.Repository.database["adventure"] = datetime.now().strftime(
                     "%Y-%m-%d %H:%M:%S.%f"
@@ -88,6 +84,8 @@ def run(Client):
                         "Successfully updated latest command run of `pls adventure`.",
                     )
 
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
         if (
             Client.Repository.config["commands"]["beg"]
             and data[Client.username]
@@ -114,6 +112,9 @@ def run(Client):
                         )
 
                 last_beg = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["blackjack"]["enabled"]
@@ -151,6 +152,9 @@ def run(Client):
                             )
 
                 last_blackjack = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["commands"]["crime"]
@@ -188,6 +192,9 @@ def run(Client):
                             )
 
                 last_crime = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["commands"]["daily"]
@@ -220,6 +227,8 @@ def run(Client):
                         "Successfully updated latest command run of `pls daily`.",
                     )
 
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
         if (
             Client.Repository.config["commands"]["dig"]
             and data[Client.username]
@@ -246,6 +255,9 @@ def run(Client):
                         )
 
                 last_dig = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["commands"]["fish"]
@@ -275,6 +287,9 @@ def run(Client):
                         )
 
                 last_fish = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["commands"]["guess"]
@@ -296,6 +311,9 @@ def run(Client):
                     Client.send_message("end")
 
                 last_guess = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["commands"]["highlow"]
@@ -333,6 +351,9 @@ def run(Client):
                             )
 
                 last_highlow = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["commands"]["hunt"]
@@ -362,6 +383,9 @@ def run(Client):
                         )
 
                 last_hunt = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["lottery"]["enabled"]
@@ -401,6 +425,9 @@ def run(Client):
                         "DEBUG",
                         "Successfully updated latest command run of `pls lottery`.",
                     )
+                    
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["commands"]["postmeme"]
@@ -438,6 +465,9 @@ def run(Client):
                             )
 
                 last_postmeme = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["commands"]["search"]
@@ -475,6 +505,9 @@ def run(Client):
                             )
 
                 last_search = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["snakeeyes"]["enabled"]
@@ -504,6 +537,9 @@ def run(Client):
                         )
 
                 last_snakeeyes = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["stream"]["enabled"]
@@ -544,6 +580,8 @@ def run(Client):
                         "Successfully updated latest command run of `pls stream`.",
                     )
 
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
         if (
             Client.Repository.config["commands"]["trivia"]
             and data[Client.username]
@@ -580,6 +618,9 @@ def run(Client):
                             )
 
                 last_trivia = datetime.now()
+                
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
             Client.Repository.config["commands"]["vote"]
@@ -611,6 +652,9 @@ def run(Client):
                         "DEBUG",
                         "Successfully updated latest command run of `pls vote`.",
                     )
+                    
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
         if (
             Client.Repository.config["commands"]["work"]
             and data[Client.username]
@@ -641,6 +685,9 @@ def run(Client):
                         "DEBUG",
                         "Successfully updated latest command run of `pls work`.",
                     )
+                    
+                if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
+                    sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if Client.Repository.config["custom commands"]["enabled"]:
             while True:
@@ -651,7 +698,7 @@ def run(Client):
                         if Client.Repository.config["custom commands"][key]["enabled"]:
                             try:
                                 exec(
-                                    f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now(); sleep(0.5)"
+                                    f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now(); sleep(Client.Repository.config['cooldowns']['commands']['value'] if Client.Repository.config['cooldowns']['commands']['enabled'] else 0.5)"
                                 )
 
                             except NameError:
