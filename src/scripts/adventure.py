@@ -151,7 +151,8 @@ def adventure(Client) -> None:
         in latest_message["embeds"][0]["description"]
     ):
         Client.log(
-            "DEBUG", "Strange looking object adventure phase. Choosing `Inspect` option."
+            "DEBUG",
+            "Strange looking object adventure phase. Choosing `Inspect` option.",
         )
 
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
@@ -174,14 +175,14 @@ def adventure(Client) -> None:
         in latest_message["embeds"][0]["description"]
     ):
         Client.log("DEBUG", "Odd eye adventure phase. Choosing `Collect` option.")
-        
+
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     elif (
         "Oh my god even in space you cannot escape it"
         in latest_message["embeds"][0]["description"]
     ):
         Client.log("DEBUG", "Rick roll adventure phase. Choosing `up` option.")
-        
+
         custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
     else:
         Client.log(

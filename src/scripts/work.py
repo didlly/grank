@@ -59,12 +59,12 @@ def work(Client) -> None:
         for item in items:
             if item == word:
                 word = item[:]
-        
+
         for option in latest_message["components"][0]["components"]:
             if word == option["label"]:
                 custom_id = option["custom_id"]
                 break
-            
+
         if custom_id is None:
             Client.log(
                 "WARNING",
@@ -89,7 +89,9 @@ def work(Client) -> None:
     elif "Repeat Order" in latest_message["content"]:
         Client.log("DEBUG", "Detected repeat the order game.")
 
-        words = [word.replace("`", "") for word in latest_message["content"].split("\n")[1:]]
+        words = [
+            word.replace("`", "") for word in latest_message["content"].split("\n")[1:]
+        ]
 
         while True:
             latest_message = Client.retreive_message("pls work")
@@ -136,7 +138,7 @@ def work(Client) -> None:
                     Client.interact_button("pls work", custom_id, latest_message)
                     custom_id = True
                     break
-        
+
         if not custom_id:
             Client.log("WARNING", "Failed to match the emoji. Clicking a random emoji.")
             custom_id = choice(latest_message["components"][0]["components"])[

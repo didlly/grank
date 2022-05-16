@@ -379,7 +379,7 @@ Values in the `auto start` category tell the program whether or not to *automati
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | `enabled`  | `Boolean` | `False`  | Tells the program whether or not to automatically start the grinder. |
-| `channels`  | `List` | `[0, 0]`  | Tells the program which channels to automatically start the grinder inv. |
+| `channels`  | `Integer` | `0`  | Tells the program which channels to automatically start the grinder inv. |
 
 ### `blacklisted servers` category
 

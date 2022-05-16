@@ -151,13 +151,12 @@ def event_4(Client, latest_message) -> None:
 
     while True:
         try:
-            Client.interact_button(
-                "The f in the chat event", custom_id, latest_message
-            )
+            Client.interact_button("The f in the chat event", custom_id, latest_message)
             sleep(1)
         except ButtonInteractError:
             return
-        
+
+
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
         try:
@@ -178,32 +177,29 @@ def event_handler(Client, ws, event: dict) -> None:
     heist = False
 
     if Client.Repository.config["auto start"]["enabled"]:
-        for index, channel in enumerate(
-            Client.Repository.config["auto start"]["channels"]
-        ):
-            try:
-                Client.channel_id = str(channel)
-                Client.guild_id = guild_id(Client)
+        try:
+            Client.channel_id = str(channel)
+            Client.guild_id = guild_id(Client)
 
-                if Client.guild_id == False:
-                    Client.log(
-                        "ERROR",
-                        f"Autostart channel ID {index + 1} (`{channel}`) is invalid.",
-                    )
-
-                if Client.channel_id not in data["channels"]:
-                    data["channels"][Client.channel_id] = {}
-
-                data["channels"][Client.channel_id][Client.token] = True
-                data["running"].append(Client.channel_id)
-                data["channels"][Client.channel_id]["message"] = {}
-                New_Client = copy(Client)
-                Thread(target=run, args=[New_Client]).start()
-            except ValueError:
+            if Client.guild_id == False:
                 Client.log(
                     "ERROR",
-                    f"Autostart channel ID {index + 1} (`{channel}`) is invalid.",
+                    f"Autostart channel ID (`{channel}`) is invalid.",
                 )
+
+            if Client.channel_id not in data["channels"]:
+                data["channels"][Client.channel_id] = {}
+
+            data["channels"][Client.channel_id][Client.token] = True
+            data["running"].append(Client.channel_id)
+            data["channels"][Client.channel_id]["message"] = {}
+            New_Client = copy(Client)
+            Thread(target=run, args=[New_Client]).start()
+        except ValueError:
+            Client.log(
+                "ERROR",
+                f"Autostart channel ID  (`{channel}`) is invalid.",
+            )
 
     while True:
         try:
@@ -2218,21 +2214,39 @@ def event_handler(Client, ws, event: dict) -> None:
                                 and len(args.variables) == 0
                                 and len(args.flags) == 0
                             ):
-                                for key in Client.Repository.config.keys():                               
+                                for key in Client.Repository.config.keys():
                                     Client.webhook_send(
                                         {
-                                    "embeds": [
-                                        {
-                                            "title": key,
-                                            "description": "" if type(Client.Repository.config[key]) == dict else f"`{Client.Repository.config[key]}`",
-                                            "fields": [{"name": key2, "value": f"`{Client.Repository.config[key][key2]}`"} for key2 in Client.Repository.config[key].keys()] if type(Client.Repository.config[key]) == dict else None,
-                                            "color": None,
+                                            "embeds": [
+                                                {
+                                                    "title": key,
+                                                    "description": ""
+                                                    if type(
+                                                        Client.Repository.config[key]
+                                                    )
+                                                    == dict
+                                                    else f"`{Client.Repository.config[key]}`",
+                                                    "fields": [
+                                                        {
+                                                            "name": key2,
+                                                            "value": f"`{Client.Repository.config[key][key2]}`",
+                                                        }
+                                                        for key2 in Client.Repository.config[
+                                                            key
+                                                        ].keys()
+                                                    ]
+                                                    if type(
+                                                        Client.Repository.config[key]
+                                                    )
+                                                    == dict
+                                                    else None,
+                                                    "color": None,
+                                                },
+                                            ],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                            "attachments": [],
                                         },
-                                    ],
-                                    "username": "Grank",
-                                    "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                    "attachments": [],
-                                    },
                                         f"```json\n{Client.Repository.config[key]}\n```",
                                     )
                                     sleep(0.1)
@@ -2415,6 +2429,11 @@ def event_handler(Client, ws, event: dict) -> None:
                     elif event["d"]["author"]["id"] == "270904126974590976":
                         Client.channel_id = event["d"]["channel_id"]
 
+                        try:
+                            Client.guild_id = guild_id(Client)
+                        except KeyError:
+                            continue
+
                         if (
                             "Attack the boss by clicking `disinfect`"
                             in event["d"]["content"]
@@ -2456,8 +2475,6 @@ def event_handler(Client, ws, event: dict) -> None:
                                     "They're trying to break into"
                                     in event["d"]["embeds"][0]["description"]
                                 ):
-                                    Client.guild_id = guild_id(Client)
-
                                     if (
                                         f"**{Client.user}**'s"
                                         in event["d"]["embeds"][0]["description"]

@@ -132,7 +132,7 @@ auto trade:
   tidepod: True
 
 auto accept trade:
-  enabled: True
+  enabled: False
   traders: [0, 0]
 
 auto sell:
@@ -164,11 +164,11 @@ anti heist:
   enabled: True
 
 auto join heist:
-  enabled: True
+  enabled: False
 
 auto start:
   enabled: False
-  channels: [0, 0]
+  channels: 0
 
 blacklisted servers:
   enabled: False

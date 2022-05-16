@@ -15,6 +15,7 @@ from requests import get
 from requests.exceptions import ConnectionError
 from utils.Shared import data
 from json import loads
+from utils.Logger import log
 
 if system().lower() == "windows":
     from ctypes import windll
@@ -42,6 +43,10 @@ except ConnectionError:
 with open(f"{cwd}current_version", "r") as f:
     data["version"] = f.read()
 
+latest_version = get(
+    "https://raw.githubusercontent.com/didlly/grank/main/src/current_version"
+).content.decode()
+
 print(
     f"""{fore.Magenta}
 ░██████╗░██████╗░░█████╗░███╗░░██╗██╗░░██╗
@@ -53,10 +58,13 @@ print(
 {style.RESET_ALL}
 {style.Italic + style.Bold}GITHUB: {style.RESET_ALL}https://github.com/didlly/grank
 {style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}{data['version']}
-{style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{get("https://raw.githubusercontent.com/didlly/grank/main/src/current_version").content.decode()}
+{style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{latest_version}
 {style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/X3JMC9FAgy
 """
 )
+
+if data["version"] != latest_version:
+    log(None, "WARNING", f"New version available. Update if possible.")
 
 with suppress(FileExistsError):
     mkdir(f"{cwd}logs/")
