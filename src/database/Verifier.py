@@ -151,7 +151,7 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['blacklisted servers']['servers']",
         "['auto start']",
         "['auto start']['enabled']",
-        "['auto start']['channels']",
+        "['auto start']['channel']",
         "['anti heist']",
         "['anti heist']['enabled']",
         "['auto join heist']",
