@@ -18,54 +18,54 @@ cooldowns:
   adventure: 302
 
   beg:
-    default: 47
-    patron: 27
+    default: 35
+    patron: 25
 
   blackjack:
-    default: 12
-    patron: 7
+    default: 10
+    patron: 5
 
   crime:
-    default: 47
-    patron: 17
+    default: 35
+    patron: 15
 
   daily: 23402
 
   dig:
-    default: 47
-    patron: 27
+    default: 35
+    patron: 25
 
   fish:
-    default: 47
-    patron: 27
+    default: 35
+    patron: 25
 
   guess: 62
 
   highlow:
-    default: 32
-    patron: 17
+    default: 30
+    patron: 15
 
   hunt:
-    default: 42
-    patron: 27
+    default: 35
+    patron: 25
 
   postmeme:
-    default: 52
-    patron: 47
+    default: 40
+    patron: 30
 
   search:
-    default: 32
-    patron: 17
+    default: 25
+    patron: 15
 
   snakeeyes:
-    default: 12
-    patron: 7
+    default: 8
+    patron: 5
 
   stream: 602
 
   trivia:
-    default: 7
-    patron: 5
+    default: 5
+    patron: 3
     
   vote: 43202
   work: 3602
