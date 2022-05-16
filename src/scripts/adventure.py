@@ -20,12 +20,12 @@ def adventure(Client) -> None:
 
             adventure = latest_message["embeds"][0]["fields"][0]["value"]
 
-            backpack = latest_message["embeds"][0]["fields"][3].split(":")
+            backpack = latest_message["embeds"][0]["fields"][3]["value"].split(":")
             backpack = ", ".join(
                 backpack[index].lower() for index in range(1, len(backpack), 2)
             )
 
-            found = latest_message["embeds"][0]["fields"][5].split(":")
+            found = latest_message["embeds"][0]["fields"][5]["value"].split(":")
             found = ", ".join(found[index].lower() for index in range(1, len(found), 2))
 
             try:
@@ -151,10 +151,10 @@ def adventure(Client) -> None:
         in latest_message["embeds"][0]["description"]
     ):
         Client.log(
-            "DEBUG", "Strange looking object adventure phase. Choosing `Ignore` option."
+            "DEBUG", "Strange looking object adventure phase. Choosing `Inspect` option."
         )
 
-        custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
+        custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     elif (
         "A friendly alien approached you slowly."
         in latest_message["embeds"][0]["description"]
@@ -173,9 +173,16 @@ def adventure(Client) -> None:
         "You uh, just came across a pair of Odd Eyes floating around"
         in latest_message["embeds"][0]["description"]
     ):
-
-        Client.log("DEBUG", "Odd eye adventure phase. Choosing `Flee` option.")
-        custom_id = latest_message["components"][0]["components"][1]["custom_id"]
+        Client.log("DEBUG", "Odd eye adventure phase. Choosing `Collect` option.")
+        
+        custom_id = latest_message["components"][0]["components"][0]["custom_id"]
+    elif (
+        "Oh my god even in space you cannot escape it"
+        in latest_message["embeds"][0]["description"]
+    ):
+        Client.log("DEBUG", "Rick roll adventure phase. Choosing `up` option.")
+        
+        custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
     else:
         Client.log(
             "WARNING", "Unknown `pls adventure` phase. Clicking a random button."

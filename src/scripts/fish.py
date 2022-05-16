@@ -1,6 +1,3 @@
-from random import choice
-
-
 def fish(Client) -> None:
     Client.send_message("pls fish")
 
@@ -53,14 +50,7 @@ def fish(Client) -> None:
         "Awh man, no fish wanted your rod today",
         "You cast out your line and sadly didn't get a bite",
     ]:
-        responses = [
-            "the lake was a bit empty",
-            "no marine life in the waters",
-            "the water was too bright",
-            "out that the lil fishies rejected you",
-        ]
-
-        Client.log("DEBUG", f"Found {choice(responses)} from the `pls fish` command.")
+        Client.log("DEBUG", f"Found nothing from the `pls fish` command.")
         return
     else:
         item = (

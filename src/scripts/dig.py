@@ -1,6 +1,3 @@
-from random import choice
-
-
 def dig(Client):
     Client.send_message("pls dig")
 
@@ -32,14 +29,7 @@ def dig(Client):
         latest_message["content"]
         == "LMAO you found nothing in the ground. SUCKS TO BE YOU!"
     ):
-        responses = [
-            "the ground was too hard to be searched",
-            "no edible life forms in the ground",
-            "the ground was a bit barren",
-            "the ground was a bit sus",
-        ]
-
-        Client.log("DEBUG", f"Found {choice(responses)} from the `pls dig` command.")
+        Client.log("DEBUG", f"Received nothing from the `pls dig` command.")
         return
     else:
         item = (

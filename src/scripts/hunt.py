@@ -1,4 +1,3 @@
-from random import choice
 from time import sleep
 
 
@@ -65,14 +64,7 @@ def hunt(Client) -> None:
         "You might be the only hunter in the world to never hit anything, just like this time",
         "You went hunting the woods and brought back literally nothing lol",
     ]:
-        responses = [
-            "nothing in the woods",
-            "no animals slow enough to be caught",
-            "that the woods seemed a bit barren",
-            "no animals in the woods - you wooden believe it",
-        ]
-
-        Client.log("DEBUG", f"Found {choice(responses)} from the `pls hunt` command.")
+        Client.log("DEBUG", f"Found nothing from the `pls hunt` command.")
         return
     else:
         item = (
