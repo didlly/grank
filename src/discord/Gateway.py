@@ -141,6 +141,25 @@ def event_3(Client, latest_message) -> None:
             return
 
 
+def event_4(Client, latest_message) -> None:
+    Client.log(
+        "DEBUG",
+        "Detected the `f in the chat` event. Participating now.",
+    )
+
+    custom_id = custom_id = latest_message["components"][0]["components"][0][
+        "custom_id"
+    ]
+
+    while True:
+        try:
+            Client.interact_button(
+                "The f in the chat event", custom_id, latest_message
+            )
+            sleep(1)
+        except ButtonInteractError:
+            return
+        
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
         try:
@@ -2423,6 +2442,8 @@ def event_handler(Client, ws, event: dict) -> None:
                             in event["d"]["content"]
                         ):
                             Thread(target=event_3, args=[Client, event["d"]]).start()
+                        elif event["d"]["content"] == "F":
+                            Thread(target=event_4, args=[Client, event["d"]]).start()
                         if len(event["d"]["embeds"]) > 0:
                             if (
                                 f"<@{Client.id}>" in event["d"]["content"]
