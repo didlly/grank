@@ -52,7 +52,7 @@ Unfortunately, I do not have access to a Mac or Linux device, so you will have t
 
 * Install the latest version of Python from [here](https://www.python.org/downloads/). Make sure to have the `Install Pip` option ticked.
 * Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
-* Run `pip install requests websocket-client psutil`.
+* Run `pip install requests websocket-client`.
 
 ### Setting up Grank
 To use Grank, you will have to provide your Discord token. Don't worry, your token is never shared with anyone else.
