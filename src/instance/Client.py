@@ -221,6 +221,10 @@ class Instance(object):
             ]["timeout"]:
                 latest_message = data["channels"][self.channel_id]["message"]
                 
+                if latest_message == {}:
+                    sleep(0.5)
+                    continue
+                
                 if "referenced_message" in latest_message.keys():
                     if latest_message["referenced_message"] != None:
                         if (
