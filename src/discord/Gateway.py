@@ -19,7 +19,6 @@ from datetime import datetime
 from copy import copy
 from sys import exc_info
 
-
 def convert_size(num, suffix="B"):
     for unit in ["B", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
         if abs(num) < 1024:
@@ -2448,9 +2447,6 @@ def event_handler(Client, ws, event: dict) -> None:
                         )
                         heist = True
                     elif event["d"]["author"]["id"] == "270904126974590976":
-                        Client.channel_id = event["d"]["channel_id"]
-                        Client.guild_id = guild_id(Client)
-
                         if (
                             "Attack the boss by clicking `disinfect`"
                             in event["d"]["content"]
