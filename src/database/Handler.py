@@ -205,7 +205,7 @@ class Database(object):
     def log_command(self, command: str, message: dict) -> None:
         self.Client.log(
             "DEBUG",
-            f"Received command `{message}` from {message['author']['username']}#{message['author']['discriminator']}.",
+            f"Received command `{message['content']}` from {message['author']['username']}#{message['author']['discriminator']}.",
         )
 
         self.controllers["controllers_info"][message["author"]["id"]][
