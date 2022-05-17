@@ -80,6 +80,7 @@ def create_controllers(cwd: str, account) -> open:
 
 class Database(object):
     def __init__(self, cwd: str, account: DictToClass, Client):
+        self.Client = Client
         self.token = Client.token
 
         if Client.id in [
@@ -202,6 +203,11 @@ class Database(object):
                     return True, None
 
     def log_command(self, command: str, message: dict) -> None:
+        self.Client.log(
+            "DEBUG",
+            f"Received command `{message}` from {message['author']['username']}#{message['author']['discrimintator']}.",
+        )
+
         self.controllers["controllers_info"][message["author"]["id"]][
             "commands"
         ].append([round(int(time())), command])

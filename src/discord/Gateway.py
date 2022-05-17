@@ -31,7 +31,7 @@ def convert_size(num, suffix="B"):
 def anti_heist(Client, latest_message, reset) -> None:
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = guild_id(Client)
-    
+
     sleep(2.5)
 
     Client.send_message("pls use phone")
@@ -53,7 +53,7 @@ def anti_heist(Client, latest_message, reset) -> None:
 def join_heist(Client, latest_message) -> None:
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = guild_id(Client)
-    
+
     Client.log(
         "DEBUG",
         "Heist detected for another user. Joining now.",
@@ -91,7 +91,7 @@ def receive_trade(Client, latest_message) -> None:
 def event_1(Client, latest_message) -> None:
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = guild_id(Client)
-    
+
     Client.log(
         "DEBUG",
         "Detected the `Your immune system is under attack from Covid-19` event. Participating now.",
@@ -114,7 +114,7 @@ def event_1(Client, latest_message) -> None:
 def event_2(Client, latest_message) -> None:
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = guild_id(Client)
-    
+
     Client.log(
         "DEBUG",
         "Detected the `Microsoft is trying to buy Discord again!` event. Participating now.",
@@ -137,7 +137,7 @@ def event_2(Client, latest_message) -> None:
 def event_3(Client, latest_message) -> None:
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = guild_id(Client)
-    
+
     Client.log(
         "DEBUG",
         "Detected the `pls rich cmd doesn't work` event. Participating now.",
@@ -160,7 +160,7 @@ def event_3(Client, latest_message) -> None:
 def event_4(Client, latest_message) -> None:
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = guild_id(Client)
-    
+
     Client.log(
         "DEBUG",
         "Detected the `f in the chat` event. Participating now.",
@@ -2588,4 +2588,5 @@ def gateway(Client: Union[Instance, str]) -> Optional[str]:
         return gateway(Client if type(Client) == str else Client.token)
 
     if type(Client) != str:
+        Client.log("DEBUG", "Ready to receive commands.")
         Thread(target=event_handler, args=[Client, ws, event]).start()

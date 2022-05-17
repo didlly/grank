@@ -71,7 +71,7 @@ cooldowns:
   work: 3602
 
   commands:
-    enabled: True
+    enabled: False
     value: 0.5
 
 lottery:

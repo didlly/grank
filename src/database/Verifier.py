@@ -198,9 +198,14 @@ def verify_database(
                 return False
 
     for key in database_template.keys():
-        if type(database_template[key]) == dict:
-            if not verify_database(cwd, None, database_template[key], database[key]):
-                return False
+        try:
+            if type(database_template[key]) == dict:
+                if not verify_database(
+                    cwd, None, database_template[key], database[key]
+                ):
+                    return False
+        except KeyError:
+            return False
 
         if key not in database.keys():
             return False

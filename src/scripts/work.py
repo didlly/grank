@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 from time import sleep
 from random import choice
 
@@ -16,14 +15,29 @@ def work(Client) -> None:
         Client.send_message("pls work")
 
         latest_message = Client.retreive_message("pls work")
+    elif "boss was tired" in latest_message["content"]:
+        Client.log("WARNING", "Fired from job.")
+        return
+    elif "you were fired" in latest_message["content"]:
+        Client.log("WARNING", "Awaiting cooldown to join job.")
+        return
+    elif "deserve a fat promotion" in latest_message["content"]:
+        promotion = latest_message["content"].split("\n")[1].split("`")[-2]
 
-    if "You need to wait" in latest_message["content"]:
+        Client.log("DEBUG", f"Got promoted in the `pls work` command - {promotion}.")
+
+        Client.send_message("pls work")
+
+        latest_message = Client.retreive_message("pls work")
+    elif "You need to wait" in latest_message["content"]:
         time_left = latest_message["content"].split("**")[1]
 
         Client.log(
             "WARNING", f"Cannot work - awaiting cooldown end ({time_left} left)."
         )
-    elif "Dunk the ball!" in latest_message["content"]:
+
+        return
+    if "Dunk the ball!" in latest_message["content"]:
         Client.log("DEBUG", "Detected dunk the ball game.")
 
         button_index = (
@@ -153,7 +167,7 @@ def work(Client) -> None:
                 "custom_id"
             ]
         else:
-            while True:
+            for _ in range(1, 6):
                 latest_message = Client.retreive_message("pls work")
 
                 if len(latest_message["components"]) > 0:
