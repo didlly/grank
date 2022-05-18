@@ -89,7 +89,7 @@ def work(Client) -> None:
                 "custom_id"
             ]
 
-            Client.interact_button("pls trivia", custom_id, latest_message)
+        Client.interact_button("pls trivia", custom_id, latest_message)
     elif "Hit the ball!" in latest_message["content"]:
         Client.log("DEBUG", "Detected hit the ball game.")
 
