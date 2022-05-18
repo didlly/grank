@@ -1,8 +1,9 @@
-from instance.Client import Instance
 from datetime import datetime, timedelta
-from utils.Shared import data
-from time import sleep
 from random import uniform
+from time import sleep
+
+from instance.Client import Instance
+from utils.Shared import data
 
 
 def shifts(Client: Instance) -> None:

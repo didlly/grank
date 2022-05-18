@@ -1,10 +1,11 @@
-from os.path import isdir, isfile
-from json.decoder import JSONDecodeError
-import utils.Yaml
 from json import loads
-from typing import Union, Optional
+from json.decoder import JSONDecodeError
+from os.path import isdir, isfile
+from typing import Optional, Union
+
+import utils.Yaml
+from database.Handler import create_config, create_controllers, create_database
 from instance.Client import Instance
-from database.Handler import create_config, create_database, create_controllers
 
 
 def verify(cwd: str, account, Client: Instance) -> None:

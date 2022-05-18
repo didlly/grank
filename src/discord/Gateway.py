@@ -1,23 +1,25 @@
-from typing import Union, Optional
-from instance.Client import ButtonInteractError, Instance
-from websocket import WebSocket
-from json import load, loads, dumps
+from copy import copy
+from datetime import datetime
+from json import dumps, load, loads
+from platform import python_version
+from sys import exc_info
 from threading import Thread
-from utils.Shared import data
+from time import sleep
+from typing import Optional, Union
+
+from websocket import WebSocket
+
 import utils.Yaml
-from scripts.buy import buy
-from instance.ArgumentHandler import parse_args
 from discord.GuildId import guild_id
 from discord.UserInfo import user_info
-from instance.Exceptions import InvalidUserID, IDNotFound, ExistingUserID
 from instance import Shifts
+from instance.ArgumentHandler import parse_args
+from instance.Client import ButtonInteractError, Instance
+from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
 from run import run
+from scripts.buy import buy
 from utils.Shared import data
-from time import sleep
-from platform import python_version
-from datetime import datetime
-from copy import copy
-from sys import exc_info
+
 
 def convert_size(num, suffix="B"):
     for unit in ["B", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:

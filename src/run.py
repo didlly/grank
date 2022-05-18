@@ -1,3 +1,7 @@
+from datetime import datetime
+from sys import exc_info
+from time import sleep
+
 from scripts.adventure import adventure
 from scripts.beg import beg
 from scripts.blackjack import blackjack
@@ -17,11 +21,7 @@ from scripts.stream import stream
 from scripts.trivia import trivia
 from scripts.vote import vote
 from scripts.work import work
-
 from utils.Shared import data
-from datetime import datetime
-from sys import exc_info
-from time import sleep
 
 
 def run(Client):

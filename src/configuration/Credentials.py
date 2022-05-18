@@ -1,8 +1,9 @@
 from json import load
 from json.decoder import JSONDecodeError
 from sys import exc_info
-from utils.Logger import log
+
 from discord.UserInfo import user_info
+from utils.Logger import log
 
 
 def verify_credentials(cwd: str) -> list:

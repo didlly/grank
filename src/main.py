@@ -1,21 +1,22 @@
-from sys import argv
 from contextlib import suppress
+from json import loads
 from os import mkdir
 from os.path import dirname
 from platform import system
-from database.Verifier import verify
+from sys import argv
+from threading import Thread
+
+from requests import get
+from requests.exceptions import ConnectionError
+
 from configuration.Credentials import verify_credentials
 from database.Handler import Database
+from database.Verifier import verify
+from discord.Gateway import gateway
 from instance.Client import Instance
 from utils.Console import fore, style
 from utils.Logger import log
-from discord.Gateway import gateway
-from threading import Thread
-from requests import get
-from requests.exceptions import ConnectionError
 from utils.Shared import data
-from json import loads
-from utils.Logger import log
 
 if system().lower() == "windows":
     from ctypes import windll

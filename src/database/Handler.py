@@ -1,14 +1,15 @@
-from json import loads, dumps
-from utils.Logger import log
 from contextlib import suppress
+from json import dumps, loads
 from os import listdir, mkdir
 from os.path import isdir
-from typing import Optional, Union
-from utils.Converter import DictToClass
-from discord.UserInfo import user_info
-from instance.Exceptions import InvalidUserID, IDNotFound, ExistingUserID
-import utils.Yaml
 from time import time
+from typing import Optional, Union
+
+import utils.Yaml
+from discord.UserInfo import user_info
+from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
+from utils.Converter import DictToClass
+from utils.Logger import log
 
 
 def create_config(cwd: str, folder: int) -> open:
