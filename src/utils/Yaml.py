@@ -1,6 +1,3 @@
-from email.quoprimime import quote
-
-
 def is_float(string: str) -> bool:
     try:
         float(string)
