@@ -24,7 +24,7 @@ from scripts.work import work
 from utils.Shared import data
 
 
-def run(Client):
+def grind(Client):
     if Client.Repository.database["confirmations"] == "False":
         try:
             Client.send_message("pls settings confirmations nah")
@@ -38,8 +38,28 @@ def run(Client):
                 )
 
     while True:
-        if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
-            sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
+        if Client.Repository.config["custom commands"]["enabled"]:
+            while True:
+                try:
+                    for key in Client.Repository.config["custom commands"]:
+                        if key == "enabled":
+                            continue
+                        if Client.Repository.config["custom commands"][key]["enabled"]:
+                            try:
+                                exec(
+                                    f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now(); sleep(Client.Repository.config['cooldowns']['commands']['value'] if Client.Repository.config['cooldowns']['commands']['enabled'] else 0.5)"
+                                )
+
+                            except NameError:
+                                custom(Client, key)
+
+                                exec(f"custom_{key.replace(' ', '_')} = datetime.now()")
+                    break
+                except Exception:
+                    Client.log(
+                        "WARNING",
+                        "User changed custom command settings while Grank was running the custom commands. Re-running the custom commands.",
+                    )
 
         if (
             Client.Repository.config["commands"]["adventure"]
@@ -901,29 +921,6 @@ def run(Client):
 
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
-
-        if Client.Repository.config["custom commands"]["enabled"]:
-            while True:
-                try:
-                    for key in Client.Repository.config["custom commands"]:
-                        if key == "enabled":
-                            continue
-                        if Client.Repository.config["custom commands"][key]["enabled"]:
-                            try:
-                                exec(
-                                    f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now(); sleep(Client.Repository.config['cooldowns']['commands']['value'] if Client.Repository.config['cooldowns']['commands']['enabled'] else 0.5)"
-                                )
-
-                            except NameError:
-                                custom(Client, key)
-
-                                exec(f"custom_{key.replace(' ', '_')} = datetime.now()")
-                    break
-                except Exception:
-                    Client.log(
-                        "WARNING",
-                        "User changed custom command settings while Grank was running the custom commands. Re-running the custom commands.",
-                    )
 
         while (
             not data[Client.username]

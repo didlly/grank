@@ -16,7 +16,7 @@ from instance import Shifts
 from instance.ArgumentHandler import parse_args
 from instance.Client import ButtonInteractError, Instance
 from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
-from run import run
+from grinder import grind
 from scripts.buy import buy
 from utils.Shared import data
 
@@ -216,7 +216,7 @@ def event_handler(Client, ws, event: dict) -> None:
             data["running"].append(Client.channel_id)
             data["channels"][Client.channel_id]["message"] = {}
             New_Client = copy(Client)
-            Thread(target=run, args=[New_Client]).start()
+            Thread(target=grind, args=[New_Client]).start()
         except ValueError:
             Client.log(
                 "ERROR",
@@ -2099,7 +2099,7 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                     New_Client = copy(Client)
 
-                                    Thread(target=run, args=[New_Client]).start()
+                                    Thread(target=grind, args=[New_Client]).start()
 
                                     data["running"].append(Client.channel_id)
                         elif args.command == "stop":
