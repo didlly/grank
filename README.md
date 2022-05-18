@@ -8,7 +8,7 @@
 [![Pull Requests](https://img.shields.io/github/issues-pr/didlly/grank?style=for-the-badge&logo=Python&color=informational)](https://github.com/didlly/grank/pulls)
 
 ## What is Grank?
-Grank is a feature rich Dank Memer automation program that automtaically grinds Dank Memer for you. It is inspired by [dankgrinder](https://github.com/dankgrinder/dankgrinder). Since dankgrinder has been discontinued and the [recommended fork](https://github.com/V4NSH4J/dankgrinder) has also been discontinued, I decided to make my own version from scratch in Python. Grank is as good as, if not better, than dankgrinder.
+Grank is a feature rich Dank Memer automation program that automtaically grinds Dank Memer for you, as well as having many self-bot commands to make using Grank easier. It is inspired by [dankgrinder](https://github.com/dankgrinder/dankgrinder). Since dankgrinder has been discontinued and the [recommended fork](https://github.com/V4NSH4J/dankgrinder) has also been discontinued, I decided to make my own version from scratch in Python. Grank is as good as, if not better, than dankgrinder.
 
 ## Features
 * Ease of use - Once Grank has been setup, you can control it through Discord using many different and useful commands.

@@ -14,7 +14,7 @@ def guild_id(Client):
     
     response = loads(req.content.decode())
     
-    if reponse["type"] != 0:
+    if response["type"] != 0:
         return False
     
     return response["guild_id"]
