@@ -54,6 +54,7 @@
         - [`blacklisted servers` category](#blacklisted-servers-category)
         - [`settings` category](#settings-category)
         - [`logging` category](#logging-category)
+            - [`webhook logging` subcategory](#webhook-logging-subcategory)
     - [Disclaimer](#disclaimer)
 
 <!-- /TOC -->
@@ -461,6 +462,15 @@ Values in the `logging` category tell the program whether or not to log *`debug`
 | `warning`  | `Boolean` | `True`  | Tells the program whether or not to log `warning` messages. |
 
 ***NOTE***: Values in the `logging` category do not affect logging messages sent when the configuration file is being loaded and the token is being verified.
+
+#### __`webhook logging` subcategory__
+
+Values in the `webhook logging` subcategory tell the program whether or not to log events through a webhook and the webhook URL to log through.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `True` | `False`  | Tells the program whether or not to log events through a webhook. |
+| `url`  | `String` | `discord.com/api/webhooks/`  | The webhook URL to log events through. Please do not include any protocol (e.g. `https://`). |
 
 ## Disclaimer
 

@@ -49,6 +49,7 @@ def anti_heist(Client, latest_message, reset) -> None:
         data["running"].remove(Client.channel_id)
 
     Client.log("DEBUG", "Successfully averted heist.")
+    Client.webhook_log("Successfully averted heist.")
 
 
 def join_heist(Client, latest_message) -> None:
@@ -64,6 +65,7 @@ def join_heist(Client, latest_message) -> None:
     Client.interact_button("pls heist", custom_id, latest_message)
 
     Client.log("DEBUG", "Joined heist.")
+    Client.webhook_log("Heist detected for another user. Joined.")
 
 
 def receive_trade(Client, latest_message) -> None:
@@ -87,6 +89,9 @@ def receive_trade(Client, latest_message) -> None:
         "DEBUG",
         f"Successfully accepted trade from {latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']}.",
     )
+    Client.webhook_log(
+        f"Successfully accepted trade from {latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']}."
+    )
 
 
 def event_1(Client, latest_message) -> None:
@@ -96,6 +101,9 @@ def event_1(Client, latest_message) -> None:
     Client.log(
         "DEBUG",
         "Detected the `Your immune system is under attack from Covid-19` event. Participating now.",
+    )
+    Client.webhook_log(
+        "Detected the `Your immune system is under attack from Covid-19` event."
     )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
@@ -120,6 +128,9 @@ def event_2(Client, latest_message) -> None:
         "DEBUG",
         "Detected the `Microsoft is trying to buy Discord again!` event. Participating now.",
     )
+    Client.webhook_log(
+        "Detected the `Microsoft is trying to buy Discord again!` event."
+    )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
@@ -143,6 +154,7 @@ def event_3(Client, latest_message) -> None:
         "DEBUG",
         "Detected the `pls rich cmd doesn't work` event. Participating now.",
     )
+    Client.webhook_log("Detected the `pls rich cmd doesn't work` event.")
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
@@ -166,6 +178,7 @@ def event_4(Client, latest_message) -> None:
         "DEBUG",
         "Detected the `f in the chat` event. Participating now.",
     )
+    Client.webhook_log("Detected the `f in the chat` event.")
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
@@ -223,6 +236,8 @@ def event_handler(Client, ws, event: dict) -> None:
                 f"Autostart channel ID  (`{channel}`) is invalid.",
             )
 
+    Client.webhook_log("Started the self-bot.")
+
     while True:
         try:
             event = loads(ws.recv())
@@ -252,7 +267,7 @@ def event_handler(Client, ws, event: dict) -> None:
                         not in ["947934623609028639", "967458611586547733"]
                     ):
                         Client.channel_id = event["d"]["channel_id"]
-                        Client.Repository.log_command(event["d"]["content"], event["d"])
+                        Client.Repository.log_command(Client, event["d"])
                         args = parse_args(event["d"]["content"])
 
                         # Client.send_message(f"***DEBUG:***  `{dumps(parse_args(event['d']['content']).__dict__)}`")
@@ -2097,6 +2112,10 @@ def event_handler(Client, ws, event: dict) -> None:
                                         "The grinder has **successfully started** in this channel!",
                                     )
 
+                                    Client.webhook_log(
+                                        f"Grinder started in channel **`{Client.channel_id}`**."
+                                    )
+
                                     New_Client = copy(Client)
 
                                     Thread(target=grind, args=[New_Client]).start()
@@ -2138,6 +2157,10 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "attachments": [],
                                         },
                                         "The grinder was **successfully stopped** in this channel!",
+                                    )
+
+                                    Client.webhook_log(
+                                        f"Grinder stopped in channel **`{Client.channel_id}`**."
                                     )
 
                                     data["running"].remove(Client.channel_id)

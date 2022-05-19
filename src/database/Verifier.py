@@ -167,6 +167,9 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['settings']['prefix']",
         "['settings']['patron']",
         "['settings']['timeout']",
+        "['logging']['webhook logging']",
+        "['logging']['webhook logging']['enabled']",
+        "['logging']['webhook logging']['url']",
     ]
 
     config = utils.Yaml.load(f"{cwd}database/{folder}/config.yml")

@@ -211,13 +211,16 @@ class Database(object):
                     self.controllers_write()
                     return True, None
 
-    def log_command(self, command: str, message: dict) -> None:
-        self.Client.log(
+    def log_command(self, Client, message: dict) -> None:
+        Client.log(
             "DEBUG",
-            f"Received command `{message['content']}` from {message['author']['username']}#{message['author']['discriminator']}.",
+            f"Received command `{message['content']}` from `{message['author']['username']}#{message['author']['discriminator']}`.",
+        )
+        Client.webhook_log(
+            f"Received command `{message['content']}` from `{message['author']['username']}#{message['author']['discriminator']}`."
         )
 
         self.controllers["controllers_info"][message["author"]["id"]][
             "commands"
-        ].append([round(int(time())), command])
+        ].append([round(int(time())), message["content"]])
         self.controllers_write()

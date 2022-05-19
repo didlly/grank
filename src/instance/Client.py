@@ -138,11 +138,11 @@ class Instance(object):
                     )
                     sleep(request["retry_after"])
                     continue
-                
+
                 self.log(
-                        "WARNING",
-                        f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {request.status_code} (expected 200 or 204).",
-                    )
+                    "WARNING",
+                    f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {request.status_code} (expected 200 or 204).",
+                )
                 raise MessageSendError(
                     f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
@@ -441,7 +441,7 @@ class Instance(object):
                         f"Successfully interacted with button on Dank Memer's response to command `{command}`.",
                     )
                 return
-            else:                   
+            else:
                 if request.status_code == 429:
                     request = loads(request.content)
 
@@ -462,7 +462,7 @@ class Instance(object):
                     self.interact_button(
                         command, custom_id, latest_message, token, session_id, check + 1
                     )
-                else:                  
+                else:
                     raise ButtonInteractError(
                         f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                     )
@@ -579,3 +579,48 @@ class Instance(object):
                 f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}"
             )
             exit(1)
+
+    def webhook_log(self, command: str, timestamp: bool = True) -> None:
+        if not self.Repository.config["logging"]["webhook logging"]["enabled"]:
+            return
+
+        command = (
+            f"**<t:{round(int(time()))}:F>** - {command}" if timestamp else command
+        )
+
+        while True:
+            request = post(
+                f"https://{self.Repository.config['logging']['webhook logging']['url']}",
+                json={
+                    "content": command,
+                    "username": "Grank",
+                    "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                    "attachments": [],
+                },
+            )
+
+            if request.status_code in [200, 204]:
+                if self.Repository.config["logging"]["debug"]:
+                    self.log(
+                        "DEBUG",
+                        f"Successfully sent webhook `{command}`.",
+                    )
+                return
+            else:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204).",
+                    )
+                if request.status_code == 429:
+                    request = loads(request.content)
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
+                        )
+                    sleep(request["retry_after"])
+                    continue
+                raise WebhookSendError(
+                    f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                )

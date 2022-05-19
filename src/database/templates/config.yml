@@ -186,3 +186,7 @@ settings:
 logging:
   debug: True
   warning: True
+  
+  webhook logging:
+    enabled: False
+    url: discord.com/api/webhooks/
