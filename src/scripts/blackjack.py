@@ -43,9 +43,9 @@ def blackjack(Client) -> None:
                         "".join(
                             filter(
                                 str.isdigit,
-                                coins=latest_message["embeds"][0]["description"].split(
+                                latest_message["embeds"][0]["description"].split(
                                     "**"
-                                )[4],
+                                )[1],
                             )
                         )
                     )

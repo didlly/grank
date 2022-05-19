@@ -13,13 +13,11 @@ def crime(Client) -> None:
             for option in latest_message["components"][0]["components"]
             if option["label"] == "tax evasion"
         ),
-        None,
+        choice(latest_message["components"][0]["components"])["custom_id"],
     )
     Client.interact_button(
         "pls crime",
-        choice(latest_message["components"][0]["components"])["custom_id"]
-        if custom_id is None
-        else custom_id,
+        custom_id,
         latest_message,
     )
 
@@ -39,14 +37,11 @@ def crime(Client) -> None:
     except Exception:
         coins = "no"
 
-    try:
-        items = (
-            latest_message["embeds"][0]["description"].split("**")[-2]
-            if latest_message["embeds"][0]["description"].count("**") == 2
-            else "no items"
-        )
-    except Exception:
-        items = "no items"
+    items = (
+        latest_message["embeds"][0]["description"].split("**")[-2]
+        if latest_message["embeds"][0]["description"].count("**") == 2
+        else "no items"
+    )
 
     Client.log(
         "DEBUG",

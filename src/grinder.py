@@ -73,7 +73,14 @@ def grind(Client):
                     "%Y-%m-%d %H:%M:%S.%f",
                 )
             ).total_seconds() > Client.Repository.config["cooldowns"]["adventure"]:
-                adventure(Client)
+                try:
+                    adventure(Client)
+                except Exception:
+                    if Client.Repository.config["logging"]["warning"]:
+                        Client.log(
+                            "WARNING",
+                            f"An unexpected error occured during the running of the `pls adventure` command: `{exc_info()}`.",
+                        )
 
                 Client.Repository.database["cooldowns"][
                     "adventure"
