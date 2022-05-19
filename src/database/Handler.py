@@ -5,6 +5,8 @@ from os.path import isdir
 from time import time
 from typing import Optional, Union
 
+from numpy import info
+
 import utils.Yaml
 from discord.UserInfo import user_info
 from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
@@ -20,6 +22,8 @@ def create_config(cwd: str, folder: int) -> open:
         open(f"{cwd}database/{folder}/config.yml", "x").close()
 
     config_file = open(f"{cwd}database/{folder}/config.yml", "r+")
+    config_file.seek(0)
+    config_file.truncate()
     config_file.write(config_template)
     config_file.flush()
 
@@ -34,6 +38,8 @@ def create_database(cwd: str, folder: int) -> open:
         open(f"{cwd}database/{folder}/database.json", "x").close()
 
     database_file = open(f"{cwd}database/{folder}/database.json", "r+")
+    database_file.seek(0)
+    database_file.truncate()
     database_file.write(database_template)
     database_file.flush()
 
@@ -51,6 +57,8 @@ def create_info(cwd: str, account):
     }
 
     info_file = open(f"{cwd}database/{account.id}/info.json", "r+")
+    info.seek(0)
+    info_file.truncate()
     info_file.write(dumps(account.__dict__))
     info_file.flush()
 

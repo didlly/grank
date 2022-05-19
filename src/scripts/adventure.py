@@ -184,6 +184,13 @@ def adventure(Client) -> None:
         Client.log("DEBUG", "Rick roll adventure phase. Choosing `up` option.")
 
         custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
+    elif (
+        "You encountered someone named Dank Sidious, what do you do?"
+        in latest_message["embeds"][0]["description"]
+    ):
+        Client.log("DEBUG", "Dank Sidious adventure phase. Choosing `Do it` option.")
+
+        custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     else:
         Client.log(
             "WARNING", "Unknown `pls adventure` phase. Clicking a random button."

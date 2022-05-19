@@ -130,20 +130,19 @@ class Instance(object):
                     )
                 return
             else:
-                if self.Repository.config["logging"]["warning"]:
+                if request.status_code == 429:
+                    request = loads(request.content)
                     self.log(
+                        "WARNING",
+                        f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
+                    )
+                    sleep(request["retry_after"])
+                    continue
+                
+                self.log(
                         "WARNING",
                         f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {request.status_code} (expected 200 or 204).",
                     )
-                if request.status_code == 429:
-                    request = loads(request.content)
-                    if self.Repository.config["logging"]["warning"]:
-                        self.log(
-                            "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
-                        )
-                    sleep(request["retry_after"])
-                    continue
                 raise MessageSendError(
                     f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
@@ -442,12 +441,7 @@ class Instance(object):
                         f"Successfully interacted with button on Dank Memer's response to command `{command}`.",
                     )
                 return
-            else:
-                if self.Repository.config["logging"]["warning"]:
-                    self.log(
-                        "WARNING",
-                        f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).",
-                    )
+            else:                   
                 if request.status_code == 429:
                     request = loads(request.content)
 
@@ -468,7 +462,7 @@ class Instance(object):
                     self.interact_button(
                         command, custom_id, latest_message, token, session_id, check + 1
                     )
-                else:
+                else:                  
                     raise ButtonInteractError(
                         f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                     )
@@ -517,11 +511,6 @@ class Instance(object):
                     )
                 return
             else:
-                if self.Repository.config["logging"]["warning"]:
-                    self.log(
-                        "WARNING",
-                        f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204).",
-                    )
                 if request.status_code == 429:
                     request = loads(request.content)
 
