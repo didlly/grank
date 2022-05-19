@@ -57,7 +57,7 @@ def create_info(cwd: str, account):
     }
 
     info_file = open(f"{cwd}database/{account.id}/info.json", "r+")
-    info.seek(0)
+    info_file.seek(0)
     info_file.truncate()
     info_file.write(dumps(account.__dict__))
     info_file.flush()
