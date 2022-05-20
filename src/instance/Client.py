@@ -590,7 +590,7 @@ class Instance(object):
 
         while True:
             request = post(
-                f"https://{self.Repository.config['logging']['webhook logging']['url']}",
+                self.Repository.config['logging']['webhook logging']['url'],
                 json={
                     "content": command,
                     "username": "Grank",
