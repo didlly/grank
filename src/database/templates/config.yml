@@ -189,4 +189,4 @@ logging:
   
   webhook logging:
     enabled: False
-    url: discord.com/api/webhooks/
+    url: https://discord.com/api/webhooks/

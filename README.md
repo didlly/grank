@@ -470,7 +470,7 @@ Values in the `webhook logging` subcategory tell the program whether or not to l
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
 | `enabled`  | `True` | `False`  | Tells the program whether or not to log events through a webhook. |
-| `url`  | `String` | `discord.com/api/webhooks/`  | The webhook URL to log events through. Please do not include any protocol (e.g. `https://`). |
+| `url`  | `String` | `discord.com/api/webhooks/`  | The webhook URL to log events through. |
 
 ## Disclaimer
 
