@@ -19,7 +19,7 @@ from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
 from grinder import grind
 from scripts.buy import buy
 from utils.Shared import data
-
+from traceback import format_exc
 
 def convert_size(num, suffix="B"):
     for unit in ["B", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
@@ -2294,7 +2294,6 @@ def event_handler(Client, ws, event: dict) -> None:
                                         },
                                         f"```json\n{Client.Repository.config[key]}\n```",
                                     )
-                                    sleep(0.1)
                             elif "help" in args.flags:
                                 Client.webhook_send(
                                     {
@@ -2419,12 +2418,13 @@ def event_handler(Client, ws, event: dict) -> None:
                                         exec(
                                             f"Client.Repository.config{''.join(arg for arg in args.variables)} = args.var"
                                         )
+                                        
                                         Client.webhook_send(
                                             {
                                                 "embeds": [
                                                     {
                                                         "title": "Success!",
-                                                        "description": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **was successfully set** to **`{args.var}`**.",
+                                                        "description": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **successfully set** to **`{args.var}`**.",
                                                         "color": 65423,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -2568,7 +2568,7 @@ def event_handler(Client, ws, event: dict) -> None:
         except Exception:
             Client.log(
                 "WARNING",
-                f"An unexpected error occured during the websocket connection (`{exc_info()}`). Assuming gateway disconnect and creating a new connection.",
+                f"An unexpected error occured during the websocket connection (`{format_exc()}`). Assuming gateway disconnect and creating a new connection.",
             )
             Thread(target=gateway, args=[Client]).start()
             return

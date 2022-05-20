@@ -217,7 +217,7 @@ class Database(object):
             f"Received command `{message['content']}` from `{message['author']['username']}#{message['author']['discriminator']}`.",
         )
         Client.webhook_log(
-            f"Received command `{message['content']}` from `{message['author']['username']}#{message['author']['discriminator']}`."
+            f"Received command **`{message['content']}`** from **`{message['author']['username']}#{message['author']['discriminator']}`**."
         )
 
         self.controllers["controllers_info"][message["author"]["id"]][

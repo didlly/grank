@@ -15,12 +15,11 @@ def parse_args(cmd: str):
     subcommand = [arg for arg in msg.split(" ")[2:] if arg[0] != "-"]
 
     variables = (
-        [arg.replace("=", "") for arg in enumerate(cmd[0].split(".")[1:])]
+        [arg.replace("=", "") for arg in cmd[0].split(".")[1:]]
         if "." in cmd[0]
         else [
             arg.replace("=", "")
-            for index, arg in enumerate(cmd[0].split(" ")[1:])
-            if index != 0
+            for arg in cmd[0].split(" ")[1:]
         ]
     )
 
