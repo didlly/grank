@@ -138,6 +138,9 @@ class Database(object):
         exec(
             f"self.config['auto accept trade']['traders'] = {[str(trader) for trader in self.config['auto accept trade']['traders']]}"
         )
+        
+        if self.config["logging"]["webhook logging"]["enabled"]:
+            self.config["logging"]["webhook logging"]["url"] = self.config["logging"]["webhook logging"]["url"].replace("https//", "https://")
 
     def config_write(self) -> None:
         self.config_file.seek(0)
