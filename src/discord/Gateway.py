@@ -286,23 +286,23 @@ def event_handler(Client, ws, event: dict) -> None:
                                                     "value": "Edits the auto start channels for this account. Run `grank autostart -help` for more information.",
                                                 },
                                                 {
-                                                    "name": "*- `commands`*",
+                                                    "name": "*- `commands / cmds`*",
                                                     "value": "Edits the custom commands for this account. Run `grank commands -help` for more information.",
                                                 },
                                                 {
-                                                    "name": "*- `config`*",
+                                                    "name": "*- `config / conf`*",
                                                     "value": "Edits the config for this account. Run `grank config -help` for more information.",
                                                 },
                                                 {
-                                                    "name": "*- `controllers`*",
+                                                    "name": "*- `controllers / cont`*",
                                                     "value": "Edits the controllers for this account. Run `grank controllers -help` for more information.",
                                                 },
                                                 {
-                                                    "name": "*- `database`*",
+                                                    "name": "*- `database / db`*",
                                                     "value": "Edits the database for this account. Run `grank database -help` for more information.",
                                                 },
                                                 {
-                                                    "name": "*- `info`*",
+                                                    "name": "*- `info / inf`*",
                                                     "value": "Shows information about the bot and the instance.",
                                                 },
                                                 {
@@ -339,7 +339,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                 },
                                 f"**Grank** is a Discord self-bot made to automate Dank Memer commands. It supports many of Dank Memer's commands and includes many useful features such as auto-buy and anti-detection.\n\n__**Commands:**__\n```yaml\nstart: Starts the grinder. Run 'grank start -help' for more information.\nstop: Stops the grinder. Run 'grank stop -help' for more information.\ncontrollers: Edits the controllers for this account. Run 'grank controllers -help' for more information.\nconfig: Edits the config for this account. Run 'grank config -help' for more information.\ncommands: Edits the custom commands for this account. Run 'grank commands -help' for more information.```\n__**Useful Links:**__\nGithub: https://github.com/didlly/grank\nDiscord: https://discord.com/invite/X3JMC9FAgy",
                             )
-                        elif args.command == "info":
+                        elif args.command == "info" or args.command == "inf":
                             Client.webhook_send(
                                 {
                                     "content": f"**Grank `{data['version']}`** runnning on **`Python {python_version()}`**",
@@ -1461,7 +1461,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
                                     )
 
-                        elif args.command == "commands":
+                        elif args.command == "commands" or args.command == "cmds":
                             if (
                                 len(args.subcommand) == 0
                                 and len(args.variables) == 0
@@ -1701,7 +1701,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         },
                                         f"The custom command you provided was not found.",
                                     )
-                        elif args.command == "controllers":
+                        elif args.command == "controllers" or args.command == "cont":
                             if (
                                 len(args.subcommand) == 0
                                 and len(args.variables) == 0
@@ -2184,7 +2184,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         },
                                         "The grinder **cannot stop** in this channel since it is **not running**!",
                                     )
-                        elif args.command == "database":
+                        elif args.command == "database" or args.command == "db":
                             if (
                                 len(args.subcommand) == 0
                                 and len(args.variables) == 0
@@ -2253,7 +2253,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                     },
                                     "Successfully reset the databae!",
                                 )
-                        elif args.command == "config":
+                        elif args.command == "config" or args.command == "conf":
                             if (
                                 len(args.subcommand) == 0
                                 and len(args.variables) == 0

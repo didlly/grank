@@ -21,11 +21,11 @@
     - [How to use Grank](#how-to-use-grank)
         - [Supported commands](#supported-commands)
         - [`autostart` category](#autostart-category)
-        - [`commands` category](#commands-category)
-        - [`config` category](#config-category)
-        - [`controllers` category](#controllers-category)
-        - [`database` category](#database-category)
-        - [`info` category](#info-category)
+        - [`commands / cmds` category](#commands--cmds-category)
+        - [`config / conf` category](#config--conf-category)
+        - [`controllers / cont` category](#controllers--cont-category)
+        - [`database / db` category](#database--db-category)
+        - [`info / inf` category](#info--inf-category)
         - [`servers` category](#servers-category)
         - [`shifts` category](#shifts-category)
         - [`start` category](#start-category)
@@ -134,7 +134,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | `autostart add 0` | Adds the channel with the ID of `0` to the list of auto-start channels. |
 | `autostart remove 0` | Removes the channel with the ID of `0` from the list of auto-start channels. |
 
-### `commands` category
+### `commands / cmds` category
 
 | Name | Description |
 | ------------- | ------------- |
@@ -143,7 +143,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | `commands add pls_help 69` | Adds the custom command 'pls help' to the list of custom commands and tells Grank it needs to be run every 69 seconds. |
 | `commands remove pls_help 69` | Removes the custom commands called 'pls help' from the list of custom commands. |
 
-### `config` category
+### `config / conf` category
 
 | Name | Description |
 | ------------- | ------------- |
@@ -155,7 +155,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 
 ***NOTE***: To access keys containing a space character, replace the space with an underscore (_).
 
-### `controllers` category
+### `controllers / cont` category
 
 | Name | Description |
 | ------------- | ------------- |
@@ -168,7 +168,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 
 ***NOTE:*** You can also @mention the user you want to interact with.
 
-### `database` category
+### `database / db` category
 
 | Name | Description |
 | ------------- | ------------- |
@@ -176,7 +176,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | `database -help`  | Shows help about the `database` command. |
 | `database reset`  | Resets the database to the default settings. |
 
-### `info` category
+### `info / inf` category
 
 | Name | Description |
 | ------------- | ------------- |
