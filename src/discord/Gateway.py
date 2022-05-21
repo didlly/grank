@@ -219,7 +219,7 @@ def event_handler(Client, ws, event: dict) -> None:
             if Client.guild_id == False:
                 Client.log(
                     "ERROR",
-                    f"Autostart channel ID (`{channel}`) is invalid.",
+                    f"Autostart channel ID (`{Client.Repository.config['auto start']['channel']}`) is invalid.",
                 )
 
             if Client.channel_id not in data["channels"]:
