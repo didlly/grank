@@ -1,5 +1,5 @@
 from copy import copy
-from datetime import datetime
+from datetime import datetime, timedelta
 from json import dumps, load, loads
 from platform import python_version
 from sys import exc_info
@@ -19,7 +19,7 @@ from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
 from grinder import grind
 from scripts.buy import buy
 from utils.Shared import data
-from traceback import format_exc
+
 
 def convert_size(num, suffix="B"):
     for unit in ["B", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
@@ -340,85 +340,109 @@ def event_handler(Client, ws, event: dict) -> None:
                                 f"**Grank** is a Discord self-bot made to automate Dank Memer commands. It supports many of Dank Memer's commands and includes many useful features such as auto-buy and anti-detection.\n\n__**Commands:**__\n```yaml\nstart: Starts the grinder. Run 'grank start -help' for more information.\nstop: Stops the grinder. Run 'grank stop -help' for more information.\ncontrollers: Edits the controllers for this account. Run 'grank controllers -help' for more information.\nconfig: Edits the config for this account. Run 'grank config -help' for more information.\ncommands: Edits the custom commands for this account. Run 'grank commands -help' for more information.```\n__**Useful Links:**__\nGithub: https://github.com/didlly/grank\nDiscord: https://discord.com/invite/X3JMC9FAgy",
                             )
                         elif args.command == "info" or args.command == "inf":
-                            Client.webhook_send(
-                                {
-                                    "content": f"**Grank `{data['version']}`** runnning on **`Python {python_version()}`**",
-                                    "embeds": [
-                                        {
-                                            "title": "Grank information",
-                                            "color": None,
-                                            "fields": [
-                                                {
-                                                    "name": "Active since:",
-                                                    "value": f"`{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`",
-                                                },
-                                                {
-                                                    "name": "Became active:",
-                                                    "value": f"<t:{round(Client.startup_time)}:R>",
-                                                },
-                                            ],
-                                        },
-                                        {
-                                            "title": "Client information",
-                                            "color": None,
-                                            "fields": [
-                                                {
-                                                    "name": "Username:",
-                                                    "value": f"`{Client.username}`",
-                                                    "inline": True,
-                                                },
-                                                {
-                                                    "name": "ID:",
-                                                    "value": f"`{Client.id}`",
-                                                    "inline": True,
-                                                },
-                                            ],
-                                        },
-                                        {
-                                            "title": "Session stats",
-                                            "color": None,
-                                            "fields": [
-                                                {
-                                                    "name": "Commands ran:",
-                                                    "value": f"`{data['stats'][Client.token]['commands_ran']}`",
-                                                },
-                                                {
-                                                    "name": "Buttons clicked:",
-                                                    "value": f"`{data['stats'][Client.token]['buttons_clicked']}`",
-                                                },
-                                                {
-                                                    "name": "Dropdowns selected:",
-                                                    "value": f"`{data['stats'][Client.token]['dropdowns_selected']}`",
-                                                },
-                                            ],
-                                        },
-                                        {
-                                            "title": "Lifetime stats",
-                                            "color": None,
-                                            "fields": [
-                                                {
-                                                    "name": "Commands ran:",
-                                                    "value": f"`{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`",
-                                                },
-                                                {
-                                                    "name": "Buttons clicked:",
-                                                    "value": f"`{data['stats'][Client.token]['buttons_clicked']  + Client.Repository.info['stats']['buttons_clicked']}`",
-                                                },
-                                                {
-                                                    "name": "Dropdowns selected:",
-                                                    "value": f"`{data['stats'][Client.token]['dropdowns_selected']  + Client.Repository.info['stats']['dropdowns_selected']}`",
-                                                },
-                                            ],
-                                            "footer": {
-                                                "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                            embed = {
+                                "content": f"**Grank `{data['version']}`** runnning on **`Python {python_version()}`**",
+                                "embeds": [
+                                    {
+                                        "title": "Grank information",
+                                        "color": None,
+                                        "fields": [
+                                            {
+                                                "name": "Active since:",
+                                                "value": f"`{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`",
                                             },
+                                            {
+                                                "name": "Became active:",
+                                                "value": f"<t:{round(Client.startup_time)}:R>",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        "title": "Client information",
+                                        "color": None,
+                                        "fields": [
+                                            {
+                                                "name": "Username:",
+                                                "value": f"`{Client.username}`",
+                                                "inline": True,
+                                            },
+                                            {
+                                                "name": "ID:",
+                                                "value": f"`{Client.id}`",
+                                                "inline": True,
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        "title": "Session stats",
+                                        "color": None,
+                                        "fields": [
+                                            {
+                                                "name": "Commands ran:",
+                                                "value": f"`{data['stats'][Client.token]['commands_ran']}`",
+                                            },
+                                            {
+                                                "name": "Buttons clicked:",
+                                                "value": f"`{data['stats'][Client.token]['buttons_clicked']}`",
+                                            },
+                                            {
+                                                "name": "Dropdowns selected:",
+                                                "value": f"`{data['stats'][Client.token]['dropdowns_selected']}`",
+                                            },
+                                        ],
+                                    },
+                                    {
+                                        "title": "Lifetime stats",
+                                        "color": None,
+                                        "fields": [
+                                            {
+                                                "name": "Commands ran:",
+                                                "value": f"`{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`",
+                                            },
+                                            {
+                                                "name": "Buttons clicked:",
+                                                "value": f"`{data['stats'][Client.token]['buttons_clicked']  + Client.Repository.info['stats']['buttons_clicked']}`",
+                                            },
+                                            {
+                                                "name": "Dropdowns selected:",
+                                                "value": f"`{data['stats'][Client.token]['dropdowns_selected']  + Client.Repository.info['stats']['dropdowns_selected']}`",
+                                            },
+                                        ],
+                                    },
+                                ],
+                                "username": "Grank",
+                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                "attachments": [],
+                            }
+
+                            if Client.Repository.config["shifts"]["enabled"]:
+                                embed["embeds"].append(
+                                    {
+                                        "title": "Shift stats",
+                                        "color": None,
+                                        "fields": [
+                                            {
+                                                "name": "Shift:",
+                                                "value": f"`{Client.Repository.database['shifts']['shift']}`",
+                                            },
+                                            {
+                                                "name": "Current state:",
+                                                "value": f"`{Client.Repository.database['shifts']['state']}`",
+                                            },
+                                            {
+                                                "name": f"State switch:",
+                                                "value": f"<t:{round((datetime.strptime(Client.Repository.database['shifts'][Client.Repository.database['shifts']['state']], '%Y-%m-%d %H:%M:%S.%f') + timedelta(seconds=Client.Repository.config['shifts'][Client.Repository.database['shifts']['shift']]['active']) - datetime(1970, 1, 1)).total_seconds())}:f>",
+                                            },
+                                        ],
+                                        "footer": {
+                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
                                         },
-                                    ],
-                                    "username": "Grank",
-                                    "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                    "attachments": [],
-                                },
+                                    }
+                                )
+
+                            Client.webhook_send(
+                                embed,
                                 f"**Grank `{data['version']}`** running on **`Python {python_version()}`**.\n\n__**Grank Information:**__\nActive since: `{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`\nBecame active: <t:{round(Client.startup_time)}:R>\n\n__**Client Information:**__\nUsername: `{Client.username}`\nID: `{Client.id}`\n\n__**Session Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected']}`\n\n__**Lifetime Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked'] + Client.Repository.info['stats']['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected'] + Client.Repository.info['stats']['dropdowns_selected']}`",
                             )
                         elif args.command == "servers":
@@ -637,7 +661,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}`**was **successfully added**.",
+                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}` **was **successfully added**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -649,7 +673,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}`**was successfully added to the list of controllers for this account.",
+                                        f"The ID **`{args.subcommand[-1]}` **was successfully added to the list of controllers for this account.",
                                     )
                                 except ValueError:
                                     Client.webhook_send(
@@ -693,7 +717,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "embeds": [
                                                     {
                                                         "title": "Success!",
-                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}`**was **successfully removed**.",
+                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}` **was **successfully removed**.",
                                                         "color": 65423,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -705,7 +729,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"The ID **`{args.subcommand[-1]}`**was successfully removed from the list of blacklisted servers for this account.",
+                                            f"The ID **`{args.subcommand[-1]}` **was successfully removed from the list of blacklisted servers for this account.",
                                         )
                                     else:
                                         Client.webhook_send(
@@ -1348,7 +1372,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}`**was **successfully added**.",
+                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}` **was **successfully added**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1360,7 +1384,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}`**was successfully added to the list of controllers for this account.",
+                                        f"The ID **`{args.subcommand[-1]}` **was successfully added to the list of controllers for this account.",
                                     )
                                 except ValueError:
                                     Client.webhook_send(
@@ -1404,7 +1428,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "embeds": [
                                                     {
                                                         "title": "Success!",
-                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}`**was **successfully removed**.",
+                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}` **was **successfully removed**.",
                                                         "color": 65423,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1416,7 +1440,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"The ID **`{args.subcommand[-1]}`**was successfully removed from the list of auto start channels channels for this account.",
+                                            f"The ID **`{args.subcommand[-1]}` **was successfully removed from the list of auto start channels channels for this account.",
                                         )
                                     else:
                                         Client.webhook_send(
@@ -1590,11 +1614,11 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                         Client.webhook_send(
                                             {
-                                                "content": f"The custom command **`{args.subcommand[1]}`**was **successfully added**.",
+                                                "content": f"The custom command **`{args.subcommand[1]}` **was **successfully added**.",
                                                 "embeds": [
                                                     {
                                                         "title": "Success!",
-                                                        "description": f"The custom command  **`{args.subcommand[1]}`**was **successfully added** with a cooldown of **`{cooldown}`**.",
+                                                        "description": f"The custom command  **`{args.subcommand[1]}` **was **successfully added** with a cooldown of **`{cooldown}`**.",
                                                         "color": 65423,
                                                     },
                                                     {
@@ -1662,11 +1686,11 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                     Client.webhook_send(
                                         {
-                                            "content": f"The custom command **`{args.subcommand[1]}`**was **successfully removed**.",
+                                            "content": f"The custom command **`{args.subcommand[1]}` **was **successfully removed**.",
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The custom command  **`{args.subcommand[1]}`**was **successfully removed**.",
+                                                    "description": f"The custom command  **`{args.subcommand[1]}` **was **successfully removed**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1687,7 +1711,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": f"The custom command **`{args.subcommand[1]}`**was not found.",
+                                                    "description": f"The custom command **`{args.subcommand[1]}` **was not found.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1883,7 +1907,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": f"The controller **`{args.subcommand[-1]}`**was not found in the list of controllers.",
+                                                    "description": f"The controller **`{args.subcommand[-1]}` **was not found in the list of controllers.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1934,7 +1958,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Error!",
-                                                    "description": f"The ID **`{args.subcommand[-1]}`**was not found in the list of controllers.",
+                                                    "description": f"The ID **`{args.subcommand[-1]}` **was not found in the list of controllers.",
                                                     "color": 16711680,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1988,7 +2012,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The controller **`{args.subcommand[1]}`**was **successfully added**.",
+                                                    "description": f"The controller **`{args.subcommand[1]}` **was **successfully added**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -2000,7 +2024,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}`**was successfully added to the list of controllers for this account.",
+                                        f"The ID **`{args.subcommand[-1]}` **was successfully added to the list of controllers for this account.",
                                     )
                             elif "remove" in args.subcommand:
                                 output = Client.Repository.database_handler(
@@ -2036,7 +2060,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The controller **`{args.subcommand[1]}`**was **successfully removed**.",
+                                                    "description": f"The controller **`{args.subcommand[1]}` **was **successfully removed**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -2048,7 +2072,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}`**was successfully removed from the list of controllers for this account.",
+                                        f"The ID **`{args.subcommand[-1]}` **was successfully removed from the list of controllers for this account.",
                                     )
                         elif args.command == "start":
                             if "help" in args.flags:
@@ -2394,7 +2418,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "embeds": [
                                                     {
                                                         "title": "Error!",
-                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **not found**.",
+                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}` **was **not found**.",
                                                         "color": 16711680,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -2406,7 +2430,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **not found**.",
+                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}` **was **not found**.",
                                         )
                                 else:
                                     args.variables = [
@@ -2417,13 +2441,13 @@ def event_handler(Client, ws, event: dict) -> None:
                                         exec(
                                             f"Client.Repository.config{''.join(arg for arg in args.variables)} = args.var"
                                         )
-                                        
+
                                         Client.webhook_send(
                                             {
                                                 "embeds": [
                                                     {
                                                         "title": "Success!",
-                                                        "description": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **successfully set** to **`{args.var}`**.",
+                                                        "description": f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}` **was **successfully set** to **`{args.var}`**.",
                                                         "color": 65423,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -2435,7 +2459,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **was successfully set** to **`{args.var}`**.",
+                                            f"Configuration value **`{'.'.join(arg[2:][:-2] for arg in args.variables)}` **was successfully set** to **`{args.var}`**.",
                                         )
                                         Client.Repository.config_write()
                                     except KeyError:
@@ -2444,7 +2468,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "embeds": [
                                                     {
                                                         "title": "Error!",
-                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **not found**.",
+                                                        "description": f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}` **was **not found**.",
                                                         "color": 16711680,
                                                         "footer": {
                                                             "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -2456,7 +2480,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                                 "attachments": [],
                                             },
-                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}`**was **not found**.",
+                                            f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}` **was **not found**.",
                                         )
                 else:
                     if (
@@ -2567,7 +2591,7 @@ def event_handler(Client, ws, event: dict) -> None:
         except Exception:
             Client.log(
                 "WARNING",
-                f"An unexpected error occured during the websocket connection (`{format_exc()}`). Assuming gateway disconnect and creating a new connection.",
+                f"An unexpected error occured during the websocket connection (`{exc_info()}`). Assuming gateway disconnect and creating a new connection.",
             )
             Thread(target=gateway, args=[Client]).start()
             return

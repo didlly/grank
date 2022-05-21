@@ -17,10 +17,7 @@ def parse_args(cmd: str):
     variables = (
         [arg.replace("=", "") for arg in cmd[0].split(".")[1:]]
         if "." in cmd[0]
-        else [
-            arg.replace("=", "")
-            for arg in cmd[0].split(" ")[1:]
-        ]
+        else [arg.replace("=", "") for arg in cmd[0].split(" ")[1:]]
     )
 
     flags = [arg[1:] for arg in cmd if arg[0] == "-"]

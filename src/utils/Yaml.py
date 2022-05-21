@@ -60,7 +60,7 @@ def load(path: str) -> dict:
 
             key = line.split(":")[0].strip()
             value = "".join(line.split(":")[1:]).strip()
-            
+
             if (
                 is_float(value)
                 or is_integer(value)
