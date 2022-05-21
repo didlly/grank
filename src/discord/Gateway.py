@@ -1167,29 +1167,17 @@ def event_handler(Client, ws, event: dict) -> None:
                                 and len(args.flags) == 0
                             ):
                                 if Client.Repository.config["auto start"]["enabled"]:
-                                    channels = ""
                                     embed = {
-                                        "content": "All **auto start channels** for this account.",
-                                        "embeds": [],
+                                        "content": "**Auto start channel** for this account.",
+                                        "embeds": [{
+                                                "title": f"`{Client.Repository.config['auto start']['channel']}`",
+                                                "description": "",
+                                                "color": None,
+                                            }],
                                         "username": "Grank",
                                         "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                         "attachments": [],
                                     }
-
-                                    for channel in Client.Repository.config[
-                                        "auto start"
-                                    ]["channel"]:
-                                        if channel == "enabled":
-                                            continue
-
-                                        channels += f"\n{channel}"
-                                        embed["embeds"].append(
-                                            {
-                                                "title": f"`{channel}`",
-                                                "description": "",
-                                                "color": None,
-                                            }
-                                        )
 
                                     embed["embeds"][-1]["footer"] = {
                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1198,7 +1186,7 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                     Client.webhook_send(
                                         embed,
-                                        f"__**All auto start channels for this account**__\n```yaml{channels}```",
+                                        f"__**Auto start channels for this account**__\n{Client.Repository.config['auto start']['channel']}",
                                     )
                                 else:
                                     Client.webhook_send(
@@ -1247,8 +1235,8 @@ def event_handler(Client, ws, event: dict) -> None:
                                                         "value": "Adds the channel with the ID of `0` to the list of auto start channels.",
                                                     },
                                                     {
-                                                        "name": "- *`autostart remove 0`*",
-                                                        "value": "Removes the channel with the ID of `0` from the list of auto start channels.",
+                                                        "name": "- *`autostart remove`*",
+                                                        "value": "Removes the autostart channel.",
                                                     },
                                                 ],
                                                 "footer": {
@@ -1384,7 +1372,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}` **was successfully added to the list of autostart channel IDs.",
+                                        f"The ID **`{args.subcommand[-1]}` **was successfully added to the list of autostart channel IDs    .",
                                     )
                                 except ValueError:
                                     Client.webhook_send(
@@ -1408,83 +1396,32 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
                                     )
                             elif "remove" in args.subcommand:
-                                try:
-                                    args.subcommand[-1] = int(args.subcommand[-1])
+                                old_channel_id = Client.Repository.config["auto start"]["channel"]
+                                Client.Repository.config["auto start"][
+                                    "channel"
+                                ] = 0
+                                Client.Repository.config_write()
 
-                                    if (
-                                        args.subcommand[-1]
-                                        == Client.Repository.config["auto start"][
-                                            "channel"
-                                        ]
-                                    ):
-                                        Client.Repository.config["auto start"][
-                                            "channel"
-                                        ] = 0
-                                        Client.Repository.config_write()
-
-                                        Client.webhook_send(
+                                Client.webhook_send(
+                                    {
+                                        "content": f"Successfull removal!",
+                                        "embeds": [
                                             {
-                                                "content": f"Successfull removal!",
-                                                "embeds": [
-                                                    {
-                                                        "title": "Success!",
-                                                        "description": f"The guild with the ID of  **`{args.subcommand[1]}` **was **successfully removed**.",
-                                                        "color": 65423,
-                                                        "footer": {
-                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
-                                                        },
-                                                    },
-                                                ],
-                                                "username": "Grank",
-                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                                "attachments": [],
+                                                "title": "Success!",
+                                                "description": f"The channel with the ID of  **`{old_channel_id}` **was **successfully removed**.",
+                                                "color": 65423,
+                                                "footer": {
+                                                    "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                                    "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                                                },
                                             },
-                                            f"The ID **`{args.subcommand[-1]}` **was successfully removed from the list of auto start channels channels for this account.",
-                                        )
-                                    else:
-                                        Client.webhook_send(
-                                            {
-                                                "content": f"An error occured while removing the channel **`{args.subcommand[-1]}`**.",
-                                                "embeds": [
-                                                    {
-                                                        "title": "Error!",
-                                                        "description": "The ID you provided was **not found** in the list of auto start channels.",
-                                                        "color": 16711680,
-                                                        "footer": {
-                                                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
-                                                        },
-                                                    }
-                                                ],
-                                                "username": "Grank",
-                                                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                                "attachments": [],
-                                            },
-                                            f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
-                                        )
-                                except ValueError:
-                                    Client.webhook_send(
-                                        {
-                                            "content": f"An error occured while removing the channel **`{args.subcommand[-1]}`**.",
-                                            "embeds": [
-                                                {
-                                                    "title": "Error!",
-                                                    "description": "IDs contain **only numbers**. The ID you provided contained **other characters**.",
-                                                    "color": 16711680,
-                                                    "footer": {
-                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
-                                                    },
-                                                }
-                                            ],
-                                            "username": "Grank",
-                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                            "attachments": [],
-                                        },
-                                        f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
-                                    )
-
+                                        ],
+                                        "username": "Grank",
+                                        "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        "attachments": [],
+                                    },
+                                    f"The ID **`{old_channel_id}` **was successfully removed from the list of auto start channels channels for this account.",
+                                )
                         elif args.command == "commands" or args.command == "cmds":
                             if (
                                 len(args.subcommand) == 0

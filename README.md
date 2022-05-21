@@ -132,7 +132,7 @@ Now you have Grank set-up, you are probably wondering how to use Grank. Grank is
 | `autostart enable` | Enables the auto-start channels function. |
 | `autostart disable` | Disables the auto-start channels function. |
 | `autostart add 0` | Adds the channel with the ID of `0` to the list of auto-start channels. |
-| `autostart remove 0` | Removes the channel with the ID of `0` from the list of auto-start channels. |
+| `autostart remove` | Removes the autostart channel. |
 
 ### `commands / cmds` category
 
