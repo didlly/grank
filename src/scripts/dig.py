@@ -31,7 +31,7 @@ def dig(Client):
     ):
         Client.log("DEBUG", f"Received nothing from the `pls dig` command.")
         return
-    else:
+    else:       
         item = (
             latest_message["content"]
             .replace("You dig in the dirt and brought back 1 ", "")

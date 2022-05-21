@@ -25,23 +25,28 @@ def crime(Client) -> None:
 
     latest_message = Client.retreive_message("pls crime")
 
+    latest_message["embeds"][0]["description"] = latest_message["embeds"][0]["description"].replace(" <:horseshoe:813911522975678476>", "")
+    
     try:
         coins = int(
             "".join(
                 filter(
                     str.isdigit,
-                    latest_message["embeds"][0]["description"].split("\n")[0],
+                    latest_message["embeds"][0]["description"].split("\n")[0]
                 )
             )
         )
     except Exception:
         coins = "no"
 
-    items = (
-        latest_message["embeds"][0]["description"].split("**")[-2]
-        if latest_message["embeds"][0]["description"].count("**") == 2
-        else "no items"
-    )
+    try:
+        items = (
+            latest_message["embeds"][0]["description"].split("**")[-2]
+            if latest_message["embeds"][0]["description"].count("**") == 2
+            else "no items"
+        )
+    except Exception:
+        items = "no items"
 
     Client.log(
         "DEBUG",

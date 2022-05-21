@@ -1178,7 +1178,7 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                     for channel in Client.Repository.config[
                                         "auto start"
-                                    ]["channels"]:
+                                    ]["channel"]:
                                         if channel == "enabled":
                                             continue
 

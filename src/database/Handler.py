@@ -27,6 +27,7 @@ def create_config(cwd: str, folder: int) -> open:
 
     return config_file, utils.Yaml.loads(config_template)
 
+
 def rebuild_config(cwd: str, folder: int, keys: list):
     with open(f"{cwd}database/templates/config.yml", "r") as config_template_file:
         config_template = utils.Yaml.loads(config_template_file.read())
@@ -36,14 +37,15 @@ def rebuild_config(cwd: str, folder: int, keys: list):
 
     config_file = open(f"{cwd}database/{folder}/config.yml", "r+")
     config = utils.Yaml.loads(config_file.read())
-    
+
     for key in keys:
         exec(f"config{key} = config_template{key}")
-            
+
     config_file.seek(0)
     config_file.truncate()
     config_file.write(utils.Yaml.dumps(config))
     config_file.flush()
+
 
 def create_database(cwd: str, folder: int) -> open:
     with open(f"{cwd}database/templates/database.json", "r") as database_template_file:

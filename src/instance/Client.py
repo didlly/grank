@@ -119,7 +119,7 @@ class Instance(object):
                 },
             )
 
-            if request.status_code in [200, 204]:
+            if 199 < request.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     if "pls" in command:
                         data["stats"][self.token]["commands_ran"] += 1
@@ -187,7 +187,7 @@ class Instance(object):
                 json=command,
             )
 
-            if request.status_code in [200, 204]:
+            if 199 < request.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     self.log(
                         "DEBUG",
@@ -432,7 +432,7 @@ class Instance(object):
                 json=payload,
             )
 
-            if request.status_code in [200, 204]:
+            if 199 < request.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     data["stats"][self.token]["buttons_clicked"] += 1
 
@@ -501,7 +501,7 @@ class Instance(object):
                 json=payload,
             )
 
-            if request.status_code in [200, 204]:
+            if 199 < request.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     data["stats"][self.token]["dropdowns_selected"] += 1
 
@@ -599,7 +599,7 @@ class Instance(object):
                 },
             )
 
-            if request.status_code in [200, 204]:
+            if 199 < request.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     self.log(
                         "DEBUG",

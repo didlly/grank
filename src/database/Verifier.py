@@ -4,7 +4,7 @@ from os.path import isdir, isfile
 from typing import Optional, Union
 
 import utils.Yaml
-from database.Handler import create_controllers, create_database, rebuild_config
+from database.Handler import create_controllers, create_database, create_info, rebuild_config
 from instance.Client import Instance
 
 
@@ -28,7 +28,12 @@ def verify(cwd: str, account, Client: Instance) -> None:
         statuses.append(False)
     else:
         statuses.append(verify_controllers(cwd, Client.id))
-    
+        
+    if not isfile(f"{cwd}database/{Client.id}/info.json"):
+        statuses.append(False)
+    else:
+        statuses.append(verify_info(cwd, Client.id))
+
     if statuses != [True] * len(statuses):
         Client.log("WARNING", "Database is corrupted. Rebuilding now.")
 
@@ -40,9 +45,13 @@ def verify(cwd: str, account, Client: Instance) -> None:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/database.json")
             create_database(cwd, Client.id)
 
-        if statuses[-1] != True:
+        if statuses[2] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/controllers.json")
             create_controllers(cwd, account)
+            
+        if statuses[-1] != True:
+            Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/info.json")
+            create_info(cwd, account)
 
 
 def verify_config(cwd: str, folder: str) -> bool:
@@ -180,7 +189,7 @@ def verify_config(cwd: str, folder: str) -> bool:
             exec(f"_ = config{option}")
         except KeyError:
             keys.append(option)
-            
+
     return True if len(keys) == 0 else (False, keys)
 
 
@@ -232,5 +241,21 @@ def verify_controllers(
         True
         if "controllers" in controllers.keys()
         and "controllers_info" in controllers.keys()
+        else False
+    )
+
+def verify_info(
+    cwd: str,
+    folder: Union[None, str],
+) -> bool:
+    with open(f"{cwd}database/{folder}/info.json", "r") as info_file:
+        try:
+            info = loads(info_file.read())
+        except JSONDecodeError:
+            return False
+
+    return (
+        True
+        if "stats" in info.keys()
         else False
     )

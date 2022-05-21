@@ -17,41 +17,20 @@ def postmeme(Client) -> None:
 
     latest_message = Client.retreive_message("pls postmeme")
 
-    if "also a fan of your memes" in latest_message:
+    try:
+        coins = latest_message["embeds"][0]["description"].split("\n")[2].split("**")[1].replace("⏣ ", "")
+    except Exception:
+        coins = "no"
+            
+    if "also a fan of your memes" in latest_message["embeds"][0]["description"]:
         try:
-            coins = int(
-                "".join(
-                    filter(
-                        str.isdigit,
-                        latest_message["embeds"][0]["description"].split(
-                            "also a fan of your memes"
-                        )[0],
-                    )
-                )
-            )
-        except Exception:
-            coins = "no"
-
-        try:
-            items = latest_message["embeds"][0]["description"].split("**")[-2]
+            items = latest_message["embeds"][0]["description"].split("\n")[-1].split("**")[-2]
         except Exception:
             items = "no items"
     else:
-        try:
-            coins = int(
-                "".join(
-                    filter(
-                        str.isdigit,
-                        latest_message["embeds"][0]["description"],
-                    )
-                )
-            )
-        except Exception:
-            coins = "no"
-
         items = "no items"
 
-        Client.log(
-            "DEBUG",
-            f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls crime` command.",
-        )
+    Client.log(
+        "DEBUG",
+        f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls postmeme` command.",
+    )
