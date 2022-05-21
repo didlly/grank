@@ -5,8 +5,6 @@ from os.path import isdir
 from time import time
 from typing import Optional, Union
 
-from numpy import info
-
 import utils.Yaml
 from discord.UserInfo import user_info
 from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
