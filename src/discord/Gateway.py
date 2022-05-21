@@ -2084,11 +2084,10 @@ def event_handler(Client, ws, event: dict) -> None:
                                         "The grinder **cannot start** in this channel since it is **already running**!",
                                     )
                                 else:
-                                    if Client.channel_id not in data["channels"]:
-                                        data["channels"][Client.channel_id] = {
-                                            Client.token: True,
-                                            "message": {},
-                                        }
+                                    data["channels"][Client.channel_id] = {
+                                        Client.token: True,
+                                        "message": {},
+                                    }
 
                                     Client.guild_id = event["d"]["guild_id"]
 
