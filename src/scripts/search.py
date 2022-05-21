@@ -75,7 +75,7 @@ def search(Client) -> None:
 
     try:
         items = (
-            latest_message["embeds"][0]["description"].split("**")[-1]
+            latest_message["embeds"][0]["description"].split("**")[-2]
             if latest_message["embeds"][0]["description"].count("**") == 2
             else "no items"
         )

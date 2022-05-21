@@ -1362,8 +1362,8 @@ def event_handler(Client, ws, event: dict) -> None:
                                     args.subcommand[-1] = int(args.subcommand[-1])
 
                                     Client.Repository.config["auto start"][
-                                        "channels"
-                                    ].append(args.subcommand[-1])
+                                        "channel"
+                                    ] = args.subcommand[-1]
                                     Client.Repository.config_write()
 
                                     Client.webhook_send(
@@ -1372,7 +1372,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "embeds": [
                                                 {
                                                     "title": "Success!",
-                                                    "description": f"The guild with the ID of  **`{args.subcommand[1]}` **was **successfully added**.",
+                                                    "description": f"The channel with the ID of  **`{args.subcommand[1]}` **was **successfully added**.",
                                                     "color": 65423,
                                                     "footer": {
                                                         "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
@@ -1384,7 +1384,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                             "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                             "attachments": [],
                                         },
-                                        f"The ID **`{args.subcommand[-1]}` **was successfully added to the list of controllers for this account.",
+                                        f"The ID **`{args.subcommand[-1]}` **was successfully added to the list of autostart channel IDs.",
                                     )
                                 except ValueError:
                                     Client.webhook_send(
@@ -1413,13 +1413,13 @@ def event_handler(Client, ws, event: dict) -> None:
 
                                     if (
                                         args.subcommand[-1]
-                                        in Client.Repository.config["auto start"][
-                                            "channels"
+                                        == Client.Repository.config["auto start"][
+                                            "channel"
                                         ]
                                     ):
                                         Client.Repository.config["auto start"][
-                                            "channels"
-                                        ].remove(args.subcommand[-1])
+                                            "channel"
+                                        ] = 0
                                         Client.Repository.config_write()
 
                                         Client.webhook_send(
