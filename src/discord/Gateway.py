@@ -82,7 +82,7 @@ def receive_trade(Client, latest_message) -> None:
     custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
 
     Client.interact_button(
-        f"{latest_message['referenced_message']['content']}", custom_id, latest_message
+        latest_message['referenced_message']['content'], custom_id, latest_message
     )
 
     Client.log(
@@ -2527,8 +2527,8 @@ def event_handler(Client, ws, event: dict) -> None:
                                     in Client.Repository.config["auto accept trade"][
                                         "traders"
                                     ]
+                                    and f"<@{Client.id}>" in event["d"]["content"]
                                 ):
-                                    print(event["d"])
                                     Thread(
                                         target=receive_trade, args=[Client, event["d"]]
                                     ).start()

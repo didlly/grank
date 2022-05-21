@@ -617,9 +617,9 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after'] / 1000} second(s).",
                         )
-                    sleep(request["retry_after"])
+                    sleep(request["retry_after"] / 1000)
                     continue
                 raise WebhookSendError(
                     f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204)."
