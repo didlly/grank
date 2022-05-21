@@ -49,7 +49,7 @@ def anti_heist(Client, latest_message, reset) -> None:
         data["running"].remove(Client.channel_id)
 
     Client.log("DEBUG", "Successfully averted heist.")
-    Client.webhook_log("Successfully averted heist.")
+    Client.webhook_log("Successfully **averted heist**.")
 
 
 def join_heist(Client, latest_message) -> None:
@@ -90,7 +90,7 @@ def receive_trade(Client, latest_message) -> None:
         f"Successfully accepted trade from {latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']}.",
     )
     Client.webhook_log(
-        f"Successfully accepted trade from {latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']}."
+        f"Successfully **accepted trade** from **`{latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']}`**."
     )
 
 
@@ -103,7 +103,7 @@ def event_1(Client, latest_message) -> None:
         "Detected the `Your immune system is under attack from Covid-19` event. Participating now.",
     )
     Client.webhook_log(
-        "Detected the `Your immune system is under attack from Covid-19` event."
+        "Detected the **`Your immune system is under attack from Covid-19`** event."
     )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
@@ -129,7 +129,7 @@ def event_2(Client, latest_message) -> None:
         "Detected the `Microsoft is trying to buy Discord again!` event. Participating now.",
     )
     Client.webhook_log(
-        "Detected the `Microsoft is trying to buy Discord again!` event."
+        "Detected the **`Microsoft is trying to buy Discord again!`** event."
     )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
@@ -154,7 +154,7 @@ def event_3(Client, latest_message) -> None:
         "DEBUG",
         "Detected the `pls rich cmd doesn't work` event. Participating now.",
     )
-    Client.webhook_log("Detected the `pls rich cmd doesn't work` event.")
+    Client.webhook_log("Detected the **`pls rich cmd doesn't work`** event.")
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
@@ -178,7 +178,7 @@ def event_4(Client, latest_message) -> None:
         "DEBUG",
         "Detected the `f in the chat` event. Participating now.",
     )
-    Client.webhook_log("Detected the `f in the chat` event.")
+    Client.webhook_log("Detected the **`f in the chat`** event.")
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
@@ -2528,6 +2528,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                         "traders"
                                     ]
                                 ):
+                                    print(event["d"])
                                     Thread(
                                         target=receive_trade, args=[Client, event["d"]]
                                     ).start()

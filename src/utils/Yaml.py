@@ -59,7 +59,7 @@ def load(path: str) -> dict:
                 continue
 
             key = line.split(":")[0].strip()
-            value = "".join(line.split(":")[1:]).strip()
+            value = ":".join(line.split(":")[1:]).strip()
 
             if (
                 is_float(value)
@@ -144,7 +144,7 @@ def loads(yaml: str) -> dict:
             continue
 
         key = line.split(":")[0].strip()
-        value = "".join(line.split(":")[1:]).strip()
+        value = ":".join(line.split(":")[1:]).strip()
 
         if (
             is_float(value)
