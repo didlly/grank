@@ -55,8 +55,12 @@ def search(Client) -> None:
 
     latest_message = Client.retreive_message("pls search")
 
-    latest_message["embeds"][0]["description"] = latest_message["embeds"][0]["description"].replace("! <:horseshoe:813911522975678476>", "").replace(" <:horseshoe:813911522975678476>", "")
-    
+    latest_message["embeds"][0]["description"] = (
+        latest_message["embeds"][0]["description"]
+        .replace("! <:horseshoe:813911522975678476>", "")
+        .replace(" <:horseshoe:813911522975678476>", "")
+    )
+
     try:
         coins = int(
             "".join(

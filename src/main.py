@@ -62,7 +62,7 @@ print(
 {style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{latest_version}
 {style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/X3JMC9FAgy
 """
-)   
+)
 
 if data["version"] != latest_version:
     log(None, "WARNING", f"New version available. Update if possible.")

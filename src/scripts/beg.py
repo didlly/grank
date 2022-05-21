@@ -3,15 +3,25 @@ def beg(Client) -> None:
 
     latest_message = Client.retreive_message("pls beg")
 
-    latest_message["embeds"][0]["description"] = latest_message["embeds"][0]["description"].replace(" <:horseshoe:813911522975678476>", "")
+    latest_message["embeds"][0]["description"] = latest_message["embeds"][0][
+        "description"
+    ].replace(" <:horseshoe:813911522975678476>", "")
 
     try:
-        coins = latest_message["embeds"][0]["description"].split("**")[1].replace("⏣ ", "") if "⏣" in latest_message["embeds"][0]["description"] else "no"
+        coins = (
+            latest_message["embeds"][0]["description"].split("**")[1].replace("⏣ ", "")
+            if "⏣" in latest_message["embeds"][0]["description"]
+            else "no"
+        )
     except Exception:
         coins = "no"
 
     try:
-        items = latest_message["embeds"][0]["description"].split("**")[-2] if latest_message["embeds"][0]["description"].count("**") == 4 else "no items"
+        items = (
+            latest_message["embeds"][0]["description"].split("**")[-2]
+            if latest_message["embeds"][0]["description"].count("**") == 4
+            else "no items"
+        )
     except Exception:
         items = "no items"
 

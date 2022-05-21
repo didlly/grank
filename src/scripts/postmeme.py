@@ -18,13 +18,22 @@ def postmeme(Client) -> None:
     latest_message = Client.retreive_message("pls postmeme")
 
     try:
-        coins = latest_message["embeds"][0]["description"].split("\n")[2].split("**")[1].replace("⏣ ", "")
+        coins = (
+            latest_message["embeds"][0]["description"]
+            .split("\n")[2]
+            .split("**")[1]
+            .replace("⏣ ", "")
+        )
     except Exception:
         coins = "no"
-            
+
     if "also a fan of your memes" in latest_message["embeds"][0]["description"]:
         try:
-            items = latest_message["embeds"][0]["description"].split("\n")[-1].split("**")[-2]
+            items = (
+                latest_message["embeds"][0]["description"]
+                .split("\n")[-1]
+                .split("**")[-2]
+            )
         except Exception:
             items = "no items"
     else:

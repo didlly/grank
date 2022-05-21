@@ -233,7 +233,7 @@ def event_handler(Client, ws, event: dict) -> None:
         except ValueError:
             Client.log(
                 "ERROR",
-                f"Autostart channel ID  (`{channel}`) is invalid.",
+                f"Autostart channel ID  (`{Client.Repository.config['auto start']['channel']}`) is invalid.",
             )
 
     Client.webhook_log("Started the self-bot.")

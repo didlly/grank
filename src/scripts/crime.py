@@ -25,14 +25,16 @@ def crime(Client) -> None:
 
     latest_message = Client.retreive_message("pls crime")
 
-    latest_message["embeds"][0]["description"] = latest_message["embeds"][0]["description"].replace(" <:horseshoe:813911522975678476>", "")
-    
+    latest_message["embeds"][0]["description"] = latest_message["embeds"][0][
+        "description"
+    ].replace(" <:horseshoe:813911522975678476>", "")
+
     try:
         coins = int(
             "".join(
                 filter(
                     str.isdigit,
-                    latest_message["embeds"][0]["description"].split("\n")[0]
+                    latest_message["embeds"][0]["description"].split("\n")[0],
                 )
             )
         )

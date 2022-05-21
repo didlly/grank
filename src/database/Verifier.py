@@ -4,7 +4,12 @@ from os.path import isdir, isfile
 from typing import Optional, Union
 
 import utils.Yaml
-from database.Handler import create_controllers, create_database, create_info, rebuild_config
+from database.Handler import (
+    create_controllers,
+    create_database,
+    create_info,
+    rebuild_config,
+)
 from instance.Client import Instance
 
 
@@ -28,7 +33,7 @@ def verify(cwd: str, account, Client: Instance) -> None:
         statuses.append(False)
     else:
         statuses.append(verify_controllers(cwd, Client.id))
-        
+
     if not isfile(f"{cwd}database/{Client.id}/info.json"):
         statuses.append(False)
     else:
@@ -48,7 +53,7 @@ def verify(cwd: str, account, Client: Instance) -> None:
         if statuses[2] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/controllers.json")
             create_controllers(cwd, account)
-            
+
         if statuses[-1] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/info.json")
             create_info(cwd, account)
@@ -244,6 +249,7 @@ def verify_controllers(
         else False
     )
 
+
 def verify_info(
     cwd: str,
     folder: Union[None, str],
@@ -254,8 +260,4 @@ def verify_info(
         except JSONDecodeError:
             return False
 
-    return (
-        True
-        if "stats" in info.keys()
-        else False
-    )
+    return True if "stats" in info.keys() else False
