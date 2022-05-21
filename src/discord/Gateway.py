@@ -82,7 +82,7 @@ def receive_trade(Client, latest_message) -> None:
     custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
 
     Client.interact_button(
-        latest_message['referenced_message']['content'], custom_id, latest_message
+        latest_message["referenced_message"]["content"], custom_id, latest_message
     )
 
     Client.log(
@@ -1885,11 +1885,8 @@ def event_handler(Client, ws, event: dict) -> None:
                                         )
 
                                     if len(commands) > 1500:
-                                        commands = "".join(
-                                            f"{command}\n"
-                                            for command in commands[:1500].split("\n")[
-                                                :-1
-                                            ]
+                                        commands = "\n".join(
+                                            commands[:1500].split("\n")
                                         )
 
                                     embed["embeds"][-1][

@@ -4,7 +4,7 @@ from os.path import isdir, isfile
 from typing import Optional, Union
 
 import utils.Yaml
-from database.Handler import create_config, create_controllers, create_database
+from database.Handler import create_controllers, create_database, rebuild_config
 from instance.Client import Instance
 
 
@@ -28,19 +28,19 @@ def verify(cwd: str, account, Client: Instance) -> None:
         statuses.append(False)
     else:
         statuses.append(verify_controllers(cwd, Client.id))
-
-    if False in statuses:
+    
+    if statuses != [True] * len(statuses):
         Client.log("WARNING", "Database is corrupted. Rebuilding now.")
 
-        if statuses[0] is False:
+        if statuses[0] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/config.yml")
-            create_config(cwd, Client.id)
+            rebuild_config(cwd, Client.id, statuses[0][-1])
 
-        if statuses[1] is False:
+        if statuses[1] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/database.json")
             create_database(cwd, Client.id)
 
-        if statuses[-1] is False:
+        if statuses[-1] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/controllers.json")
             create_controllers(cwd, account)
 
@@ -173,14 +173,15 @@ def verify_config(cwd: str, folder: str) -> bool:
     ]
 
     config = utils.Yaml.load(f"{cwd}database/{folder}/config.yml")
+    keys = []
 
     for option in options:
         try:
             exec(f"_ = config{option}")
         except KeyError:
-            return False
-
-    return True
+            keys.append(option)
+            
+    return True if len(keys) == 0 else (False, keys)
 
 
 def verify_database(
