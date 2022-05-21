@@ -576,7 +576,7 @@ class Instance(object):
 
         if level == "ERROR":
             _ = input(
-                f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}"
+                f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}\n"
             )
             exit(1)
 

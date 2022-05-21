@@ -1169,11 +1169,13 @@ def event_handler(Client, ws, event: dict) -> None:
                                 if Client.Repository.config["auto start"]["enabled"]:
                                     embed = {
                                         "content": "**Auto start channel** for this account.",
-                                        "embeds": [{
+                                        "embeds": [
+                                            {
                                                 "title": f"`{Client.Repository.config['auto start']['channel']}`",
                                                 "description": "",
                                                 "color": None,
-                                            }],
+                                            }
+                                        ],
                                         "username": "Grank",
                                         "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                         "attachments": [],
@@ -1396,10 +1398,10 @@ def event_handler(Client, ws, event: dict) -> None:
                                         f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
                                     )
                             elif "remove" in args.subcommand:
-                                old_channel_id = Client.Repository.config["auto start"]["channel"]
-                                Client.Repository.config["auto start"][
+                                old_channel_id = Client.Repository.config["auto start"][
                                     "channel"
-                                ] = 0
+                                ]
+                                Client.Repository.config["auto start"]["channel"] = 0
                                 Client.Repository.config_write()
 
                                 Client.webhook_send(
