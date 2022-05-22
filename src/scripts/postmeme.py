@@ -1,5 +1,4 @@
 from random import choice
-from time import sleep
 
 
 def postmeme(Client) -> None:
@@ -12,8 +11,6 @@ def postmeme(Client) -> None:
         choice(latest_message["components"][0]["components"])["custom_id"],
         latest_message,
     )
-
-    sleep(0.5)
 
     latest_message = Client.retreive_message("pls postmeme")
 

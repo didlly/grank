@@ -87,12 +87,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls adventure`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
         if (
@@ -136,12 +130,6 @@ def grind(Client):
                     "beg"
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
-
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls beg`.",
-                    )
 
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
@@ -196,12 +184,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls blackjack`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -255,12 +237,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls crime`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -289,12 +265,6 @@ def grind(Client):
                     "daily"
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
-
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls daily`.",
-                    )
 
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
@@ -339,12 +309,6 @@ def grind(Client):
                     "dig"
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
-
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls dig`.",
-                    )
 
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
@@ -391,12 +355,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls fish`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -427,12 +385,6 @@ def grind(Client):
                     "guess"
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
-
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls guess`.",
-                    )
 
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
@@ -487,12 +439,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls highlow`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -538,12 +484,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls hunt`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -580,12 +520,6 @@ def grind(Client):
                     "lottery"
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
-
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls lottery`.",
-                    )
 
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
@@ -640,12 +574,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls postmeme`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -699,12 +627,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls search`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -750,12 +672,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls snakeeyes`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -792,12 +708,6 @@ def grind(Client):
                     "stream"
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
-
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls stream`.",
-                    )
 
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
@@ -851,12 +761,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls trivia`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
@@ -886,12 +790,6 @@ def grind(Client):
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
 
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls vote`.",
-                    )
-
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
         if (
@@ -919,12 +817,6 @@ def grind(Client):
                     "work"
                 ] = datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")
                 Client.Repository.database_write()
-
-                if Client.Repository.config["logging"]["debug"]:
-                    Client.log(
-                        "DEBUG",
-                        "Successfully updated latest command run of `pls work`.",
-                    )
 
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])

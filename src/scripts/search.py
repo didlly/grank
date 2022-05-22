@@ -1,5 +1,4 @@
 from random import choice
-from time import sleep
 
 
 def search(Client) -> None:
@@ -50,8 +49,6 @@ def search(Client) -> None:
         else custom_id,
         latest_message,
     )
-
-    sleep(0.5)
 
     latest_message = Client.retreive_message("pls search")
 

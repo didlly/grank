@@ -1,5 +1,4 @@
 from random import choice
-from time import sleep
 
 
 def crime(Client) -> None:
@@ -20,8 +19,6 @@ def crime(Client) -> None:
         custom_id,
         latest_message,
     )
-
-    sleep(0.5)
 
     latest_message = Client.retreive_message("pls crime")
 

@@ -216,14 +216,15 @@ class Instance(object):
     def retreive_message(self, command, token=None, check=True):
         while True:
             time = datetime.now()
+            old_latest_message = copy(data["channels"][self.channel_id]["message"])
 
             while (datetime.now() - time).total_seconds() < self.Repository.config[
                 "settings"
             ]["timeout"]:
-                latest_message = data["channels"][self.channel_id]["message"]
+                latest_message = copy(data["channels"][self.channel_id]["message"])
 
-                if latest_message == {}:
-                    sleep(0.5)
+                if old_latest_message == latest_message:
+                    sleep(self.Repository.config["settings"]["timeout"] / 10)
                     continue
 
                 if "referenced_message" in latest_message.keys():
@@ -255,6 +256,9 @@ class Instance(object):
                             f"Got Dank Memer's response to command `{command}`.",
                         )
                     break
+
+                sleep(self.Repository.config["settings"]["timeout"] / 10)
+                old_latest_message = copy(latest_message)
 
             if latest_message["author"]["id"] != "270904126974590976":
                 raise TimeoutError(

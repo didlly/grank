@@ -192,6 +192,30 @@ def event_4(Client, latest_message) -> None:
             return
 
 
+def event_5(Client, latest_message) -> None:
+    Client.channel_id = latest_message["channel_id"]
+    Client.guild_id = guild_id(Client)
+
+    Client.log(
+        "DEBUG",
+        "Detected the `frick off karen` event. Participating now.",
+    )
+    Client.webhook_log("Detected the **`frick off karen`** event.")
+
+    custom_id = custom_id = latest_message["components"][0]["components"][0][
+        "custom_id"
+    ]
+
+    while True:
+        try:
+            Client.interact_button(
+                "The frick off karen event", custom_id, latest_message
+            )
+            sleep(1)
+        except ButtonInteractError:
+            return
+
+
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
         try:
@@ -2448,6 +2472,11 @@ def event_handler(Client, ws, event: dict) -> None:
                             Thread(target=event_3, args=[Client, event["d"]]).start()
                         elif event["d"]["content"] == "F":
                             Thread(target=event_4, args=[Client, event["d"]]).start()
+                        elif (
+                            "Attack the boss by clicking `frick off karen`"
+                            in event["d"]["content"]
+                        ):
+                            Thread(target=event_5, args=[Client, event["d"]]).start()
                         if len(event["d"]["embeds"]) > 0:
                             if (
                                 f"<@{Client.id}>" in event["d"]["content"]

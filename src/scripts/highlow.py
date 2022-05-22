@@ -1,6 +1,3 @@
-from time import sleep
-
-
 def highlow(Client) -> None:
     Client.send_message("pls highlow")
 
@@ -17,8 +14,6 @@ def highlow(Client) -> None:
         else latest_message["components"][0]["components"][1]["custom_id"],
         latest_message,
     )
-
-    sleep(0.5)
 
     latest_message = Client.retreive_message("pls highlow")
 

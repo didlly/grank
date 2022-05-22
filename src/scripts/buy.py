@@ -1,10 +1,5 @@
-from time import sleep
-
-
 def buy(Client, item: str) -> None:
     Client.send_message(f"pls buy {item}")
-
-    sleep(1)
 
     latest_message = Client.retreive_message(f"pls buy {item}")
 
@@ -37,17 +32,13 @@ def buy(Client, item: str) -> None:
         )
 
         if (wallet + bank) - Client.Repository.database["price"][item] > 0:
-            sleep(1)
-
             amount = Client.Repository.database["price"][item] - wallet
 
             Client.send_message(f"pls with {amount}")
 
-            sleep(1)
-
             Client.send_message(f"pls buy {item}")
 
-            _ = Client.retreive_message(f"pls buy {item}")
+            Client.retreive_message(f"pls buy {item}")
         else:
             if Client.Repository.config["logging"]["warning"]:
                 Client.log("WARNING", f"Insufficient funds to buy a {item}.")

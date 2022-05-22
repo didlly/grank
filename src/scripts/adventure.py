@@ -14,8 +14,6 @@ def adventure(Client) -> None:
         ):
             Client.log("DEBUG", "Adventure has ended.")
 
-            sleep(1)
-
             latest_message = Client.retreive_message("pls adv")
 
             adventure = latest_message["embeds"][0]["fields"][0]["value"]
@@ -84,14 +82,10 @@ def adventure(Client) -> None:
 
                     Client.interact_button("pls adv", custom_id, latest_message)
 
-                    sleep(1)
-
                     output = buy(Client, "adventure ticket")
 
                     if not output:
                         return
-
-                    sleep(1)
 
                     Client.send_message("pls adv")
 
@@ -107,21 +101,15 @@ def adventure(Client) -> None:
 
             Client.interact_button("pls adv", custom_id, latest_message)
 
-            sleep(1)
-
             latest_message = Client.retreive_message("pls adv")
 
             custom_id = latest_message["components"][-1]["components"][1]["custom_id"]
 
             Client.interact_button("pls adv", custom_id, latest_message)
 
-            sleep(1)
-
             custom_id = latest_message["components"][-1]["components"][0]["custom_id"]
 
             Client.interact_button("pls adv", custom_id, latest_message)
-
-            sleep(1)
 
             latest_message = Client.retreive_message("pls adv")
 

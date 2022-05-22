@@ -1,5 +1,4 @@
 from random import choice, randint
-from time import sleep
 
 from scripts.buy import buy
 from scripts.item import has_item
@@ -15,7 +14,7 @@ def stream(Client) -> None:
 
         if "You were inactive" in latest_message["content"]:
             Client.log("WARNING", "Stream ended due to inactivity. Re-starting stream.")
-            sleep(2)
+
             latest_message = Client.retreive_message("pls stream")
 
         if "title" not in latest_message["embeds"][0].keys():
@@ -82,8 +81,6 @@ def stream(Client) -> None:
             latest_message,
         )
 
-        sleep(1)
-
         latest_message = Client.retreive_message("pls stream")
 
         Client.interact_dropdown(
@@ -100,8 +97,6 @@ def stream(Client) -> None:
             latest_message["components"][-1]["components"][0]["custom_id"],
             latest_message,
         )
-
-    sleep(1)
 
     latest_message = Client.retreive_message("pls stream")
 

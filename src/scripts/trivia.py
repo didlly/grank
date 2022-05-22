@@ -1,5 +1,4 @@
 from random import choice
-from time import sleep
 
 from utils.Shared import data
 
@@ -41,8 +40,6 @@ def trivia(Client) -> None:
         custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
 
     Client.interact_button("pls trivia", custom_id, latest_message)
-
-    sleep(0.5)
 
     latest_message = Client.retreive_message("pls trivia")
 

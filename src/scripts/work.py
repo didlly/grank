@@ -10,8 +10,6 @@ def work(Client) -> None:
     if "You don't currently have a job to work at." in latest_message["content"]:
         Client.send_message("pls work babysitter")
 
-        sleep(1)
-
         Client.send_message("pls work")
 
         latest_message = Client.retreive_message("pls work")

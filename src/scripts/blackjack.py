@@ -1,5 +1,4 @@
 from random import randint
-from time import sleep
 
 
 def blackjack(Client) -> None:
@@ -85,7 +84,5 @@ def blackjack(Client) -> None:
                 latest_message,
             )
             break
-
-        sleep(0.5)
 
         latest_message = Client.retreive_message(f"pls blackjack {amount}")
