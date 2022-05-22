@@ -239,7 +239,7 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
             return
 
 
-def event_handler(Client, ws, event: dict) -> None:
+def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
     if Client.Repository.config["shifts"]["enabled"]:
         data[Client.username] = False
         Thread(target=Shifts.shifts, args=[Client]).start()
@@ -250,7 +250,7 @@ def event_handler(Client, ws, event: dict) -> None:
     Client.session_id = event["d"]["sessions"][0]["session_id"]
     heist = False
 
-    if Client.Repository.config["auto start"]["enabled"]:
+    if Client.Repository.config["auto start"]["enabled"] and autostart:
         try:
             Client.channel_id = str(Client.Repository.config["auto start"]["channel"])
             Client.guild_id = guild_id(Client)
@@ -2582,11 +2582,11 @@ def event_handler(Client, ws, event: dict) -> None:
                 "WARNING",
                 f"An unexpected error occured during the websocket connection (`{exc_info()}`). Assuming gateway disconnect and creating a new connection.",
             )
-            Thread(target=gateway, args=[Client]).start()
+            Thread(target=gateway, args=[Client, False]).start()
             return
 
 
-def gateway(Client: Union[Instance, str]) -> Optional[str]:
+def gateway(Client: Union[Instance, str], autostart: bool = True) -> Optional[str]:
     ws = WebSocket()
     ws.connect("wss://gateway.discord.gg/?v=10&encoding=json")
     heartbeat_interval = loads(ws.recv())["d"]["heartbeat_interval"] / 1000
@@ -2622,4 +2622,4 @@ def gateway(Client: Union[Instance, str]) -> Optional[str]:
 
     if type(Client) != str:
         Client.log("DEBUG", "Ready to receive commands.")
-        Thread(target=event_handler, args=[Client, ws, event]).start()
+        Thread(target=event_handler, args=[Client, ws, event, autostart]).start()
