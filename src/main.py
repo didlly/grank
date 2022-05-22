@@ -83,5 +83,5 @@ for account in accounts:
     verify(cwd, account, Client)
     Repository = Database(cwd, account, Client)
 
-    Client.Repository = Repository
+    Client.Repository = Repository  
     Thread(target=gateway, args=[Client]).start()
