@@ -57,7 +57,7 @@ def buy(Client, item: str) -> None:
     Client.log("DEBUG", f"Successfully bought {item}.")
 
     Client.webhook_log(
-        f"Automatically bought {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} [](https://cdn.discordapp.com/emojis/{[word for word in latest_message['embeds'][0]['description'].split(' ') if word[:2] == '<:'][0].split(':')[-1][:-1]}.webp?size=44&quality=lossless) **{item}**."
+        f"Automatically bought {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'}[](https://cdn.discordapp.com/emojis/{[word for word in latest_message['embeds'][0]['description'].split(' ') if word[:2] == '<:'][0].split(':')[-1][:-1]}.webp?size=44&quality=lossless) **{item}**."
     )
 
     return True
