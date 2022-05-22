@@ -6,14 +6,13 @@ from platform import system
 from sys import argv
 from threading import Thread
 
-from requests import get
-from requests.exceptions import ConnectionError
-
 from configuration.Credentials import verify_credentials
 from database.Handler import Database
 from database.Verifier import verify
 from discord.Gateway import gateway
 from instance.Client import Instance
+from requests import get
+from requests.exceptions import ConnectionError
 from utils.Console import fore, style
 from utils.Logger import log
 from utils.Shared import data
@@ -83,5 +82,5 @@ for account in accounts:
     verify(cwd, account, Client)
     Repository = Database(cwd, account, Client)
 
-    Client.Repository = Repository  
+    Client.Repository = Repository
     Thread(target=gateway, args=[Client]).start()

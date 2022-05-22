@@ -53,7 +53,7 @@ def buy(Client, item: str) -> None:
                 f"Insufficient funds to buy {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} **{item}**.",
             )
             return False
-        
+
     Client.log("DEBUG", f"Successfully bought {item}.")
 
     Client.webhook_log(

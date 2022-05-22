@@ -7,8 +7,6 @@ from threading import Thread
 from time import sleep
 from typing import Optional, Union
 
-from websocket import WebSocket
-
 import utils.Yaml
 from discord.GuildId import guild_id
 from discord.UserInfo import user_info
@@ -19,6 +17,7 @@ from instance.Client import ButtonInteractError, Instance
 from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
 from scripts.buy import buy
 from utils.Shared import data
+from websocket import WebSocket
 
 
 def anti_heist(Client, latest_message, reset) -> None:
@@ -41,7 +40,9 @@ def anti_heist(Client, latest_message, reset) -> None:
         data["running"].remove(Client.channel_id)
 
     Client.log("DEBUG", "Successfully averted heist.")
-    Client.webhook_log(f"Successfully [**averted heist**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}).")
+    Client.webhook_log(
+        f"Successfully [**averted heist**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']})."
+    )
 
 
 def join_heist(Client, latest_message) -> None:
@@ -57,7 +58,9 @@ def join_heist(Client, latest_message) -> None:
     Client.interact_button("pls heist", custom_id, latest_message)
 
     Client.log("DEBUG", "Joined heist.")
-    Client.webhook_log(f"**Heist detected** for [**another user**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}). Joined.")
+    Client.webhook_log(
+        f"**Heist detected** for [**another user**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}). Joined."
+    )
 
 
 def receive_trade(Client, latest_message) -> None:
@@ -146,7 +149,9 @@ def event_3(Client, latest_message) -> None:
         "DEBUG",
         "Detected the `pls rich cmd doesn't work` event. Participating now.",
     )
-    Client.webhook_log(f"Detected the [**`pls rich cmd doesn't work`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event.")
+    Client.webhook_log(
+        f"Detected the [**`pls rich cmd doesn't work`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+    )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
@@ -170,7 +175,9 @@ def event_4(Client, latest_message) -> None:
         "DEBUG",
         "Detected the `f in the chat` event. Participating now.",
     )
-    Client.webhook_log(f"Detected the [**`f in the chat`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event.")
+    Client.webhook_log(
+        f"Detected the [**`f in the chat`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+    )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
@@ -192,7 +199,9 @@ def event_5(Client, latest_message) -> None:
         "DEBUG",
         "Detected the `frick off karen` event. Participating now.",
     )
-    Client.webhook_log(f"Detected the [**`frick off karen`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event.")
+    Client.webhook_log(
+        f"Detected the [**`frick off karen`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+    )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
@@ -216,7 +225,9 @@ def event_6(Client, latest_message) -> None:
         "DEBUG",
         "Detected the `they've got airpods` event. Participating now.",
     )
-    Client.webhook_log(f"Detected the [**`They've got airpods`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event.")
+    Client.webhook_log(
+        f"Detected the [**`They've got airpods`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+    )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
         "custom_id"
