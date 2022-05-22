@@ -57,7 +57,7 @@ def join_heist(Client, latest_message) -> None:
     Client.interact_button("pls heist", custom_id, latest_message)
 
     Client.log("DEBUG", "Joined heist.")
-    Client.webhook_log("Heist detected for another user. Joined.")
+    Client.webhook_log("**Heist detected** for **another user**. Joined.")
 
 
 def receive_trade(Client, latest_message) -> None:
@@ -208,6 +208,28 @@ def event_5(Client, latest_message) -> None:
             return
 
 
+def event_6(Client, latest_message) -> None:
+    Client.channel_id = latest_message["channel_id"]
+    Client.guild_id = guild_id(Client)
+
+    Client.log(
+        "DEBUG",
+        "Detected the `they've got airpods` event. Participating now.",
+    )
+    Client.webhook_log("Detected the **`They've got airpods`** event.")
+
+    custom_id = custom_id = latest_message["components"][0]["components"][0][
+        "custom_id"
+    ]
+
+    while True:
+        try:
+            Client.interact_button("The they've got airpods", custom_id, latest_message)
+            sleep(1)
+        except ButtonInteractError:
+            return
+
+
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
     while True:
         try:
@@ -224,6 +246,7 @@ def event_handler(Client, ws, event: dict) -> None:
     else:
         data[Client.username] = True
 
+    Client.webhook_log("Self-bot is **online**.")
     Client.session_id = event["d"]["sessions"][0]["session_id"]
     heist = False
 
@@ -241,6 +264,10 @@ def event_handler(Client, ws, event: dict) -> None:
             if Client.channel_id not in data["channels"]:
                 data["channels"][Client.channel_id] = {}
 
+            Client.webhook_log(
+                f"Grinder **auto-started** in channel **`{Client.channel_id}`**."
+            )
+
             data["channels"][Client.channel_id][Client.token] = True
             data["running"].append(Client.channel_id)
             data["channels"][Client.channel_id]["message"] = {}
@@ -251,8 +278,6 @@ def event_handler(Client, ws, event: dict) -> None:
                 "ERROR",
                 f"Autostart channel ID  (`{Client.Repository.config['auto start']['channel']}`) is invalid.",
             )
-
-    Client.webhook_log("Started the self-bot.")
 
     while True:
         try:
@@ -2088,7 +2113,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                     )
 
                                     Client.webhook_log(
-                                        f"Grinder started in channel **`{Client.channel_id}`**."
+                                        f"Grinder **started** in channel **`{Client.channel_id}`**."
                                     )
 
                                     New_Client = copy(Client)
@@ -2135,7 +2160,7 @@ def event_handler(Client, ws, event: dict) -> None:
                                     )
 
                                     Client.webhook_log(
-                                        f"Grinder stopped in channel **`{Client.channel_id}`**."
+                                        f"Grinder **stopped** in channel **`{Client.channel_id}`**."
                                     )
 
                                     data["running"].remove(Client.channel_id)
@@ -2469,6 +2494,11 @@ def event_handler(Client, ws, event: dict) -> None:
                             in event["d"]["content"]
                         ):
                             Thread(target=event_5, args=[Client, event["d"]]).start()
+                        elif (
+                            "Attack the boss by clicking `jerk`"
+                            in event["d"]["content"]
+                        ):
+                            Thread(target=event_6, args=[Client, event["d"]]).start()
                         if len(event["d"]["embeds"]) > 0:
                             if (
                                 f"<@{Client.id}>" in event["d"]["content"]

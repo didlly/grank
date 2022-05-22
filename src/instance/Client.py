@@ -406,7 +406,7 @@ class Instance(object):
         return latest_message
 
     def interact_button(
-        self, command, custom_id, latest_message, token=None, session_id=None, check=0
+        self, command, custom_id, latest_message, token=None, session_id=None
     ):
         payload = {
             "application_id": 270904126974590976,
@@ -457,21 +457,12 @@ class Instance(object):
                     sleep(request["retry_after"])
 
                     continue
-                if request.status_code == 400 and check < 2:
-                    self.log(
-                        "WARNING",
-                        f"Internal Discord error while interacting with button to Dank Memer's reponse to command `{command}`. Re-trying in 1 second.",
-                    )
-                    sleep(1)
-                    self.interact_button(
-                        command, custom_id, latest_message, token, session_id, check + 1
-                    )
-                else:
-                    raise ButtonInteractError(
-                        f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
-                    )
 
-    def interact_dropdown(self, command, custom_id, option_id, latest_message, check=0):
+                raise ButtonInteractError(
+                    f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                )
+
+    def interact_dropdown(self, command, custom_id, option_id, latest_message):
         payload = {
             "application_id": 270904126974590976,
             "channel_id": self.channel_id,
@@ -526,19 +517,9 @@ class Instance(object):
                     sleep(request["retry_after"])
 
                     continue
-                if request.status_code == 400 and check < 2:
-                    self.log(
-                        "WARNING",
-                        f"Internal Discord error while interacting with button to Dank Memer's reponse to command `{command}`. Re-trying in 1 second.",
-                    )
-                    sleep(1)
-                    self.interact_dropdown(
-                        self, command, custom_id, option_id, latest_message, check + 1
-                    )
-                else:
-                    raise DropdownInteractError(
-                        f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
-                    )
+                raise DropdownInteractError(
+                    f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                )
 
     def clear_lag(self, command: str) -> None:
         """clear_lag()

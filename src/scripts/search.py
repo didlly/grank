@@ -63,7 +63,9 @@ def search(Client) -> None:
             "".join(
                 filter(
                     str.isdigit,
-                    latest_message["embeds"][0]["description"].split("\n")[0],
+                    latest_message["embeds"][0]["description"]
+                    .split("\n")[0]
+                    .split("https://")[0],
                 )
             )
         )

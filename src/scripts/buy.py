@@ -31,19 +31,33 @@ def buy(Client, item: str) -> None:
             )
         )
 
+        Client.webhook_log(f"Bank: `{bank}`; Wallet: {wallet}.")
+
         if (wallet + bank) - Client.Repository.database["price"][item] > 0:
             amount = Client.Repository.database["price"][item] - wallet
 
             Client.send_message(f"pls with {amount}")
 
+            Client.webhook_log(f"Automatically withdrew **⏣ {amount}**.")
+
             Client.send_message(f"pls buy {item}")
 
             Client.retreive_message(f"pls buy {item}")
         else:
-            if Client.Repository.config["logging"]["warning"]:
-                Client.log("WARNING", f"Insufficient funds to buy a {item}.")
+            Client.log(
+                "WARNING",
+                f"Insufficient funds to buy {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} {item}.",
+            )
+            Client.webhook_log(
+                "WARNING",
+                f"Insufficient funds to buy {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} **{item}**.",
+            )
             return False
     else:
-        if Client.Repository.config["logging"]["debug"]:
-            Client.log("DEBUG", f"Successfully bought {item}.")
-        return True
+        Client.log("DEBUG", f"Successfully bought {item}.")
+
+    Client.webhook_log(
+        f"Automatically bought {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} **{item}**."
+    )
+
+    return True
