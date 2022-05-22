@@ -565,12 +565,16 @@ class Instance(object):
             )
             exit(1)
 
-    def webhook_log(self, command: str, timestamp: bool = True) -> None:
+    def webhook_log(self, command: str, username: bool=True, timestamp: bool = True) -> None:
         if not self.Repository.config["logging"]["webhook logging"]["enabled"]:
             return
 
         command = (
-            f"**<t:{round(int(time()))}:F>** - {command}" if timestamp else command
+            f"**`{self.username}`** - {command}" if username else command
+        )
+
+        command = (
+            f"**<t:{round(int(time()))}:F>** | {command}" if timestamp else command
         )
 
         while True:
