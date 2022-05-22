@@ -12,21 +12,13 @@ from websocket import WebSocket
 import utils.Yaml
 from discord.GuildId import guild_id
 from discord.UserInfo import user_info
+from grinder import grind
 from instance import Shifts
 from instance.ArgumentHandler import parse_args
 from instance.Client import ButtonInteractError, Instance
 from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
-from grinder import grind
 from scripts.buy import buy
 from utils.Shared import data
-
-
-def convert_size(num, suffix="B"):
-    for unit in ["B", "Ki", "Mi", "Gi", "Ti", "Pi", "Ei", "Zi"]:
-        if abs(num) < 1024:
-            return f"{num:3.1f} {unit}{suffix}"
-        num /= 1024
-    return f"{num:.1f}Yi{suffix}"
 
 
 def anti_heist(Client, latest_message, reset) -> None:
@@ -2175,12 +2167,12 @@ def event_handler(Client, ws, event: dict) -> None:
                             ):
                                 Client.webhook_send(
                                     {
-                                        "content": f"Database file (`/database/{Client.id}/database.json`):\n```json\n{dumps(Client.Repository.database)}```",
+                                        "content": f"Database file (`/database/{Client.id}/database.json`):\n```json\n{dumps(Client.Repository.database, indent=4, sort_keys=True)}```",
                                         "username": "Grank",
                                         "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                         "attachments": [],
                                     },
-                                    f"""Database settings.\n```json\n{dumps(Client.Repository.database)}```""",
+                                    f"""Database settings.\n```json\n{dumps(Client.Repository.database, indent=4, sort_keys=True)}```""",
                                 )
                             elif "help" in args.flags:
                                 Client.webhook_send(
