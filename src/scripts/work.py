@@ -72,6 +72,8 @@ def work(Client) -> None:
             if item == word:
                 word = item[:]
 
+        custom_id = None
+
         for option in latest_message["components"][0]["components"]:
             if word == option["label"]:
                 custom_id = option["custom_id"]

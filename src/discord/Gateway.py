@@ -2204,12 +2204,12 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                             ):
                                 Client.webhook_send(
                                     {
-                                        "content": f"Database file (`/database/{Client.id}/database.json`):\n```json\n{dumps(Client.Repository.database, indent=4, sort_keys=True)}```",
+                                        "content": f"Database file (`/database/{Client.id}/database.json`):\n```json\n{dumps(Client.Repository.database, indent=4)}```",
                                         "username": "Grank",
                                         "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                                         "attachments": [],
                                     },
-                                    f"""Database settings.\n```json\n{dumps(Client.Repository.database, indent=4, sort_keys=True)}```""",
+                                    f"""Database settings.\n```json\n{dumps(Client.Repository.database, indent=4)}```""",
                                 )
                             elif "help" in args.flags:
                                 Client.webhook_send(

@@ -76,7 +76,7 @@ def create_info(cwd: str, account):
     info_file = open(f"{cwd}database/{account.id}/info.json", "r+")
     info_file.seek(0)
     info_file.truncate()
-    info_file.write(dumps(account.__dict__, indent=4, sort_keys=True))
+    info_file.write(dumps(account.__dict__, indent=4))
     info_file.flush()
 
     return info_file, account.__dict__
@@ -98,7 +98,7 @@ def create_controllers(cwd: str, account) -> open:
         open(f"{cwd}database/{account.id}/controllers.json", "x").close()
 
     controllers_file = open(f"{cwd}database/{account.id}/controllers.json", "r+")
-    controllers_file.write(dumps(controllers_template, indent=4, sort_keys=True))
+    controllers_file.write(dumps(controllers_template, indent=4))
     controllers_file.flush()
 
     return controllers_file, controllers_template
@@ -165,19 +165,19 @@ class Database(object):
     def database_write(self) -> None:
         self.database_file.seek(0)
         self.database_file.truncate()
-        self.database_file.write(dumps(self.database, indent=4, sort_keys=True))
+        self.database_file.write(dumps(self.database, indent=4))
         self.database_file.flush()
 
     def info_write(self) -> None:
         self.info_file.seek(0)
         self.info_file.truncate()
-        self.info_file.write(dumps(self.info, indent=4, sort_keys=True))
+        self.info_file.write(dumps(self.info, indent=4))
         self.info_file.flush()
 
     def controllers_write(self) -> None:
         self.controllers_file.seek(0)
         self.controllers_file.truncate()
-        self.controllers_file.write(dumps(self.controllers, indent=4, sort_keys=True))
+        self.controllers_file.write(dumps(self.controllers, indent=4))
         self.controllers_file.flush()
 
     def database_handler(
