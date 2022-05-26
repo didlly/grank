@@ -234,7 +234,7 @@ class Database(object):
             "DEBUG",
             f"Received command `{message['content']}` from `{message['author']['username']}#{message['author']['discriminator']}`.",
         )
-        
+
         Client.webhook_log(
             {
                 "content": None,
@@ -248,10 +248,8 @@ class Database(object):
                             "name": f"{message['author']['username']}#{message['author']['discriminator']}",
                             "icon_url": f"https://cdn.discordapp.com/avatars/{message['author']['id']}/{message['author']['avatar']}.webp?size=32",
                         },
-                        "footer": {
-                            "text": Client.username
-                        },
-                        "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z")
+                        "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                        "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                     }
                 ],
                 "attachments": [],

@@ -41,7 +41,26 @@ def anti_heist(Client, latest_message, reset) -> None:
 
     Client.log("DEBUG", "Successfully averted heist.")
     Client.webhook_log(
-        f"Successfully [**averted heist**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']})."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": f"**Averted heist**",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "description": f"Successfully averted a heist.",
+                    "color": 13162510,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
 
@@ -59,7 +78,26 @@ def join_heist(Client, latest_message) -> None:
 
     Client.log("DEBUG", "Joined heist.")
     Client.webhook_log(
-        f"**Heist detected** for [**another user**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}). Joined."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": f"**Heist detected for another user**",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "description": f"Successfully joined a heist directed towards another user.",
+                    "color": 13162510,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
 
@@ -85,7 +123,26 @@ def receive_trade(Client, latest_message) -> None:
         f"Successfully accepted trade from {latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']}.",
     )
     Client.webhook_log(
-        f"Successfully [**accepted trade**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) from **`{latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']}`**."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": f"**Successfully accepted trade**",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "description": f"Accepted trade from {latest_message['referenced_message']['author']['username']}#{latest_message['referenced_message']['author']['discriminator']}.",
+                    "color": 14190350,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
 
@@ -98,7 +155,26 @@ def event_1(Client, latest_message) -> None:
         "Detected the `Your immune system is under attack from Covid-19` event. Participating now.",
     )
     Client.webhook_log(
-        f"Detected the [**`Your immune system is under attack from Covid-19`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": f"**Event detected**",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "description": f"Detected the `Your immune system is under attack from Covid-19` event.",
+                    "color": 13686798,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
@@ -124,7 +200,26 @@ def event_2(Client, latest_message) -> None:
         "Detected the `Microsoft is trying to buy Discord again!` event. Participating now.",
     )
     Client.webhook_log(
-        f"Detected the [**`Microsoft is trying to buy Discord again!`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": f"**Event detected**",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "description": f"Detected the `Microsoft is trying to buy Discord again` event.",
+                    "color": 13686798,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
@@ -150,7 +245,26 @@ def event_3(Client, latest_message) -> None:
         "Detected the `pls rich cmd doesn't work` event. Participating now.",
     )
     Client.webhook_log(
-        f"Detected the [**`pls rich cmd doesn't work`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": f"**Event detected**",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "description": f"Detected the `pls rich cmd doesn't work` event.",
+                    "color": 13686798,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
@@ -176,7 +290,26 @@ def event_4(Client, latest_message) -> None:
         "Detected the `f in the chat` event. Participating now.",
     )
     Client.webhook_log(
-        f"Detected the [**`f in the chat`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": f"**Event detected**",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "description": f"Detected the `f in the chat` event.",
+                    "color": 13686798,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
@@ -200,7 +333,26 @@ def event_5(Client, latest_message) -> None:
         "Detected the `frick off karen` event. Participating now.",
     )
     Client.webhook_log(
-        f"Detected the [**`frick off karen`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": f"**Event detected**",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "description": f"Detected the `frick off karen` event.",
+                    "color": 13686798,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
@@ -223,10 +375,29 @@ def event_6(Client, latest_message) -> None:
 
     Client.log(
         "DEBUG",
-        "Detected the `they've got airpods` event. Participating now.",
+        "Detected the `They've got airpods` event. Participating now.",
     )
     Client.webhook_log(
-        f"Detected the [**`They've got airpods`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}) event."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": f"**Event detected**",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "description": f"Detected the `They've got airpods` event.",
+                    "color": 13686798,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
     custom_id = custom_id = latest_message["components"][0]["components"][0][
@@ -257,7 +428,23 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
     else:
         data[Client.username] = True
 
-    Client.webhook_log("Self-bot is **online**.")
+    Client.webhook_log(
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": "Self-bot is online",
+                    "description": "The self-bot is online.",
+                    "color": 65423,
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                },
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
+    )
     Client.session_id = event["d"]["sessions"][0]["session_id"]
     heist = False
 
@@ -276,7 +463,24 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                 data["channels"][Client.channel_id] = {}
 
             Client.webhook_log(
-                f"Grinder **auto-started** in channel <#{Client.channel_id}> (**`{Client.channel_id}`**)."
+                {
+                    "content": None,
+                    "embeds": [
+                        {
+                            "title": "Grinder auto-started",
+                            "description": f"The grinder auto started in the channel <#{Client.channel_id}> (**`{Client.channel_id}`**).",
+                            "color": 5832636,
+                            "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                            "timestamp": datetime.now().strftime(
+                                "%Y-%m-%dT%H:%M:%S.000Z"
+                            ),
+                        }
+                    ],
+                    "attachments": [],
+                    "attachments": [],
+                    "username": "Grank",
+                    "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                }
             )
 
             data["channels"][Client.channel_id][Client.token] = True
@@ -2125,7 +2329,24 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                     )
 
                                     Client.webhook_log(
-                                        f"Grinder **started** in channel <#{Client.channel_id}> (**`{Client.channel_id}`**)."
+                                        {
+                                            "content": None,
+                                            "embeds": [
+                                                {
+                                                    "title": "Grinder started",
+                                                    "description": f"The grinder started in the channel <#{Client.channel_id}> (**`{Client.channel_id}`**).",
+                                                    "color": 14159511,
+                                                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                                                    "timestamp": datetime.now().strftime(
+                                                        "%Y-%m-%dT%H:%M:%S.000Z"
+                                                    ),
+                                                }
+                                            ],
+                                            "attachments": [],
+                                            "attachments": [],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        }
                                     )
 
                                     New_Client = copy(Client)
@@ -2172,7 +2393,24 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                     )
 
                                     Client.webhook_log(
-                                        f"Grinder **stopped** in channel <#{Client.channel_id}> (**`{Client.channel_id}`**)."
+                                        {
+                                            "content": None,
+                                            "embeds": [
+                                                {
+                                                    "title": "Grinder stopped",
+                                                    "description": f"The grinder stopped in the channel <#{Client.channel_id}> (**`{Client.channel_id}`**).",
+                                                    "color": 14159511,
+                                                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                                                    "timestamp": datetime.now().strftime(
+                                                        "%Y-%m-%dT%H:%M:%S.000Z"
+                                                    ),
+                                                }
+                                            ],
+                                            "attachments": [],
+                                            "attachments": [],
+                                            "username": "Grank",
+                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                                        }
                                     )
 
                                     data["running"].remove(Client.channel_id)

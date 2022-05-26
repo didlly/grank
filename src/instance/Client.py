@@ -35,6 +35,7 @@ class DropdownInteractError(Exception):
 class Instance(object):
     def __init__(self, cwd: str, account: DictToClass) -> None:
         self.cwd = cwd
+        self.avatar = account.avatar
         self.token = account.token
         self.id = account.id
         self.username = f"{account.username}#{account.discriminator}"
@@ -566,7 +567,7 @@ class Instance(object):
             exit(1)
 
     def webhook_log(
-        self, command: Union[str, dict], username: bool = True, timestamp: bool = True
+        self, payload: dict
     ) -> None:
         if not self.Repository.config["logging"]["webhook logging"]["enabled"]:
             return
@@ -574,28 +575,21 @@ class Instance(object):
         while True:
             request = post(
                 self.Repository.config["logging"]["webhook logging"]["url"],
-                json={
-                    "content": f"{f'**<t:{round(int(time()))}:F>** | ' if timestamp else ''}{f'**`{self.username}`** -' if username else ''} {command}",
-                    "username": "Grank",
-                    "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                    "attachments": [],
-                }
-                if type(command) == str
-                else command,
+                json=payload
             )
 
             if 199 < request.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     self.log(
                         "DEBUG",
-                        f"Successfully sent webhook `{command}`.",
+                        f"Successfully sent webhook `{payload}`.",
                     )
                 return
             else:
                 if self.Repository.config["logging"]["warning"]:
                     self.log(
                         "WARNING",
-                        f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204).",
+                        f"Failed to send webhook `{payload}`. Status code: {request.status_code} (expected 200 or 204).",
                     )
                 if request.status_code == 429:
                     request = loads(request.content)
@@ -607,5 +601,5 @@ class Instance(object):
                     sleep(request["retry_after"] / 1000)
                     continue
                 raise WebhookSendError(
-                    f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                    f"Failed to send webhook `{payload}`. Status code: {request.status_code} (expected 200 or 204)."
                 )

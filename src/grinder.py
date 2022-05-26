@@ -58,7 +58,7 @@ def grind(Client):
                 except Exception:
                     Client.log(
                         "WARNING",
-                        "User changed custom command settings while Grank was running the custom commands. Re-running the custom commands.",
+                        f"An unexpected error occured during the running of the custom commands: `{exc_info()}`.",
                     )
 
         if (

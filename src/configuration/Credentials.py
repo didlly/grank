@@ -37,12 +37,13 @@ def verify_credentials(cwd: str) -> list:
                 "ERROR",
                 f"Token {index + 1} (`{credentials['TOKENS'][index]}`) is invalid.",
             )
-        else:
-            data.append(info)
-            log(
-                f"{info.username}#{info.discriminator}",
-                "DEBUG",
-                "Logged in successfully.",
-            )
+            
+        data.append(info)
+        
+        log(
+            f"{info.username}#{info.discriminator}",
+            "DEBUG",
+            "Logged in successfully.",
+        )
 
     return data

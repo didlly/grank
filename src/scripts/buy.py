@@ -1,3 +1,6 @@
+from datetime import datetime
+
+
 def buy(Client, item: str) -> None:
     Client.send_message(f"pls buy {item}")
 
@@ -31,14 +34,36 @@ def buy(Client, item: str) -> None:
             )
         )
 
-        Client.webhook_log(f"Bank: `{bank}`; Wallet: {wallet}.")
+        Client.webhook_log(
+            {
+                "content": None,
+                "embeds": [
+                    {
+                        "title": "Auto Tool",
+                        "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                        "color": None,
+                        "fields": [
+                            {"name": "Bank", "value": f"`{bank}`", "inline": True},
+                            {"name": "Wallet", "value": f"`{wallet}`", "inline": True},
+                        ],
+                        "author": {
+                            "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                            "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                        },
+                        "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                        "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                    }
+                ],
+                "attachments": [],
+                "username": "Grank",
+                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+            }
+        )
 
         if (wallet + bank) - Client.Repository.database["price"][item] > 0:
             amount = Client.Repository.database["price"][item] - wallet
 
             Client.send_message(f"pls with {amount}")
-
-            Client.webhook_log(f"Automatically withdrew **⏣ {amount}**.")
 
             Client.send_message(f"pls buy {item}")
 
@@ -49,15 +74,54 @@ def buy(Client, item: str) -> None:
                 f"Insufficient funds to buy {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} {item}.",
             )
             Client.webhook_log(
-                "WARNING",
-                f"Insufficient funds to buy {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} **{item}**.",
+                {
+                    "content": None,
+                    "embeds": [
+                        {
+                            "title": "Auto Tool",
+                            "description": f"**Insufficient funds** to buy {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} **{item}**.",
+                            "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                            "color": None,
+                            "author": {
+                                "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                                "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                            },
+                            "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                            "timestamp": datetime.now().strftime(
+                                "%Y-%m-%dT%H:%M:%S.000Z"
+                            ),
+                        }
+                    ],
+                    "attachments": [],
+                    "username": "Grank",
+                    "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                }
             )
             return False
 
     Client.log("DEBUG", f"Successfully bought {item}.")
 
     Client.webhook_log(
-        f"Automatically bought {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} **{item}**."
+        {
+            "content": None,
+            "embeds": [
+                {
+                    "title": "Auto Tool",
+                    "description": f"**Successfully bought** {'an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else 'a'} **{item}**.",
+                    "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{latest_message['id']}",
+                    "color": None,
+                    "author": {
+                        "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
+                    },
+                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                }
+            ],
+            "attachments": [],
+            "username": "Grank",
+            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+        }
     )
 
     return True
