@@ -4,6 +4,7 @@ from os import listdir, mkdir
 from os.path import isdir
 from time import time
 from typing import Optional, Union
+from datetime import datetime
 
 import utils.Yaml
 from discord.UserInfo import user_info
@@ -233,8 +234,30 @@ class Database(object):
             "DEBUG",
             f"Received command `{message['content']}` from `{message['author']['username']}#{message['author']['discriminator']}`.",
         )
+        
         Client.webhook_log(
-            f"Received command [**`{message['content']}`**](https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{message['id']}) from **`{message['author']['username']}#{message['author']['discriminator']}`**."
+            {
+                "content": None,
+                "embeds": [
+                    {
+                        "title": f"**Command received**",
+                        "url": f"https://discord.com/channels/{Client.guild_id}/{Client.channel_id}/{message['id']}",
+                        "description": f"`{message['content']}`",
+                        "color": 3063249,
+                        "author": {
+                            "name": f"{message['author']['username']}#{message['author']['discriminator']}",
+                            "icon_url": f"https://cdn.discordapp.com/avatars/{message['author']['id']}/{message['author']['avatar']}.webp?size=32",
+                        },
+                        "footer": {
+                            "text": Client.username
+                        },
+                        "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z")
+                    }
+                ],
+                "attachments": [],
+                "username": "Grank",
+                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+            }
         )
 
         self.controllers["controllers_info"][message["author"]["id"]][

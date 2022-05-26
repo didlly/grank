@@ -4,6 +4,7 @@ from json import loads
 from random import uniform
 from threading import Thread
 from time import sleep, time
+from typing import Union
 
 from requests import get, post
 from utils.Console import fore, style
@@ -565,26 +566,22 @@ class Instance(object):
             exit(1)
 
     def webhook_log(
-        self, command: str, username: bool = True, timestamp: bool = True
+        self, command: Union[str, dict], username: bool = True, timestamp: bool = True
     ) -> None:
         if not self.Repository.config["logging"]["webhook logging"]["enabled"]:
             return
-
-        command = f"**`{self.username}`** - {command}" if username else command
-
-        command = (
-            f"**<t:{round(int(time()))}:F>** | {command}" if timestamp else command
-        )
 
         while True:
             request = post(
                 self.Repository.config["logging"]["webhook logging"]["url"],
                 json={
-                    "content": command,
+                    "content": f"{f'**<t:{round(int(time()))}:F>** | ' if timestamp else ''}{f'**`{self.username}`** -' if username else ''} {command}",
                     "username": "Grank",
                     "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                     "attachments": [],
-                },
+                }
+                if type(command) == str
+                else command,
             )
 
             if 199 < request.status_code < 300:
