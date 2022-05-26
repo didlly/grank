@@ -70,7 +70,7 @@ def stream(Client) -> None:
 
                     Client.interact_button(
                         "pls stream",
-                        latest_message["components"][0]["components"][-1]["custom_id"],
+                        latest_message["components"][-1]["components"][-1]["custom_id"],
                         latest_message,
                     )
                     return
