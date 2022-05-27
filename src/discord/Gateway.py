@@ -1,8 +1,8 @@
 from copy import copy
 from datetime import datetime, timedelta
 from json import dumps, load, loads
+from json.decoder import JSONDecodeError
 from platform import python_version
-from sys import exc_info
 from threading import Thread
 from time import sleep
 from typing import Optional, Union
@@ -2871,6 +2871,8 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
         except WebSocketConnectionClosedException:
             Thread(target=gateway, args=[Client, False]).start()
             return
+        except JSONDecodeError:
+            continue
 
 
 def gateway(Client: Union[Instance, str], autostart: bool = True) -> Optional[str]:
