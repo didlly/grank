@@ -1,13 +1,11 @@
 from contextlib import suppress
-from json import loads
 from os import mkdir
 from os.path import dirname
 from platform import system
 from sys import argv
 from threading import Thread
 
-from requests import get
-from requests.exceptions import ConnectionError
+from utils.Requests import request
 
 from configuration.Credentials import verify_credentials
 from database.Handler import Database
@@ -28,25 +26,16 @@ cwd = dirname(argv[0])
 
 cwd = cwd if cwd == "" else f"{cwd}/"
 
-try:
-    data["trivia"] = loads(
-        get(
-            "https://raw.githubusercontent.com/didlly/grank/main/src/trivia.json",
-            allow_redirects=True,
-        ).content
-    )
-except ConnectionError:
-    log(
-        "ERROR",
-        "In case you didn't realise, Sherlock, you need an internet connection to run Grank ;-).",
-    )
+data["trivia"] = request(
+    "https://raw.githubusercontent.com/didlly/grank/main/src/trivia.json",
+).content  
 
 with open(f"{cwd}current_version", "r") as f:
     data["version"] = f.read()
 
-latest_version = get(
+latest_version = request(
     "https://raw.githubusercontent.com/didlly/grank/main/src/current_version"
-).content.decode()
+).content
 
 print(
     f"""{fore.Magenta}

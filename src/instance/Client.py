@@ -1,12 +1,11 @@
 from copy import copy
 from datetime import datetime
-from json import loads
 from random import uniform
 from threading import Thread
 from time import sleep, time
 from typing import Optional
 
-from requests import get, post
+from utils.Requests import request
 
 from utils.Console import fore, style
 from utils.Converter import DictToClass
@@ -86,9 +85,10 @@ class Instance(object):
         command = str(command)
 
         if self.Repository.config["typing indicator"]["enabled"]:
-            request = post(
+            req = request(
                 f"https://discord.com/api/v9/channels/{self.channel_id if channel_id is None else channel_id}/typing",
                 headers={"authorization": self.token if token is None else token},
+                method="POST"
             )
             sleep(
                 uniform(
@@ -106,7 +106,7 @@ class Instance(object):
             )
 
         while True:
-            request = post(
+            req = request(
                 f"https://discord.com/api/v10/channels/{self.channel_id if channel_id is None else channel_id}/messages?limit=1",
                 headers={"authorization": self.token if token is None else token},
                 json={"content": command}
@@ -119,9 +119,10 @@ class Instance(object):
                         "message_id": latest_message["id"],
                     },
                 },
+                method="POST"
             )
 
-            if 199 < request.status_code < 300:
+            if 199 < req.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     if "pls" in command:
                         data["stats"][self.token]["commands_ran"] += 1
@@ -132,8 +133,7 @@ class Instance(object):
                     )
                 return
             else:
-                if request.status_code == 429:
-                    request = loads(request.content)
+                if req.status_code == 429:
                     self.log(
                         "WARNING",
                         f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
@@ -143,19 +143,19 @@ class Instance(object):
 
                 self.log(
                     "WARNING",
-                    f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {request.status_code} (expected 200 or 204).",
+                    f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {req.status_code} (expected 200 or 204).",
                 )
                 raise MessageSendError(
-                    f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                    f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
 
     def webhook_send(self, command: dict, fallback_message: str) -> None:
-        request = get(
+        req = request(
             f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
             headers={"authorization": self.token},
         )
 
-        if request.status_code not in [200, 204]:
+        if req.status_code not in [200, 204]:
             self.log(
                 "WARNING",
                 f"Cannot send webhook in channel {self.channel_id} - Missing Permissions. Resorting to normal message.",
@@ -163,33 +163,33 @@ class Instance(object):
             self.send_message(fallback_message)
             return
 
-        response = loads(request.content)
-
-        if len(response) > 0:
-            token = response[0]["token"]
-            channel_id = response[0]["id"]
+        if len(req.content) > 0:
+            token = req.content[0]["token"]
+            channel_id = req.content[0]["id"]
         else:
-            request = post(
+            req = request(
                 f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
                 headers={"authorization": self.token},
                 json={"name": "Spidey Bot"},
+                method="POST"
             )
-            token = loads(request.content)["token"]
+            token = req.content["token"]
 
-            request = get(
+            req = request(
                 f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
                 headers={"authorization": self.token},
             )
-            channel_id = loads(request.content)[0]["id"]
+            channel_id = req.content[0]["id"]
 
         while True:
-            request = post(
+            req = request(
                 f"https://discord.com/api/webhooks/{channel_id}/{token}",
                 headers={"authorization": self.token},
                 json=command,
+                method="POST"
             )
 
-            if 199 < request.status_code < 300:
+            if 199 < req.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     self.log(
                         "DEBUG",
@@ -200,10 +200,9 @@ class Instance(object):
                 if self.Repository.config["logging"]["warning"]:
                     self.log(
                         "WARNING",
-                        f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204).",
+                        f"Failed to send webhook `{command}`. Status code: {req.status_code} (expected 200 or 204).",
                     )
-                if request.status_code == 429:
-                    request = loads(request.content)
+                if req.status_code == 429:
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
@@ -212,7 +211,7 @@ class Instance(object):
                     sleep(request["retry_after"] / 1000)
                     continue
                 raise WebhookSendError(
-                    f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                    f"Failed to send webhook `{command}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
 
     def retreive_message(self, command, token=None, check=True, old_latest_message: Optional[dict]=None):
@@ -432,13 +431,14 @@ class Instance(object):
             )
 
         while True:
-            request = post(
+            req = request(
                 "https://discord.com/api/v10/interactions",
                 headers={"authorization": self.token if token is None else token},
                 json=payload,
+                method="POST"
             )
 
-            if 199 < request.status_code < 300:
+            if 199 < req.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     data["stats"][self.token]["buttons_clicked"] += 1
 
@@ -448,9 +448,7 @@ class Instance(object):
                     )
                 return
             else:
-                if request.status_code == 429:
-                    request = loads(request.content)
-
+                if req.status_code == 429:
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
@@ -461,7 +459,7 @@ class Instance(object):
                     continue
 
                 raise ButtonInteractError(
-                    f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                    f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
 
     def interact_dropdown(self, command, custom_id, option_id, latest_message):
@@ -492,13 +490,14 @@ class Instance(object):
             )
 
         while True:
-            request = post(
+            req = request(
                 "https://discord.com/api/v10/interactions",
                 headers={"authorization": self.token},
                 json=payload,
+                method="POST"
             )
 
-            if 199 < request.status_code < 300:
+            if 199 < req.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     data["stats"][self.token]["dropdowns_selected"] += 1
 
@@ -508,9 +507,7 @@ class Instance(object):
                     )
                 return
             else:
-                if request.status_code == 429:
-                    request = loads(request.content)
-
+                if req.status_code == 429:
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
@@ -520,7 +517,7 @@ class Instance(object):
 
                     continue
                 raise DropdownInteractError(
-                    f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
+                    f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
 
     def clear_lag(self, command: str, index1: int=0, index2: int=-1) -> None:
@@ -535,12 +532,12 @@ class Instance(object):
             interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
         """
 
-        req = get(
+        req = request(
             f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
             headers={"authorization": self.token},
         )
 
-        for message in loads(req.content.decode()):
+        for message in req.content:
             if message["author"]["id"] != "270904126974590976" or len(message["components"]) == 0:
                 continue
             
@@ -583,12 +580,13 @@ class Instance(object):
             return
 
         while True:
-            request = post(
+            req = request(
                 self.Repository.config["logging"]["webhook logging"]["url"],
                 json=payload,
+                method="POST"
             )
 
-            if 199 < request.status_code < 300:
+            if 199 < req.status_code < 300:
                 if self.Repository.config["logging"]["debug"]:
                     self.log(
                         "DEBUG",
@@ -599,10 +597,9 @@ class Instance(object):
                 if self.Repository.config["logging"]["warning"]:
                     self.log(
                         "WARNING",
-                        f"Failed to send webhook `{payload}`. Status code: {request.status_code} (expected 200 or 204).",
+                        f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204).",
                     )
-                if request.status_code == 429:
-                    request = loads(request.content)
+                if req.status_code == 429:
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
@@ -611,5 +608,5 @@ class Instance(object):
                     sleep(request["retry_after"] / 1000)
                     continue
                 raise WebhookSendError(
-                    f"Failed to send webhook `{payload}`. Status code: {request.status_code} (expected 200 or 204)."
+                    f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
                 )

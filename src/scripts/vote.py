@@ -1,20 +1,19 @@
-from json import loads
-
-from requests import get, post
+from utils.Requests import request
 
 
 def vote(Client) -> None:
     json = {"authorize": True, "permissions": 0}
 
-    req = post(
+    req = request(
         "https://discord.com/api/v10/oauth2/authorize?client_id=477949690848083968&response_type=code&scope=identify",
         headers={"authorization": Client.token},
         json=json,
+        method="POST"
     )
 
-    code = loads(req.content.decode())["location"].split("code=")[-1]
+    code = req.content["location"].split("code=")[-1]
 
-    req = get(f"https://discordbotlist.com/api/v1/oauth?code={code}")
+    req = request(f"https://discordbotlist.com/api/v1/oauth?code={code}")
 
     if "captcha" in req.content.decode():
         Client.log(
@@ -23,14 +22,13 @@ def vote(Client) -> None:
         )
         return False
 
-    dbl_token = loads(req.content.decode())["token"]
+    dbl_token = req.content["token"]
 
-    req = loads(
-        post(
+    req = request(
             "https://discordbotlist.com/api/v1/bots/270904126974590976/upvote",
             headers={"authorization": dbl_token},
-        ).content.decode()
-    )
+            method="POST"
+        ).content
 
     if req["success"]:
         if Client.Repository.config["logging"]["debug"]:

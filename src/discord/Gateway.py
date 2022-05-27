@@ -7,7 +7,7 @@ from threading import Thread
 from time import sleep
 from typing import Optional, Union
 
-from websocket import WebSocket
+from websocket import WebSocket, WebSocketConnectionClosedException
 
 import utils.Yaml
 from discord.GuildId import guild_id
@@ -2866,11 +2866,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                     == data["channels"][event["d"]["channel_id"]]["message"]["id"]
                 ):
                     data["channels"][event["d"]["channel_id"]]["message"] = event["d"]
-        except Exception:
-            Client.log(
-                "WARNING",
-                f"An unexpected error occured during the websocket connection (`{exc_info()}`). Assuming gateway disconnect and creating a new connection.",
-            )
+        except WebSocketConnectionClosedException:
             Thread(target=gateway, args=[Client, False]).start()
             return
 

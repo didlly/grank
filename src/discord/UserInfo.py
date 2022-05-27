@@ -1,22 +1,21 @@
-from json import loads
 from typing import Optional
 
-from requests import get
+from utils.Requests import request
 
 from utils.Converter import DictToClass
 
 
 def user_info(token: str, user_id: Optional[int] = None) -> Optional[dict]:
-    req = get(
+    req = request(
         "https://discord.com/api/v10/users/@me"
         if user_id is None
         else f"https://discord.com/api/v10/users/{user_id}",
         headers={"authorization": token},
     )
 
-    if not req.ok:
+    if not 199 < req.status_code < 300:
         return None
 
-    req = DictToClass(loads(req.content))
+    req = DictToClass(req.content)
     req.token = token
     return req

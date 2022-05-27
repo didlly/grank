@@ -1,10 +1,8 @@
-from json import loads
-
-from requests import get
+from utils.Requests import request
 
 
 def guild_id(Client):
-    req = get(
+    req = request(
         f"https://discord.com/api/v10/channels/{Client.channel_id}",
         headers={"authorization": Client.token},
     )
@@ -12,9 +10,7 @@ def guild_id(Client):
     if req.status_code == 404:
         return False
 
-    response = loads(req.content.decode())
-
-    if response["type"] != 0:
+    if req.content["type"] != 0:
         return False
 
-    return response["guild_id"]
+    return req.content["guild_id"]
