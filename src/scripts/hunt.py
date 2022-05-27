@@ -11,7 +11,7 @@ def hunt(Client) -> None:
             Client.log("DEBUG", "Detected dodge the fireball game.")
 
         while True:
-            latest_message = Client.retreive_message("pls hunt")
+            latest_message = Client.retreive_message("pls hunt", old_latest_message=latest_message)
 
             level = (
                 latest_message["content"]

@@ -9,13 +9,11 @@ def highlow(Client) -> None:
         "pls highlow",
         latest_message["components"][0]["components"][0]["custom_id"]
         if number > 50
-        else latest_message["components"][0]["components"][2]["custom_id"]
-        if number < 50
-        else latest_message["components"][0]["components"][1]["custom_id"],
+        else latest_message["components"][0]["components"][2]["custom_id"],
         latest_message,
     )
 
-    latest_message = Client.retreive_message("pls highlow")
+    latest_message = Client.retreive_message("pls highlow", old_latest_message=latest_message)
 
     if "You won" in latest_message["embeds"][0]["description"]:
         try:

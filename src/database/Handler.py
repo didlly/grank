@@ -1,10 +1,10 @@
 from contextlib import suppress
+from datetime import datetime
 from json import dumps, loads
 from os import listdir, mkdir
 from os.path import isdir
 from time import time
 from typing import Optional, Union
-from datetime import datetime
 
 import utils.Yaml
 from discord.UserInfo import user_info
@@ -248,7 +248,10 @@ class Database(object):
                             "name": f"{message['author']['username']}#{message['author']['discriminator']}",
                             "icon_url": f"https://cdn.discordapp.com/avatars/{message['author']['id']}/{message['author']['avatar']}.webp?size=32",
                         },
-                        "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                        "footer": {
+                            "text": Client.username,
+                            "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                        },
                         "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                     }
                 ],

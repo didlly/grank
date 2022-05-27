@@ -12,7 +12,7 @@ def postmeme(Client) -> None:
         latest_message,
     )
 
-    latest_message = Client.retreive_message("pls postmeme")
+    latest_message = Client.retreive_message("pls postmeme", old_latest_message=latest_message)
 
     try:
         coins = (

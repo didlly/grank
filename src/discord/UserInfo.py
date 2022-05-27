@@ -2,6 +2,7 @@ from json import loads
 from typing import Optional
 
 from requests import get
+
 from utils.Converter import DictToClass
 
 

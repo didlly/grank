@@ -7,6 +7,8 @@ from threading import Thread
 from time import sleep
 from typing import Optional, Union
 
+from websocket import WebSocket
+
 import utils.Yaml
 from discord.GuildId import guild_id
 from discord.UserInfo import user_info
@@ -17,7 +19,6 @@ from instance.Client import ButtonInteractError, Instance
 from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
 from scripts.buy import buy
 from utils.Shared import data
-from websocket import WebSocket
 
 
 def anti_heist(Client, latest_message, reset) -> None:
@@ -27,7 +28,7 @@ def anti_heist(Client, latest_message, reset) -> None:
     sleep(2.5)
 
     Client.send_message("pls use phone")
-    latest_message = Client.retreive_message("pls use phone")
+    latest_message = Client.retreive_message("pls use phone", old_latest_message=latest_message)
 
     if "You don't own this item??" in latest_message["content"]:
         buy(Client, "phone")
@@ -53,7 +54,10 @@ def anti_heist(Client, latest_message, reset) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],
@@ -90,7 +94,10 @@ def join_heist(Client, latest_message) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],
@@ -135,7 +142,10 @@ def receive_trade(Client, latest_message) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],
@@ -167,7 +177,10 @@ def event_1(Client, latest_message) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],
@@ -212,7 +225,10 @@ def event_2(Client, latest_message) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],
@@ -257,7 +273,10 @@ def event_3(Client, latest_message) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],
@@ -302,7 +321,10 @@ def event_4(Client, latest_message) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],
@@ -345,7 +367,10 @@ def event_5(Client, latest_message) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],
@@ -390,7 +415,10 @@ def event_6(Client, latest_message) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],
@@ -436,7 +464,10 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                     "title": "Self-bot is online",
                     "description": "The self-bot is online.",
                     "color": 65423,
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 },
             ],
@@ -470,7 +501,10 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                             "title": "Grinder auto-started",
                             "description": f"The grinder auto started in the channel <#{Client.channel_id}> (**`{Client.channel_id}`**).",
                             "color": 5832636,
-                            "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                            "footer": {
+                                "text": Client.username,
+                                "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                            },
                             "timestamp": datetime.now().strftime(
                                 "%Y-%m-%dT%H:%M:%S.000Z"
                             ),
@@ -2336,7 +2370,10 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                                     "title": "Grinder started",
                                                     "description": f"The grinder started in the channel <#{Client.channel_id}> (**`{Client.channel_id}`**).",
                                                     "color": 14159511,
-                                                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                                                    "footer": {
+                                                        "text": Client.username,
+                                                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                                                    },
                                                     "timestamp": datetime.now().strftime(
                                                         "%Y-%m-%dT%H:%M:%S.000Z"
                                                     ),
@@ -2400,7 +2437,10 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                                     "title": "Grinder stopped",
                                                     "description": f"The grinder stopped in the channel <#{Client.channel_id}> (**`{Client.channel_id}`**).",
                                                     "color": 14159511,
-                                                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                                                    "footer": {
+                                                        "text": Client.username,
+                                                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                                                    },
                                                     "timestamp": datetime.now().strftime(
                                                         "%Y-%m-%dT%H:%M:%S.000Z"
                                                     ),
@@ -2872,3 +2912,5 @@ def gateway(Client: Union[Instance, str], autostart: bool = True) -> Optional[st
     if type(Client) != str:
         Client.log("DEBUG", "Ready to receive commands.")
         Thread(target=event_handler, args=[Client, ws, event, autostart]).start()
+
+    return event["d"]["sessions"][0]["session_id"]

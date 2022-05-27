@@ -14,7 +14,7 @@ def adventure(Client) -> None:
         ):
             Client.log("DEBUG", "Adventure has ended.")
 
-            latest_message = Client.retreive_message("pls adv")
+            latest_message = Client.retreive_message("pls adv", old_latest_message=latest_message)
 
             adventure = latest_message["embeds"][0]["fields"][0]["value"]
 
@@ -49,7 +49,7 @@ def adventure(Client) -> None:
 
             Client.send_message("pls adv")
 
-            latest_message = Client.retreive_message("pls adv")
+            latest_message = Client.retreive_message("pls adv", old_latest_message=latest_message)
         elif (
             "You can interact with the adventure again"
             in latest_message["embeds"][0]["description"]
@@ -89,7 +89,7 @@ def adventure(Client) -> None:
 
                     Client.send_message("pls adv")
 
-                    latest_message = Client.retreive_message("pls adv")
+                    latest_message = Client.retreive_message("pls adv", old_latest_message=latest_message)
                 elif Client.Repository.config["logging"]["warning"]:
                     Client.log(
                         "WARNING",
@@ -101,7 +101,7 @@ def adventure(Client) -> None:
 
             Client.interact_button("pls adv", custom_id, latest_message)
 
-            latest_message = Client.retreive_message("pls adv")
+            latest_message = Client.retreive_message("pls adv", old_latest_message=latest_message)
 
             custom_id = latest_message["components"][-1]["components"][1]["custom_id"]
 
@@ -111,7 +111,7 @@ def adventure(Client) -> None:
 
             Client.interact_button("pls adv", custom_id, latest_message)
 
-            latest_message = Client.retreive_message("pls adv")
+            latest_message = Client.retreive_message("pls adv", old_latest_message=latest_message)
 
     if len(latest_message["components"][0]["components"]) == 1:
         Client.log("DEBUG", "Uneventful adventure phase.")

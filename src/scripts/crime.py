@@ -20,7 +20,7 @@ def crime(Client) -> None:
         latest_message,
     )
 
-    latest_message = Client.retreive_message("pls crime")
+    latest_message = Client.retreive_message("pls crime", old_latest_message=latest_message)
 
     latest_message["embeds"][0]["description"] = latest_message["embeds"][0][
         "description"

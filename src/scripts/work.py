@@ -12,7 +12,7 @@ def work(Client) -> None:
 
         Client.send_message("pls work")
 
-        latest_message = Client.retreive_message("pls work")
+        latest_message = Client.retreive_message("pls work", old_latest_message=latest_message)
     elif "boss was tired" in latest_message["content"]:
         Client.log("WARNING", "Fired from job.")
         return
@@ -26,7 +26,7 @@ def work(Client) -> None:
 
         Client.send_message("pls work")
 
-        latest_message = Client.retreive_message("pls work")
+        latest_message = Client.retreive_message("pls work", old_latest_message=latest_message)
     elif "You need to wait" in latest_message["content"]:
         time_left = latest_message["content"].split("**")[1]
 
@@ -59,7 +59,7 @@ def work(Client) -> None:
         ]
 
         while True:
-            latest_message = Client.retreive_message("pls work")
+            latest_message = Client.retreive_message("pls work", old_latest_message=latest_message)
 
             if len(latest_message["components"]) > 0:
                 break
@@ -108,7 +108,7 @@ def work(Client) -> None:
         ]
 
         while True:
-            latest_message = Client.retreive_message("pls work")
+            latest_message = Client.retreive_message("pls work", old_latest_message=latest_message)
 
             if len(latest_message["components"]) > 0:
                 break
@@ -129,7 +129,7 @@ def work(Client) -> None:
         emoji = latest_message["content"].split("\n")[-1]
 
         while True:
-            latest_message = Client.retreive_message("pls work")
+            latest_message = Client.retreive_message("pls work", old_latest_message=latest_message)
 
             if len(latest_message["components"]) > 0:
                 break
@@ -168,7 +168,7 @@ def work(Client) -> None:
             ]
         else:
             for _ in range(1, 6):
-                latest_message = Client.retreive_message("pls work")
+                latest_message = Client.retreive_message("pls work", old_latest_message=latest_message)
 
                 if len(latest_message["components"]) > 0:
                     break

@@ -50,7 +50,7 @@ def search(Client) -> None:
         latest_message,
     )
 
-    latest_message = Client.retreive_message("pls search")
+    latest_message = Client.retreive_message("pls search", old_latest_message=latest_message)
 
     latest_message["embeds"][0]["description"] = (
         latest_message["embeds"][0]["description"]

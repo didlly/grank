@@ -4,9 +4,10 @@ from json import loads
 from random import uniform
 from threading import Thread
 from time import sleep, time
-from typing import Union
+from typing import Optional
 
 from requests import get, post
+
 from utils.Console import fore, style
 from utils.Converter import DictToClass
 from utils.Shared import data
@@ -214,10 +215,10 @@ class Instance(object):
                     f"Failed to send webhook `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
 
-    def retreive_message(self, command, token=None, check=True):
+    def retreive_message(self, command, token=None, check=True, old_latest_message: Optional[dict]=None):
         while True:
             time = datetime.now()
-            old_latest_message = copy(data["channels"][self.channel_id]["message"])
+            old_latest_message = copy(data["channels"][self.channel_id]["message"]) if old_latest_message == None else old_latest_message
 
             while (datetime.now() - time).total_seconds() < self.Repository.config[
                 "settings"
@@ -566,16 +567,14 @@ class Instance(object):
             )
             exit(1)
 
-    def webhook_log(
-        self, payload: dict
-    ) -> None:
+    def webhook_log(self, payload: dict) -> None:
         if not self.Repository.config["logging"]["webhook logging"]["enabled"]:
             return
 
         while True:
             request = post(
                 self.Repository.config["logging"]["webhook logging"]["url"],
-                json=payload
+                json=payload,
             )
 
             if 199 < request.status_code < 300:

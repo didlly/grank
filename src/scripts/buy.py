@@ -50,7 +50,10 @@ def buy(Client, item: str) -> None:
                             "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                             "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                         },
-                        "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                        "footer": {
+                            "text": Client.username,
+                            "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                        },
                         "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                     }
                 ],
@@ -67,7 +70,7 @@ def buy(Client, item: str) -> None:
 
             Client.send_message(f"pls buy {item}")
 
-            latest_message = Client.retreive_message(f"pls buy {item}")
+            latest_message = Client.retreive_message(f"pls buy {item}", old_latest_message=latest_message)
         else:
             Client.log(
                 "WARNING",
@@ -86,7 +89,10 @@ def buy(Client, item: str) -> None:
                                 "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                                 "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                             },
-                            "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                            "footer": {
+                                "text": Client.username,
+                                "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                            },
                             "timestamp": datetime.now().strftime(
                                 "%Y-%m-%dT%H:%M:%S.000Z"
                             ),
@@ -114,7 +120,10 @@ def buy(Client, item: str) -> None:
                         "name": f"{latest_message['author']['username']}#{latest_message['author']['discriminator']}",
                         "icon_url": f"https://cdn.discordapp.com/avatars/{latest_message['author']['id']}/{latest_message['author']['avatar']}.webp?size=32",
                     },
-                    "footer": {"text": Client.username, "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32"},
+                    "footer": {
+                        "text": Client.username,
+                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                    },
                     "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
                 }
             ],

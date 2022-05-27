@@ -41,7 +41,7 @@ def trivia(Client) -> None:
 
     Client.interact_button("pls trivia", custom_id, latest_message)
 
-    latest_message = Client.retreive_message("pls trivia")
+    latest_message = Client.retreive_message("pls trivia", old_latest_message=latest_message)
 
     try:
         coins = int(
