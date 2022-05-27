@@ -135,9 +135,9 @@ class Instance(object):
                 if req.status_code == 429:
                     self.log(
                         "WARNING",
-                        f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
+                        f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} second(s).",
                     )
-                    sleep(request["retry_after"])
+                    sleep(req.content["retry_after"])
                     continue
 
                 self.log(
@@ -205,9 +205,9 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after'] / 1000} second(s).",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} second(s).",
                         )
-                    sleep(request["retry_after"] / 1000)
+                    sleep(req.content["retry_after"] / 1000)
                     continue
                 raise WebhookSendError(
                     f"Failed to send webhook `{command}`. Status code: {req.status_code} (expected 200 or 204)."
@@ -457,9 +457,9 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} second(s).",
                         )
-                    sleep(request["retry_after"])
+                    sleep(req.content["retry_after"])
 
                     continue
 
@@ -516,9 +516,9 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after']} second(s).",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} second(s).",
                         )
-                    sleep(request["retry_after"])
+                    sleep(req.content["retry_after"])
 
                     continue
                 raise DropdownInteractError(
@@ -613,9 +613,9 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {request['retry_after'] / 1000} second(s).",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} second(s).",
                         )
-                    sleep(request["retry_after"] / 1000)
+                    sleep(req.content["retry_after"] / 1000)
                     continue
                 raise WebhookSendError(
                     f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
