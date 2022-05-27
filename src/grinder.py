@@ -697,7 +697,7 @@ def grind(Client):
                         )
 
                         try:
-                            Client.clear_lag("pls stream")
+                            Client.clear_lag("pls stream", -1)
                         except Exception:
                             Client.log(
                                 "WARNING",

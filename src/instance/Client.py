@@ -523,7 +523,7 @@ class Instance(object):
                     f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {request.status_code} (expected 200 or 204)."
                 )
 
-    def clear_lag(self, command: str) -> None:
+    def clear_lag(self, command: str, index1: int=0, index2: int=-1) -> None:
         """clear_lag()
 
         - Attempts to stop backlash from failed interactive commands by interacting with the `End Interaction` button on the embed.
@@ -546,7 +546,7 @@ class Instance(object):
             
             for _ in range(0, 2):
                 try:
-                    custom_id = message["components"][0]["components"][-1]["custom_id"]
+                    custom_id = message["components"][index1]["components"][index2]["custom_id"]
                     self.interact_button(command, custom_id, message)
                     break
                 except ButtonInteractError:
