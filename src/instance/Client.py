@@ -535,11 +535,22 @@ class Instance(object):
             interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
         """
 
-        message = data["channels"][self.channel_id]["message"]
+        req = get(
+            f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
+            headers={"authorization": self.token},
+        )
 
-        custom_id = message["components"][0]["components"][-1]["custom_id"]
-
-        return self.interact_button(command, custom_id, message)
+        for message in loads(req.content.decode()):
+            if message["author"]["id"] != "270904126974590976" or len(message["components"]) == 0:
+                continue
+            
+            for _ in range(0, 2):
+                try:
+                    custom_id = message["components"][0]["components"][-1]["custom_id"]
+                    self.interact_button(command, custom_id, message)
+                    break
+                except ButtonInteractError:
+                    continue
 
     def log(self, level: str, text: str) -> None:
         if "Repository" in self.__dict__.keys():
