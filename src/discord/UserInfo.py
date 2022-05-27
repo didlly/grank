@@ -1,8 +1,7 @@
 from typing import Optional
 
-from utils.Requests import request
-
 from utils.Converter import DictToClass
+from utils.Requests import request
 
 
 def user_info(token: str, user_id: Optional[int] = None) -> Optional[dict]:

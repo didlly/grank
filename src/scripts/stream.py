@@ -15,7 +15,9 @@ def stream(Client) -> None:
         if "You were inactive" in latest_message["content"]:
             Client.log("WARNING", "Stream ended due to inactivity. Re-starting stream.")
 
-            latest_message = Client.retreive_message("pls stream", old_latest_message=latest_message)
+            latest_message = Client.retreive_message(
+                "pls stream", old_latest_message=latest_message
+            )
 
         if "title" not in latest_message["embeds"][0].keys():
             break
@@ -81,7 +83,9 @@ def stream(Client) -> None:
             latest_message,
         )
 
-        latest_message = Client.retreive_message("pls stream", old_latest_message=latest_message)
+        latest_message = Client.retreive_message(
+            "pls stream", old_latest_message=latest_message
+        )
 
         Client.interact_dropdown(
             "pls stream",
@@ -98,7 +102,9 @@ def stream(Client) -> None:
             latest_message,
         )
 
-    latest_message = Client.retreive_message("pls stream", old_latest_message=latest_message)
+    latest_message = Client.retreive_message(
+        "pls stream", old_latest_message=latest_message
+    )
 
     if (
         int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0

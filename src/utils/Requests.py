@@ -1,34 +1,30 @@
 """
-UNLICENSED
-This is free and unencumbered software released into the public domain.
-
-https://github.com/sesh/thttp
-
-NOTE: This is an edited version of `thttp`, the link to which is aforementioned.
+NOTE: This is an edited version of `thttp` (https://github.com/sesh/thttp).
 """
 
 import gzip
 import ssl
-from json import loads, dumps
-from json.decoder import JSONDecodeError
-from contextlib import suppress
-from utils.Logger import log
 from base64 import b64encode
 from collections import namedtuple
-
+from contextlib import suppress
 from http.cookiejar import CookieJar
+from json import dumps, loads
+from json.decoder import JSONDecodeError
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
 from urllib.request import (
-    Request,
-    build_opener,
+    HTTPCookieProcessor,
     HTTPRedirectHandler,
     HTTPSHandler,
-    HTTPCookieProcessor,
+    Request,
+    build_opener,
 )
 
+from utils.Logger import log
 
-Response = namedtuple("Response", "request content json status_code url headers cookiejar")
+Response = namedtuple(
+    "Response", "request content json status_code url headers cookiejar"
+)
 
 
 class NoRedirect(HTTPRedirectHandler):
@@ -61,7 +57,9 @@ def request(
         - cookiejar
     """
     method = method.upper()
-    headers["User-Agent"] = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7"
+    headers[
+        "User-Agent"
+    ] = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7"
     headers = {k.lower(): v for k, v in headers.items()}  # lowercase headers
 
     if params:
@@ -105,10 +103,14 @@ def request(
 
     opener = build_opener(*handlers)
     req = Request(url, data=data, headers=headers, method=method)
-    
+
     try:
         with opener.open(req, timeout=timeout) as resp:
-            status_code, content, resp_url = (resp.getcode(), resp.read().decode(), resp.geturl())
+            status_code, content, resp_url = (
+                resp.getcode(),
+                resp.read().decode(),
+                resp.geturl(),
+            )
             headers = {k.lower(): v for k, v in list(resp.info().items())}
 
             if "gzip" in headers.get("content-encoding", ""):
@@ -138,8 +140,8 @@ def request(
             "ERROR",
             "In case you didn't realise, Sherlock, you need an internet connection to run Grank ;-).",
         )
-    
+
     with suppress(JSONDecodeError):
         content = loads(content)
-    
+
     return Response(req, content, json, status_code, resp_url, headers, cookiejar)

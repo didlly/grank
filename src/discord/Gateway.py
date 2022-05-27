@@ -28,7 +28,9 @@ def anti_heist(Client, latest_message, reset) -> None:
     sleep(2.5)
 
     Client.send_message("pls use phone")
-    latest_message = Client.retreive_message("pls use phone", old_latest_message=latest_message)
+    latest_message = Client.retreive_message(
+        "pls use phone", old_latest_message=latest_message
+    )
 
     if "You don't own this item??" in latest_message["content"]:
         buy(Client, "phone")

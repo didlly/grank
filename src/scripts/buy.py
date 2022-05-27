@@ -70,7 +70,9 @@ def buy(Client, item: str) -> None:
 
             Client.send_message(f"pls buy {item}")
 
-            latest_message = Client.retreive_message(f"pls buy {item}", old_latest_message=latest_message)
+            latest_message = Client.retreive_message(
+                f"pls buy {item}", old_latest_message=latest_message
+            )
         else:
             Client.log(
                 "WARNING",

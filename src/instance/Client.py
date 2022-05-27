@@ -5,10 +5,9 @@ from threading import Thread
 from time import sleep, time
 from typing import Optional
 
-from utils.Requests import request
-
 from utils.Console import fore, style
 from utils.Converter import DictToClass
+from utils.Requests import request
 from utils.Shared import data
 
 
@@ -88,7 +87,7 @@ class Instance(object):
             req = request(
                 f"https://discord.com/api/v9/channels/{self.channel_id if channel_id is None else channel_id}/typing",
                 headers={"authorization": self.token if token is None else token},
-                method="POST"
+                method="POST",
             )
             sleep(
                 uniform(
@@ -119,7 +118,7 @@ class Instance(object):
                         "message_id": latest_message["id"],
                     },
                 },
-                method="POST"
+                method="POST",
             )
 
             if 199 < req.status_code < 300:
@@ -171,7 +170,7 @@ class Instance(object):
                 f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
                 headers={"authorization": self.token},
                 json={"name": "Spidey Bot"},
-                method="POST"
+                method="POST",
             )
             token = req.content["token"]
 
@@ -186,7 +185,7 @@ class Instance(object):
                 f"https://discord.com/api/webhooks/{channel_id}/{token}",
                 headers={"authorization": self.token},
                 json=command,
-                method="POST"
+                method="POST",
             )
 
             if 199 < req.status_code < 300:
@@ -214,10 +213,16 @@ class Instance(object):
                     f"Failed to send webhook `{command}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
 
-    def retreive_message(self, command, token=None, check=True, old_latest_message: Optional[dict]=None):
+    def retreive_message(
+        self, command, token=None, check=True, old_latest_message: Optional[dict] = None
+    ):
         while True:
             time = datetime.now()
-            old_latest_message = copy(data["channels"][self.channel_id]["message"]) if old_latest_message == None else old_latest_message
+            old_latest_message = (
+                copy(data["channels"][self.channel_id]["message"])
+                if old_latest_message == None
+                else old_latest_message
+            )
 
             while (datetime.now() - time).total_seconds() < self.Repository.config[
                 "settings"
@@ -435,7 +440,7 @@ class Instance(object):
                 "https://discord.com/api/v10/interactions",
                 headers={"authorization": self.token if token is None else token},
                 json=payload,
-                method="POST"
+                method="POST",
             )
 
             if 199 < req.status_code < 300:
@@ -494,7 +499,7 @@ class Instance(object):
                 "https://discord.com/api/v10/interactions",
                 headers={"authorization": self.token},
                 json=payload,
-                method="POST"
+                method="POST",
             )
 
             if 199 < req.status_code < 300:
@@ -520,7 +525,7 @@ class Instance(object):
                     f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
 
-    def clear_lag(self, command: str, index1: int=0, index2: int=-1) -> None:
+    def clear_lag(self, command: str, index1: int = 0, index2: int = -1) -> None:
         """clear_lag()
 
         - Attempts to stop backlash from failed interactive commands by interacting with the `End Interaction` button on the embed.
@@ -538,12 +543,17 @@ class Instance(object):
         )
 
         for message in req.content:
-            if message["author"]["id"] != "270904126974590976" or len(message["components"]) == 0:
+            if (
+                message["author"]["id"] != "270904126974590976"
+                or len(message["components"]) == 0
+            ):
                 continue
-            
+
             for _ in range(0, 2):
                 try:
-                    custom_id = message["components"][index1]["components"][index2]["custom_id"]
+                    custom_id = message["components"][index1]["components"][index2][
+                        "custom_id"
+                    ]
                     self.interact_button(command, custom_id, message)
                     break
                 except ButtonInteractError:
@@ -583,7 +593,7 @@ class Instance(object):
             req = request(
                 self.Repository.config["logging"]["webhook logging"]["url"],
                 json=payload,
-                method="POST"
+                method="POST",
             )
 
             if 199 < req.status_code < 300:

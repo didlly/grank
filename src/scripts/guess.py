@@ -16,7 +16,9 @@ def guess(Client) -> None:
     ):
         Client.send_message("hint")
 
-        latest_message = Client.retreive_message("hint", old_latest_message=latest_message)
+        latest_message = Client.retreive_message(
+            "hint", old_latest_message=latest_message
+        )
 
         if (
             latest_message["content"]
@@ -24,7 +26,9 @@ def guess(Client) -> None:
         ):
             Client.send_message("15")
 
-            latest_message = Client.retreive_message("15", old_latest_message=latest_message)
+            latest_message = Client.retreive_message(
+                "15", old_latest_message=latest_message
+            )
 
             if (
                 latest_message["content"]
@@ -32,7 +36,9 @@ def guess(Client) -> None:
             ):
                 Client.send_message("hint")
 
-                latest_message = Client.retreive_message("hint", old_latest_message=latest_message)
+                latest_message = Client.retreive_message(
+                    "hint", old_latest_message=latest_message
+                )
 
                 if (
                     latest_message["content"]
@@ -42,7 +48,9 @@ def guess(Client) -> None:
 
                     Client.send_message(num)
 
-                    latest_message = Client.retreive_message(num, old_latest_message=latest_message)
+                    latest_message = Client.retreive_message(
+                        num, old_latest_message=latest_message
+                    )
 
                     if (
                         latest_message["content"]
@@ -61,7 +69,9 @@ def guess(Client) -> None:
 
                     Client.send_message(num)
 
-                    latest_message = Client.retreive_message(num, old_latest_message=latest_message)
+                    latest_message = Client.retreive_message(
+                        num, old_latest_message=latest_message
+                    )
 
                     if (
                         latest_message["content"]
@@ -76,7 +86,9 @@ def guess(Client) -> None:
         else:
             Client.send_message("5")
 
-            latest_message = Client.retreive_message("5", old_latest_message=latest_message)
+            latest_message = Client.retreive_message(
+                "5", old_latest_message=latest_message
+            )
 
             if (
                 latest_message["content"]
@@ -84,7 +96,9 @@ def guess(Client) -> None:
             ):
                 Client.send_message("hint")
 
-                latest_message = Client.retreive_message("hint", old_latest_message=latest_message)
+                latest_message = Client.retreive_message(
+                    "hint", old_latest_message=latest_message
+                )
 
                 if (
                     latest_message["content"]
@@ -94,7 +108,9 @@ def guess(Client) -> None:
 
                     Client.send_message(num)
 
-                    latest_message = Client.retreive_message(num, old_latest_message=latest_message)
+                    latest_message = Client.retreive_message(
+                        num, old_latest_message=latest_message
+                    )
 
                     if (
                         latest_message["content"]
@@ -113,7 +129,9 @@ def guess(Client) -> None:
 
                     Client.send_message(num)
 
-                    latest_message = Client.retreive_message(num, old_latest_message=latest_message)
+                    latest_message = Client.retreive_message(
+                        num, old_latest_message=latest_message
+                    )
 
                     if (
                         latest_message["content"]

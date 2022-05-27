@@ -85,4 +85,6 @@ def blackjack(Client) -> None:
             )
             break
 
-        latest_message = Client.retreive_message(f"pls blackjack {amount}", old_latest_message=latest_message)
+        latest_message = Client.retreive_message(
+            f"pls blackjack {amount}", old_latest_message=latest_message
+        )

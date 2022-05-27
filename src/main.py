@@ -5,8 +5,6 @@ from platform import system
 from sys import argv
 from threading import Thread
 
-from utils.Requests import request
-
 from configuration.Credentials import verify_credentials
 from database.Handler import Database
 from database.Verifier import verify
@@ -14,6 +12,7 @@ from discord.Gateway import gateway
 from instance.Client import Instance
 from utils.Console import fore, style
 from utils.Logger import log
+from utils.Requests import request
 from utils.Shared import data
 
 if system().lower() == "windows":
@@ -28,7 +27,7 @@ cwd = cwd if cwd == "" else f"{cwd}/"
 
 data["trivia"] = request(
     "https://raw.githubusercontent.com/didlly/grank/main/src/trivia.json",
-).content  
+).content
 
 with open(f"{cwd}current_version", "r") as f:
     data["version"] = f.read()

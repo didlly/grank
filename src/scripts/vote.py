@@ -8,7 +8,7 @@ def vote(Client) -> None:
         "https://discord.com/api/v10/oauth2/authorize?client_id=477949690848083968&response_type=code&scope=identify",
         headers={"authorization": Client.token},
         json=json,
-        method="POST"
+        method="POST",
     )
 
     code = req.content["location"].split("code=")[-1]
@@ -25,10 +25,10 @@ def vote(Client) -> None:
     dbl_token = req.content["token"]
 
     req = request(
-            "https://discordbotlist.com/api/v1/bots/270904126974590976/upvote",
-            headers={"authorization": dbl_token},
-            method="POST"
-        ).content
+        "https://discordbotlist.com/api/v1/bots/270904126974590976/upvote",
+        headers={"authorization": dbl_token},
+        method="POST",
+    ).content
 
     if req["success"]:
         if Client.Repository.config["logging"]["debug"]:

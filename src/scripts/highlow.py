@@ -13,7 +13,9 @@ def highlow(Client) -> None:
         latest_message,
     )
 
-    latest_message = Client.retreive_message("pls highlow", old_latest_message=latest_message)
+    latest_message = Client.retreive_message(
+        "pls highlow", old_latest_message=latest_message
+    )
 
     if "You won" in latest_message["embeds"][0]["description"]:
         try:
