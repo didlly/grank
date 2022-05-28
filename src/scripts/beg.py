@@ -29,3 +29,5 @@ def beg(Client) -> None:
         "DEBUG",
         f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls beg` command.",
     )
+
+    
