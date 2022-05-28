@@ -124,7 +124,7 @@ class Instance(object):
             )
             return False
         
-        if item == "no items" or item == "":
+        if item in ["", "no items", "Your immune system is under attack from Covid-19", "Microsoft is trying to buy Discord again!", "pls rich cmd doesn't work", "f in the chat", "frick off karen", "They've got airpods"]:
             return False
         
         if item in data["stats"][self.token]["items_gained"]:
