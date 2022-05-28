@@ -35,7 +35,6 @@ def blackjack(Client) -> None:
                 Client.log(
                     "DEBUG", f"Lost {amount} through the `pls blackjack` command."
                 )
-                Client._update_coins("pls blackjack", -amount)
                 return
             elif "You won" in latest_message["embeds"][0]["description"]:
                 try:

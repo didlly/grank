@@ -12,8 +12,11 @@ from discord.Gateway import gateway
 from instance.Client import Instance
 from utils.Console import fore, style
 from utils.Logger import log
+from utils.Modules import verify_modules
 from utils.Requests import request
 from utils.Shared import data
+
+verify_modules()
 
 if system().lower() == "windows":
     from ctypes import windll
