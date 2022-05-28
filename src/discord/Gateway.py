@@ -1,8 +1,8 @@
 from copy import copy
 from datetime import datetime, timedelta
 from json import dumps, load, loads
-from json.decoder import JSONDecodeError
 from platform import python_version
+from pyclbr import Class
 from threading import Thread
 from time import sleep
 from typing import Optional, Union
@@ -685,6 +685,10 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                                 "name": "Coins gained:",
                                                 "value": f"`{data['stats'][Client.token]['coins_gained']}`",
                                             },
+                                            {
+                                                "name": "Items gained:",
+                                                "value": f"{f'{chr(92)}n'.join(f'**`{key}`**: **`' + str(data['stats'][Client.token]['items_gained'][key]) + '`**' for key in data['stats'][Client.token]['items_gained'])}".replace("\\n", "\n"),
+                                            },
                                         ],
                                     },
                                     {
@@ -693,19 +697,23 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                         "fields": [
                                             {
                                                 "name": "Commands ran:",
-                                                "value": f"`{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`",
+                                                "value": f"`{Client.Repository.info['stats']['commands_ran']}`",
                                             },
                                             {
                                                 "name": "Buttons clicked:",
-                                                "value": f"`{data['stats'][Client.token]['buttons_clicked']  + Client.Repository.info['stats']['buttons_clicked']}`",
+                                                "value": f"`{Client.Repository.info['stats']['buttons_clicked']}`",
                                             },
                                             {
                                                 "name": "Dropdowns selected:",
-                                                "value": f"`{data['stats'][Client.token]['dropdowns_selected']  + Client.Repository.info['stats']['dropdowns_selected']}`",
+                                                "value": f"`{Client.Repository.info['stats']['dropdowns_selected']}`",
                                             },
                                             {
                                                 "name": "Coins gained:",
-                                                "value": f"`{data['stats'][Client.token]['coins_gained']  + Client.Repository.info['stats']['coins_gained']}`",
+                                                "value": f"`{Client.Repository.info['stats']['coins_gained']}`",
+                                            },
+                                            {
+                                                "name": "Items gained:",
+                                                "value": f"{f'{chr(92)}n'.join(f'**`{key}`**: **`' + str(Client.Repository.info['stats']['items_gained'][key]) + '`**' for key in Client.Repository.info['stats']['items_gained'])}".replace("\\n", "\n"),
                                             },
                                         ],
                                     },
@@ -743,7 +751,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
 
                             Client.webhook_send(
                                 embed,
-                                f"**Grank `{data['version']}`** running on **`Python {python_version()}`**.\n\n__**Grank Information:**__\nActive since: `{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`\nBecame active: <t:{round(Client.startup_time)}:R>\n\n__**Client Information:**__\nUsername: `{Client.username}`\nID: `{Client.id}`\n\n__**Session Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected']}`\nCoins gained: `{data['stats'][Client.token]['coins_gained']}`\n\n__**Lifetime Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran'] + Client.Repository.info['stats']['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked'] + Client.Repository.info['stats']['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected'] + Client.Repository.info['stats']['dropdowns_selected']}`\nCoins gained: `{data['stats'][Client.token]['coins_gained'] + Client.Repository.info['stats']['coins_gained']}`",
+                                f"**Grank `{data['version']}`** running on **`Python {python_version()}`**.\n\n__**Grank Information:**__\nActive since: `{datetime.utcfromtimestamp(Client.startup_time).strftime('%Y-%m-%d %H:%M:%S')}`\nBecame active: <t:{round(Client.startup_time)}:R>\n\n__**Client Information:**__\nUsername: `{Client.username}`\nID: `{Client.id}`\n\n__**Session Stats:**__\nCommands ran: `{data['stats'][Client.token]['commands_ran']}`\nButtons clicked: `{data['stats'][Client.token]['buttons_clicked']}`\nDropdowns selected: `{data['stats'][Client.token]['dropdowns_selected']}`\nCoins gained: `{data['stats'][Client.token]['coins_gained']}`\n\n__**Lifetime Stats:**__\nCommands ran: `{Client.Repository.info['stats']['commands_ran']}`\nButtons clicked: `{Client.Repository.info['stats']['buttons_clicked']}`\nDropdowns selected: `{Client.Repository.info['stats']['dropdowns_selected']}`\nCoins gained: `{Client.Repository.info['stats']['coins_gained']}`",
                             )
                         elif args.command == "servers":
                             if (
@@ -2878,7 +2886,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
         except WebSocketConnectionClosedException:
             Thread(target=gateway, args=[Client, False]).start()
             return
-        except JSONDecodeError:
+        except Exception:
             continue
 
 

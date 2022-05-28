@@ -265,6 +265,7 @@ def verify_info(
             or "buttons_clicked" not in info["stats"].keys()
             or "dropdowns_selected" not in info["stats"].keys()
             or "coins_gained" not in info["stats"].keys()
+            or "items_gained" not in info["stats"].keys()
         ):
             return False
     else:

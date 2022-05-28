@@ -36,18 +36,19 @@ def postmeme(Client) -> None:
 
     if "also a fan of your memes" in latest_message["embeds"][0]["description"]:
         try:
-            items = (
+            item = (
                 latest_message["embeds"][0]["description"]
                 .split("\n")[-1]
                 .split("**")[-2]
             )
         except Exception:
-            items = "no items"
+            item = "no items"
     else:
-        items = "no items"
+        item = "no items"
 
     Client.log(
         "DEBUG",
-        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls postmeme` command.",
+        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} &{' an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else '' if item == 'no items' else ' a'} {item} from the `pls postmeme` command.",
     )
     Client._update_coins("pls postmeme", coins)
+    Client._update_items("pls postmeme", item)

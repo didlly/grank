@@ -61,3 +61,4 @@ def fish(Client) -> None:
         ).strip()
 
         Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls fish` command.")
+        Client._update_items("pls fish", item)

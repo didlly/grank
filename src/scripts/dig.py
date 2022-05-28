@@ -40,3 +40,4 @@ def dig(Client):
         ).strip()
 
         Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls dig` command.")
+        Client._update_items("pls dig", item)

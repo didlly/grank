@@ -7,6 +7,7 @@ from typing import Optional
 
 from utils.Console import fore, style
 from utils.Converter import DictToClass
+from utils.Merge import combine
 from utils.Requests import request
 from utils.Shared import data
 
@@ -55,17 +56,19 @@ class Instance(object):
             "buttons_clicked": 0,
             "dropdowns_selected": 0,
             "coins_gained": 0,
+            "items_gained": {}
         }
 
         while "Repository" not in self.__dict__.keys():
             continue
-
+        
         self.lifetime_commands_ran = self.Repository.info["stats"]["commands_ran"]
         self.lifetime_buttons_clicked = self.Repository.info["stats"]["buttons_clicked"]
         self.lifetime_dropdowns_selected = self.Repository.info["stats"][
             "dropdowns_selected"
         ]
         self.lifetime_coins_gained = self.Repository.info["stats"]["coins_gained"]
+        self.lifetime_items_gained = self.Repository.info["stats"]["items_gained"]
 
         while True:
             self.Repository.info["stats"]["commands_ran"] = (
@@ -82,6 +85,8 @@ class Instance(object):
             self.Repository.info["stats"]["coins_gained"] = (
                 self.lifetime_coins_gained + data["stats"][self.token]["coins_gained"]
             )
+            self.Repository.info["stats"]["items_gained"] = combine(self.lifetime_items_gained, data["stats"][self.token]["items_gained"])
+
             self.Repository.info_write()
             sleep(10)
 
@@ -107,6 +112,26 @@ class Instance(object):
 
         data["stats"][self.token]["coins_gained"] += coins
 
+        return True
+    
+    def _update_items(self, command: str, item: int) -> bool:
+        item = item.lower()
+        
+        if item.count(" ") > 2:
+            self.log(
+                "WARNING",
+                f"A possible error was encountered while parsing the items received from the `{command}` command - `{item}` seems to be more than 3 words.",
+            )
+            return False
+        
+        if item == "no items" or item == "":
+            return False
+        
+        if item in data["stats"][self.token]["items_gained"]:
+            data["stats"][self.token]["items_gained"][item] += 1
+        else:
+            data["stats"][self.token]["items_gained"][item] = 1
+            
         return True
 
     def send_message(self, command, token=None, latest_message=None, channel_id=None):

@@ -44,17 +44,18 @@ def crime(Client) -> None:
         coins = 0
 
     try:
-        items = (
+        item = (
             latest_message["embeds"][0]["description"].split("**")[-2]
             if latest_message["embeds"][0]["description"].count("**") == 2
             else "no items"
         )
     except Exception:
-        items = "no items"
+        item = "no items"
 
     Client.log(
         "DEBUG",
-        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls crime` command.",
+        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} &{' an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else '' if item == 'no items' else ' a'} {item} from the `pls crime` command.",
     )
 
     Client._update_coins("pls crime", coins)
+    Client._update_items("pls crime", item)
