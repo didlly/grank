@@ -7,8 +7,6 @@ from threading import Thread
 from time import sleep
 from typing import Optional, Union
 
-from websocket import WebSocket, WebSocketConnectionClosedException
-
 import utils.Yaml
 from discord.GuildId import guild_id
 from discord.UserInfo import user_info
@@ -19,6 +17,7 @@ from instance.Client import ButtonInteractError, Instance
 from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
 from scripts.buy import buy
 from utils.Shared import data
+from websocket import WebSocket, WebSocketConnectionClosedException
 
 
 def anti_heist(Client, latest_message, reset) -> None:

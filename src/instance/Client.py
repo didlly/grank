@@ -80,8 +80,7 @@ class Instance(object):
                 + data["stats"][self.token]["dropdowns_selected"]
             )
             self.Repository.info["stats"]["coins_gained"] = (
-                self.lifetime_coins_gained
-                + data["stats"][self.token]["coins_gained"]
+                self.lifetime_coins_gained + data["stats"][self.token]["coins_gained"]
             )
             self.Repository.info_write()
             sleep(10)

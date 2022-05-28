@@ -6,9 +6,9 @@ from typing import Optional, Union
 import utils.Yaml
 from database.Handler import (
     rebuild_config,
-    rebuild_database,
     rebuild_controllers,
-    rebuild_info  
+    rebuild_database,
+    rebuild_info,
 )
 from instance.Client import Instance
 
@@ -260,9 +260,14 @@ def verify_info(
             return False
 
     if "stats" in info.keys():
-        if "commands_ran" not in info["stats"].keys() or "buttons_clicked" not in info["stats"].keys() or "dropdowns_selected" not in info["stats"].keys() or "coins_gained" not in info["stats"].keys():
+        if (
+            "commands_ran" not in info["stats"].keys()
+            or "buttons_clicked" not in info["stats"].keys()
+            or "dropdowns_selected" not in info["stats"].keys()
+            or "coins_gained" not in info["stats"].keys()
+        ):
             return False
     else:
         return False
-    
+
     return True
