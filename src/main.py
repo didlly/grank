@@ -68,7 +68,7 @@ for account in accounts:
         mkdir(f"{cwd}logs/{data['version']}/{account.token}")
 
     Client = Instance(cwd, account)
-    verify(cwd, account, Client)
+    verify(cwd, Client)
     Repository = Database(cwd, account, Client)
 
     Client.Repository = Repository

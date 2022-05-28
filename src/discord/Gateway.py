@@ -1738,7 +1738,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                     if command == "enabled":
                                         continue
 
-                                    commands += f"\n{command}: {'Enabled' if Client.Repository.config['custom commands'][command]['enabled'] else 'Disabled'}, Cooldown = {Client.Repository.config['custom commands'][command]['cooldown']}"
+                                    commands += f"\n{command}: {'True' if Client.Repository.config['custom commands'][command]['enabled'] else 'False'}, Cooldown = {Client.Repository.config['custom commands'][command]['cooldown']}"
                                     embed["embeds"].append(
                                         {
                                             "title": f"`{command}`:",
@@ -1746,7 +1746,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                             "fields": [
                                                 {
                                                     "name": "Enabled:",
-                                                    "value": f"`{'Enabled' if Client.Repository.config['custom commands'][command]['enabled'] else 'Disabled'}`",
+                                                    "value": f"`{'True' if Client.Repository.config['custom commands'][command]['enabled'] else 'False'}`",
                                                     "inline": True,
                                                 },
                                                 {

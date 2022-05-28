@@ -54,6 +54,7 @@ class Instance(object):
             "commands_ran": 0,
             "buttons_clicked": 0,
             "dropdowns_selected": 0,
+            "coins_gained": 0,
         }
 
         while "Repository" not in self.__dict__.keys():
@@ -64,6 +65,7 @@ class Instance(object):
         self.lifetime_dropdowns_selected = self.Repository.info["stats"][
             "dropdowns_selected"
         ]
+        self.lifetime_coins_gained = self.Repository.info["stats"]["coins_gained"]
 
         while True:
             self.Repository.info["stats"]["commands_ran"] = (
@@ -76,6 +78,10 @@ class Instance(object):
             self.Repository.info["stats"]["dropdowns_selected"] = (
                 self.lifetime_dropdowns_selected
                 + data["stats"][self.token]["dropdowns_selected"]
+            )
+            self.Repository.info["stats"]["coins_gained"] = (
+                self.lifetime_coins_gained
+                + data["stats"][self.token]["coins_gained"]
             )
             self.Repository.info_write()
             sleep(10)

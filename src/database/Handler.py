@@ -29,7 +29,7 @@ def create_config(cwd: str, folder: int) -> open:
     return config_file, utils.Yaml.loads(config_template)
 
 
-def rebuild_config(cwd: str, folder: int, keys: list):
+def rebuild_config(cwd: str, folder: int):
     with open(f"{cwd}database/templates/config.yml", "r") as config_template_file:
         config_template = utils.Yaml.loads(config_template_file.read())
 
@@ -38,15 +38,12 @@ def rebuild_config(cwd: str, folder: int, keys: list):
 
     config_file = open(f"{cwd}database/{folder}/config.yml", "r+")
     config = utils.Yaml.loads(config_file.read())
-
-    for key in keys:
-        exec(f"config{key} = config_template{key}")
-
+    
+    config = config | config_template
     config_file.seek(0)
     config_file.truncate()
     config_file.write(utils.Yaml.dumps(config))
-    config_file.flush()
-
+    config_file.flush() 
 
 def create_database(cwd: str, folder: int) -> open:
     with open(f"{cwd}database/templates/database.json", "r") as database_template_file:
@@ -63,6 +60,22 @@ def create_database(cwd: str, folder: int) -> open:
 
     return database_file, loads(database_template)
 
+def rebuild_database(cwd: str, folder: int):
+    with open(f"{cwd}database/templates/database.json", "r") as database_template_file:
+        database_template = loads(database_template_file.read())
+
+    with suppress(FileExistsError):
+        open(f"{cwd}database/{folder}/database.json", "x").close()
+
+    database_file = open(f"{cwd}database/{folder}/database.json", "r+")
+    database = loads(database_file.read())
+    
+    database = database | database_template
+    
+    database_file.seek(0)
+    database_file.truncate()
+    database_file.write(dumps(database, indent=4))
+    database_file.flush()
 
 def create_info(cwd: str, account):
     with suppress(FileExistsError):
@@ -72,6 +85,7 @@ def create_info(cwd: str, account):
         "commands_ran": 0,
         "buttons_clicked": 0,
         "dropdowns_selected": 0,
+        "coins_gained": 0
     }
 
     info_file = open(f"{cwd}database/{account.id}/info.json", "r+")
@@ -82,6 +96,24 @@ def create_info(cwd: str, account):
 
     return info_file, account.__dict__
 
+def rebuild_info(cwd: str, folder: int):
+    with suppress(FileExistsError):
+        open(f"{cwd}database/{folder}/info.json", "x").close()
+
+    info_file = open(f"{cwd}database/{folder}/info.json", "r+")
+    info = loads(info_file.read())
+    
+    info = info | {"stats": {
+            "commands_ran": 0,
+            "buttons_clicked": 0,
+            "dropdowns_selected": 0,
+            "coins_gained": 0,
+        }}
+    
+    info_file.seek(0)
+    info_file.truncate()
+    info_file.write(dumps(info, indent=4))
+    info_file.flush()
 
 def create_controllers(cwd: str, account) -> open:
     controllers_template = {
@@ -104,6 +136,26 @@ def create_controllers(cwd: str, account) -> open:
 
     return controllers_file, controllers_template
 
+def rebuild_controllers(cwd: str, folder: int):
+    with suppress(FileExistsError):
+        open(f"{cwd}database/{folder}/controllers.json", "x").close()
+
+    controllers_file = open(f"{cwd}database/{folder}/controllers.json", "r+")
+    controllers = loads(controllers_file.read())
+    
+    controllers = controllers | {"controllers": [folder],
+        "controllers_info": {
+            folder: {
+                "added": int(time()),
+                "added_by": folder,
+                "commands": [],
+            }
+        }}
+    
+    controllers_file.seek(0)
+    controllers_file.truncate()
+    controllers_file.write(dumps(controllers, indent=4))
+    controllers_file.flush()
 
 class Database(object):
     def __init__(self, cwd: str, account: DictToClass, Client):

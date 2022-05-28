@@ -5,15 +5,15 @@ from typing import Optional, Union
 
 import utils.Yaml
 from database.Handler import (
-    create_controllers,
-    create_database,
-    create_info,
     rebuild_config,
+    rebuild_database,
+    rebuild_controllers,
+    rebuild_info  
 )
 from instance.Client import Instance
 
 
-def verify(cwd: str, account, Client: Instance) -> None:
+def verify(cwd: str, Client: Instance) -> None:
     if not isdir(f"{cwd}database/{Client.id}"):
         return
 
@@ -44,19 +44,19 @@ def verify(cwd: str, account, Client: Instance) -> None:
 
         if statuses[0] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/config.yml")
-            rebuild_config(cwd, Client.id, statuses[0][-1])
+            rebuild_config(cwd, Client.id)
 
         if statuses[1] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/database.json")
-            create_database(cwd, Client.id)
+            rebuild_database(cwd, Client.id)
 
         if statuses[2] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/controllers.json")
-            create_controllers(cwd, account)
+            rebuild_controllers(cwd, Client.id)
 
         if statuses[-1] != True:
             Client.log("DEBUG", f"Rebuilding `/database/{Client.id}/info.json")
-            create_info(cwd, account)
+            rebuild_info(cwd, Client.id)
 
 
 def verify_config(cwd: str, folder: str) -> bool:
@@ -187,15 +187,14 @@ def verify_config(cwd: str, folder: str) -> bool:
     ]
 
     config = utils.Yaml.load(f"{cwd}database/{folder}/config.yml")
-    keys = []
 
     for option in options:
         try:
             exec(f"_ = config{option}")
         except KeyError:
-            keys.append(option)
+            return False
 
-    return True if len(keys) == 0 else (False, keys)
+    return True
 
 
 def verify_database(
@@ -260,4 +259,10 @@ def verify_info(
         except JSONDecodeError:
             return False
 
-    return True if "stats" in info.keys() else False
+    if "stats" in info.keys():
+        if "commands_ran" not in info["stats"].keys() or "buttons_clicked" not in info["stats"].keys() or "dropdowns_selected" not in info["stats"].keys() or "coins_gained" not in info["stats"].keys():
+            return False
+    else:
+        return False
+    
+    return True
