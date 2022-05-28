@@ -8,6 +8,11 @@ def trivia(Client) -> None:
 
     latest_message = Client.retreive_message("pls trivia")
 
+    if "description" not in latest_message["embeds"][0].keys():
+        latest_message = Client.fallback_retreive_message("pls trivia")
+    elif "seconds to answer" not in latest_message["embeds"][0]["description"]:
+        latest_message = Client.fallback_retreive_message("pls trivia")
+
     try:
         answer = data["trivia"][
             latest_message["embeds"][0]["description"]

@@ -52,7 +52,9 @@ def grind(Client):
                             except KeyError:
                                 custom(Client, key)
 
-                                exec(f"Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write()")
+                                exec(
+                                    f"Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write()"
+                                )
                     break
                 except Exception:
                     Client.log(

@@ -6,6 +6,9 @@ def search(Client) -> None:
 
     latest_message = Client.retreive_message("pls search")
 
+    if "Where do you want to search" not in latest_message["content"]:
+        latest_message = Client.fallback_retreive_message("pls crime")
+
     custom_id = None
 
     for option in latest_message["components"][0]["components"]:

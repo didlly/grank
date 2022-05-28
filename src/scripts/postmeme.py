@@ -6,6 +6,14 @@ def postmeme(Client) -> None:
 
     latest_message = Client.retreive_message("pls postmeme")
 
+    if "description" not in latest_message["embeds"][0].keys():
+        latest_message = Client.fallback_retreive_message("pls postmeme")
+    elif (
+        "Pick a meme to post to the internet"
+        not in latest_message["embeds"][0]["description"]
+    ):
+        latest_message = Client.fallback_retreive_message("pls highlow")
+
     Client.interact_button(
         "pls postmeme",
         choice(latest_message["components"][0]["components"])["custom_id"],

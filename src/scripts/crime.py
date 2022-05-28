@@ -6,6 +6,9 @@ def crime(Client) -> None:
 
     latest_message = Client.retreive_message("pls crime")
 
+    if "What crime do you want to commit" not in latest_message["content"]:
+        latest_message = Client.fallback_retreive_message("pls crime")
+
     custom_id = next(
         (
             option["custom_id"]
@@ -53,5 +56,5 @@ def crime(Client) -> None:
         "DEBUG",
         f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls crime` command.",
     )
-    
+
     Client._update_coins("pls crime", coins)

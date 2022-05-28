@@ -3,6 +3,14 @@ def highlow(Client) -> None:
 
     latest_message = Client.retreive_message("pls highlow")
 
+    if "description" not in latest_message["embeds"][0].keys():
+        latest_message = Client.fallback_retreive_message("pls highlow")
+    elif (
+        "I just chose a secret number between 1 and 100"
+        not in latest_message["embeds"][0]["description"]
+    ):
+        latest_message = Client.fallback_retreive_message("pls highlow")
+
     number = int(latest_message["embeds"][0]["description"].split("**")[-2])
 
     Client.interact_button(

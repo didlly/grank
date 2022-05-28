@@ -89,20 +89,26 @@ class Instance(object):
         try:
             coins = int(coins.replace(",", "")) if type(coins) != int else coins
         except ValueError:
-            self.log("WARNING", f"An error occured while parsing the coins received from the `{command}` command - `{coins}` is not a number.")
+            self.log(
+                "WARNING",
+                f"An error occured while parsing the coins received from the `{command}` command - `{coins}` is not a number.",
+            )
             return False
-        
+
         if coins > 5000 and command != "pls blackjack":
-            self.log("WARNING", f"A possible error was encountered while parsing the coins received from the `{command}` command - `{coins}` is a large amount. Skipping adding to total coins gained.")
+            self.log(
+                "WARNING",
+                f"A possible error was encountered while parsing the coins received from the `{command}` command - `{coins}` is a large amount. Skipping adding to total coins gained.",
+            )
             return False
-        
+
         if coins < 1:
             return False
-        
+
         data["stats"][self.token]["coins_gained"] += coins
-        
+
         return True
-    
+
     def send_message(self, command, token=None, latest_message=None, channel_id=None):
         command = str(command)
 
@@ -238,7 +244,7 @@ class Instance(object):
 
     def retreive_message(
         self, command, token=None, check=True, old_latest_message: Optional[dict] = None
-    ):
+    ) -> dict:
         while True:
             time = datetime.now()
             old_latest_message = (
@@ -321,6 +327,9 @@ class Instance(object):
                     )
                 sleep(cooldown)
                 self.send_message(command, token if token is not None else None)
+                latest_message = self.retreive_message(
+                    command, token, check, old_latest_message
+                )
             else:
                 break
 
@@ -433,6 +442,62 @@ class Instance(object):
                     self.send_message(f"pls sell {key}")
 
         return latest_message
+
+    def fallback_retreive_message(self, command: str) -> dict:
+        req = request(
+            f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
+            headers={"authorization": self.token},
+        )
+
+        for latest_message in req.content:
+            if latest_message["author"]["id"] != "270904126974590976" or (
+                command != "pls stream"
+                and "referenced_message" not in latest_message.keys()
+            ):
+                continue
+
+            if "referenced_message" in latest_message.keys():
+                if (
+                    latest_message["referenced_message"]["author"]["id"] != self.id
+                    or latest_message["referenced_message"]["content"] != command
+                ):
+                    continue
+            if (
+                len(latest_message["embeds"]) != 0
+                and "title" in latest_message["embeds"][0].keys()
+                and latest_message["embeds"][0]["title"]
+                in ["You're currently bot banned!", "You're currently blacklisted!"]
+            ):
+                self.log(
+                    "ERROR",
+                    "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.",
+                )
+
+            if len(latest_message["embeds"]) > 0:
+                if "description" in latest_message["embeds"][0].keys():
+                    if (
+                        "The default cooldown is"
+                        in latest_message["embeds"][0]["description"]
+                    ):
+                        cooldown = int(
+                            "".join(
+                                filter(
+                                    str.isdigit,
+                                    latest_message["embeds"][0]["description"]
+                                    .split("**")[1]
+                                    .split("**")[0],
+                                )
+                            )
+                        )
+                        self.log(
+                            "WARNING",
+                            f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
+                        )
+                        sleep(cooldown)
+                        self.send_message(command)
+                        latest_message = self.retreive_message(command)
+
+            return latest_message
 
     def interact_button(
         self, command, custom_id, latest_message, token=None, session_id=None
@@ -549,17 +614,6 @@ class Instance(object):
                 )
 
     def clear_lag(self, command: str, index1: int = 0, index2: int = -1) -> None:
-        """clear_lag()
-
-        - Attempts to stop backlash from failed interactive commands by interacting with the `End Interaction` button on the embed.
-
-        Args:
-            command (str): The command that failed to successfully execute.
-
-        Returns:
-            interacted (bool): A boolean value that tells Grank whether the button was successfully interacted with or not.
-        """
-
         req = request(
             f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
             headers={"authorization": self.token},
