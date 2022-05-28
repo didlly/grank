@@ -98,7 +98,7 @@ class Instance(object):
         if coins > 5000 and command != "pls blackjack":
             self.log(
                 "WARNING",
-                f"A possible error was encountered while parsing the coins received from the `{command}` command - `{coins}` is a large amount. Skipping adding to total coins gained.",
+                f"A possible error was encountered while parsing the coins received from the `{command}` command - `{coins}` is a large amount.",
             )
             return False
 
@@ -164,7 +164,7 @@ class Instance(object):
                 if req.status_code == 429:
                     self.log(
                         "WARNING",
-                        f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} second(s).",
+                        f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
                     )
                     sleep(req.content["retry_after"])
                     continue
@@ -234,7 +234,7 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} second(s).",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
                         )
                     sleep(req.content["retry_after"] / 1000)
                     continue
@@ -545,7 +545,7 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} second(s).",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
                         )
                     sleep(req.content["retry_after"])
 
@@ -604,7 +604,7 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} second(s).",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
                         )
                     sleep(req.content["retry_after"])
 
@@ -690,7 +690,7 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} second(s).",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
                         )
                     sleep(req.content["retry_after"] / 1000)
                     continue
