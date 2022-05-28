@@ -38,7 +38,7 @@ def crime(Client) -> None:
             )
         )
     except Exception:
-        coins = "no"
+        coins = 0
 
     try:
         items = (
@@ -51,5 +51,7 @@ def crime(Client) -> None:
 
     Client.log(
         "DEBUG",
-        f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls crime` command.",
+        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls crime` command.",
     )
+    
+    Client._update_coins("pls crime", coins)

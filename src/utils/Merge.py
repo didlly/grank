@@ -3,7 +3,7 @@ def merge(dict1: dict, dict2: dict) -> dict:
 
     for key in dict2:
         if type(dict2[key]) == dict:
-            merged[key] = merge(dict1[key], dict2[key])
+            merged[key] = merge(dict1[key] if key in dict1 else {}, dict2[key])
         else:
             if key not in dict1.keys():
                 merged[key] = dict2[key]

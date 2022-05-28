@@ -55,9 +55,10 @@ def trivia(Client) -> None:
             )
         )
     except Exception:
-        coins = "no"
+        coins = 0
 
     Client.log(
         "DEBUG",
-        f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} from the `pls trivia` command.",
+        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} from the `pls trivia` command.",
     )
+    Client._update_coins("pls trivia", coins)

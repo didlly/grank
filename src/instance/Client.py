@@ -47,9 +47,9 @@ class Instance(object):
             errors="ignore",
         )
 
-        Thread(target=self.update).start()
+        Thread(target=self._update).start()
 
-    def update(self) -> None:
+    def _update(self) -> None:
         data["stats"][self.token] = {
             "commands_ran": 0,
             "buttons_clicked": 0,
@@ -85,6 +85,24 @@ class Instance(object):
             self.Repository.info_write()
             sleep(10)
 
+    def _update_coins(self, command: str, coins: int) -> bool:
+        try:
+            coins = int(coins.replace(",", "")) if type(coins) != int else coins
+        except ValueError:
+            self.log("WARNING", f"An error occured while parsing the coins received from the `{command}` command - `{coins}` is not a number.")
+            return False
+        
+        if coins > 5000 and command != "pls blackjack":
+            self.log("WARNING", f"A possible error was encountered while parsing the coins received from the `{command}` command - `{coins}` is a large amount. Skipping adding to total coins gained.")
+            return False
+        
+        if coins < 1:
+            return False
+        
+        data["stats"][self.token]["coins_gained"] += coins
+        
+        return True
+    
     def send_message(self, command, token=None, latest_message=None, channel_id=None):
         command = str(command)
 

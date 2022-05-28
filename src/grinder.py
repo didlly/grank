@@ -47,13 +47,12 @@ def grind(Client):
                         if Client.Repository.config["custom commands"][key]["enabled"]:
                             try:
                                 exec(
-                                    f"if (datetime.now() - custom_{key.replace(' ', '_')}).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); custom_{key.replace(' ', '_')} = datetime.now(); sleep(Client.Repository.config['cooldowns']['commands']['value'] if Client.Repository.config['cooldowns']['commands']['enabled'] else 0.5)"
+                                    f"if (datetime.now() - datetime.strptime(Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'], '%Y-%m-%d %H:%M:%S.%f')).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write(); sleep(Client.Repository.config['cooldowns']['commands']['value'] if Client.Repository.config['cooldowns']['commands']['enabled'] else 0.5)"
                                 )
-
-                            except NameError:
+                            except KeyError:
                                 custom(Client, key)
 
-                                exec(f"custom_{key.replace(' ', '_')} = datetime.now()")
+                                exec(f"Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write()")
                     break
                 except Exception:
                     Client.log(
@@ -837,6 +836,10 @@ def grind(Client):
                 Client.Repository.info["stats"]["dropdowns_selected"] = (
                     Client.lifetime_dropdowns_selected
                     + data["stats"][Client.token]["dropdowns_selected"]
+                )
+                Client.Repository.info["stats"]["coins_gained"] = (
+                    Client.lifetime_coins_gained
+                    + data["stats"][Client.token]["coins_gained"]
                 )
                 Client.Repository.info_write()
                 return

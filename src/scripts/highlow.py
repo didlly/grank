@@ -32,8 +32,9 @@ def highlow(Client) -> None:
 
         Client.log(
             "DEBUG",
-            f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} from the `pls highlow` command.",
+            f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} from the `pls highlow` command.",
         )
+        Client._update_coins("pls highlow", coins)
     else:
         Client.log(
             "DEBUG", "Lost the `pls highlow` command (no negative balance impacts)."

@@ -35,6 +35,7 @@ def blackjack(Client) -> None:
                 Client.log(
                     "DEBUG", f"Lost {amount} through the `pls blackjack` command."
                 )
+                Client._update_coins("pls blackjack", -amount)
                 return
             elif "You won" in latest_message["embeds"][0]["description"]:
                 try:
@@ -53,8 +54,9 @@ def blackjack(Client) -> None:
 
                 Client.log(
                     "DEBUG",
-                    f"Won {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.",
+                    f"Won ⏣ {coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.",
                 )
+                Client._update_coins("pls blackjack", coins)
                 return
             elif "hasn't changed" in latest_message["embeds"][0]["description"]:
                 Client.log(

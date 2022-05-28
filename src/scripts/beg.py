@@ -11,10 +11,10 @@ def beg(Client) -> None:
         coins = (
             latest_message["embeds"][0]["description"].split("**")[1].replace("⏣ ", "")
             if "⏣" in latest_message["embeds"][0]["description"]
-            else "no"
+            else 0
         )
     except Exception:
-        coins = "no"
+        coins = 0
 
     try:
         items = (
@@ -27,5 +27,7 @@ def beg(Client) -> None:
 
     Client.log(
         "DEBUG",
-        f"Received {'⏣ ' if coins != 'no' else ''}{coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls beg` command.",
+        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} &{' an' if items[0] in ['a', 'e', 'i', 'o', 'u'] else '' if items == 'no items' else ' a'} {items} from the `pls beg` command.",
     )
+
+    Client._update_coins("pls beg", coins)
