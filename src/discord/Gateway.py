@@ -687,7 +687,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                             },
                                             {
                                                 "name": "Items gained:",
-                                                "value": f"{f'{chr(92)}n'.join(f'**`{key}`**: **`' + str(data['stats'][Client.token]['items_gained'][key]) + '`**' for key in data['stats'][Client.token]['items_gained'])}".replace("\\n", "\n"),
+                                                "value": "\n".join(f"**`{key}`**: **`{data['stats'][Client.token]['items_gained'][key]}`**" for key in data["stats"][Client.token]["items_gained"])
                                             },
                                         ],
                                     },
@@ -713,7 +713,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                             },
                                             {
                                                 "name": "Items gained:",
-                                                "value": f"{f'{chr(92)}n'.join(f'**`{key}`**: **`' + str(Client.Repository.info['stats']['items_gained'][key]) + '`**' for key in Client.Repository.info['stats']['items_gained'])}".replace("\\n", "\n"),
+                                                "value": "\n".join(f"**`{key}`**: **`{Client.Repository.info['stats']['items_gained'][key]}`**" for key in Client.Repository.info['stats']['items_gained'])
                                             },
                                         ],
                                     },
