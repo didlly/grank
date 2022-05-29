@@ -102,7 +102,7 @@ class Instance(object):
             )
             return False
 
-        if coins > 5000 and command != "pls blackjack":
+        if coins > 10000 and command != "pls blackjack":
             self.log(
                 "WARNING",
                 f"A possible error was encountered while parsing the coins received from the `{command}` command - `{coins}` is a large amount.",

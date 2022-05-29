@@ -2367,8 +2367,6 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                         "message": {},
                                     }
 
-                                    Client.guild_id = event["d"]["guild_id"]
-
                                     Client.webhook_send(
                                         {
                                             "embeds": [
