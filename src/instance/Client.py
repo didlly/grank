@@ -124,6 +124,7 @@ class Instance(object):
             "no items",
             "your immune system is under attack from covid-19",
             "the shop sale just started!"
+            or "answered first!" in item
         ]:
             return False
 
