@@ -53,7 +53,7 @@ def blackjack(Client) -> None:
 
                 Client.log(
                     "DEBUG",
-                    f"Won ⏣ {coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.",
+                    f"Won {coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.",
                 )
                 Client._update_coins("pls blackjack", coins)
                 return

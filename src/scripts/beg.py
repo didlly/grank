@@ -27,7 +27,7 @@ def beg(Client) -> None:
 
     Client.log(
         "DEBUG",
-        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} &{' an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else '' if item == 'no items' else ' a'} {item} from the `pls beg` command.",
+        f"Received {coins} coin{'' if coins == 1 else 's'} &{' an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else '' if item == 'no items' else ' a'} {item} from the `pls beg` command.",
     )
 
     Client._update_coins("pls beg", coins)

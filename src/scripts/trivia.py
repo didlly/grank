@@ -64,6 +64,6 @@ def trivia(Client) -> None:
 
     Client.log(
         "DEBUG",
-        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} from the `pls trivia` command.",
+        f"Received {coins} coin{'' if coins == 1 else 's'} from the `pls trivia` command.",
     )
     Client._update_coins("pls trivia", coins)

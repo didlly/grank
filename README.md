@@ -13,9 +13,11 @@
     - [What is Grank?](#what-is-grank)
     - [Features](#features)
     - [Supported commands](#supported-commands)
-        - [Getting Started](#getting-started)
+        - [Installing for the first time](#installing-for-the-first-time)
             - [Windows](#windows)
-            - [macOS and Linux](#macos-and-linux)
+            - [Linux](#linux)
+            - [macOS](#macos)
+        - [Updating](#updating)
         - [Setting up Grank](#setting-up-grank)
             - [How to enter these details.](#how-to-enter-these-details)
     - [How to use Grank](#how-to-use-grank)
@@ -94,16 +96,25 @@ Grank is a feature rich Dank Memer automation program that automtaically grinds 
 * `pls work`
 * `pls adv` (Partial support)
 
-### Getting Started
+### Installing for the first time
+* Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
 
 #### Windows
-Download the latest release from [here](https://github.com/didlly/grank/releases).
+* Download PyPy from [here](https://downloads.python.org/pypy/pypy3.9-v7.3.9-win64.zip).
+* Extract the contents into the `/src` directory.
 
-#### macOS and Linux
-Unfortunately, I do not have access to a Mac or Linux device, so you will have to run the program from source.
+#### Linux
+* Download PyPy from [here](https://downloads.python.org/pypy/pypy3.9-v7.3.9-linux64.tar.bz2) (or if that doesn't work from [here](https://downloads.python.org/pypy/pypy3.9-v7.3.9-aarch64-portable.tar.bz2)).
+* Extract the contents into the `/src` directory.
 
-* Install the latest version of Python from [here](https://www.python.org/downloads/). Make sure to have the `Install Pip` option ticked.
-* Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
+#### macOS
+* Download PyPy from [here](https://downloads.python.org/pypy/pypy3.9-v7.3.9-osx64.tar.bz2).
+* Extract the contents into the `/src` directory.
+
+***NOTE:*** Everytime you update Grank's source code, you do **NOT HAVE** to re-download PyPy.
+
+### Updating
+* Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip) into the directory you extracted the previous version of Grank into. Let it overwrite any existing files.
 
 ### Setting up Grank
 To use Grank, you will have to provide your Discord token. Don't worry, your token is never shared with anyone else.
@@ -114,7 +125,7 @@ To use Grank, you will have to provide your Discord token. Don't worry, your tok
 
 Open `src/credentials.json`. You should see a dictionary with a key called `TOKEN`. Add your token into the list after this key. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
 
-You are now ready to use the program. Run `python main.py` (or `python3 main.py`) in a command prompt in the `/src/` directory to start the program (or if you are on Windows run `main.exe`). You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things!
+You are now ready to use the program. Run `pypy main.py` (or `pypy3 main.py`) in a command prompt in the `/src` directory to start the program. You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things!
 
 ## How to use Grank
 Now you have Grank set-up, you are probably wondering how to use Grank. Grank is controlled through Discord. You can view all the commands below, or run `grank help` to get started on your journey using Grank. You will find more information by running the specific `-help` command for each command category.

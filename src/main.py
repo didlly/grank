@@ -1,16 +1,15 @@
 from contextlib import suppress
 from os import mkdir
 from os.path import dirname
-from platform import system
+from platform import system, python_version, python_implementation
 from sys import argv
 from threading import Thread
 
 from configuration.Credentials import verify_credentials
 from database.Handler import Database
 from database.Verifier import verify
-from discord.Gateway import gateway
 from instance.Client import Instance
-from utils.Console import fore, style
+from utils.Console import style
 from utils.Logger import log
 from utils.Modules import verify_modules
 from utils.Requests import request
@@ -39,21 +38,7 @@ latest_version = request(
     "https://raw.githubusercontent.com/didlly/grank/main/src/current_version"
 ).content
 
-print(
-    f"""{fore.Magenta}
-░██████╗░██████╗░░█████╗░███╗░░██╗██╗░░██╗
-██╔════╝░██╔══██╗██╔══██╗████╗░██║██║░██╔╝
-██║░░██╗░██████╔╝███████║██╔██╗██║█████═╝░
-{fore.Bright_Magenta}██║░░╚██╗██╔══██╗██╔══██║██║╚████║██╔═██╗░
-╚██████╔╝██║░░██║██║░░██║██║░╚███║██║░╚██╗
-░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝╚═╝░░╚══╝╚═╝░░╚═╝
-{style.RESET_ALL}
-{style.Italic + style.Bold}GITHUB: {style.RESET_ALL}https://github.com/didlly/grank
-{style.Italic + style.Bold}INSTALLED VERSION: {style.RESET_ALL}{data['version']}
-{style.Italic + style.Bold}LATEST VERSION: {style.RESET_ALL}{latest_version}
-{style.Italic + style.Bold}DISCORD SERVER: {style.RESET_ALL}https://discord.com/invite/X3JMC9FAgy
-"""
-)
+print(f"Grank {style.Bold}{data['version']}{style.RESET_ALL} running on Python {style.Bold}v{python_version()}{style.RESET_ALL} ({style.Bold}{python_implementation()}{style.RESET_ALL}) using {style.Bold}{system()}{style.RESET_ALL}.\n")
 
 if data["version"] != latest_version:
     log(None, "WARNING", f"New version available. Update if possible.")
@@ -75,4 +60,4 @@ for account in accounts:
     Repository = Database(cwd, account, Client)
 
     Client.Repository = Repository
-    Thread(target=gateway, args=[Client]).start()
+    Thread(target=__import__("discord.Gateway").Gateway.gateway, args=[Client]).start()

@@ -90,7 +90,7 @@ def create_info(cwd: str, account):
         "buttons_clicked": 0,
         "dropdowns_selected": 0,
         "coins_gained": 0,
-        "items_gained": {}
+        "items_gained": {},
     }
 
     info_file = open(f"{cwd}database/{account.id}/info.json", "r+")
@@ -117,7 +117,7 @@ def rebuild_info(cwd: str, folder: int):
                 "buttons_clicked": 0,
                 "dropdowns_selected": 0,
                 "coins_gained": 0,
-                "items_gained": {}
+                "items_gained": {},
             }
         },
     )

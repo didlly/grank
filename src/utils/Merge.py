@@ -10,9 +10,10 @@ def merge(dict1: dict, dict2: dict) -> dict:
 
     return merged
 
+
 def combine(dict1: dict, dict2: dict) -> dict:
     combined = dict1
-    
+
     for key in dict2:
         if type(dict2[key]) == dict:
             combined[key] = combine(dict1[key], dict2[key])
@@ -22,7 +23,7 @@ def combine(dict1: dict, dict2: dict) -> dict:
                     combined[key] = dict2[key] - dict2[key]
                 except TypeError:
                     combined[key] = ""
-                    
+
             dict1[key] += dict2[key]
-        
+
     return combined

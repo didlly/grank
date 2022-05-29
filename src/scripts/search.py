@@ -88,7 +88,7 @@ def search(Client) -> None:
 
     Client.log(
         "DEBUG",
-        f"Received ⏣ {coins} coin{'' if coins == 1 else 's'} &{' an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else '' if item == 'no items' else ' a'} {item} from the `pls search` command.",
+        f"Received {coins} coin{'' if coins == 1 else 's'} &{' an' if item[0] in ['a', 'e', 'i', 'o', 'u'] else '' if item == 'no items' else ' a'} {item} from the `pls search` command.",
     )
     Client._update_coins("pls search", coins)
     Client._update_items("pls search", item)

@@ -56,12 +56,12 @@ class Instance(object):
             "buttons_clicked": 0,
             "dropdowns_selected": 0,
             "coins_gained": 0,
-            "items_gained": {}
+            "items_gained": {},
         }
 
         while "Repository" not in self.__dict__.keys():
             continue
-        
+
         self.lifetime_commands_ran = self.Repository.info["stats"]["commands_ran"]
         self.lifetime_buttons_clicked = self.Repository.info["stats"]["buttons_clicked"]
         self.lifetime_dropdowns_selected = self.Repository.info["stats"][
@@ -85,7 +85,9 @@ class Instance(object):
             self.Repository.info["stats"]["coins_gained"] = (
                 self.lifetime_coins_gained + data["stats"][self.token]["coins_gained"]
             )
-            self.Repository.info["stats"]["items_gained"] = combine(self.lifetime_items_gained, data["stats"][self.token]["items_gained"])
+            self.Repository.info["stats"]["items_gained"] = combine(
+                self.lifetime_items_gained, data["stats"][self.token]["items_gained"]
+            )
 
             self.Repository.info_write()
             sleep(10)
@@ -113,10 +115,18 @@ class Instance(object):
         data["stats"][self.token]["coins_gained"] += coins
 
         return True
-    
+
     def _update_items(self, command: str, item: int) -> bool:
         item = item.lower()
-        
+
+        if item in [
+            "",
+            "no items",
+            "your immune system is under attack from covid-19",
+            "the shop sale just started!"
+        ]:
+            return False
+
         if item.count(" ") > 2:
             self.log(
                 "WARNING",
@@ -124,14 +134,11 @@ class Instance(object):
             )
             return False
         
-        if item in ["", "no items", "your immune system is under attack from covid-19", "microsoft is trying to buy discord again!", "pls rich cmd doesn't work", "f in the chat", "frick off karen", "they've got airpods"]:
-            return False
-        
         if item in data["stats"][self.token]["items_gained"]:
             data["stats"][self.token]["items_gained"][item] += 1
         else:
             data["stats"][self.token]["items_gained"][item] = 1
-            
+
         return True
 
     def send_message(self, command, token=None, latest_message=None, channel_id=None):
