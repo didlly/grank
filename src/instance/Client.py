@@ -134,6 +134,13 @@ class Instance(object):
             )
             return False
         
+        if any(char in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] for char in item):
+            self.log(
+                "WARNING",
+                f"A possible error was encountered while parsing the items received from the `{command}` command - `{item}` seems to contain digits.",
+            )
+            return False
+        
         if item in data["stats"][self.token]["items_gained"]:
             data["stats"][self.token]["items_gained"][item] += 1
         else:
