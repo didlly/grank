@@ -13,13 +13,13 @@
     - [What is Grank?](#what-is-grank)
     - [Features](#features)
     - [Supported commands](#supported-commands)
-        - [Installing for the first time](#installing-for-the-first-time)
-            - [Windows](#windows)
-            - [Linux](#linux)
-            - [macOS](#macos)
-        - [Updating](#updating)
-        - [Setting up Grank](#setting-up-grank)
-            - [How to enter these details.](#how-to-enter-these-details)
+    - [Installing for the first time](#installing-for-the-first-time)
+        - [Windows](#windows)
+        - [Linux](#linux)
+        - [macOS](#macos)
+    - [Updating](#updating)
+    - [Setting up Grank](#setting-up-grank)
+        - [How to enter these details.](#how-to-enter-these-details)
     - [How to use Grank](#how-to-use-grank)
         - [Supported commands](#supported-commands)
         - [`autostart` category](#autostart-category)
@@ -96,32 +96,32 @@ Grank is a feature rich Dank Memer automation program that automtaically grinds 
 * `pls work`
 * `pls adv` (Partial support)
 
-### Installing for the first time
+## Installing for the first time
 * Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
 
-#### Windows
+### Windows
 * Download PyPy from [here](https://downloads.python.org/pypy/pypy3.9-v7.3.9-win64.zip).
 * Extract the contents into the `/src` directory.
 
-#### Linux
+### Linux
 * Download PyPy from [here](https://downloads.python.org/pypy/pypy3.9-v7.3.9-linux64.tar.bz2) (or if that doesn't work from [here](https://downloads.python.org/pypy/pypy3.9-v7.3.9-aarch64-portable.tar.bz2)).
 * Extract the contents into the `/src` directory.
 
-#### macOS
+### macOS
 * Download PyPy from [here](https://downloads.python.org/pypy/pypy3.9-v7.3.9-osx64.tar.bz2).
 * Extract the contents into the `/src` directory.
 
 ***NOTE:*** Everytime you update Grank's source code, you do **NOT HAVE** to re-download PyPy.
 
-### Updating
+## Updating
 * Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip) into the directory you extracted the previous version of Grank into. Let it overwrite any existing files.
 
-### Setting up Grank
+## Setting up Grank
 To use Grank, you will have to provide your Discord token. Don't worry, your token is never shared with anyone else.
 
 [Useful Youtube video on how to get your Discord Token](https://www.youtube.com/watch?v=WWHZoa0SxCc)
 
-#### How to enter these details.
+### How to enter these details.
 
 Open `src/credentials.json`. You should see a dictionary with a key called `TOKEN`. Add your token into the list after this key. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
 
