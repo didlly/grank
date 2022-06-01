@@ -1263,7 +1263,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -&gt; None:
                                 and len(args.flags) == 0
                             ):
                                 if Client.Repository.config["shifts"]["enabled"]:
-                                    shifts = ""
+                                    shifts_text = ""
                                     embed = {
                                         "content": "All **shifts** for this account.",
                                         "embeds": [],
@@ -1276,7 +1276,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -&gt; None:
                                         if shift == "enabled":
                                             continue
 
-                                        shifts += f"\n{shift}"
+                                        shifts_text += f"\n{shift}"
                                         embed["embeds"].append(
                                             {
                                                 "title": f"`{shift}`",
@@ -1310,7 +1310,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -&gt; None:
 
                                     Client.webhook_send(
                                         embed,
-                                        f"__**All shifts for this account**__\n```yaml{shifts}```",
+                                        f"__**All shifts for this account**__\n```yaml{shifts_text}```",
                                     )
                                 else:
                                     Client.webhook_send(
@@ -4667,7 +4667,7 @@ Then, the function will send "p" to call the police and avert the heist
                                 and len(args.flags) == 0
                             ):
                                 if Client.Repository.config["shifts"]["enabled"]:
-                                    shifts = ""
+                                    shifts_text = ""
                                     embed = {
                                         "content": "All **shifts** for this account.",
                                         "embeds": [],
@@ -4680,7 +4680,7 @@ Then, the function will send "p" to call the police and avert the heist
                                         if shift == "enabled":
                                             continue
 
-                                        shifts += f"\n{shift}"
+                                        shifts_text += f"\n{shift}"
                                         embed["embeds"].append(
                                             {
                                                 "title": f"`{shift}`",
@@ -4714,7 +4714,7 @@ Then, the function will send "p" to call the police and avert the heist
 
                                     Client.webhook_send(
                                         embed,
-                                        f"__**All shifts for this account**__\n```yaml{shifts}```",
+                                        f"__**All shifts for this account**__\n```yaml{shifts_text}```",
                                     )
                                 else:
                                     Client.webhook_send(

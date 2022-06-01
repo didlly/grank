@@ -1215,7 +1215,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                 and len(args.flags) == 0
                             ):
                                 if Client.Repository.config["shifts"]["enabled"]:
-                                    shifts = ""
+                                    shifts_text = ""
                                     embed = {
                                         "content": "All **shifts** for this account.",
                                         "embeds": [],
@@ -1228,7 +1228,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                         if shift == "enabled":
                                             continue
 
-                                        shifts += f"\n{shift}"
+                                        shifts_text += f"\n{shift}"
                                         embed["embeds"].append(
                                             {
                                                 "title": f"`{shift}`",
@@ -1262,7 +1262,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
 
                                     Client.webhook_send(
                                         embed,
-                                        f"__**All shifts for this account**__\n```yaml{shifts}```",
+                                        f"__**All shifts for this account**__\n```yaml{shifts_text}```",
                                     )
                                 else:
                                     Client.webhook_send(

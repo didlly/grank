@@ -1604,7 +1604,7 @@ None
                                 <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
                             <span class="p">):</span>
                                 <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
-                                    <span class="n">shifts</span> <span class="o">=</span> <span class="s2">""</span>
+                                    <span class="n">shifts_text</span> <span class="o">=</span> <span class="s2">""</span>
                                     <span class="n">embed</span> <span class="o">=</span> <span class="p">{</span>
                                         <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"All **shifts** for this account."</span><span class="p">,</span>
                                         <span class="s2">"embeds"</span><span class="p">:</span> <span class="p">[],</span>
@@ -1617,7 +1617,7 @@ None
                                         <span class="k">if</span> <span class="n">shift</span> <span class="o">==</span> <span class="s2">"enabled"</span><span class="p">:</span>
                                             <span class="k">continue</span>
 
-                                        <span class="n">shifts</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="si">{</span><span class="n">shift</span><span class="si">}</span><span class="s2">"</span>
+                                        <span class="n">shifts_text</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="si">{</span><span class="n">shift</span><span class="si">}</span><span class="s2">"</span>
                                         <span class="n">embed</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                             <span class="p">{</span>
                                                 <span class="s2">"title"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"`</span><span class="si">{</span><span class="n">shift</span><span class="si">}</span><span class="s2">`"</span><span class="p">,</span>
@@ -1651,7 +1651,7 @@ None
 
                                     <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
                                         <span class="n">embed</span><span class="p">,</span>
-                                        <span class="sa">f</span><span class="s2">"__**All shifts for this account**__</span><span class="se">\n</span><span class="s2">```yaml</span><span class="si">{</span><span class="n">shifts</span><span class="si">}</span><span class="s2">```"</span><span class="p">,</span>
+                                        <span class="sa">f</span><span class="s2">"__**All shifts for this account**__</span><span class="se">\n</span><span class="s2">```yaml</span><span class="si">{</span><span class="n">shifts_text</span><span class="si">}</span><span class="s2">```"</span><span class="p">,</span>
                                     <span class="p">)</span>
                                 <span class="k">else</span><span class="p">:</span>
                                     <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
