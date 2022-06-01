@@ -44,7 +44,7 @@ def request(
     redirect: bool = True,
     cookiejar: Optional[CookieJar] = None,
     basic_auth: Optional[str] = None,
-    timeout: int = 60,
+    timeout: int = 5,
 ):
     """
     The request function is used to make a request to the specified URL.
@@ -60,7 +60,7 @@ def request(
         redirect (bool) = True: Whether or not to follow redirects
         cookiejar (Optional[CookieJar]) = None: Cookie container
         basic_auth (Optional[str]) = None: A username and password to be sent with the request (or None if there is none)
-        timeout (int) = 60: A timeout for the request
+        timeout (int) = 5: A timeout for the request
 
     Returns:
         A tuple of status code, response content and the final url
