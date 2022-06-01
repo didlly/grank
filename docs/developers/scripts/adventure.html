@@ -152,7 +152,7 @@ def adventure(Client: Instance) -&gt; bool:
             if "footer" in latest_message["embeds"][0].keys():
                 Client.log(
                     "DEBUG",
-                    "User does not have item `adventure ticket`. Buying adventure ticket now.",
+                    "Account does not have item `adventure ticket`. Buying adventure ticket now.",
                 )
 
                 # ...if autobuy is enabled...
@@ -473,7 +473,7 @@ If the cooldown period hasn't ended, it will return False
             if "footer" in latest_message["embeds"][0].keys():
                 Client.log(
                     "DEBUG",
-                    "User does not have item `adventure ticket`. Buying adventure ticket now.",
+                    "Account does not have item `adventure ticket`. Buying adventure ticket now.",
                 )
 
                 # ...if autobuy is enabled...

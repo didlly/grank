@@ -29,8 +29,8 @@ def hunt(Client: Instance) -> bool:
             # ...get the level the fireball is on
             level = (
                 latest_message["content"]
-                .split("\n")[1]
-                .replace(latest_message["content"].split("\n")[1].strip(), "")
+                .split("\n")[2]
+                .rstrip()
                 .count("       ")
             )
 
@@ -63,7 +63,7 @@ def hunt(Client: Instance) -> bool:
     ):
         Client.log(
             "DEBUG",
-            "User does not have item `hunting rifle`. Buying hunting rifle now.",
+            "Account does not have item `hunting rifle`. Buying hunting rifle now.",
         )
 
         # ...if autobuy is enabled...

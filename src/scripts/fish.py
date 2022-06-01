@@ -45,7 +45,7 @@ def fish(Client: Instance) -> bool:
     ):
         Client.log(
             "DEBUG",
-            "User does not have item `fishing pole`. Buying fishing pole now.",
+            "Account does not have item `fishing pole`. Buying fishing pole now.",
         )
 
         # ...if autobuy is enabled...

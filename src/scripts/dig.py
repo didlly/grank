@@ -24,7 +24,7 @@ def dig(Client: Instance) -> bool:
         latest_message["content"]
         == "You don't have a shovel, you need to go buy one. I'd hate to let you dig with your bare hands."
     ):
-        Client.log("DEBUG", "User does not have item `shovel`. Buying shovel now.")
+        Client.log("DEBUG", "Account does not have item `shovel`. Buying shovel now.")
 
         # ...if autobuy is enabled...
         if (

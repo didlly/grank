@@ -42,7 +42,7 @@ def stream(Client: Instance) -> bool:
             if not has_item(Client, "keyboard"):
                 Client.log(
                     "DEBUG",
-                    "User does not have item `keyboard`. Buying keyboard now.",
+                    "Account does not have item `keyboard`. Buying keyboard now.",
                 )
 
                 # ...if autobuy is enabled...
@@ -65,7 +65,7 @@ def stream(Client: Instance) -> bool:
             # ...if the account does not have a `mouse`...
             if not has_item(Client, "mouse"):
                 Client.log(
-                    "DEBUG", "User does not have item `mouse`. Buying mouse now."
+                    "DEBUG", "Account does not have item `mouse`. Buying mouse now."
                 )
 
                 # ...if autobuy is enabled...

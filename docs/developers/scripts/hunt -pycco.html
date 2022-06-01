@@ -160,8 +160,8 @@ bool: Indicates whether the command ran successfully or not
       <div class="highlight">
        <pre>            <span class="n">level</span> <span class="o">=</span> <span class="p">(</span>
                 <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span>
-                <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-                <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="s2">""</span><span class="p">)</span>
+                <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="o">.</span><span class="n"></span>rstrip</span><span class="p">()</span>
                 <span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"       "</span><span class="p">)</span>
             <span class="p">)</span></pre>
       </div>
@@ -293,7 +293,7 @@ bool: Indicates whether the command ran successfully or not
     <span class="p">):</span>
         <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
             <span class="s2">"DEBUG"</span><span class="p">,</span>
-            <span class="s2">"User does not have item `hunting rifle`. Buying hunting rifle now."</span><span class="p">,</span>
+            <span class="s2">"Account does not have item `hunting rifle`. Buying hunting rifle now."</span><span class="p">,</span>
         <span class="p">)</span></pre>
       </div>
      </div>

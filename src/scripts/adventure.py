@@ -107,7 +107,7 @@ def adventure(Client: Instance) -> bool:
             if "footer" in latest_message["embeds"][0].keys():
                 Client.log(
                     "DEBUG",
-                    "User does not have item `adventure ticket`. Buying adventure ticket now.",
+                    "Account does not have item `adventure ticket`. Buying adventure ticket now.",
                 )
 
                 # ...if autobuy is enabled...
