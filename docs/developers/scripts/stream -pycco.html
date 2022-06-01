@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+   <title>
+    stream.py
+   </title>
+   <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+   <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+  </meta>
+ </head>
+ <body>
+  <div id="container">
+   <div id="background">
+   </div>
+   <div class="section">
+    <div class="docs">
+     <h1>
+      stream.py
+     </h1>
+    </div>
+   </div>
+   <div class="clearall">
+    <div class="section" id="section-0">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-0">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span><span class="p">,</span> <span class="n">randint</span>
+
+<span class="kn">from</span> <span class="nn">instance.Client</span> <span class="kn">import</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">scripts.buy</span> <span class="kn">import</span> <span class="n">buy</span>
+<span class="kn">from</span> <span class="nn">scripts.item</span> <span class="kn">import</span> <span class="n">has_item</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-1">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-1">
+        #
+       </a>
+      </div>
+      <p>
+       The stream function is used to interact with the stream command
+      </p>
+      <p>
+       Args:
+Client (Instance): The Discord client
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the command ran successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">stream</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-2">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-2">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-3">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-3">
+        #
+       </a>
+      </div>
+      <p>
+       Initialise bought_mouse &amp; bought_keyboard to True
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">bought_mouse</span><span class="p">,</span> <span class="n">bought_keyboard</span> <span class="o">=</span> <span class="p">[</span><span class="kc">True</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-4">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-4">
+        #
+       </a>
+      </div>
+      <p>
+       Send the command
+       <code>
+        pls stream
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"pls stream"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-5">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-5">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s response to
+       <code>
+        pls stream
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span><span class="s2">"pls stream"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-6">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-6">
+        #
+       </a>
+      </div>
+      <p>
+       If the stream timed out…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="s2">"You were inactive"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"WARNING"</span><span class="p">,</span> <span class="s2">"Stream ended due to inactivity. Re-starting stream."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-7">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-7">
+        #
+       </a>
+      </div>
+      <p>
+       …get Dank Memer’s next message (the stream timed out and stream controllers messages are separate)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+            <span class="s2">"pls stream"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-8">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-8">
+        #
+       </a>
+      </div>
+      <p>
+       If the response has a
+       <code>
+        description
+       </code>
+       section in the embed…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="s2">"description"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-9">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-9">
+        #
+       </a>
+      </div>
+      <p>
+       …if the
+       <code>
+        description
+       </code>
+       section has
+       <code>
+        keyboard
+       </code>
+       in it…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="s2">"keyboard"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-10">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-10">
+        #
+       </a>
+      </div>
+      <p>
+       …if the account does not have a
+       <code>
+        keyboard
+       </code>
+       …
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="ow">not</span> <span class="n">has_item</span><span class="p">(</span><span class="n">Client</span><span class="p">,</span> <span class="s2">"keyboard"</span><span class="p">):</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                    <span class="s2">"DEBUG"</span><span class="p">,</span>
+                    <span class="s2">"User does not have item `keyboard`. Buying keyboard now."</span><span class="p">,</span>
+                <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-11">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-11">
+        #
+       </a>
+      </div>
+      <p>
+       …if autobuy is enabled…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"auto buy"</span><span class="p">]</span>
+                    <span class="ow">and</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"auto buy"</span><span class="p">][</span><span class="s2">"keyboard"</span><span class="p">]</span>
+                <span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-12">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-12">
+        #
+       </a>
+      </div>
+      <p>
+       …try and buy a
+       <code>
+        keyboard
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">bought_keyboard</span> <span class="o">=</span> <span class="n">buy</span><span class="p">(</span><span class="n">Client</span><span class="p">,</span> <span class="s2">"keyboard"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-13">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-13">
+        #
+       </a>
+      </div>
+      <p>
+       Else…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                        <span class="s2">"WARNING"</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">"A keyboard is required for the command `pls stream`. However, since </span><span class="si">{</span><span class="s1">'autobuy is off for keyboards,'</span> <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">'auto buy'</span><span class="p">][</span><span class="s1">'enabled'</span><span class="p">]</span> <span class="k">else</span> <span class="s1">'auto buy is off for all items,'</span><span class="si">}</span><span class="s2"> the program will not buy one. Aborting command."</span><span class="p">,</span>
+                    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-14">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-14">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-15">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-15">
+        #
+       </a>
+      </div>
+      <p>
+       …if the
+       <code>
+        description
+       </code>
+       section has
+       <code>
+        Mouse
+       </code>
+       in it…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="s2">"mouse"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-16">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-16">
+        #
+       </a>
+      </div>
+      <p>
+       …if the account does not have a
+       <code>
+        mouse
+       </code>
+       …
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="ow">not</span> <span class="n">has_item</span><span class="p">(</span><span class="n">Client</span><span class="p">,</span> <span class="s2">"mouse"</span><span class="p">):</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                    <span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"User does not have item `mouse`. Buying mouse now."</span>
+                <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-17">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-17">
+        #
+       </a>
+      </div>
+      <p>
+       …if autobuy is enabled…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"auto buy"</span><span class="p">]</span>
+                    <span class="ow">and</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"auto buy"</span><span class="p">][</span><span class="s2">"mouse"</span><span class="p">]</span>
+                <span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-18">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-18">
+        #
+       </a>
+      </div>
+      <p>
+       …try and buy a
+       <code>
+        mouse
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">bought_mouse</span> <span class="o">=</span> <span class="n">buy</span><span class="p">(</span><span class="n">Client</span><span class="p">,</span> <span class="s2">"mouse"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-19">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-19">
+        #
+       </a>
+      </div>
+      <p>
+       Else…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                        <span class="s2">"WARNING"</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">"A mouse is required for the command `pls stream`. However, since </span><span class="si">{</span><span class="s1">'autobuy is off for mouses,'</span> <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">'auto buy'</span><span class="p">][</span><span class="s1">'enabled'</span><span class="p">]</span> <span class="k">else</span> <span class="s1">'auto buy is off for all items,'</span><span class="si">}</span><span class="s2"> the program will not buy one. Aborting command."</span><span class="p">,</span>
+                    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-20">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-20">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-21">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-21">
+        #
+       </a>
+      </div>
+      <p>
+       If buying a mouse or keyboard failed…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="ow">not</span> <span class="n">bought_mouse</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">bought_keyboard</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-22">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-22">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-23">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-23">
+        #
+       </a>
+      </div>
+      <p>
+       If there are three buttons on Dank Memer’s response…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-24">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-24">
+        #
+       </a>
+      </div>
+      <p>
+       …if the response has a
+       <code>
+        footer
+       </code>
+       section in the embed…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="s2">"footer"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-25">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-25">
+        #
+       </a>
+      </div>
+      <p>
+       …if the
+       <code>
+        footer
+       </code>
+       section has
+       <code>
+        Wait
+       </code>
+       in it’s text section…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="s2">"Wait"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"footer"</span><span class="p">][</span><span class="s2">"text"</span><span class="p">]:</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Cannot stream yet - awaiting cooldown end."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-26">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-26">
+        #
+       </a>
+      </div>
+      <p>
+       …interact with the
+       <code>
+        End Interaction
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+                    <span class="s2">"pls stream"</span><span class="p">,</span>
+                    <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+                    <span class="n">latest_message</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-27">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-27">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Go Live
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+            <span class="s2">"pls stream"</span><span class="p">,</span>
+            <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+            <span class="n">latest_message</span><span class="p">,</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-28">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-28">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s edited response
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+            <span class="s2">"pls stream"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-29">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-29">
+        #
+       </a>
+      </div>
+      <p>
+       Select a random dropdown item
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">interact_dropdown</span><span class="p">(</span>
+            <span class="s2">"pls stream"</span><span class="p">,</span>
+            <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+            <span class="n">choice</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"options"</span><span class="p">])[</span>
+                <span class="s2">"value"</span>
+            <span class="p">],</span>
+            <span class="n">latest_message</span><span class="p">,</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-30">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-30">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Go Live
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+            <span class="s2">"pls stream"</span><span class="p">,</span>
+            <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+            <span class="n">latest_message</span><span class="p">,</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-31">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-31">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s edited response
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+        <span class="s2">"pls stream"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-32">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-32">
+        #
+       </a>
+      </div>
+      <p>
+       If the wrong latest message was retreived…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="s2">"fields"</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-33">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-33">
+        #
+       </a>
+      </div>
+      <p>
+       …get the correct latest message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">fallback_retreive_message</span><span class="p">(</span><span class="s2">"pls stream"</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"fields"</span><span class="p">])</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-34">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-34">
+        #
+       </a>
+      </div>
+      <p>
+       …get the correct latest message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">fallback_retreive_message</span><span class="p">(</span><span class="s2">"pls stream"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-35">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-35">
+        #
+       </a>
+      </div>
+      <p>
+       If the stream has sponsers, and the config allows running ads on stream…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="p">(</span>
+        <span class="nb">int</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"fields"</span><span class="p">][</span><span class="mi">5</span><span class="p">][</span><span class="s2">"value"</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"`"</span><span class="p">,</span> <span class="s2">""</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span>
+        <span class="ow">and</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"stream"</span><span class="p">][</span><span class="s2">"ads"</span><span class="p">]</span>
+    <span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-36">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-36">
+        #
+       </a>
+      </div>
+      <p>
+       …run an ad
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+            <span class="s2">"pls stream"</span><span class="p">,</span>
+            <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+            <span class="n">latest_message</span><span class="p">,</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-37">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-37">
+        #
+       </a>
+      </div>
+      <p>
+       Else…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">else</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-38">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-38">
+        #
+       </a>
+      </div>
+      <p>
+       Choose a button that abides by the config
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">button</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"stream"</span><span class="p">][</span><span class="s2">"chat"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"stream"</span><span class="p">][</span><span class="s2">"donations"</span><span class="p">]</span>
+            <span class="k">else</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"stream"</span><span class="p">][</span><span class="s2">"chat"</span><span class="p">]</span>
+            <span class="k">else</span> <span class="mi">2</span>
+            <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"stream"</span><span class="p">][</span><span class="s2">"donations"</span><span class="p">]</span>
+            <span class="k">else</span> <span class="kc">None</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-39">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-39">
+        #
+       </a>
+      </div>
+      <p>
+       If no button abides by the config…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="n">button</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-40">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-40">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-41">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-41">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+            <span class="s2">"pls stream"</span><span class="p">,</span>
+            <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="n">button</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+            <span class="n">latest_message</span><span class="p">,</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-42">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-42">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        End Interaction
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+        <span class="s2">"pls stream"</span><span class="p">,</span>
+        <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+        <span class="n">latest_message</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+
+</pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

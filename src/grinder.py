@@ -1,7 +1,14 @@
+"""
+The `grinder.py` file controls the grinding process for the account. It is the only file that is not commented (apart from `/src/discord/Gateway.py`) due to its large size. It calls the subprograms that run commands, as well as organising the custom commands.
+"""
+
 from datetime import datetime
 from sys import exc_info
 from time import sleep
+from typing import Optional
 
+from discord.UserInfo import user_info
+from instance.Client import Instance
 from scripts.adventure import adventure
 from scripts.beg import beg
 from scripts.blackjack import blackjack
@@ -24,7 +31,79 @@ from scripts.work import work
 from utils.Shared import data
 
 
-def grind(Client):
+def grind(Client: Instance, log: bool = False) -> Optional[bool]:
+    last_db_update = datetime.now()
+
+    if Client.Repository.config["auto trade"]["enabled"]:
+        if user_info(Client.Repository.config["auto trade"]["trader token"]) is None:
+            Client.webhook_send(
+                {
+                    "embeds": [
+                        {
+                            "title": "Error!",
+                            "description": "The grinder **cannot start** since an **invalid trader token** has been set!",
+                            "color": 16711680,
+                            "footer": {
+                                "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                                "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                            },
+                        }
+                    ],
+                    "username": "Grank",
+                    "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                    "attachments": [],
+                },
+                "The grinder **cannot start** since an **invalid trader token** has been set!",
+            )
+            return False
+
+        Client.trader_token_session_id = __import__("discord.Gateway").Gateway.gateway(
+            Client.Repository.config["auto trade"]["trader token"]
+        )
+
+    if log:
+        Client.webhook_send(
+            {
+                "embeds": [
+                    {
+                        "title": "Success!",
+                        "description": f"The grinder has **successfully started** in this channel!",
+                        "color": 65423,
+                        "footer": {
+                            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+                        },
+                    },
+                ],
+                "username": "Grank",
+                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+                "attachments": [],
+            },
+            "The grinder has **successfully started** in this channel!",
+        )
+
+        Client.webhook_log(
+            {
+                "content": None,
+                "embeds": [
+                    {
+                        "title": "Grinder started",
+                        "description": f"The grinder started in the channel <#{Client.channel_id}> (**`{Client.channel_id}`**).",
+                        "color": 14159511,
+                        "footer": {
+                            "text": Client.username,
+                            "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
+                        },
+                        "timestamp": datetime.now().strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                    }
+                ],
+                "attachments": [],
+                "attachments": [],
+                "username": "Grank",
+                "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
+            }
+        )
+
     if Client.Repository.database["confirmations"] == "False":
         try:
             Client.send_message("pls settings confirmations nah")
@@ -822,26 +901,14 @@ def grind(Client):
                 if Client.Repository.config["cooldowns"]["commands"]["enabled"]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
+        if (datetime.now() - last_db_update).total_seconds() > 10:
+            Client._update()
+            last_db_update = datetime.now()
+
         while (
             not data[Client.username]
             or not data["channels"][Client.channel_id][Client.token]
         ):
             if not data["channels"][Client.channel_id][Client.token]:
-                Client.Repository.info["stats"]["commands_ran"] = (
-                    Client.lifetime_commands_ran
-                    + data["stats"][Client.token]["commands_ran"]
-                )
-                Client.Repository.info["stats"]["buttons_clicked"] = (
-                    Client.lifetime_buttons_clicked
-                    + data["stats"][Client.token]["buttons_clicked"]
-                )
-                Client.Repository.info["stats"]["dropdowns_selected"] = (
-                    Client.lifetime_dropdowns_selected
-                    + data["stats"][Client.token]["dropdowns_selected"]
-                )
-                Client.Repository.info["stats"]["coins_gained"] = (
-                    Client.lifetime_coins_gained
-                    + data["stats"][Client.token]["coins_gained"]
-                )
-                Client.Repository.info_write()
+                Client._update()
                 return

@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, minimum-scale=1" name="viewport">
+   <meta content="pdoc 0.10.0" name="generator"/>
+   <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+   <title>
+    src.utils.Requests API documentation
+   </title>
+   <meta content="NOTE: This is an edited version of `thttp` (https://github.com/sesh/thttp)." name="description"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" rel="preload stylesheet"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" rel="preload stylesheet"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" rel="stylesheet preload"/>
+   <style>
+    :root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}
+   </style>
+   <style media="screen and (min-width: 700px)">
+    @media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}
+   </style>
+   <style media="print">
+    @media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}
+   </style>
+   <script crossorigin="" defer="" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js">
+   </script>
+   <script>
+    window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())
+   </script>
+  </meta>
+ </head>
+ <body>
+  <main>
+   <article id="content">
+    <header>
+     <h1 class="title">
+      Module
+      <code>
+       src.utils.Requests
+      </code>
+     </h1>
+    </header>
+    <section id="section-intro">
+     <p>
+      NOTE: This is an edited version of
+      <code>
+       thttp
+      </code>
+      (
+      <a href="https://github.com/sesh/thttp">
+       https://github.com/sesh/thttp
+      </a>
+      ).
+     </p>
+     <details class="source">
+      <summary>
+       <span>
+        Expand source code
+       </span>
+      </summary>
+      <pre><code class="python">"""
+NOTE: This is an edited version of `thttp` (https://github.com/sesh/thttp).
+"""
+
+from base64 import b64encode
+from collections import namedtuple
+from contextlib import suppress
+from gzip import decompress
+from http.cookiejar import CookieJar
+from json import dumps, loads
+from json.decoder import JSONDecodeError
+from ssl import CERT_NONE, create_default_context
+from typing import Optional
+from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
+from urllib.request import (
+    HTTPCookieProcessor,
+    HTTPRedirectHandler,
+    HTTPSHandler,
+    Request,
+    build_opener,
+)
+
+from utils.Logger import log
+
+Response = namedtuple(
+    "Response", "request content json status_code url headers cookiejar"
+)
+
+
+class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None
+
+
+def request(
+    url: str,
+    params: dict = {},
+    json: Optional[dict] = None,
+    data: Optional[str] = None,
+    headers: dict = {},
+    method: str = "GET",
+    verify: bool = False,
+    redirect: bool = True,
+    cookiejar: Optional[CookieJar] = None,
+    basic_auth: Optional[str] = None,
+    timeout: int = 60,
+):
+    """
+    The request function is used to make a request to the specified URL.
+
+    Args:
+        url (str): The url of the page the request will be sent to
+        params (dict) = {}: The query parameters
+        json (Optional[dict]) = None: The json payload (or None if there is none)
+        data (Optional[str]) = None: The string payload (or None if there is none)
+        headers (dict) = {}: The headers for the request
+        method (str) = "GET": The request method
+        verify (bool) = False: Whether or not to ignore ssl errors
+        redirect (bool) = True: Whether or not to follow redirects
+        cookiejar (Optional[CookieJar]) = None: Cookie container
+        basic_auth (Optional[str]) = None: A username and password to be sent with the request (or None if there is none)
+        timeout (int) = 60: A timeout for the request
+
+    Returns:
+        A tuple of status code, response content and the final url
+    """
+
+    # Make the method uppercase
+    method = method.upper()
+
+    # Add a legitimate `User-Agent` header so Discord doesn't block us
+    headers[
+        "User-Agent"
+    ] = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7"
+
+    # Make all headers lowercase
+    headers = {k.lower(): v for k, v in headers.items()}
+
+    # If there are query parameters...
+    if params:
+        # ..add them onto the end of the URL
+        url += f"?{urlencode(params)}"
+
+    # If a json and data payload have both been provided...
+    if json and data:
+        # ...raise an Exception
+        raise Exception("Cannot provide both json and data parameters")
+
+    # If json / data is provided and the method isn't `POST` or `PATCH` or `PUT`...
+    if method not in ["POST", "PATCH", "PUT"] and (json or data):
+        # ...raise an Exception
+        raise Exception(
+            "Request method must POST, PATCH or PUT if json or data is provided"
+        )
+
+    # If a json payload was supplied...
+    if json:
+        # ...add the json header to the request
+        headers["content-type"] = "application/json"
+
+        # Convert the json into a string and encode it in `utf-8`
+        data = dumps(json).encode("utf-8")
+    # Else if a data payload was supplied...
+    elif data:
+        # ...encode the data
+        data = urlencode(data).encode()
+
+    # If basic_auth is set to True and a username and password have been supplied...
+    if basic_auth and len(basic_auth) == 2 and "authorization" not in headers:
+        # ...unpack the username and password from the variable basic_auth
+        username, password = basic_auth
+
+        # Add the username and password to the headers
+        headers[
+            "authorization"
+        ] = f'Basic {b64encode(f"{username}:{password}".encode()).decode("ascii")}'
+
+    # If a cookiejar wasn't supplied...
+    if not cookiejar:
+        # ...create a new one
+        cookiejar = CookieJar()
+
+    # Create a SSLContext object and assign it to the variable ctx
+    ctx = create_default_context()
+
+    # If verify is set to False...
+    if not verify:
+        # Disable checking the hostname on request send
+        ctx.check_hostname = False
+
+        # Disable verify the request with a certificate
+        ctx.verify_mode = CERT_NONE
+
+    # Initialize handlers to an empty list
+    handlers = []
+
+    # Append a HTTPSHandler class to handlers
+    handlers.append(HTTPSHandler(context=ctx))
+
+    # Append a HTTPCookiePorcessor class to handlers
+    handlers.append(HTTPCookieProcessor(cookiejar=cookiejar))
+
+    # If redirecting is disabled...
+    if not redirect:
+        # ...append a NoRedirect class to handlers
+        handlers.append(NoRedirect())
+
+    # Create an opener object
+    opener = build_opener(*handlers)
+
+    # Initialize the request
+    req = Request(url, data=data, headers=headers, method=method)
+
+    try:
+        # Open the request...
+        with opener.open(req, timeout=timeout) as resp:
+            # ...unpack the response status code, content etc.
+            status_code, content, resp_url = (
+                resp.getcode(),
+                resp.read().decode(),
+                resp.geturl(),
+            )
+
+            # Get the response headers
+            headers = {k.lower(): v for k, v in list(resp.info().items())}
+
+            # If gzip is in the request headers...
+            if "gzip" in headers.get("content-encoding", ""):
+                # ...decompress the content using gzip
+                content = decompress(content).decode()
+
+            # Parse the json response if there is one
+            json = (
+                loads(content)
+                if "application/json" in headers.get("content-type", "").lower()
+                and content
+                else None
+            )
+    # ...except HTTPError...
+    except HTTPError as e:
+        # ...unpack the response status code, content etc.
+        status_code, content, resp_url = (e.code, e.read().decode(), e.geturl())
+
+        # Get the response headers
+        headers = {k.lower(): v for k, v in list(e.headers.items())}
+
+        # If gzip is in the request headers...
+        if "gzip" in headers.get("content-encoding", ""):
+            # ...decompress the content using gzip
+            content = decompress(content).decode()
+
+        # Parse the json response if there is one
+        json = (
+            loads(content)
+            if "application/json" in headers.get("content-type", "").lower() and content
+            else None
+        )
+    # ...except URLError (no WiFi connection)...
+    except URLError:
+        # ...tell the user of ;-)
+        log(
+            None,
+            "ERROR",
+            "In case you didn't realise, Sherlock, you need an internet connection to run Grank ;-).",
+        )
+
+    # ...suppress a JSONDecodeError...
+    with suppress(JSONDecodeError):
+        # ...parse the response as json if possible
+        content = loads(content)
+
+    # Return the tuple of request, content etc.
+    return Response(req, content, json, status_code, resp_url, headers, cookiejar)</code></pre>
+     </details>
+    </section>
+    <section>
+    </section>
+    <section>
+    </section>
+    <section>
+     <h2 class="section-title" id="header-functions">
+      Functions
+     </h2>
+     <dl>
+      <dt id="src.utils.Requests.request">
+       <code class="name flex">
+        <span>
+         def
+         <span class="ident">
+          request
+         </span>
+        </span>
+        (
+        <span>
+         url: str, params: dict = {}, json: Optional[dict] = None, data: Optional[str] = None, headers: dict = {}, method: str = 'GET', verify: bool = False, redirect: bool = True, cookiejar: Optional[http.cookiejar.CookieJar] = None, basic_auth: Optional[str] = None, timeout: int = 60)
+        </span>
+       </code>
+      </dt>
+      <dd>
+       <div class="desc">
+        <p>
+         The request function is used to make a request to the specified URL.
+        </p>
+        <h2 id="args">
+         Args
+        </h2>
+        <dl>
+         <dt>
+          <strong>
+           <code>
+            url
+           </code>
+          </strong>
+          :
+          <code>
+           str
+          </code>
+         </dt>
+         <dd>
+          The url of the page the request will be sent to
+         </dd>
+        </dl>
+        <p>
+         params (dict) = {}: The query parameters
+json (Optional[dict]) = None: The json payload (or None if there is none)
+data (Optional[str]) = None: The string payload (or None if there is none)
+headers (dict) = {}: The headers for the request
+method (str) = "GET": The request method
+verify (bool) = False: Whether or not to ignore ssl errors
+redirect (bool) = True: Whether or not to follow redirects
+cookiejar (Optional[CookieJar]) = None: Cookie container
+basic_auth (Optional[str]) = None: A username and password to be sent with the request (or None if there is none)
+timeout (int) = 60: A timeout for the request
+        </p>
+        <h2 id="returns">
+         Returns
+        </h2>
+        <p>
+         A tuple of status code, response content and the final url
+        </p>
+       </div>
+       <details class="source">
+        <summary>
+         <span>
+          Expand source code
+         </span>
+        </summary>
+        <pre><code class="python">def request(
+    url: str,
+    params: dict = {},
+    json: Optional[dict] = None,
+    data: Optional[str] = None,
+    headers: dict = {},
+    method: str = "GET",
+    verify: bool = False,
+    redirect: bool = True,
+    cookiejar: Optional[CookieJar] = None,
+    basic_auth: Optional[str] = None,
+    timeout: int = 60,
+):
+    """
+    The request function is used to make a request to the specified URL.
+
+    Args:
+        url (str): The url of the page the request will be sent to
+        params (dict) = {}: The query parameters
+        json (Optional[dict]) = None: The json payload (or None if there is none)
+        data (Optional[str]) = None: The string payload (or None if there is none)
+        headers (dict) = {}: The headers for the request
+        method (str) = "GET": The request method
+        verify (bool) = False: Whether or not to ignore ssl errors
+        redirect (bool) = True: Whether or not to follow redirects
+        cookiejar (Optional[CookieJar]) = None: Cookie container
+        basic_auth (Optional[str]) = None: A username and password to be sent with the request (or None if there is none)
+        timeout (int) = 60: A timeout for the request
+
+    Returns:
+        A tuple of status code, response content and the final url
+    """
+
+    # Make the method uppercase
+    method = method.upper()
+
+    # Add a legitimate `User-Agent` header so Discord doesn't block us
+    headers[
+        "User-Agent"
+    ] = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7"
+
+    # Make all headers lowercase
+    headers = {k.lower(): v for k, v in headers.items()}
+
+    # If there are query parameters...
+    if params:
+        # ..add them onto the end of the URL
+        url += f"?{urlencode(params)}"
+
+    # If a json and data payload have both been provided...
+    if json and data:
+        # ...raise an Exception
+        raise Exception("Cannot provide both json and data parameters")
+
+    # If json / data is provided and the method isn't `POST` or `PATCH` or `PUT`...
+    if method not in ["POST", "PATCH", "PUT"] and (json or data):
+        # ...raise an Exception
+        raise Exception(
+            "Request method must POST, PATCH or PUT if json or data is provided"
+        )
+
+    # If a json payload was supplied...
+    if json:
+        # ...add the json header to the request
+        headers["content-type"] = "application/json"
+
+        # Convert the json into a string and encode it in `utf-8`
+        data = dumps(json).encode("utf-8")
+    # Else if a data payload was supplied...
+    elif data:
+        # ...encode the data
+        data = urlencode(data).encode()
+
+    # If basic_auth is set to True and a username and password have been supplied...
+    if basic_auth and len(basic_auth) == 2 and "authorization" not in headers:
+        # ...unpack the username and password from the variable basic_auth
+        username, password = basic_auth
+
+        # Add the username and password to the headers
+        headers[
+            "authorization"
+        ] = f'Basic {b64encode(f"{username}:{password}".encode()).decode("ascii")}'
+
+    # If a cookiejar wasn't supplied...
+    if not cookiejar:
+        # ...create a new one
+        cookiejar = CookieJar()
+
+    # Create a SSLContext object and assign it to the variable ctx
+    ctx = create_default_context()
+
+    # If verify is set to False...
+    if not verify:
+        # Disable checking the hostname on request send
+        ctx.check_hostname = False
+
+        # Disable verify the request with a certificate
+        ctx.verify_mode = CERT_NONE
+
+    # Initialize handlers to an empty list
+    handlers = []
+
+    # Append a HTTPSHandler class to handlers
+    handlers.append(HTTPSHandler(context=ctx))
+
+    # Append a HTTPCookiePorcessor class to handlers
+    handlers.append(HTTPCookieProcessor(cookiejar=cookiejar))
+
+    # If redirecting is disabled...
+    if not redirect:
+        # ...append a NoRedirect class to handlers
+        handlers.append(NoRedirect())
+
+    # Create an opener object
+    opener = build_opener(*handlers)
+
+    # Initialize the request
+    req = Request(url, data=data, headers=headers, method=method)
+
+    try:
+        # Open the request...
+        with opener.open(req, timeout=timeout) as resp:
+            # ...unpack the response status code, content etc.
+            status_code, content, resp_url = (
+                resp.getcode(),
+                resp.read().decode(),
+                resp.geturl(),
+            )
+
+            # Get the response headers
+            headers = {k.lower(): v for k, v in list(resp.info().items())}
+
+            # If gzip is in the request headers...
+            if "gzip" in headers.get("content-encoding", ""):
+                # ...decompress the content using gzip
+                content = decompress(content).decode()
+
+            # Parse the json response if there is one
+            json = (
+                loads(content)
+                if "application/json" in headers.get("content-type", "").lower()
+                and content
+                else None
+            )
+    # ...except HTTPError...
+    except HTTPError as e:
+        # ...unpack the response status code, content etc.
+        status_code, content, resp_url = (e.code, e.read().decode(), e.geturl())
+
+        # Get the response headers
+        headers = {k.lower(): v for k, v in list(e.headers.items())}
+
+        # If gzip is in the request headers...
+        if "gzip" in headers.get("content-encoding", ""):
+            # ...decompress the content using gzip
+            content = decompress(content).decode()
+
+        # Parse the json response if there is one
+        json = (
+            loads(content)
+            if "application/json" in headers.get("content-type", "").lower() and content
+            else None
+        )
+    # ...except URLError (no WiFi connection)...
+    except URLError:
+        # ...tell the user of ;-)
+        log(
+            None,
+            "ERROR",
+            "In case you didn't realise, Sherlock, you need an internet connection to run Grank ;-).",
+        )
+
+    # ...suppress a JSONDecodeError...
+    with suppress(JSONDecodeError):
+        # ...parse the response as json if possible
+        content = loads(content)
+
+    # Return the tuple of request, content etc.
+    return Response(req, content, json, status_code, resp_url, headers, cookiejar)</code></pre>
+       </details>
+      </dd>
+     </dl>
+    </section>
+    <section>
+     <h2 class="section-title" id="header-classes">
+      Classes
+     </h2>
+     <dl>
+      <dt id="src.utils.Requests.NoRedirect">
+       <code class="flex name class">
+        <span>
+         class
+         <span class="ident">
+          NoRedirect
+         </span>
+        </span>
+       </code>
+      </dt>
+      <dd>
+       <div class="desc">
+       </div>
+       <details class="source">
+        <summary>
+         <span>
+          Expand source code
+         </span>
+        </summary>
+        <pre><code class="python">class NoRedirect(HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        return None</code></pre>
+       </details>
+       <h3>
+        Ancestors
+       </h3>
+       <ul class="hlist">
+        <li>
+         urllib.request.HTTPRedirectHandler
+        </li>
+        <li>
+         urllib.request.BaseHandler
+        </li>
+       </ul>
+       <h3>
+        Methods
+       </h3>
+       <dl>
+        <dt id="src.utils.Requests.NoRedirect.redirect_request">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            redirect_request
+           </span>
+          </span>
+          (
+          <span>
+           self, req, fp, code, msg, headers, newurl)
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           Return a Request or None in response to a redirect.
+          </p>
+          <p>
+           This is called by the http_error_30x methods when a
+redirection response is received.
+If a redirection should
+take place, return a new Request to allow http_error_30x to
+perform the redirect.
+Otherwise, raise HTTPError if no-one
+else should try to handle this url.
+Return None if you can't
+but another Handler might.
+          </p>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def redirect_request(self, req, fp, code, msg, headers, newurl):
+    return None</code></pre>
+         </details>
+        </dd>
+       </dl>
+      </dd>
+      <dt id="src.utils.Requests.Response">
+       <code class="flex name class">
+        <span>
+         class
+         <span class="ident">
+          Response
+         </span>
+        </span>
+        <span>
+         (
+        </span>
+        <span>
+         request, content, json, status_code, url, headers, cookiejar)
+        </span>
+       </code>
+      </dt>
+      <dd>
+       <div class="desc">
+        <p>
+         Response(request, content, json, status_code, url, headers, cookiejar)
+        </p>
+       </div>
+       <h3>
+        Ancestors
+       </h3>
+       <ul class="hlist">
+        <li>
+         builtins.tuple
+        </li>
+       </ul>
+       <h3>
+        Instance variables
+       </h3>
+       <dl>
+        <dt id="src.utils.Requests.Response.content">
+         <code class="name">
+          var
+          <span class="ident">
+           content
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           Alias for field number 1
+          </p>
+         </div>
+        </dd>
+        <dt id="src.utils.Requests.Response.cookiejar">
+         <code class="name">
+          var
+          <span class="ident">
+           cookiejar
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           Alias for field number 6
+          </p>
+         </div>
+        </dd>
+        <dt id="src.utils.Requests.Response.headers">
+         <code class="name">
+          var
+          <span class="ident">
+           headers
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           Alias for field number 5
+          </p>
+         </div>
+        </dd>
+        <dt id="src.utils.Requests.Response.json">
+         <code class="name">
+          var
+          <span class="ident">
+           json
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           Alias for field number 2
+          </p>
+         </div>
+        </dd>
+        <dt id="src.utils.Requests.Response.request">
+         <code class="name">
+          var
+          <span class="ident">
+           request
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           Alias for field number 0
+          </p>
+         </div>
+        </dd>
+        <dt id="src.utils.Requests.Response.status_code">
+         <code class="name">
+          var
+          <span class="ident">
+           status_code
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           Alias for field number 3
+          </p>
+         </div>
+        </dd>
+        <dt id="src.utils.Requests.Response.url">
+         <code class="name">
+          var
+          <span class="ident">
+           url
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           Alias for field number 4
+          </p>
+         </div>
+        </dd>
+       </dl>
+      </dd>
+     </dl>
+    </section>
+   </article>
+   <nav id="sidebar">
+    <h1>
+     Index
+    </h1>
+    <div class="toc">
+     <ul>
+     </ul>
+    </div>
+    <ul id="index">
+     <li>
+      <h3>
+       Super-module
+      </h3>
+      <ul>
+       <li>
+        <code>
+         <a href="index.html" title="src.utils">
+          src.utils
+         </a>
+        </code>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <h3>
+       <a href="#header-functions">
+        Functions
+       </a>
+      </h3>
+      <ul class="">
+       <li>
+        <code>
+         <a href="#src.utils.Requests.request" title="src.utils.Requests.request">
+          request
+         </a>
+        </code>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <h3>
+       <a href="#header-classes">
+        Classes
+       </a>
+      </h3>
+      <ul>
+       <li>
+        <h4>
+         <code>
+          <a href="#src.utils.Requests.NoRedirect" title="src.utils.Requests.NoRedirect">
+           NoRedirect
+          </a>
+         </code>
+        </h4>
+        <ul class="">
+         <li>
+          <code>
+           <a href="#src.utils.Requests.NoRedirect.redirect_request" title="src.utils.Requests.NoRedirect.redirect_request">
+            redirect_request
+           </a>
+          </code>
+         </li>
+        </ul>
+       </li>
+       <li>
+        <h4>
+         <code>
+          <a href="#src.utils.Requests.Response" title="src.utils.Requests.Response">
+           Response
+          </a>
+         </code>
+        </h4>
+        <ul class="two-column">
+         <li>
+          <code>
+           <a href="#src.utils.Requests.Response.content" title="src.utils.Requests.Response.content">
+            content
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.utils.Requests.Response.cookiejar" title="src.utils.Requests.Response.cookiejar">
+            cookiejar
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.utils.Requests.Response.headers" title="src.utils.Requests.Response.headers">
+            headers
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.utils.Requests.Response.json" title="src.utils.Requests.Response.json">
+            json
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.utils.Requests.Response.request" title="src.utils.Requests.Response.request">
+            request
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.utils.Requests.Response.status_code" title="src.utils.Requests.Response.status_code">
+            status_code
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.utils.Requests.Response.url" title="src.utils.Requests.Response.url">
+            url
+           </a>
+          </code>
+         </li>
+        </ul>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </nav>
+  </main>
+  <footer id="footer">
+   <p>
+    <a href="Requests -pycco.html" target="_blank">
+     View full code
+    </a>
+    - Generated by
+    <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator">
+     <cite>
+      pdoc
+     </cite>
+     0.10.0
+    </a>
+    .
+   </p>
+  </footer>
+ </body>
+</html>

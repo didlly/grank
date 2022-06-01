@@ -1,0 +1,3333 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Handler.py
+  </title>
+  <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+  <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div id="container">
+   <div id="background">
+   </div>
+   <div class="section">
+    <div class="docs">
+     <h1>
+      Handler.py
+     </h1>
+    </div>
+   </div>
+   <div class="clearall">
+    <div class="section" id="section-0">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-0">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span></span><span class="kn">from</span> <span class="nn">contextlib</span> <span class="kn">import</span> <span class="n">suppress</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span><span class="p">,</span> <span class="n">loads</span>
+<span class="kn">from</span> <span class="nn">json.decoder</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span><span class="p">,</span> <span class="n">mkdir</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">isdir</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span> <span class="nn">utils.Yaml</span>
+<span class="kn">from</span> <span class="nn">discord.UserInfo</span> <span class="kn">import</span> <span class="n">user_info</span>
+<span class="kn">from</span> <span class="nn">instance.Client</span> <span class="kn">import</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">instance.Exceptions</span> <span class="kn">import</span> <span class="n">ExistingUserID</span><span class="p">,</span> <span class="n">IDNotFound</span><span class="p">,</span> <span class="n">InvalidUserID</span>
+<span class="kn">from</span> <span class="nn">utils.Converter</span> <span class="kn">import</span> <span class="n">DictToClass</span>
+<span class="kn">from</span> <span class="nn">utils.Merge</span> <span class="kn">import</span> <span class="n">merge</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-1">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-1">
+        #
+       </a>
+      </div>
+      <p>
+       The create_config function creates a config file for the specified account.
+      </p>
+      <p>
+       Args:
+cwd (str): The current working directory
+folder (int): The name of the account’s folder
+      </p>
+      <p>
+       Returns:
+A tuple of the config file and the parsed config
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">create_config</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-2">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-2">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-3">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-3">
+        #
+       </a>
+      </div>
+      <p>
+       Open the config template file…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/templates/config.yml"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_template_file</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-4">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-4">
+        #
+       </a>
+      </div>
+      <p>
+       …and read the config template from it
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">config_template</span> <span class="o">=</span> <span class="n">config_template_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileExistsError</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-5">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-5">
+        #
+       </a>
+      </div>
+      <p>
+       Create the config file, and suppress the FileExistsError if it occurs
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/config.yml"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-6">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-6">
+        #
+       </a>
+      </div>
+      <p>
+       Re-open the config file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/config.yml"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-7">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-7">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the config file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-8">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-8">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the config file after the cursor (i.e, delete the contents of the config file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-9">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-9">
+        #
+       </a>
+      </div>
+      <p>
+       Write the config template to the config file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">config_template</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-10">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-10">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the config file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-11">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-11">
+        #
+       </a>
+      </div>
+      <p>
+       Return the config file and the parsed config
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">return</span> <span class="n">config_file</span><span class="p">,</span> <span class="n">utils</span><span class="o">.</span><span class="n">Yaml</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">config_template</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-12">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-12">
+        #
+       </a>
+      </div>
+      <p>
+       The rebuild_config function is used to rebuild the config file for the specified account.
+      </p>
+      <p>
+       Args:
+cwd (str): The current working directory of the program
+folder (int): The name of the account’s folder
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the subprogram executed successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">rebuild_config</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-13">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-13">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-14">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-14">
+        #
+       </a>
+      </div>
+      <p>
+       Open the config template file…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/templates/config.yml"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">config_template_file</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-15">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-15">
+        #
+       </a>
+      </div>
+      <p>
+       …and read the config template from it
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">config_template</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">Yaml</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">config_template_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileExistsError</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-16">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-16">
+        #
+       </a>
+      </div>
+      <p>
+       Create the config file, and suppress the FileExistsError if it occurs
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/config.yml"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-17">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-17">
+        #
+       </a>
+      </div>
+      <p>
+       Re-open the config file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/config.yml"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-18">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-18">
+        #
+       </a>
+      </div>
+      <p>
+       Parse the contents of the config file into a dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">config</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">Yaml</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">config_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-19">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-19">
+        #
+       </a>
+      </div>
+      <p>
+       If there is an error while parsing, an Exception would be raised, which is caught here, and the program will set config to an empty dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">config</span> <span class="o">=</span> <span class="p">{}</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-20">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-20">
+        #
+       </a>
+      </div>
+      <p>
+       Merge the config and config template
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">config_template</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-21">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-21">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the config file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-22">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-22">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the config file after the cursor (i.e, delete the contents of the config file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-23">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-23">
+        #
+       </a>
+      </div>
+      <p>
+       Write the config in string form to the config file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">Yaml</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">config</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-24">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-24">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the config file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">config_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-25">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-25">
+        #
+       </a>
+      </div>
+      <p>
+       The create_database function creates a database file for the specified account.
+      </p>
+      <p>
+       Args:
+cwd (str): The current working directory
+folder (int): The name of the account’s folder
+      </p>
+      <p>
+       Returns:
+A tuple of the database file and the parsed database
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">create_database</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-26">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-26">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-27">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-27">
+        #
+       </a>
+      </div>
+      <p>
+       Open the database template file…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/templates/database.json"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">database_template_file</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-28">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-28">
+        #
+       </a>
+      </div>
+      <p>
+       …and read the database template from it
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">database_template</span> <span class="o">=</span> <span class="n">database_template_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileExistsError</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-29">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-29">
+        #
+       </a>
+      </div>
+      <p>
+       Create the database file, and suppress the FileExistsError if it occurs
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/database.json"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-30">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-30">
+        #
+       </a>
+      </div>
+      <p>
+       Re-open the database file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/database.json"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-31">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-31">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the database file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-32">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-32">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the database file after the cursor (i.e, delete the contents of the database file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-33">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-33">
+        #
+       </a>
+      </div>
+      <p>
+       Write the database template to the database file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">database_template</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-34">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-34">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the database file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-35">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-35">
+        #
+       </a>
+      </div>
+      <p>
+       Return the database file and the parsed database
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">return</span> <span class="n">database_file</span><span class="p">,</span> <span class="n">loads</span><span class="p">(</span><span class="n">database_template</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-36">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-36">
+        #
+       </a>
+      </div>
+      <p>
+       The rebuild_database function is used to rebuild the database file for the specified account.
+      </p>
+      <p>
+       Args:
+cwd (str): The current working directory of the program
+folder (int): The name of the account’s folder
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the subprogram executed successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">rebuild_database</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-37">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-37">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-38">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-38">
+        #
+       </a>
+      </div>
+      <p>
+       Open the database template file…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/templates/database.json"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="n">database_template_file</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-39">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-39">
+        #
+       </a>
+      </div>
+      <p>
+       …and read the database template from it
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">database_template</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">database_template_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileExistsError</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-40">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-40">
+        #
+       </a>
+      </div>
+      <p>
+       Create the database file, and suppress the FileExistsError if it occurs
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/database.json"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-41">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-41">
+        #
+       </a>
+      </div>
+      <p>
+       Re-open the database file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/database.json"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-42">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-42">
+        #
+       </a>
+      </div>
+      <p>
+       Parse the contents of the database file into a dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">database</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">database_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-43">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-43">
+        #
+       </a>
+      </div>
+      <p>
+       If there is an error while parsing, a JSONDecodeError would be raised, which is caught here, and the program will set database to an empty dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">database</span> <span class="o">=</span> <span class="p">{}</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-44">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-44">
+        #
+       </a>
+      </div>
+      <p>
+       Merge the database and database template
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">database_template</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-45">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-45">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the database file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-46">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-46">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the database file after the cursor (i.e, delete the contents of the database file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-47">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-47">
+        #
+       </a>
+      </div>
+      <p>
+       Write the database in string from the the database file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">database</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-48">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-48">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the database file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">database_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-49">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-49">
+        #
+       </a>
+      </div>
+      <p>
+       The create_controllers function creates a controllers file for the specified account.
+      </p>
+      <p>
+       Args:
+cwd (str): The current working directory
+account (DictToClass): The account’s data class
+      </p>
+      <p>
+       Returns:
+A tuple of the controllers file and the parsed controllers
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">create_controllers</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">account</span><span class="p">:</span> <span class="n">DictToClass</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-50">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-50">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileExistsError</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-51">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-51">
+        #
+       </a>
+      </div>
+      <p>
+       Create the controllers file, and suppress the FileExistsError if it occurs
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/controllers.json"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">controllers_template</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"controllers"</span><span class="p">:</span> <span class="p">[</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">],</span>
+        <span class="s2">"controllers_info"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"added"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">()),</span>
+                <span class="s2">"added_by"</span><span class="p">:</span> <span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                <span class="s2">"commands"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+    <span class="p">}</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-52">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-52">
+        #
+       </a>
+      </div>
+      <p>
+       Re-open the controllers file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/controllers.json"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-53">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-53">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-54">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-54">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the controllers file after the cursor (i.e, delete the contents of the controllers file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-55">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-55">
+        #
+       </a>
+      </div>
+      <p>
+       Write the controllers template in string form to the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">controllers_template</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-56">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-56">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the controllers file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-57">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-57">
+        #
+       </a>
+      </div>
+      <p>
+       Return the controllers file and the controllers template
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">return</span> <span class="n">controllers_file</span><span class="p">,</span> <span class="n">controllers_template</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-58">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-58">
+        #
+       </a>
+      </div>
+      <p>
+       The rebuild_controllers function is used to rebuild the controllers file for the specified account.
+      </p>
+      <p>
+       Args:
+cwd (str): The current working directory of the program
+folder (int): The name of the account’s folder
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the subprogram executed successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">rebuild_controllers</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-59">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-59">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileExistsError</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-60">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-60">
+        #
+       </a>
+      </div>
+      <p>
+       Create the controllers file, and suppress the FileExistsError if it occurs
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/controllers.json"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-61">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-61">
+        #
+       </a>
+      </div>
+      <p>
+       Re-open the controllers file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/controllers.json"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-62">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-62">
+        #
+       </a>
+      </div>
+      <p>
+       Parse the contents of the controllers file into a dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">controllers</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">controllers_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-63">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-63">
+        #
+       </a>
+      </div>
+      <p>
+       If there is an error while parsing, a JSONDecodeError would be raised, which is caught here, and the program will set controllers to an empty dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">controllers</span> <span class="o">=</span> <span class="p">{}</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-64">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-64">
+        #
+       </a>
+      </div>
+      <p>
+       Merge the controllers &amp; controllers template.
+       <code>
+        folder
+       </code>
+       is being used as it is the same as the account’s ID
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span>
+        <span class="n">controllers</span><span class="p">,</span>
+        <span class="p">{</span>
+            <span class="s2">"controllers"</span><span class="p">:</span> <span class="p">[</span><span class="n">folder</span><span class="p">],</span>
+            <span class="s2">"controllers_info"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="n">folder</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">"added"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">()),</span>
+                    <span class="s2">"added_by"</span><span class="p">:</span> <span class="n">folder</span><span class="p">,</span>
+                    <span class="s2">"commands"</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="p">}</span>
+            <span class="p">},</span>
+        <span class="p">},</span>
+    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-65">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-65">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-66">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-66">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the controllers file after the cursor (i.e, delete the contents of the controllers file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-67">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-67">
+        #
+       </a>
+      </div>
+      <p>
+       Write the controllers in string form the the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">controllers</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-68">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-68">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the controllers file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">controllers_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-69">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-69">
+        #
+       </a>
+      </div>
+      <p>
+       The create_info function creates a info file for the specified account.
+      </p>
+      <p>
+       Args:
+cwd (str): The current working directory
+account (DictToClass): The account’s data class
+      </p>
+      <p>
+       Returns:
+A tuple of the info file and the parsed info
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">create_info</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">account</span><span class="p">:</span> <span class="n">DictToClass</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-70">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-70">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileExistsError</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-71">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-71">
+        #
+       </a>
+      </div>
+      <p>
+       Create the info file, and suppress the FileExistsError if it occurs
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/info.json"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="n">account</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s2">"commands_ran"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">"buttons_clicked"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">"dropdowns_selected"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">"coins_gained"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s2">"items_gained"</span><span class="p">:</span> <span class="p">{},</span>
+    <span class="p">}</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-72">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-72">
+        #
+       </a>
+      </div>
+      <p>
+       Re-open the info file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">account</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/info.json"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-73">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-73">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the info file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-74">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-74">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the info file after the cursor (i.e, delete the contents of the info file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-75">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-75">
+        #
+       </a>
+      </div>
+      <p>
+       Write the account’s class’ dictionary in string form to the info file.
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">account</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-76">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-76">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the info file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-77">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-77">
+        #
+       </a>
+      </div>
+      <p>
+       Return the info file and the account’s class’ dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">return</span> <span class="n">info_file</span><span class="p">,</span> <span class="n">account</span><span class="o">.</span><span class="vm">__dict__</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-78">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-78">
+        #
+       </a>
+      </div>
+      <p>
+       The rebuild_info function is used to rebuild the info file for the specified account.
+      </p>
+      <p>
+       Args:
+cwd (str): The current working directory of the program
+folder (int): The name of the account’s folder
+account (DictToClass): The account’s data class
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the subprogram executed successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">rebuild_info</span><span class="p">(</span><span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">folder</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">account</span><span class="p">:</span> <span class="n">DictToClass</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-79">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-79">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">with</span> <span class="n">suppress</span><span class="p">(</span><span class="ne">FileExistsError</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-80">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-80">
+        #
+       </a>
+      </div>
+      <p>
+       Create the info file, and suppress the FileExistsError if it occurs
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/info.json"</span><span class="p">,</span> <span class="s2">"x"</span><span class="p">)</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-81">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-81">
+        #
+       </a>
+      </div>
+      <p>
+       Re-open the info file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">folder</span><span class="si">}</span><span class="s2">/info.json"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-82">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-82">
+        #
+       </a>
+      </div>
+      <p>
+       Parse the contents of the info file into a dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">info</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="n">info_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+    <span class="k">except</span> <span class="n">JSONDecodeError</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-83">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-83">
+        #
+       </a>
+      </div>
+      <p>
+       If there is an error while parsing, a JSONDecodeError would be raised, which is caught here, and the program will set info to the dictionary version of the account’s data class
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">info</span> <span class="o">=</span> <span class="n">account</span><span class="o">.</span><span class="vm">__dict__</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-84">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-84">
+        #
+       </a>
+      </div>
+      <p>
+       Merge the info and info template
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info</span> <span class="o">=</span> <span class="n">merge</span><span class="p">(</span>
+        <span class="n">info</span><span class="p">,</span>
+        <span class="p">{</span>
+            <span class="s2">"stats"</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">"commands_ran"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"buttons_clicked"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"dropdowns_selected"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"coins_gained"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">"items_gained"</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-85">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-85">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the info file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-86">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-86">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the info file after the cursor (i.e, delete the contents of the info file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-87">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-87">
+        #
+       </a>
+      </div>
+      <p>
+       Write the info in string form to the info file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="n">info</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-88">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-88">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the database file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">info_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-89">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-89">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">class</span> <span class="nc">Database</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-90">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-90">
+        #
+       </a>
+      </div>
+      <p>
+       The
+       <strong>
+        init
+       </strong>
+       function is called when the class is instantiated.
+It initializes all of the variables and sets up any data structures that
+the object will need to use later on. It’s very important to understand
+that every variable defined in this function will be an attribute of every
+instance created from this class.
+      </p>
+      <p>
+       Args:
+self: Gives access to the class’ attributes and methods
+cwd (str): The current working directory of the program
+account (DictToClass) The account’s data class
+Client (Instance): The account’s class for interacting with Discord
+      </p>
+      <p>
+       Returns:
+NoneType:
+       <strong>
+        init
+       </strong>
+       functions for classes aren’t allowed to return anything, don’t ask me why
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">account</span><span class="p">:</span> <span class="n">DictToClass</span><span class="p">,</span> <span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-91">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-91">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-92">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-92">
+        #
+       </a>
+      </div>
+      <p>
+       Copy the Client class into this class
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">Client</span> <span class="o">=</span> <span class="n">Client</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-93">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-93">
+        #
+       </a>
+      </div>
+      <p>
+       If the account already has a database (when getting the list of folders, folders called
+       <code>
+        __pycache__
+       </code>
+       aren’t added)…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="n">obj</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database"</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">isdir</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">obj</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span> <span class="ow">and</span> <span class="n">obj</span> <span class="o">!=</span> <span class="s2">"__pycache__"</span>
+        <span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Found existing database."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-94">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-94">
+        #
+       </a>
+      </div>
+      <p>
+       Open the config file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/config.yml"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-95">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-95">
+        #
+       </a>
+      </div>
+      <p>
+       Parse the contents of the config file into a dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">utils</span><span class="o">.</span><span class="n">Yaml</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-96">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-96">
+        #
+       </a>
+      </div>
+      <p>
+       Open the database file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">database_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/database.json"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-97">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-97">
+        #
+       </a>
+      </div>
+      <p>
+       Parse the contents of the database file into a dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">database_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-98">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-98">
+        #
+       </a>
+      </div>
+      <p>
+       Open the info file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">info_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/info.json"</span><span class="p">,</span> <span class="s2">"r+"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-99">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-99">
+        #
+       </a>
+      </div>
+      <p>
+       Parse the contents of the info file into a dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-100">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-100">
+        #
+       </a>
+      </div>
+      <p>
+       Open the controllers file in read &amp; write mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">controllers_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/controllers.json"</span><span class="p">,</span> <span class="s2">"r+"</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-101">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-101">
+        #
+       </a>
+      </div>
+      <p>
+       Parse the contents of the controllers file into a dictionary
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">controllers</span> <span class="o">=</span> <span class="n">loads</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controllers_file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-102">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-102">
+        #
+       </a>
+      </div>
+      <p>
+       Else…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                <span class="s2">"DEBUG"</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"Database does not exist. Creating database now."</span><span class="p">,</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-103">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-103">
+        #
+       </a>
+      </div>
+      <p>
+       Create a directory for the account
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">mkdir</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">cwd</span><span class="si">}</span><span class="s2">database/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-104">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-104">
+        #
+       </a>
+      </div>
+      <p>
+       Create and parse the config file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">create_config</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">Client</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-105">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-105">
+        #
+       </a>
+      </div>
+      <p>
+       Create and parse the database file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">database_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">database</span> <span class="o">=</span> <span class="n">create_database</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">Client</span><span class="o">.</span><span class="n">id</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-106">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-106">
+        #
+       </a>
+      </div>
+      <p>
+       Create and parse the info file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">info_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">create_info</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">account</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-107">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-107">
+        #
+       </a>
+      </div>
+      <p>
+       Create and parse the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="bp">self</span><span class="o">.</span><span class="n">controllers_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">controllers</span> <span class="o">=</span> <span class="n">create_controllers</span><span class="p">(</span><span class="n">cwd</span><span class="p">,</span> <span class="n">account</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                <span class="s2">"DEBUG"</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"Created database."</span><span class="p">,</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-108">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-108">
+        #
+       </a>
+      </div>
+      <p>
+       The config_write function writes the config dictionary in memory, converted to a string, to it’s file
+      </p>
+      <p>
+       Args:
+self: Access the attributes and methods of the class in python
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the subprogram executed successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">def</span> <span class="nf">config_write</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-109">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-109">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-110">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-110">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the config file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-111">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-111">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the config file after the cursor (i.e, delete the contents of the config file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-112">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-112">
+        #
+       </a>
+      </div>
+      <p>
+       Write the config in string form to the config file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">Yaml</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-113">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-113">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the config file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">config_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-114">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-114">
+        #
+       </a>
+      </div>
+      <p>
+       The database_write function writes the database dictionary in memory, converted to a string, to it’s file
+      </p>
+      <p>
+       Args:
+self: Access the attributes and methods of the class in python
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the subprogram executed successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">def</span> <span class="nf">database_write</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-115">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-115">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-116">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-116">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the database file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">database_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-117">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-117">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the database file after the cursor (i.e, delete the contents of the database file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">database_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-118">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-118">
+        #
+       </a>
+      </div>
+      <p>
+       Write the database in string from the the database file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">database_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">database</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-119">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-119">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the database file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">database_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-120">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-120">
+        #
+       </a>
+      </div>
+      <p>
+       The info_write function writes the info dictionary in memory, converted to a string, to it’s file
+      </p>
+      <p>
+       Args:
+self: Access the attributes and methods of the class in python
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the subprogram executed successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">def</span> <span class="nf">info_write</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-121">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-121">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-122">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-122">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the info file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">info_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-123">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-123">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the info file after the cursor (i.e, delete the contents of the info file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">info_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-124">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-124">
+        #
+       </a>
+      </div>
+      <p>
+       Write the info in string form to the info file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">info_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-125">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-125">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the database file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">info_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-126">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-126">
+        #
+       </a>
+      </div>
+      <p>
+       The controllers_write function writes the controllers dictionary in memory, converted to a string, to it’s file
+      </p>
+      <p>
+       Args:
+self: Access the attributes and methods of the class in python
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the subprogram executed successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">def</span> <span class="nf">controllers_write</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-127">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-127">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-128">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-128">
+        #
+       </a>
+      </div>
+      <p>
+       Move the cursor to the start of the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">controllers_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-129">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-129">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the contents of the controllers file after the cursor (i.e, delete the contents of the controllers file)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">controllers_file</span><span class="o">.</span><span class="n">truncate</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-130">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-130">
+        #
+       </a>
+      </div>
+      <p>
+       Write the controllers in string form the the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">controllers_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">controllers</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">))</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-131">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-131">
+        #
+       </a>
+      </div>
+      <p>
+       Flush all changes to the controllers file to make sure they take effect
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">controllers_file</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-132">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-132">
+        #
+       </a>
+      </div>
+      <p>
+       The database_handler function is used to write and read data from the database.
+The database_handler function takes in a command, an argument, some data, and an ID as arguments.
+If the command is “write” it will write to the database
+      </p>
+      <p>
+       Args:
+self: Access variables that belongs to the class
+command:str: Specify what command is being run
+arg:Optional[str]=None: Tell the user that they do not have to provide an argument
+data:Optional[Union[str: Pass the data to the function
+int]]=None: Specify the id of the user that requested this action
+ID:int=None: Specify the id of the user who is executing the command
+: Specify the command that is being run
+      </p>
+      <p>
+       Returns:
+A tuple containing data indicating whether the subprogram ran successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">def</span> <span class="nf">database_handler</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">arg</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">data</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">ID</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">tuple</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-133">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-133">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-134">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-134">
+        #
+       </a>
+      </div>
+      <p>
+       If the command is
+       <code>
+        write
+       </code>
+       …
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="n">command</span> <span class="o">==</span> <span class="s2">"write"</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-135">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-135">
+        #
+       </a>
+      </div>
+      <p>
+       …if the arg is
+       <code>
+        controller add
+       </code>
+       …
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="n">arg</span> <span class="o">==</span> <span class="s2">"controller add"</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-136">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-136">
+        #
+       </a>
+      </div>
+      <p>
+       …if the ID to add is already in the list of controllers…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">if</span> <span class="n">data</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span><span class="s2">"controllers"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-137">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-137">
+        #
+       </a>
+      </div>
+      <p>
+       …return False and the error message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">return</span> <span class="p">(</span>
+                        <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">ExistingUserID</span><span class="p">,</span>
+                        <span class="s2">"The ID you provided **is already** in the list of controllers for this account."</span><span class="p">,</span>
+                    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-138">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-138">
+        #
+       </a>
+      </div>
+      <p>
+       Get the info about the ID to add
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="n">controllers</span> <span class="o">=</span> <span class="n">user_info</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-139">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-139">
+        #
+       </a>
+      </div>
+      <p>
+       If the ID does not exist
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">if</span> <span class="n">controllers</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-140">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-140">
+        #
+       </a>
+      </div>
+      <p>
+       Initialize the error message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">message</span> <span class="o">=</span> <span class="s2">"The ID you provided does **not belong to any user**."</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-141">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-141">
+        #
+       </a>
+      </div>
+      <p>
+       If the ID contains letters…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">char</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">data</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-142">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-142">
+        #
+       </a>
+      </div>
+      <p>
+       …update the error message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                        <span class="n">message</span> <span class="o">=</span> <span class="s2">"IDs contain **only numbers**. The ID you provided contained **other characters**."</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-143">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-143">
+        #
+       </a>
+      </div>
+      <p>
+       Return False and the error message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">InvalidUserID</span><span class="p">,</span> <span class="n">message</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-144">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-144">
+        #
+       </a>
+      </div>
+      <p>
+       Else…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">else</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-145">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-145">
+        #
+       </a>
+      </div>
+      <p>
+       Add the ID to the list of controllers
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="bp">self</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span><span class="s2">"controllers"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-146">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-146">
+        #
+       </a>
+      </div>
+      <p>
+       Add the information about the time the controller was added etc. to the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="bp">self</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span><span class="s2">"controllers_info"</span><span class="p">][</span><span class="n">data</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                        <span class="s2">"added"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">()),</span>
+                        <span class="s2">"added_by"</span><span class="p">:</span> <span class="n">ID</span><span class="p">,</span>
+                        <span class="s2">"commands"</span><span class="p">:</span> <span class="p">[],</span>
+                    <span class="p">}</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-147">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-147">
+        #
+       </a>
+      </div>
+      <p>
+       Update the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="bp">self</span><span class="o">.</span><span class="n">controllers_write</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-148">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-148">
+        #
+       </a>
+      </div>
+      <p>
+       Return True and no error message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-149">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-149">
+        #
+       </a>
+      </div>
+      <p>
+       …else if the arg is
+       <code>
+        controller remove
+       </code>
+       …
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">elif</span> <span class="n">arg</span> <span class="o">==</span> <span class="s2">"controller remove"</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-150">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-150">
+        #
+       </a>
+      </div>
+      <p>
+       …if the ID provided is not in the lsit of controllers…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">if</span> <span class="n">data</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span><span class="s2">"controllers"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-151">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-151">
+        #
+       </a>
+      </div>
+      <p>
+       …return False and the error message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">return</span> <span class="p">(</span>
+                        <span class="kc">False</span><span class="p">,</span>
+                        <span class="n">IDNotFound</span><span class="p">,</span>
+                        <span class="s2">"The ID you provided was **not found** in the list of controllers."</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-152">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-152">
+        #
+       </a>
+      </div>
+      <p>
+       Remove the controller from the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="bp">self</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span><span class="s2">"controllers"</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-153">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-153">
+        #
+       </a>
+      </div>
+      <p>
+       Update the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="bp">self</span><span class="o">.</span><span class="n">controllers_write</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-154">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-154">
+        #
+       </a>
+      </div>
+      <p>
+       Return True and no error message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">None</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-155">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-155">
+        #
+       </a>
+      </div>
+      <p>
+       The log_command function is called when a command is ran. It logs the command in the log file, and also sends a webhook to the logging channel.
+      </p>
+      <p>
+       Args:
+self: Access the bot’s attributes and methods
+Client (Instance): The Discord client
+message (dict): The command that was sent by the user
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the subprogram ran successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">def</span> <span class="nf">log_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-156">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-156">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="s2">"DEBUG"</span><span class="p">,</span>
+            <span class="sa">f</span><span class="s2">"Received command `</span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="s1">'content'</span><span class="p">]</span><span class="si">}</span><span class="s2">` from `</span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="s1">'author'</span><span class="p">][</span><span class="s1">'username'</span><span class="p">]</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="s1">'author'</span><span class="p">][</span><span class="s1">'discriminator'</span><span class="p">]</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">Client</span><span class="o">.</span><span class="n">webhook_log</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"content"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">"embeds"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">"title"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"**Command received**"</span><span class="p">,</span>
+                        <span class="s2">"url"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"https://discord.com/channels/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">guild_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                        <span class="s2">"description"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"`</span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="s1">'content'</span><span class="p">]</span><span class="si">}</span><span class="s2">`"</span><span class="p">,</span>
+                        <span class="s2">"color"</span><span class="p">:</span> <span class="mi">3063249</span><span class="p">,</span>
+                        <span class="s2">"author"</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">"name"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="s1">'author'</span><span class="p">][</span><span class="s1">'username'</span><span class="p">]</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="s1">'author'</span><span class="p">][</span><span class="s1">'discriminator'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+                            <span class="s2">"icon_url"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"https://cdn.discordapp.com/avatars/</span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="s1">'author'</span><span class="p">][</span><span class="s1">'id'</span><span class="p">]</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">message</span><span class="p">[</span><span class="s1">'author'</span><span class="p">][</span><span class="s1">'avatar'</span><span class="p">]</span><span class="si">}</span><span class="s2">.webp?size=32"</span><span class="p">,</span>
+                        <span class="p">},</span>
+                        <span class="s2">"footer"</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">"text"</span><span class="p">:</span> <span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+                            <span class="s2">"icon_url"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"https://cdn.discordapp.com/avatars/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">avatar</span><span class="si">}</span><span class="s2">.webp?size=32"</span><span class="p">,</span>
+                        <span class="p">},</span>
+                        <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z"</span><span class="p">),</span>
+                    <span class="p">}</span>
+                <span class="p">],</span>
+                <span class="s2">"attachments"</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Grank"</span><span class="p">,</span>
+                <span class="s2">"avatar_url"</span><span class="p">:</span> <span class="s2">"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&amp;usqp=CAU"</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-157">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-157">
+        #
+       </a>
+      </div>
+      <p>
+       Add the command to the list of commands ran by that user, and include the UNIX time it was run
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span><span class="s2">"controllers_info"</span><span class="p">][</span><span class="n">message</span><span class="p">[</span><span class="s2">"author"</span><span class="p">][</span><span class="s2">"id"</span><span class="p">]][</span>
+            <span class="s2">"commands"</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="nb">round</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">())),</span> <span class="n">message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]])</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-158">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-158">
+        #
+       </a>
+      </div>
+      <p>
+       Update the controllers file
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="bp">self</span><span class="o">.</span><span class="n">controllers_write</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="kc">True</span>
+
+</pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

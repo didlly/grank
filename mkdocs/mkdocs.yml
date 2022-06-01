@@ -1,0 +1,10 @@
+site_name: Grank
+site_url: https://didlly.github.io/
+
+nav:
+  - Home: index.md
+  - User Documentation: user-docs.md
+  - Developer Documentation: /docs/developers
+
+theme:
+  name: readthedocs

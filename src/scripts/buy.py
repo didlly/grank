@@ -1,38 +1,34 @@
 from datetime import datetime
 
+from instance.Client import Instance
+from scripts.balance import balance
 
-def buy(Client, item: str) -> None:
+
+def buy(Client: Instance, item: str) -> bool:
+    """
+    The buy function is used to buy items from the shop.
+
+    Args:
+        Client (Instance): The Discord client
+        item (str) The item to buy
+
+    Returns:
+        bool: Indicates whether the item was successfully bought or not
+    """
+
+    # Try and buy the item
     Client.send_message(f"pls buy {item}")
 
+    # Get Dank Memer's response to `pls buy {item}`
     latest_message = Client.retreive_message(f"pls buy {item}")
 
+    # If there are insufficient funds in the account's wallet to buy the item...
     if latest_message["content"] in [
         "your wallet is short on cash, go withdraw some BANK money to make this purchase",
         "Far out, you don't have enough money in your wallet or your bank to buy that much!!",
     ]:
-        from scripts.balance import balance
-
-        latest_message = balance(Client)
-
-        bank = int(
-            "".join(
-                filter(
-                    str.isdigit,
-                    latest_message["embeds"][0]["description"]
-                    .split("\n")[1]
-                    .split("/")[0]
-                    .strip(),
-                )
-            )
-        )
-        wallet = int(
-            "".join(
-                filter(
-                    str.isdigit,
-                    latest_message["embeds"][0]["description"].split("\n")[0],
-                )
-            )
-        )
+        # Get the amount of money in the account's bank & wallet
+        bank, wallet = balance(Client)
 
         Client.webhook_log(
             {
@@ -63,16 +59,22 @@ def buy(Client, item: str) -> None:
             }
         )
 
+        # If there are sufficient funds in the wallet & bank combined to buy the item...
         if (wallet + bank) - Client.Repository.database["price"][item] > 0:
+            # ...get the required amount to be withdrawn to buy the item
             amount = Client.Repository.database["price"][item] - wallet
 
+            # Withdraw the required amount
             Client.send_message(f"pls with {amount}")
 
+            # Buy the item
             Client.send_message(f"pls buy {item}")
 
-            latest_message = Client.retreive_message(
+            # Get Dank Memer's response to `pls buy {item}`. This is done in case Dank Memer sends a cooldowns message
+            Client.retreive_message(
                 f"pls buy {item}", old_latest_message=latest_message
             )
+        # Else...
         else:
             Client.log(
                 "WARNING",
@@ -105,6 +107,7 @@ def buy(Client, item: str) -> None:
                     "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
                 }
             )
+            # ...return False
             return False
 
     Client.log("DEBUG", f"Successfully bought {item}.")

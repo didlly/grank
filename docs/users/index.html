@@ -1,0 +1,4202 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en-GB">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <link href="https://didlly.github.io/user-docs/" rel="canonical"/>
+  <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+  <title>
+   User Documentation - Grank
+  </title>
+  <link href="/docs/assets/css/theme.css" rel="stylesheet"/>
+  <link href="/docs/assets/css/theme_extra.css" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" rel="stylesheet"/>
+  <script>
+   // Current page data
+        var mkdocs_page_name = "User Documentation";
+        var mkdocs_page_input_path = "user-docs.md";
+        var mkdocs_page_url = "/docs/users";
+  </script>
+  <script defer="" src="/docs/assets/js/jquery-3.6.0.min.js">
+  </script>
+  <!--[if lt IE 9]>
+      <script src="/docs/assets/js/html5shiv.min.js"></script>
+    <![endif]-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js">
+  </script>
+  <script>
+   hljs.initHighlightingOnLoad();
+  </script>
+ </head>
+ <body class="wy-body-for-nav" role="document">
+  <div class="wy-grid-for-nav">
+   <nav class="wy-nav-side stickynav" data-toggle="wy-nav-shift">
+    <div class="wy-side-scroll">
+     <div class="wy-side-nav-search">
+      <a class="icon icon-home" href="..">
+       Grank
+      </a>
+      <div role="search">
+       <form action="/docs/assets/search.html" class="wy-form" id="rtd-search-form" method="get">
+        <input name="q" placeholder="Search docs" title="Type search term here" type="text"/>
+       </form>
+      </div>
+     </div>
+     <div aria-label="Navigation menu" class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation">
+      <ul>
+       <li class="toctree-l1">
+        <a class="reference internal" href="..">
+         Home
+        </a>
+       </li>
+      </ul>
+      <ul class="current">
+       <li class="toctree-l1 current">
+        <a class="reference internal current" href="./">
+         User Documentation
+        </a>
+        <ul class="current">
+         <li class="toctree-l2">
+          <a class="reference internal" href="#features">
+           Features
+          </a>
+         </li>
+         <li class="toctree-l2">
+          <a class="reference internal" href="#supported-commands">
+           Supported commands
+          </a>
+         </li>
+         <li class="toctree-l2">
+          <a class="reference internal" href="#installing-for-the-first-time">
+           Installing for the first time
+          </a>
+          <ul>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#windows">
+             Windows
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#linux">
+             Linux
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#macos">
+             macOS
+            </a>
+           </li>
+          </ul>
+         </li>
+         <li class="toctree-l2">
+          <a class="reference internal" href="#updating">
+           Updating
+          </a>
+         </li>
+         <li class="toctree-l2">
+          <a class="reference internal" href="#setting-up-grank">
+           Setting up Grank
+          </a>
+          <ul>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#how-to-enter-these-details">
+             How to enter these details.
+            </a>
+           </li>
+          </ul>
+         </li>
+         <li class="toctree-l2">
+          <a class="reference internal" href="#how-to-use-grank">
+           How to use Grank
+          </a>
+          <ul>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#supported-commands_1">
+             Supported commands
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#autostart-category">
+             autostart category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#commands-cmds-category">
+             commands / cmds category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#config-conf-category">
+             config / conf category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#controllers-cont-category">
+             controllers / cont category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#database-db-category">
+             database / db category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#info-inf-category">
+             info / inf category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#servers-category">
+             servers category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#shifts-category">
+             shifts category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#start-category">
+             start category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#stop-category">
+             stop category
+            </a>
+           </li>
+          </ul>
+         </li>
+         <li class="toctree-l2">
+          <a class="reference internal" href="#config-file">
+           Config file
+          </a>
+          <ul>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#commands-category">
+             commands category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#cooldowns-category">
+             cooldowns category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#lottery-category">
+             lottery category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#stream-category">
+             stream category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#blackjack-category">
+             blackjack category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#snakeeyes-category">
+             snakeeyes category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#custom-commands-category">
+             custom commands category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#shifts-category_1">
+             shifts category
+            </a>
+            <ul>
+             <li class="toctree-l4">
+              <a class="reference internal" href="#example-shifts-config">
+               Example shifts config
+              </a>
+             </li>
+            </ul>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#auto-buy-category">
+             auto buy category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#auto-trade-category">
+             auto trade category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#auto-accept-trade-category">
+             auto accept trade category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#auto-sell-category">
+             auto sell category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#typing-indicator-category">
+             typing indicator category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#message-delay-category">
+             message delay category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#button-delay-category">
+             button delay category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#dropdown-delay-category">
+             dropdown delay category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#anti-heist-category">
+             anti heist category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#auto-join-heist-category">
+             auto join heist category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#auto-start-category">
+             auto start category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#blacklisted-servers-category">
+             blacklisted servers category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#settings-category">
+             settings category
+            </a>
+           </li>
+           <li class="toctree-l3">
+            <a class="reference internal" href="#logging-category">
+             logging category
+            </a>
+            <ul>
+             <li class="toctree-l4">
+              <a class="reference internal" href="#webhook-logging-subcategory">
+               webhook logging subcategory
+              </a>
+             </li>
+            </ul>
+           </li>
+          </ul>
+         </li>
+         <li class="toctree-l2">
+          <a class="reference internal" href="#disclaimer">
+           Disclaimer
+          </a>
+         </li>
+        </ul>
+       </li>
+      </ul>
+      <ul>
+       <li class="toctree-l1">
+        <a class="" href="/docs/developers">
+         Developer Documentation
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </nav>
+   <section class="wy-nav-content-wrap" data-toggle="wy-nav-shift">
+    <nav aria-label="Mobile navigation menu" class="wy-nav-top" role="navigation">
+     <i class="fa fa-bars" data-toggle="wy-nav-top">
+     </i>
+     <a href="..">
+      Grank
+     </a>
+    </nav>
+    <div class="wy-nav-content">
+     <div class="rst-content">
+      <div aria-label="breadcrumbs navigation" role="navigation">
+       <ul class="wy-breadcrumbs">
+        <li>
+         <a alt="Docs" class="icon icon-home" href="..">
+         </a>
+         »
+        </li>
+        <li>
+         User Documentation
+        </li>
+        <li class="wy-breadcrumbs-aside">
+        </li>
+       </ul>
+       <hr/>
+      </div>
+      <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
+       <div class="section" itemprop="articleBody">
+        <h1 id="user-documentation">
+         User Documentation
+        </h1>
+        <p>
+         <a href="https://discord.gg/X3JMC9FAgy">
+          <img alt="Join our Discord" src="https://www.oathro.com/themes/oathro/img/discord-button.png"/>
+         </a>
+        </p>
+        <h2 id="features">
+         Features
+        </h2>
+        <ul>
+         <li>
+          Ease of use - Once Grank has been setup, you can control it through Discord using many different and useful commands.
+         </li>
+         <li>
+          Smart - If Grank detects that the user does not have an item required for a command (e.g. not having a
+          <code>
+           hunting rifle
+          </code>
+          for the
+          <code>
+           pls hunt
+          </code>
+          command), Grank will automatically buy the item. What if the account doesn't have enough money in it's wallet? Then Grank checks the amount of money in the account's bank. If the two combined provide sufficient funds to buy the item, Grank will withdraw the required amount (and no more), and will buy the item. If the account doesn't have enough money in it's wallet and bank combined, Grank logs a warning stating this.
+         </li>
+         <li>
+          Anti detection features - Grank has many features to prevent detection by Dank Memer, Discord or other users. One of these such features is a Typing Indicator. When you start typing a message on Discord, a typing indicator appears, which lets everyone else in the channel know you are typing a message. If enabled, Grank will trigger the Typing Indicator, wait a random amount (which can be controlled in the config), and send the command. This also adds a random gap between commands that makes the self-bot more human.
+         </li>
+         <li>
+          Custom commamds - Want to periodically run a command like
+          <code>
+           pls bet 1000
+          </code>
+          ? Well you can with Grank. Either add the command to the config file, or take advantage of Grank's self-bot commands feature and run the command
+          <code>
+           grank command add {command} {interval}
+          </code>
+          (where
+          <code>
+           command
+          </code>
+          is the command to be run and
+          <code>
+           interval
+          </code>
+          is how often it should be run).
+         </li>
+         <li>
+          Anti heist - If someone is heisting you, Grank will stop it.
+         </li>
+         <li>
+          Auto join heist - If someone else is being heisted, Grank will join the heist.
+         </li>
+         <li>
+          Auto trade - Automatically trades specified items to an alt account upon receiving the item.
+         </li>
+         <li>
+          Auto accept trade - If someone sends a trade request to Grank, Grank will automatically accept it (provided they are in the allowed user list to do so).
+         </li>
+        </ul>
+        <p>
+         <strong>
+          <em>
+           NOTE:
+          </em>
+         </strong>
+         All these options can be toggled and customised in the config.
+        </p>
+        <h2 id="supported-commands">
+         Supported commands
+        </h2>
+        <ul>
+         <li>
+          <code>
+           pls beg
+          </code>
+         </li>
+         <li>
+          <code>
+           pls blackjack
+          </code>
+         </li>
+         <li>
+          <code>
+           pls crime
+          </code>
+         </li>
+         <li>
+          <code>
+           pls daily
+          </code>
+         </li>
+         <li>
+          <code>
+           pls dig
+          </code>
+         </li>
+         <li>
+          <code>
+           pls fish
+          </code>
+         </li>
+         <li>
+          <code>
+           pls guess
+          </code>
+         </li>
+         <li>
+          <code>
+           pls highlow
+          </code>
+         </li>
+         <li>
+          <code>
+           pls hunt
+          </code>
+         </li>
+         <li>
+          <code>
+           pls lottery
+          </code>
+         </li>
+         <li>
+          <code>
+           pls postmeme
+          </code>
+         </li>
+         <li>
+          <code>
+           pls search
+          </code>
+         </li>
+         <li>
+          <code>
+           pls snakeeyes
+          </code>
+         </li>
+         <li>
+          <code>
+           pls stream
+          </code>
+         </li>
+         <li>
+          <code>
+           pls trivia
+          </code>
+         </li>
+         <li>
+          <code>
+           pls work
+          </code>
+         </li>
+         <li>
+          <code>
+           pls adv
+          </code>
+          (Partial support)
+         </li>
+        </ul>
+        <h2 id="installing-for-the-first-time">
+         Installing for the first time
+        </h2>
+        <ul>
+         <li>
+          Download and extract the latest version of Grank from
+          <a href="https://github.com/didlly/grank/archive/refs/heads/main.zip">
+           here
+          </a>
+          .
+         </li>
+        </ul>
+        <h3 id="windows">
+         Windows
+        </h3>
+        <ul>
+         <li>
+          Download PyPy from
+          <a href="https://downloads.python.org/pypy/pypy3.9-v7.3.9-win64.zip">
+           here
+          </a>
+          .
+         </li>
+         <li>
+          Extract the contents into the
+          <code>
+           /src
+          </code>
+          directory.
+         </li>
+        </ul>
+        <h3 id="linux">
+         Linux
+        </h3>
+        <ul>
+         <li>
+          Download PyPy from
+          <a href="https://downloads.python.org/pypy/pypy3.9-v7.3.9-linux64.tar.bz2">
+           here
+          </a>
+          (or if that doesn't work from
+          <a href="https://downloads.python.org/pypy/pypy3.9-v7.3.9-aarch64-portable.tar.bz2">
+           here
+          </a>
+          ).
+         </li>
+         <li>
+          Extract the contents into the
+          <code>
+           /src
+          </code>
+          directory.
+         </li>
+        </ul>
+        <h3 id="macos">
+         macOS
+        </h3>
+        <ul>
+         <li>
+          Download PyPy from
+          <a href="https://downloads.python.org/pypy/pypy3.9-v7.3.9-osx64.tar.bz2">
+           here
+          </a>
+          .
+         </li>
+         <li>
+          Extract the contents into the
+          <code>
+           /src
+          </code>
+          directory.
+         </li>
+        </ul>
+        <p>
+         <strong>
+          <em>
+           NOTE:
+          </em>
+         </strong>
+         Everytime you update Grank's source code, you do
+         <strong>
+          NOT HAVE
+         </strong>
+         to re-download PyPy.
+        </p>
+        <h2 id="updating">
+         Updating
+        </h2>
+        <ul>
+         <li>
+          Download and extract the latest version of Grank from
+          <a href="https://github.com/didlly/grank/archive/refs/heads/main.zip">
+           here
+          </a>
+          into the directory you extracted the previous version of Grank into. Let it overwrite any existing files.
+         </li>
+        </ul>
+        <h2 id="setting-up-grank">
+         Setting up Grank
+        </h2>
+        <p>
+         To use Grank, you will have to provide your Discord token. Don't worry, your token is never shared with anyone else.
+        </p>
+        <p>
+         <a href="https://www.youtube.com/watch?v=WWHZoa0SxCc">
+          Useful Youtube video on how to get your Discord Token
+         </a>
+        </p>
+        <h3 id="how-to-enter-these-details">
+         How to enter these details.
+        </h3>
+        <p>
+         Open
+         <code>
+          src/credentials.json
+         </code>
+         . You should see a dictionary with a key called
+         <code>
+          TOKEN
+         </code>
+         . Add your token into the list after this key. You can add as many entries as you want. The file has been filled in with a dummy layout so you know how to input your data.
+        </p>
+        <p>
+         You are now ready to use the program. Run
+         <code>
+          pypy main.py
+         </code>
+         (or
+         <code>
+          pypy3 main.py
+         </code>
+         ) in a command prompt in the
+         <code>
+          /src
+         </code>
+         directory to start the program. You do not have to have Discord open to run the program, so you can have the program running in the background while you do other things!
+        </p>
+        <h2 id="how-to-use-grank">
+         How to use Grank
+        </h2>
+        <p>
+         Now you have Grank set-up, you are probably wondering how to use Grank. Grank is controlled through Discord. You can view all the commands below, or run
+         <code>
+          grank help
+         </code>
+         to get started on your journey using Grank. You will find more information by running the specific
+         <code>
+          -help
+         </code>
+         command for each command category.
+        </p>
+        <h3 id="supported-commands_1">
+         Supported commands
+        </h3>
+        <p>
+         <code>
+          grank help
+         </code>
+         - Displays the help command.
+        </p>
+        <h3 id="autostart-category">
+         <code>
+          autostart
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             autostart
+            </code>
+           </td>
+           <td>
+            Shows a list of all the auto-start channels for this account.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             autostart -help
+            </code>
+           </td>
+           <td>
+            Shows help about the
+            <code>
+             autostart
+            </code>
+            command.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             autostart enable
+            </code>
+           </td>
+           <td>
+            Enables the auto-start channels function.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             autostart disable
+            </code>
+           </td>
+           <td>
+            Disables the auto-start channels function.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             autostart add 0
+            </code>
+           </td>
+           <td>
+            Adds the channel with the ID of
+            <code>
+             0
+            </code>
+            to the list of auto-start channels.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             autostart remove
+            </code>
+           </td>
+           <td>
+            Removes the autostart channel.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="commands-cmds-category">
+         <code>
+          commands / cmds
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             commands
+            </code>
+           </td>
+           <td>
+            Shows a list of all the custom commands for this account.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             commands -help
+            </code>
+           </td>
+           <td>
+            Shows help about the
+            <code>
+             commands
+            </code>
+            command.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             commands add pls_help 69
+            </code>
+           </td>
+           <td>
+            Adds the custom command 'pls help' to the list of custom commands and tells Grank it needs to be run every 69 seconds.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             commands remove pls_help 69
+            </code>
+           </td>
+           <td>
+            Removes the custom commands called 'pls help' from the list of custom commands.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="config-conf-category">
+         <code>
+          config / conf
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             config
+            </code>
+           </td>
+           <td>
+            Shows a list of all the config options and their values for this account.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             config -help
+            </code>
+           </td>
+           <td>
+            Shows help about the
+            <code>
+             config
+            </code>
+            command.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             config reset
+            </code>
+           </td>
+           <td>
+            Resets the config to the default settings.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             config.cooldowns.patron
+            </code>
+           </td>
+           <td>
+            Displays the value of the patron key in the subconfig cooldowns.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             config.cooldowns.patron = True
+            </code>
+           </td>
+           <td>
+            Sets the patron key in the subconfig cooldowns to True.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <p>
+         <strong>
+          <em>
+           NOTE
+          </em>
+         </strong>
+         : To access keys containing a space character, replace the space with an underscore (_).
+        </p>
+        <h3 id="controllers-cont-category">
+         <code>
+          controllers / cont
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             controllers
+            </code>
+           </td>
+           <td>
+            Shows a list of all the controllers for this account.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             controllers -help
+            </code>
+           </td>
+           <td>
+            Shows help about the
+            <code>
+             controllers
+            </code>
+            command.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             controllers purge 0
+            </code>
+           </td>
+           <td>
+            Removes all the logged messages from the controller with the ID of
+            <code>
+             0
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             controllers info 0
+            </code>
+           </td>
+           <td>
+            Provides information about the controller. This includes information such as when the controller was added, which account added the controller, and what commands the controller has run.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             controllers add 0:
+            </code>
+           </td>
+           <td>
+            Adds the account with the ID of
+            <code>
+             0
+            </code>
+            to the list of controllers.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             controllers remove 0
+            </code>
+           </td>
+           <td>
+            Removes the account with the ID of
+            <code>
+             0
+            </code>
+            from the list of controllers.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <p>
+         <strong>
+          <em>
+           NOTE:
+          </em>
+         </strong>
+         You can also @mention the user you want to interact with.
+        </p>
+        <h3 id="database-db-category">
+         <code>
+          database / db
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             database
+            </code>
+           </td>
+           <td>
+            Shows a list of all the database options and their values for this account.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             database -help
+            </code>
+           </td>
+           <td>
+            Shows help about the
+            <code>
+             database
+            </code>
+            command.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             database reset
+            </code>
+           </td>
+           <td>
+            Resets the database to the default settings.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="info-inf-category">
+         <code>
+          info / inf
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             info
+            </code>
+           </td>
+           <td>
+            Shows info about the grinder (like session stats, commands ran stats, etc).
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="servers-category">
+         <code>
+          servers
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             servers
+            </code>
+           </td>
+           <td>
+            Shows a list of all the blacklisted servers for this account.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             servers -help
+            </code>
+           </td>
+           <td>
+            Shows help about the
+            <code>
+             servers
+            </code>
+            command.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             servers enable
+            </code>
+           </td>
+           <td>
+            Enables the blacklisted servers function.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             servers disable
+            </code>
+           </td>
+           <td>
+            Disables the blacklisted servers function.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             servers add 0
+            </code>
+           </td>
+           <td>
+            Adds the server with the ID of
+            <code>
+             0
+            </code>
+            to the list of blacklisted servers.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             servers remove 0
+            </code>
+           </td>
+           <td>
+            Removes the server with the ID of
+            <code>
+             0
+            </code>
+            from the list of blacklisted servers.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="shifts-category">
+         <code>
+          shifts
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             shifts
+            </code>
+           </td>
+           <td>
+            Shows a list of all the shifts for this account.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             shifts -help
+            </code>
+           </td>
+           <td>
+            Shows help about the
+            <code>
+             shifts
+            </code>
+            command.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             shifts enable
+            </code>
+           </td>
+           <td>
+            Enables the shifts function.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             shifts disable
+            </code>
+           </td>
+           <td>
+            Disables the shifts function.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             shifts add 7200 3600 60
+            </code>
+           </td>
+           <td>
+            Adds a shift with an active length of
+            <code>
+             7200
+            </code>
+            , a passive length of
+            <code>
+             3600
+            </code>
+            , and a variation of
+            <code>
+             60
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             shifts remove 1
+            </code>
+           </td>
+           <td>
+            Removes the 1st shift profile.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="start-category">
+         <code>
+          start
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             start
+            </code>
+           </td>
+           <td>
+            Starts the grinder.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             start -help
+            </code>
+           </td>
+           <td>
+            Shows help about the
+            <code>
+             start
+            </code>
+            command.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="stop-category">
+         <code>
+          stop
+         </code>
+         category
+        </h3>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             stop
+            </code>
+           </td>
+           <td>
+            Stops the grinder.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             stop -help
+            </code>
+           </td>
+           <td>
+            Shows help about the
+            <code>
+             stop
+            </code>
+            command.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h2 id="config-file">
+         Config file
+        </h2>
+        <p>
+         The
+         <code>
+          config.yml
+         </code>
+         file is used to change the way the program runs.
+        </p>
+        <h3 id="commands-category">
+         <code>
+          commands
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          commands
+         </code>
+         category tell the program whether or not to
+         <em>
+          run certain commands
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             adventure
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls adventure
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             beg
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls beg
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             crime
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls crime
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             daily
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls daily
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             dig
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls dig
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             fish
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls fish
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             guess
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls guess
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             highlow
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls highlow
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             hunt
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls hunt
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             postmeme
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls postmeme
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             search
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls search
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             trivia
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls trivia
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             vote
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to vote for Dank Memer on Discord Bot List.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             work
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls work
+            </code>
+            .
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="cooldowns-category">
+         <code>
+          cooldowns
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          cooldowns
+         </code>
+         category tell the program
+         <em>
+          the cooldowns for each command
+         </em>
+         &amp;
+         <em>
+          cooldowns between commands
+         </em>
+         . Edit them only if you know what you are doing. You have the most optimal settings by default.
+        </p>
+        <h3 id="lottery-category">
+         <code>
+          lottery
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          lottery
+         </code>
+         category tell the program
+         <em>
+          whether lottery tickets should be bought
+         </em>
+         , and
+         <em>
+          how often they should be bought
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to buy lottery tickets.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             cooldown
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             3600
+            </code>
+           </td>
+           <td>
+            Tells the program the interval between buying lottery tickets.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="stream-category">
+         <code>
+          stream
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          stream
+         </code>
+         category tell the program
+         <em>
+          whether or not to run the command
+          <code>
+           pls stream
+          </code>
+         </em>
+         , and
+         <em>
+          what buttons should it interact with
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls stream
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             ads
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to collect run ads during the stream.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             chat
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to read the chat during the stream.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             donations
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to collect donations during the stream.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="blackjack-category">
+         <code>
+          blackjack
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          blackjack
+         </code>
+         category tell the program
+         <em>
+          whether or not to run the command
+          <code>
+           pls blackjack
+          </code>
+         </em>
+         , and
+         <em>
+          how much it should bet each time
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls blackjack
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             random
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to choose a random amount each time the command
+            <code>
+             pls blackjack
+            </code>
+            is run, or to choose a pre-set amount.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             amount
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             1500
+            </code>
+           </td>
+           <td>
+            The pre-set amount to be bet if
+            <code>
+             random
+            </code>
+            is set to
+            <code>
+             False
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             minimum
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             1500
+            </code>
+           </td>
+           <td>
+            The minimum amount to be bet if
+            <code>
+             random
+            </code>
+            is set to
+            <code>
+             True
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             maximum
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             3000
+            </code>
+           </td>
+           <td>
+            The maximum amount to be bet if
+            <code>
+             random
+            </code>
+            is set to
+            <code>
+             True
+            </code>
+            .
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="snakeeyes-category">
+         <code>
+          snakeeyes
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          snakeeyes
+         </code>
+         category tell the program
+         <em>
+          whether or not to run the command
+          <code>
+           pls snakeeyes
+          </code>
+         </em>
+         , and
+         <em>
+          how much it should bet each time
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run the command
+            <code>
+             pls snakeeyes
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             random
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to choose a random amount each time the command
+            <code>
+             pls snakeeyes
+            </code>
+            is run, or to choose a pre-set amount.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             amount
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             1500
+            </code>
+           </td>
+           <td>
+            The pre-set amount to be bet if
+            <code>
+             random
+            </code>
+            is set to
+            <code>
+             False
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             minimum
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             1500
+            </code>
+           </td>
+           <td>
+            The minimum amount to be bet if
+            <code>
+             random
+            </code>
+            is set to
+            <code>
+             True
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             maximum
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             3000
+            </code>
+           </td>
+           <td>
+            The maximum amount to be bet if
+            <code>
+             random
+            </code>
+            is set to
+            <code>
+             True
+            </code>
+            .
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="custom-commands-category">
+         <code>
+          custom commands
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          custom commands
+         </code>
+         category tell the program
+         <em>
+          what custom commands should be run
+         </em>
+         and
+         <em>
+          their cooldowns
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run any of the custom commands.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <p>
+         <strong>
+          <em>
+           NOTE:
+          </em>
+         </strong>
+         You can add your own custom commands by following the layout for the default options.
+        </p>
+        <h3 id="shifts-category_1">
+         <code>
+          shifts
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          shifts
+         </code>
+         category tell the program
+         <em>
+          whether or not to run Grank in shifts
+         </em>
+         , and
+         <em>
+          the length of active and passive phases
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to run in shifts.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h4 id="example-shifts-config">
+         <strong>
+          Example shifts config
+         </strong>
+        </h4>
+        <p>
+         You can add as many shift configs as you want, so long as you number them in order starting from
+         <code>
+          1
+         </code>
+         . The program will infinitely cycle through all the shift configurations.
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             active
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             7200
+            </code>
+           </td>
+           <td>
+            Tells the program how long the program should run before sleeping (in seconds).
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             passive
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             3600
+            </code>
+           </td>
+           <td>
+            Tells the program how long the program should sleep before running again (in seconds).
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             variation
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             3600
+            </code>
+           </td>
+           <td>
+            Tells the program how much to vary the shifts by.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="auto-buy-category">
+         <code>
+          auto buy
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          auto buy
+         </code>
+         category tell the program whether or not to
+         <em>
+          buy certain items
+         </em>
+         if needed.
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            If this is set to
+            <code>
+             False
+            </code>
+            no items will be bought. If it is set to
+            <code>
+             True
+            </code>
+            the program will try and buy the item if their respective config value is
+            <code>
+             True
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             shovel
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and buy the item
+            <code>
+             shovel
+            </code>
+            if needed and the user doesn't have it.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             fishing pole
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and buy the item
+            <code>
+             fishing pole
+            </code>
+            if needed and the user doesn't have it.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             hunting rifle
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and buy the
+            <code>
+             hunting rifle
+            </code>
+            if needed and the user doesn't have it.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             keyboard
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and buy the item
+            <code>
+             keyboard
+            </code>
+            if needed and the user doesn't have it.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             mouse
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and buy the item
+            <code>
+             mouse
+            </code>
+            if
+           </td>
+          </tr>
+          <tr>
+           <td>
+            needed and the user doesn't have it.
+           </td>
+           <td>
+           </td>
+           <td>
+           </td>
+           <td>
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             adventure ticket
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and buy the item
+            <code>
+             adventure ticket
+            </code>
+            if needed and the user doesn't have it.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="auto-trade-category">
+         <code>
+          auto trade
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          auto trade
+         </code>
+         category tell the program
+         <em>
+          who items should be traded to
+         </em>
+         , and
+         <em>
+          what items should be traded.
+         </em>
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            If this is set to
+            <code>
+             False
+            </code>
+            no items will be traded. If it is set to
+            <code>
+             True
+            </code>
+            the program will try and trade the item if their respective config value is
+            <code>
+             True
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             trader token
+            </code>
+           </td>
+           <td>
+            <code>
+             String
+            </code>
+           </td>
+           <td>
+            <code>
+             None
+            </code>
+           </td>
+           <td>
+            The token of the user the items should be traded to.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             bank note
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and trade the item
+            <code>
+             bank note
+            </code>
+            to the user specified in the
+            <code>
+             trader
+            </code>
+            option.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             tidepod
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and trade the item
+            <code>
+             tidepod
+            </code>
+            to the user specified in the
+            <code>
+             trader
+            </code>
+            option.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <p>
+         <strong>
+          <em>
+           NOTE:
+          </em>
+         </strong>
+         You can add your own items to be traded by following the layout for the default options.
+        </p>
+        <h3 id="auto-accept-trade-category">
+         <code>
+          auto accept trade
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          anti heist
+         </code>
+         category tell the program whether or not to
+         <em>
+          automatically accept trades
+         </em>
+         and
+         <em>
+          who to accept them from
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to automatically accept trades from other users.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             traders
+            </code>
+           </td>
+           <td>
+            <code>
+             List
+            </code>
+           </td>
+           <td>
+            <code>
+             [0, 0]
+            </code>
+           </td>
+           <td>
+            Tells the program which accounts to automatically accept trades from.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="auto-sell-category">
+         <code>
+          auto sell
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          auto sell
+         </code>
+         category tell the program
+         <em>
+          what items should be sold (upon receiving them).
+         </em>
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            If this is set to
+            <code>
+             False
+            </code>
+            no items will be sold. If it is set to
+            <code>
+             False
+            </code>
+            the program will try and sell the item if their respective config value is
+            <code>
+             True
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             apple
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and sell the item
+            <code>
+             apple
+            </code>
+            (upon receiving it).
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             common fish
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to try and sell the item
+            <code>
+             common fish
+            </code>
+            (upon receiving it).
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <p>
+         <strong>
+          <em>
+           NOTE:
+          </em>
+         </strong>
+         You can add your own items to be traded by following the layout for the default options.
+        </p>
+        <h3 id="typing-indicator-category">
+         <code>
+          typing indicator
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          typing indicator
+         </code>
+         category tell the program whether to make Discord think the self-bot is typing, and for how long it should. This is just for aesthetics and I would recommend it to be
+         <em>
+          off in private servers
+         </em>
+         to increase command speed, and
+         <em>
+          on in public servers
+         </em>
+         to make the self-bot look more legitimate.
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            If this is set to
+            <code>
+             True
+            </code>
+            , the program will make Discord think the self-bot is typing. If it is set to
+            <code>
+             False
+            </code>
+            the program will not make Discord think the self-bot is typing, thus increasing command speed.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             minimum
+            </code>
+           </td>
+           <td>
+            <code>
+             Float
+            </code>
+           </td>
+           <td>
+            <code>
+             0
+            </code>
+           </td>
+           <td>
+            The minimum time for the program to sleep after Discord is told that the user is typing.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             maximum
+            </code>
+           </td>
+           <td>
+            <code>
+             Float
+            </code>
+           </td>
+           <td>
+            <code>
+             0.5
+            </code>
+           </td>
+           <td>
+            The maximum time for the program to sleep after Discord is told that the user is typing.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="message-delay-category">
+         <code>
+          message delay
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          messge delay
+         </code>
+         category tell the program whether to
+         <em>
+          add random pauses before sending messages
+         </em>
+         and
+         <em>
+          how long the pauses should be for
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            If this is set to
+            <code>
+             True
+            </code>
+            , the program will add random pauses before sending messages.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             minimum
+            </code>
+           </td>
+           <td>
+            <code>
+             Float
+            </code>
+           </td>
+           <td>
+            <code>
+             0
+            </code>
+           </td>
+           <td>
+            The minimum time for the program to pause.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             maximum
+            </code>
+           </td>
+           <td>
+            <code>
+             Float
+            </code>
+           </td>
+           <td>
+            <code>
+             0.5
+            </code>
+           </td>
+           <td>
+            The maximum time for the program to pause.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="button-delay-category">
+         <code>
+          button delay
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          button delay
+         </code>
+         category tell the program whether to
+         <em>
+          add random pauses before interacting with buttons
+         </em>
+         and
+         <em>
+          how long the pauses should be for
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            If this is set to
+            <code>
+             True
+            </code>
+            , the program will add random pauses before interacting with buttons.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             minimum
+            </code>
+           </td>
+           <td>
+            <code>
+             Float
+            </code>
+           </td>
+           <td>
+            <code>
+             0
+            </code>
+           </td>
+           <td>
+            The minimum time for the program to pause.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             maximum
+            </code>
+           </td>
+           <td>
+            <code>
+             Float
+            </code>
+           </td>
+           <td>
+            <code>
+             0.5
+            </code>
+           </td>
+           <td>
+            The maximum time for the program to pause.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="dropdown-delay-category">
+         <code>
+          dropdown delay
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          dropdown delay
+         </code>
+         category tell the program whether to
+         <em>
+          add random pauses before selecting dropdowns
+         </em>
+         and
+         <em>
+          how long the pauses should be for
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            If this is set to
+            <code>
+             True
+            </code>
+            , the program will add random pauses before selecting dropdowns.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             minimum
+            </code>
+           </td>
+           <td>
+            <code>
+             Float
+            </code>
+           </td>
+           <td>
+            <code>
+             0
+            </code>
+           </td>
+           <td>
+            The minimum time for the program to pause.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             maximum
+            </code>
+           </td>
+           <td>
+            <code>
+             Float
+            </code>
+           </td>
+           <td>
+            <code>
+             0.5
+            </code>
+           </td>
+           <td>
+            The maximum time for the program to pause.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="anti-heist-category">
+         <code>
+          anti heist
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          anti heist
+         </code>
+         category tell the program whether or not to
+         <em>
+          automatically avert heists
+         </em>
+         by
+         <em>
+          calling the police
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to automatically avert heists.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="auto-join-heist-category">
+         <code>
+          auto join heist
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          auto join heist
+         </code>
+         category tell the program whether or not to
+         <em>
+          automatically join heists
+         </em>
+         directed to
+         <em>
+          other users
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to automatically join heists directed to other users.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="auto-start-category">
+         <code>
+          auto start
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          auto start
+         </code>
+         category tell the program whether or not to
+         <em>
+          automatically start the grinder
+         </em>
+         and
+         <em>
+          which channels to automatically start the grinder in
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to automatically start the grinder.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             channel
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             0
+            </code>
+           </td>
+           <td>
+            Tells the program which channels to automatically start the grinder in.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="blacklisted-servers-category">
+         <code>
+          blacklisted servers
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          logging
+         </code>
+         category tell the program whether or not to
+         <em>
+          ignore messages from certain servers
+         </em>
+         and
+         <em>
+          which servers to ignore the messages from
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to ignore messages in the specified channel.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             servers
+            </code>
+           </td>
+           <td>
+            <code>
+             List
+            </code>
+           </td>
+           <td>
+            <code>
+             [0, 0]
+            </code>
+           </td>
+           <td>
+            Tells the program which servers to ingore messages from.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="settings-category">
+         <code>
+          settings
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          settings
+         </code>
+         category
+         <em>
+          change how Grank functions
+         </em>
+         .
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             prefix
+            </code>
+           </td>
+           <td>
+            <code>
+             String
+            </code>
+           </td>
+           <td>
+            <code>
+             grank
+            </code>
+           </td>
+           <td>
+            Granks self-bot commands prefix.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             patron
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Changes cooldowns to reflect the cooldowns of
+            <code>
+             patrons
+            </code>
+            .
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             timeout
+            </code>
+           </td>
+           <td>
+            <code>
+             Integer
+            </code>
+           </td>
+           <td>
+            <code>
+             5
+            </code>
+           </td>
+           <td>
+            Timeout for waiting for responses from Dank Memer to commands that require user interaction (like
+            <code>
+             pls search
+            </code>
+            ).
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h3 id="logging-category">
+         <code>
+          logging
+         </code>
+         category
+        </h3>
+        <p>
+         Values in the
+         <code>
+          logging
+         </code>
+         category tell the program whether or not to log
+         <em>
+          <code>
+           debug
+          </code>
+         </em>
+         and
+         <em>
+          <code>
+           warning
+          </code>
+         </em>
+         messages. We would recommend having
+         <em>
+          at least
+         </em>
+         <code>
+          warning
+         </code>
+         set to
+         <code>
+          True
+         </code>
+         . Fatal errors will be logged regardless of the configuration.
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             debug
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to log
+            <code>
+             debug
+            </code>
+            messages.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             warning
+            </code>
+           </td>
+           <td>
+            <code>
+             Boolean
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to log
+            <code>
+             warning
+            </code>
+            messages.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <p>
+         <strong>
+          <em>
+           NOTE
+          </em>
+         </strong>
+         : Values in the
+         <code>
+          logging
+         </code>
+         category do not affect logging messages sent when the configuration file is being loaded and the token is being verified.
+        </p>
+        <h4 id="webhook-logging-subcategory">
+         <strong>
+          <code>
+           webhook logging
+          </code>
+          subcategory
+         </strong>
+        </h4>
+        <p>
+         Values in the
+         <code>
+          webhook logging
+         </code>
+         subcategory tell the program whether or not to log events through a webhook and the webhook URL to log through.
+        </p>
+        <table>
+         <thead>
+          <tr>
+           <th>
+            Name
+           </th>
+           <th>
+            Type
+           </th>
+           <th>
+            Default Value
+           </th>
+           <th>
+            Description
+           </th>
+          </tr>
+         </thead>
+         <tbody>
+          <tr>
+           <td>
+            <code>
+             enabled
+            </code>
+           </td>
+           <td>
+            <code>
+             True
+            </code>
+           </td>
+           <td>
+            <code>
+             False
+            </code>
+           </td>
+           <td>
+            Tells the program whether or not to log events through a webhook.
+           </td>
+          </tr>
+          <tr>
+           <td>
+            <code>
+             url
+            </code>
+           </td>
+           <td>
+            <code>
+             String
+            </code>
+           </td>
+           <td>
+            <code>
+             discord.com/api/webhooks/
+            </code>
+           </td>
+           <td>
+            The webhook URL to log events through.
+           </td>
+          </tr>
+         </tbody>
+        </table>
+        <h2 id="disclaimer">
+         Disclaimer
+        </h2>
+        <p>
+         This is a self-bot. Self-bots are against Discord's TOS. Automation of Dank Memer commands also breaks Dank Memer's rules. By using this program you acknowledge that I can take no responsibility for actions taken against you if you are caught.
+        </p>
+        <p>
+         This being said, I believe the chance of being caught running this script is low, provided you take the appropriate measures. The only probable way you will be caught is if someone tries to send you a message and you don't respond.
+        </p>
+       </div>
+      </div>
+      <footer>
+       <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
+        <a class="btn btn-neutral float-left" href=".." title="Home">
+         <span class="icon icon-circle-arrow-left">
+         </span>
+         Previous
+        </a>
+       </div>
+       <hr/>
+       <div role="contentinfo">
+        <!-- Copyright etc -->
+       </div>
+       Built with
+       <a href="https://www.mkdocs.org/">
+        MkDocs
+       </a>
+       using a
+       <a href="https://github.com/readthedocs/sphinx_rtd_theme">
+        theme
+       </a>
+       provided by
+       <a href="https://readthedocs.org">
+        Read the Docs
+       </a>
+       .
+      </footer>
+     </div>
+    </div>
+   </section>
+  </div>
+  <div aria-label="Versions" class="rst-versions" role="note">
+   <span class="rst-current-version" data-toggle="rst-current-version">
+    <span>
+     <a href=".." style="color: #fcfcfc">
+      « Previous
+     </a>
+    </span>
+   </span>
+  </div>
+  <script>
+   var base_url = '..';
+  </script>
+  <script defer="" src="/docs/assets/js/theme_extra.js">
+  </script>
+  <script defer="" src="/docs/assets/js/theme.js">
+  </script>
+  <script defer="" src="/docs/assets/search/main.js">
+  </script>
+  <script defer="">
+   window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+  </script>
+ </body>
+</html>

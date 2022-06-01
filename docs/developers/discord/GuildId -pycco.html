@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   GuildId.py
+  </title>
+  <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+  <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div id="container">
+   <div id="background">
+   </div>
+   <div class="section">
+    <div class="docs">
+     <h1>
+      GuildId.py
+     </h1>
+    </div>
+   </div>
+   <div class="clearall">
+    <div class="section" id="section-0">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-0">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+
+<span class="kn">from</span> <span class="nn">instance.Client</span> <span class="kn">import</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">utils.Requests</span> <span class="kn">import</span> <span class="n">request</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-1">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-1">
+        #
+       </a>
+      </div>
+      <p>
+       The guild_id function gets the guild id of the channel id in the account’s class
+      </p>
+      <p>
+       Args:
+Client (Instance): The Discord client
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">guild_id</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="nb">bool</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-2">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-2">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-3">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-3">
+        #
+       </a>
+      </div>
+      <p>
+       Send a request to the Discord API
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">req</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span>
+        <span class="sa">f</span><span class="s2">"https://discord.com/api/v10/channels/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">"authorization"</span><span class="p">:</span> <span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">},</span>
+    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-4">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-4">
+        #
+       </a>
+      </div>
+      <p>
+       If the channel was not found…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">404</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-5">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-5">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-6">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-6">
+        #
+       </a>
+      </div>
+      <p>
+       Else if the channel is not a server channel (e.g.,
+       <code>
+        dm
+       </code>
+       ,
+       <code>
+        group dm
+       </code>
+       )…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">elif</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="s2">"type"</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-7">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-7">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-8">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-8">
+        #
+       </a>
+      </div>
+      <p>
+       Otherwise, return the guild id.
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">return</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="s2">"guild_id"</span><span class="p">]</span>
+
+</pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

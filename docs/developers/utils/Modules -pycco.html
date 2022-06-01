@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+   <title>
+    Modules.py
+   </title>
+   <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+   <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+  </meta>
+ </head>
+ <body>
+  <div id="container">
+   <div id="background">
+   </div>
+   <div class="section">
+    <div class="docs">
+     <h1>
+      Modules.py
+     </h1>
+    </div>
+   </div>
+   <div class="clearall">
+    <div class="section" id="section-0">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-0">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span></span><span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">name</span><span class="p">,</span> <span class="n">system</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">check_call</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">executable</span>
+
+<span class="kn">from</span> <span class="nn">utils.Logger</span> <span class="kn">import</span> <span class="n">log</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-1">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-1">
+        #
+       </a>
+      </div>
+      <p>
+       The verify_modules function checks to make sure that the
+       <code>
+        websocket-client
+       </code>
+       module is installed. If it is not,
+it will install it for you. This function should be called before any other functions in this library.
+      </p>
+      <p>
+       Args:
+      </p>
+      <p>
+       Returns:
+None
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">verify_modules</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-2">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-2">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">try</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-3">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-3">
+        #
+       </a>
+      </div>
+      <p>
+       Try and import the WebSocket class from the
+       <code>
+        websocket-client
+       </code>
+       module
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="kn">from</span> <span class="nn">websocket</span> <span class="kn">import</span> <span class="n">WebSocket</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-4">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-4">
+        #
+       </a>
+      </div>
+      <p>
+       If the
+       <code>
+        websocket-client
+       </code>
+       module is not installed, an ImportError would be raised, which is caught here, and the program will install the
+       <code>
+        websocket-client
+       </code>
+       module
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">log</span><span class="p">(</span>
+            <span class="kc">None</span><span class="p">,</span>
+            <span class="s2">"WARNING"</span><span class="p">,</span>
+            <span class="s2">"Module `websocket-client` is not installed. Installing now."</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">log</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Verifying that pip is installed. This may take a while."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-5">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-5">
+        #
+       </a>
+      </div>
+      <p>
+       Make sure pip is isntalled
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">check_call</span><span class="p">([</span><span class="n">executable</span><span class="p">,</span> <span class="s2">"-m"</span><span class="p">,</span> <span class="s2">"ensurepip"</span><span class="p">])</span>
+
+        <span class="n">log</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Checking for an update for pip. This may take a while."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-6">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-6">
+        #
+       </a>
+      </div>
+      <p>
+       Make sure pip is updated to the latest available version
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">check_call</span><span class="p">([</span><span class="n">executable</span><span class="p">,</span> <span class="s2">"-m"</span><span class="p">,</span> <span class="s2">"pip"</span><span class="p">,</span> <span class="s2">"install"</span><span class="p">,</span> <span class="s2">"-U"</span><span class="p">,</span> <span class="s2">"pip"</span><span class="p">,</span> <span class="s2">"wheel"</span><span class="p">])</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-7">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-7">
+        #
+       </a>
+      </div>
+      <p>
+       …install it
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">check_call</span><span class="p">([</span><span class="n">executable</span><span class="p">,</span> <span class="s2">"-m"</span><span class="p">,</span> <span class="s2">"pip"</span><span class="p">,</span> <span class="s2">"install"</span><span class="p">,</span> <span class="s2">"websocket-client"</span><span class="p">])</span>
+        <span class="n">log</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Successfully installed the module `websocket-client`."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-8">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-8">
+        #
+       </a>
+      </div>
+      <p>
+       Clear the terminal of any previous text (i.e, text from the installation process)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">system</span><span class="p">(</span><span class="s2">"cls"</span> <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">"nt"</span> <span class="k">else</span> <span class="s2">"clear"</span><span class="p">)</span>
+
+</pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

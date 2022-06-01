@@ -1,0 +1,3650 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, minimum-scale=1" name="viewport"/>
+  <meta content="pdoc 0.10.0" name="generator">
+   <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+   <title>
+    src.instance.Client API documentation
+   </title>
+   <meta content="" name="description"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" rel="preload stylesheet"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" rel="preload stylesheet"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" rel="stylesheet preload"/>
+   <style>
+    :root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}
+   </style>
+   <style media="screen and (min-width: 700px)">
+    @media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}
+   </style>
+   <style media="print">
+    @media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}
+   </style>
+   <script crossorigin="" defer="" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js">
+   </script>
+   <script>
+    window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())
+   </script>
+  </meta>
+ </head>
+ <body>
+  <main>
+   <article id="content">
+    <header>
+     <h1 class="title">
+      Module
+      <code>
+       src.instance.Client
+      </code>
+     </h1>
+    </header>
+    <section id="section-intro">
+     <details class="source">
+      <summary>
+       <span>
+        Expand source code
+       </span>
+      </summary>
+      <pre><code class="python">from copy import copy
+from datetime import datetime
+from random import uniform
+from time import sleep, time
+from typing import Optional
+
+from instance.Exceptions import (
+    MessageSendError,
+    WebhookSendError,
+    ResponseTimeout,
+    ButtonInteractError,
+    DropdownInteractError
+)
+from utils.Console import fore, style
+from utils.Converter import DictToClass
+from utils.Merge import combine
+from utils.Requests import request
+from utils.Shared import data
+
+
+class Instance(object):
+    def __init__(self, cwd: str, account: DictToClass) -&gt; None:
+        """
+        The __init__ function is called when an instance of a class is created.
+        It initializes the attributes of the class.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            cwd (str): The current working directory of the program
+            account (DictToClass): The account's data class
+
+        Returns:
+            NoneType: __init__ functions for classes aren't allowed to return anything, don't ask me why
+        """
+
+        self.cwd = cwd
+        self.avatar = account.avatar
+        self.token = account.token
+        self.id = account.id
+        self.username = f"{account.username}#{account.discriminator}"
+        self.user = account.username
+        self.discriminator = account.discriminator
+
+        # Set startup_time to the UNIX time the line was executed
+        self.startup_time = int(time())
+
+        # Create the log file
+        self.log_file = open(
+            f"{cwd}logs/{data['version']}/{account.token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
+            "a",
+            errors="ignore",
+        )
+        
+        # Initialize the session stats dictionary in the shared dictionary
+        data["stats"][self.token] = {
+            "commands_ran": 0,
+            "buttons_clicked": 0,
+            "dropdowns_selected": 0,
+            "coins_gained": 0,
+            "items_gained": {},
+        }
+
+    def _update(self) -&gt; bool:
+        """
+        The _update function is called every 10 seconds when the bot is being run. It updates the lifetime stats of the account, and adds their current session's stats to them.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+
+        Returns:
+            bool: Indicates whether the subprogram executed successfully or not
+        """
+
+        self.Repository.info["stats"]["commands_ran"] += data["stats"][self.token][
+            "commands_ran"
+        ]
+
+        self.Repository.info["stats"]["buttons_clicked"] += data["stats"][
+            self.token
+        ]["buttons_clicked"]
+
+        self.Repository.info["stats"]["dropdowns_selected"] += data["stats"][
+            self.token
+        ]["dropdowns_selected"]
+
+        self.Repository.info["stats"]["coins_gained"] += data["stats"][self.token][
+            "coins_gained"
+        ]
+
+        self.Repository.info["stats"]["items_gained"] = combine(
+            self.Repository.info["stats"]["items_gained"], data["stats"][self.token]["items_gained"]
+        )
+
+        self.Repository.info_write()
+        
+        return True
+
+    def _update_coins(self, command: str, coins: int) -&gt; bool:
+        """
+        The _update_coins function is used to update the coins_gained integer in the info file
+        It takes two arguments, command and coins. Command is the name of the command that was run, while coins is an integer representing how many coins were gained or lost by running said command.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command ran which was used to gain the coins
+            coins (int): The amount of coins received from the command
+
+        Returns:
+            True if the coins received from the command is a number and less than 10000, else False
+        """
+
+        try:
+            coins = int(coins.replace(",", "")) if type(coins) != int else coins
+        except ValueError:
+            self.log(
+                "WARNING",
+                f"An error occured while parsing the coins received from the `{command}` command - `{coins}` is not a number.",
+            )
+            return False
+
+        if coins &gt; 10000 and command != "pls blackjack":
+            self.log(
+                "WARNING",
+                f"A possible error was encountered while parsing the coins received from the `{command}` command - `{coins}` is a large amount.",
+            )
+            return False
+
+        if coins &lt; 1:
+            return False
+
+        data["stats"][self.token]["coins_gained"] += coins
+
+        return True
+
+    def _update_items(self, command: str, item: str) -&gt; bool:
+        """
+        The _update_items function is used to update the `items_gained` dictionary in the info file.
+        It takes two arguments: command and item.
+        command is a string that represents what command was run (e.g., `beg` or `crime`).
+        item is a string representing which item was gained (e.g., `apple`, `fish`).
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command ran which was used to gain the item
+            item (int): The item received from that command.
+
+        Returns:
+            False if the item is an empty string, has `answered first` in it, is `no items` or is `the shop sale just started!`, else True
+        """
+
+        item = item.lower()
+
+        if item in [
+            "",
+            "no items",
+            "your immune system is under attack from covid-19",
+            "the shop sale just started!" or "answered first" in item,
+        ]:
+            return False
+
+        if item.count(" ") &gt; 2:
+            self.log(
+                "WARNING",
+                f"A possible error was encountered while parsing the items received from the `{command}` command - `{item}` seems to be more than 3 words.",
+            )
+            return False
+
+        if any(char in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] for char in item):
+            self.log(
+                "WARNING",
+                f"A possible error was encountered while parsing the items received from the `{command}` command - `{item}` seems to contain digits.",
+            )
+            return False
+
+        if item in data["stats"][self.token]["items_gained"]:
+            data["stats"][self.token]["items_gained"][item] += 1
+        else:
+            data["stats"][self.token]["items_gained"][item] = 1
+
+        return True
+
+    def send_message(
+        self,
+        command: str,
+        token: Optional[str] = None,
+        latest_message: Optional[dict] = None,
+        channel_id: Optional[int] = None,
+    ) -&gt; None:
+        """
+        The send_message function sends a message to the Discord channel.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command to send
+            token (Optional[sr]) = None: The token used the send the message (or None if it should be the token in self)
+            latest_message (Optional[dict]) = None: Used if the message should reply to another message.
+            channel_id (Optional[int]) = None: The channel id used the send the message (or None if it should be the channel id in self)
+
+        Returns:
+            None
+        """
+        command = str(command)
+
+        if self.Repository.config["typing indicator"]["enabled"]:
+            req = request(
+                f"https://discord.com/api/v9/channels/{self.channel_id if channel_id is None else channel_id}/typing",
+                headers={"authorization": self.token if token is None else token},
+                method="POST",
+            )
+            sleep(
+                uniform(
+                    self.Repository.config["typing indicator"]["minimum"],
+                    self.Repository.config["typing indicator"]["maximum"],
+                )
+            )
+
+        if self.Repository.config["message delay"]["enabled"]:
+            sleep(
+                uniform(
+                    self.Repository.config["message delay"]["minimum"],
+                    self.Repository.config["message delay"]["maximum"],
+                )
+            )
+
+        while True:
+            req = request(
+                f"https://discord.com/api/v10/channels/{self.channel_id if channel_id is None else channel_id}/messages?limit=1",
+                headers={"authorization": self.token if token is None else token},
+                json={"content": command}
+                if latest_message is None
+                else {
+                    "content": command,
+                    "message_reference": {
+                        "guild_id": latest_message["guild_id"],
+                        "channel_id": latest_message["channel_id"],
+                        "message_id": latest_message["id"],
+                    },
+                },
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    if "pls" in command:
+                        data["stats"][self.token]["commands_ran"] += 1
+
+                    self.log(
+                        "DEBUG",
+                        f"Successfully sent {'command' if 'pls' in command else 'message'} `{command}`.",
+                    )
+                return
+            else:
+                if req.status_code == 429:
+                    self.log(
+                        "WARNING",
+                        f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
+                    )
+                    sleep(req.content["retry_after"])
+                    continue
+
+                self.log(
+                    "WARNING",
+                    f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {req.status_code} (expected 200 or 204).",
+                )
+                raise MessageSendError(
+                    f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+                )
+
+    def webhook_send(self, payload: dict, fallback_message: str) -&gt; bool:
+        """
+        The webhook_send function sends a webhook to the channel specified by self.channel_id with the given payload.
+        If Discord is ratelimiting the bot, it will sleep for `req.content['retry_after'] / 1000` seconds and then try again.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            payload (dict): The webhook to be sent
+            fallback_message (str): The message to be sent if there is an error sending the webhook (usually if missing permissions). This may be removed in future versions
+
+        Returns:
+            bool: Indicates whether the subprogram executed successfully or not
+        """
+
+        req = request(
+            f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+            headers={"authorization": self.token},
+        )
+
+        if req.status_code not in [200, 204]:
+            self.log(
+                "WARNING",
+                f"Cannot send webhook in channel {self.channel_id} - Missing Permissions. Resorting to normal message.",
+            )
+            self.send_message(fallback_message)
+            return True
+
+        if "embeds" in payload.keys():
+            payload["embeds"][-1]["footer"] = {
+                "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+            }
+
+        if len(req.content) &gt; 0:
+            token = req.content[0]["token"]
+            channel_id = req.content[0]["id"]
+        else:
+            req = request(
+                f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+                headers={"authorization": self.token},
+                json={"name": "Spidey Bot"},
+                method="POST",
+            )
+            token = req.content["token"]
+
+            req = request(
+                f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+                headers={"authorization": self.token},
+            )
+            channel_id = req.content[0]["id"]
+
+        while True:
+            req = request(
+                f"https://discord.com/api/webhooks/{channel_id}/{token}",
+                headers={"authorization": self.token},
+                json=payload,
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    self.log(
+                        "DEBUG",
+                        f"Successfully sent webhook `{payload}`.",
+                    )
+                return
+            else:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204).",
+                    )
+                if req.status_code == 429:
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
+                        )
+                    sleep(req.content["retry_after"] / 1000)
+                    continue
+                raise WebhookSendError(
+                    f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
+                )
+
+        return True
+
+    def retreive_message(
+        self,
+        command: str,
+        token: Optional[str] = None,
+        check: bool = True,
+        old_latest_message: Optional[dict] = None,
+    ) -&gt; dict:
+        """
+        The retreive_message function is used to retrieve the latest message from a Discord channel.
+
+        Parameters:
+
+            command (str): The command that was sent to Dank Memer.
+
+            token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+
+            check (bool): Whether or not this function should check for cooldowns and other restrictions in Dank Memer's response before returning it as a dict. Defaults to True, which means it will check for these restrictions and return an error if they are detected; False means no checks will be performed on the response at all, allowing you more control over what is returned by this function without having to manually parse each message yourself.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command the latest message is being retreived for.
+            token (Optional[str]) = None: The token used to retreive the message (or None if if it should be the token in self)
+            check (bool) = True: Determine whether or not the function should check for restrictions in the response from Dank Memer
+            old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck in an infinite loop or getting the wrong latest message if it can't find a response to its request
+
+        Returns:
+            The latest message in the channel
+        """
+
+        while True:
+            time = datetime.now()
+            old_latest_message = (
+                copy(data["channels"][self.channel_id]["message"])
+                if old_latest_message == None
+                else old_latest_message
+            )
+
+            while (datetime.now() - time).total_seconds() &lt; self.Repository.config[
+                "settings"
+            ]["timeout"]:
+                latest_message = copy(data["channels"][self.channel_id]["message"])
+
+                if old_latest_message == latest_message:
+                    sleep(self.Repository.config["settings"]["timeout"] / 10)
+                    continue
+
+                if "referenced_message" in latest_message.keys():
+                    if latest_message["referenced_message"] != None:
+                        if (
+                            latest_message["referenced_message"]["author"]["id"]
+                            == self.id
+                            and latest_message["author"]["id"] == "270904126974590976"
+                            and latest_message["referenced_message"]["content"]
+                            == command
+                        ):
+                            if self.Repository.config["logging"]["debug"]:
+                                self.log(
+                                    "DEBUG",
+                                    f"Got Dank Memer's response to command `{command}`.",
+                                )
+                            break
+                    elif latest_message["author"]["id"] == "270904126974590976":
+                        if self.Repository.config["logging"]["debug"]:
+                            self.log(
+                                "DEBUG",
+                                f"Got Dank Memer's response to command `{command}`.",
+                            )
+                        break
+                elif latest_message["author"]["id"] == "270904126974590976":
+                    if self.Repository.config["logging"]["debug"]:
+                        self.log(
+                            "DEBUG",
+                            f"Got Dank Memer's response to command `{command}`.",
+                        )
+                    break
+
+                sleep(self.Repository.config["settings"]["timeout"] / 10)
+                old_latest_message = copy(latest_message)
+
+            if latest_message["author"]["id"] != "270904126974590976":
+                raise ResponseTimeout(
+                    f"Timeout exceeded for response from Dank Memer ({self.Repository.config['settings']['timeout']} {'second' if self.Repository.config['settings']['timeout'] == 1 else 'seconds'}). Aborting command."
+                )
+
+            elif len(latest_message["embeds"]) &gt; 0:
+                if "description" not in latest_message["embeds"][0].keys():
+                    break
+
+                if (
+                    "The default cooldown is"
+                    not in latest_message["embeds"][0]["description"]
+                ):
+                    break
+
+                cooldown = int(
+                    "".join(
+                        filter(
+                            str.isdigit,
+                            latest_message["embeds"][0]["description"]
+                            .split("**")[1]
+                            .split("**")[0],
+                        )
+                    )
+                )
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
+                    )
+                sleep(cooldown)
+                self.send_message(command, token if token is not None else None)
+                latest_message = self.retreive_message(
+                    command, token, check, old_latest_message
+                )
+            else:
+                break
+
+        if (
+            len(latest_message["embeds"]) != 0
+            and "title" in latest_message["embeds"][0].keys()
+            and latest_message["embeds"][0]["title"]
+            in ["You're currently bot banned!", "You're currently blacklisted!"]
+        ):
+            self.log(
+                "ERROR",
+                "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.",
+            )
+
+        if self.Repository.config["auto trade"]["enabled"] and check:
+            old_latest_message = copy(latest_message)
+
+            for key in self.Repository.config["auto trade"]:
+                if (
+                    key == "enabled"
+                    or key == "trader token"
+                    or not self.Repository.config["auto trade"][key]
+                ):
+                    continue
+
+                found = False
+
+                if key.lower() in latest_message["content"].lower():
+                    found = True
+                elif len(latest_message["embeds"]) &gt; 0:
+                    if (
+                        key.lower()
+                        in latest_message["embeds"][0]["description"].lower()
+                    ):
+                        found = True
+
+                if found:
+                    self.log("DEBUG", "Received an item to be autotraded.")
+
+                    self.send_message(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        self.Repository.config["auto trade"]["trader token"],
+                    )
+
+                    latest_message = self.retreive_message(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        self.Repository.config["auto trade"]["trader token"],
+                        False,
+                    )
+
+                    if (
+                        latest_message["content"]
+                        == "You have 0 coins, you can't give them 1."
+                    ):
+                        self.send_message(
+                            f"pls with 1",
+                            self.Repository.config["auto trade"]["trader token"],
+                        )
+
+                        self.send_message(
+                            f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                            self.Repository.config["auto trade"]["trader token"],
+                        )
+
+                        latest_message = self.retreive_message(
+                            f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                            self.Repository.config["auto trade"]["trader token"],
+                            False,
+                        )
+
+                    self.interact_button(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        latest_message["components"][0]["components"][-1]["custom_id"],
+                        latest_message,
+                        self.Repository.config["auto trade"]["trader token"],
+                        self.trader_token_session_id,
+                    )
+
+                    sleep(1)
+
+                    latest_message = self.retreive_message(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;", check=False
+                    )
+
+                    self.interact_button(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        latest_message["components"][0]["components"][-1]["custom_id"],
+                        latest_message,
+                    )
+
+            return old_latest_message
+
+        elif self.Repository.config["auto sell"]["enabled"] and check:
+            for key in self.Repository.config["auto sell"]:
+                if key == "enabled" or not self.Repository.config["auto sell"][key]:
+                    continue
+
+                found = False
+
+                if key.lower() in latest_message["content"].lower():
+                    found = True
+                elif len(latest_message["embeds"]) &gt; 0:
+                    if (
+                        key.lower()
+                        in latest_message["embeds"][0]["description"].lower()
+                    ):
+                        found = True
+
+                if found:
+                    self.send_message(f"pls sell {key}")
+
+        return latest_message
+
+    def fallback_retreive_message(self, command: str) -&gt; dict:
+        """
+        The fallback_retreive_message function is a helper function that is used to retreive the latest message sent by Dank Memer from the Discord channel.
+        It does this by making an API call to Discord's servers, and then parsing through all of the messages in order to find one that matches our criteria.
+        The criteria for this function is as follows:
+
+            1) The message must be sent by Dank Memer. This ensures we don't get any false positives from other bots or users.
+            2) The command must be referenced in the embed title field of said message (e.g., `pls stream`). This ensures we don't get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command the latest message is being retreived for
+
+        Returns:
+            The latest message sent by Dank Memer in the channel
+        """
+
+        req = request(
+            f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
+            headers={"authorization": self.token},
+        )
+
+        for latest_message in req.content:
+            if latest_message["author"]["id"] != "270904126974590976" or (
+                command != "pls stream"
+                and "referenced_message" not in latest_message.keys()
+            ):
+                continue
+
+            if "referenced_message" in latest_message.keys():
+                if (
+                    latest_message["referenced_message"]["author"]["id"] != self.id
+                    or latest_message["referenced_message"]["content"] != command
+                ):
+                    continue
+            if (
+                len(latest_message["embeds"]) != 0
+                and "title" in latest_message["embeds"][0].keys()
+                and latest_message["embeds"][0]["title"]
+                in ["You're currently bot banned!", "You're currently blacklisted!"]
+            ):
+                self.log(
+                    "ERROR",
+                    "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.",
+                )
+
+            if len(latest_message["embeds"]) &gt; 0:
+                if "description" in latest_message["embeds"][0].keys():
+                    if (
+                        "The default cooldown is"
+                        in latest_message["embeds"][0]["description"]
+                    ):
+                        cooldown = int(
+                            "".join(
+                                filter(
+                                    str.isdigit,
+                                    latest_message["embeds"][0]["description"]
+                                    .split("**")[1]
+                                    .split("**")[0],
+                                )
+                            )
+                        )
+                        self.log(
+                            "WARNING",
+                            f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
+                        )
+                        sleep(cooldown)
+                        self.send_message(command)
+                        latest_message = self.retreive_message(command)
+
+            return latest_message
+
+    def interact_button(
+        self,
+        command: str,
+        custom_id: int,
+        latest_message: dict,
+        token: Optional[str] = None,
+        session_id: Optional[str] = None,
+    ):
+        """
+        The interact_button function sends a POST request to the Discord API, which interacts with a button on Dank Memer's response.
+
+        Parameters:
+
+            command (str): The name of the command that was sent to Discord. This is used for logging purposes only.
+
+            custom_id (int): The ID of the button that should be interacted with on Dank Memer's response message.
+
+            latest_message (dict): The message the button to be interacted with is on.
+
+            token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command is being interacted with
+            custom_id (int): The ID of the button that should be interacted with
+            latest_message (dict): The message the button to be interacted with is on.
+            token (Optional[str]) = None: Pass the token to the function
+            session_id (Optional[str]) = None: The sesion id of the account that is interacting with the button.
+
+        Returns:
+            Nothing
+        """
+
+        payload = {
+            "application_id": 270904126974590976,
+            "channel_id": self.channel_id,
+            "type": 3,
+            "data": {"component_type": 2, "custom_id": custom_id},
+            "guild_id": latest_message["message_reference"]["guild_id"]
+            if "message_reference" in latest_message.keys()
+            else self.guild_id,
+            "message_flags": 0,
+            "message_id": latest_message["id"],
+            "session_id": self.session_id if session_id is None else session_id,
+        }
+
+        if self.Repository.config["button delay"]["enabled"]:
+            sleep(
+                uniform(
+                    self.Repository.config["button delay"]["minimum"],
+                    self.Repository.config["button delay"]["maximum"],
+                )
+            )
+
+        while True:
+            req = request(
+                "https://discord.com/api/v10/interactions",
+                headers={"authorization": self.token if token is None else token},
+                json=payload,
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    data["stats"][self.token]["buttons_clicked"] += 1
+
+                    self.log(
+                        "DEBUG",
+                        f"Successfully interacted with button on Dank Memer's response to command `{command}`.",
+                    )
+                return
+            else:
+                if req.status_code == 429:
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
+                        )
+                    sleep(req.content["retry_after"])
+
+                    continue
+
+                raise ButtonInteractError(
+                    f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+                )
+
+    def interact_dropdown(
+        self, command: str, custom_id: int, option_id: str, latest_message: dict
+    ):
+        """
+        The interact_dropdown function is used to interact with a dropdown menu on Dank Memer's response to a command.
+
+        Parameters:
+
+            self (DiscordSelfbot): The DiscordSelfbot instance that is calling the function.
+
+            command (str): The name of the command that was called
+
+            custom_id (int): A unique ID of the dropdown to be selected.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command is being interacted with
+            custom_id (int): The ID of the button that should be interacted with
+            option_id (str): The ID of the dropdown that should be selected
+            latest_message (dict): The message the button to be interacted with is on.
+
+        Returns:
+            None
+        """
+
+        payload = {
+            "application_id": 270904126974590976,
+            "channel_id": self.channel_id,
+            "type": 3,
+            "data": {
+                "component_type": 3,
+                "custom_id": custom_id,
+                "type": 3,
+                "values": [option_id],
+            },
+            "guild_id": latest_message["message_reference"]["guild_id"]
+            if "message_reference" in latest_message.keys()
+            else self.guild_id,
+            "message_flags": 0,
+            "message_id": latest_message["id"],
+            "session_id": self.session_id,
+        }
+
+        if self.Repository.config["dropdown delay"]["enabled"]:
+            sleep(
+                uniform(
+                    self.Repository.config["dropdown delay"]["minimum"],
+                    self.Repository.config["dropdown delay"]["maximum"],
+                )
+            )
+
+        while True:
+            req = request(
+                "https://discord.com/api/v10/interactions",
+                headers={"authorization": self.token},
+                json=payload,
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    data["stats"][self.token]["dropdowns_selected"] += 1
+
+                    self.log(
+                        "DEBUG",
+                        f"Successfully interacted with dropdown on Dank Memer's response to command `{command}`.",
+                    )
+                return
+            else:
+                if req.status_code == 429:
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
+                        )
+                    sleep(req.content["retry_after"])
+
+                    continue
+                raise DropdownInteractError(
+                    f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+                )
+
+    def clear_lag(self, command: str, index1: int = 0, index2: int = -1) -&gt; None:
+        """
+        The clear_lag function is used to stop possible backlash from Dank Memer commands. It does this
+        by finding the latest message from Dank Memer and interacting with the last button on the first row,
+        although this can be changed
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): Specify which button to interact with
+            index1 (int) = 0: Specify the index of the first component in a message
+            index2 (int) = -1: Specify the index of the button in the message
+
+        Returns:
+            None
+        """
+
+        req = request(
+            f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
+            headers={"authorization": self.token},
+        )
+
+        for message in req.content:
+            if (
+                message["author"]["id"] != "270904126974590976"
+                or len(message["components"]) == 0
+            ):
+                continue
+
+            for _ in range(0, 2):
+                try:
+                    custom_id = message["components"][index1]["components"][index2][
+                        "custom_id"
+                    ]
+                    self.interact_button(command, custom_id, message)
+                    break
+                except ButtonInteractError:
+                    continue
+
+    def log(self, level: str, text: str) -&gt; None:
+        """
+        The log function is used to log messages.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            level (str): The level of the log message
+            text (str): The log message
+
+        Returns:
+            None
+        """
+
+        if "Repository" in self.__dict__.keys():
+            if level == "DEBUG" and not self.Repository.config["logging"]["debug"]:
+                return
+            elif (
+                level == "WARNING" and not self.Repository.config["logging"]["warning"]
+            ):
+                return
+
+        time = datetime.now().strftime("[%x-%X]")
+
+        print(
+            f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}"
+        )
+
+        self.log_file.write(
+            f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n"
+        )
+        self.log_file.flush()
+
+        if level == "ERROR":
+            _ = input(
+                f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}\n"
+            )
+            exit(1)
+
+    def webhook_log(self, payload: dict) -&gt; None:
+        """
+        The webhook_log function is used to send a webhook log to the webhook logging URL
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            payload (dict): The data to be sent to the webhook
+
+        Returns:
+            None
+        """
+
+        if not self.Repository.config["logging"]["webhook logging"]["enabled"]:
+            return
+
+        while True:
+            req = request(
+                self.Repository.config["logging"]["webhook logging"]["url"],
+                json=payload,
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    self.log(
+                        "DEBUG",
+                        f"Successfully sent webhook `{payload}`.",
+                    )
+                return
+            else:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204).",
+                    )
+                if req.status_code == 429:
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
+                        )
+                    sleep(req.content["retry_after"] / 1000)
+                    continue
+                raise WebhookSendError(
+                    f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
+                )</code></pre>
+     </details>
+    </section>
+    <section>
+    </section>
+    <section>
+    </section>
+    <section>
+    </section>
+    <section>
+     <h2 class="section-title" id="header-classes">
+      Classes
+     </h2>
+     <dl>
+      <dt id="src.instance.Client.Instance">
+       <code class="flex name class">
+        <span>
+         class
+         <span class="ident">
+          Instance
+         </span>
+        </span>
+        <span>
+         (
+        </span>
+        <span>
+         cwd: str, account: utils.Converter.DictToClass)
+        </span>
+       </code>
+      </dt>
+      <dd>
+       <div class="desc">
+        <p>
+         The
+         <strong>
+          init
+         </strong>
+         function is called when an instance of a class is created.
+It initializes the attributes of the class.
+        </p>
+        <h2 id="args">
+         Args
+        </h2>
+        <dl>
+         <dt>
+          <strong>
+           <code>
+            self
+           </code>
+          </strong>
+         </dt>
+         <dd>
+          Gives access to the class' attributes and methods.
+         </dd>
+         <dt>
+          <strong>
+           <code>
+            cwd
+           </code>
+          </strong>
+          :
+          <code>
+           str
+          </code>
+         </dt>
+         <dd>
+          The current working directory of the program
+         </dd>
+         <dt>
+          <strong>
+           <code>
+            account
+           </code>
+          </strong>
+          :
+          <code>
+           DictToClass
+          </code>
+         </dt>
+         <dd>
+          The account's data class
+         </dd>
+        </dl>
+        <h2 id="returns">
+         Returns
+        </h2>
+        <dl>
+         <dt>
+          <code>
+           NoneType
+          </code>
+         </dt>
+         <dd>
+          <strong>
+           init
+          </strong>
+          functions for classes aren't allowed to return anything, don't ask me why
+         </dd>
+        </dl>
+       </div>
+       <details class="source">
+        <summary>
+         <span>
+          Expand source code
+         </span>
+        </summary>
+        <pre><code class="python">class Instance(object):
+    def __init__(self, cwd: str, account: DictToClass) -&gt; None:
+        """
+        The __init__ function is called when an instance of a class is created.
+        It initializes the attributes of the class.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            cwd (str): The current working directory of the program
+            account (DictToClass): The account's data class
+
+        Returns:
+            NoneType: __init__ functions for classes aren't allowed to return anything, don't ask me why
+        """
+
+        self.cwd = cwd
+        self.avatar = account.avatar
+        self.token = account.token
+        self.id = account.id
+        self.username = f"{account.username}#{account.discriminator}"
+        self.user = account.username
+        self.discriminator = account.discriminator
+
+        # Set startup_time to the UNIX time the line was executed
+        self.startup_time = int(time())
+
+        # Create the log file
+        self.log_file = open(
+            f"{cwd}logs/{data['version']}/{account.token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
+            "a",
+            errors="ignore",
+        )
+        
+        # Initialize the session stats dictionary in the shared dictionary
+        data["stats"][self.token] = {
+            "commands_ran": 0,
+            "buttons_clicked": 0,
+            "dropdowns_selected": 0,
+            "coins_gained": 0,
+            "items_gained": {},
+        }
+
+    def _update(self) -&gt; bool:
+        """
+        The _update function is called every 10 seconds when the bot is being run. It updates the lifetime stats of the account, and adds their current session's stats to them.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+
+        Returns:
+            bool: Indicates whether the subprogram executed successfully or not
+        """
+
+        self.Repository.info["stats"]["commands_ran"] += data["stats"][self.token][
+            "commands_ran"
+        ]
+
+        self.Repository.info["stats"]["buttons_clicked"] += data["stats"][
+            self.token
+        ]["buttons_clicked"]
+
+        self.Repository.info["stats"]["dropdowns_selected"] += data["stats"][
+            self.token
+        ]["dropdowns_selected"]
+
+        self.Repository.info["stats"]["coins_gained"] += data["stats"][self.token][
+            "coins_gained"
+        ]
+
+        self.Repository.info["stats"]["items_gained"] = combine(
+            self.Repository.info["stats"]["items_gained"], data["stats"][self.token]["items_gained"]
+        )
+
+        self.Repository.info_write()
+        
+        return True
+
+    def _update_coins(self, command: str, coins: int) -&gt; bool:
+        """
+        The _update_coins function is used to update the coins_gained integer in the info file
+        It takes two arguments, command and coins. Command is the name of the command that was run, while coins is an integer representing how many coins were gained or lost by running said command.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command ran which was used to gain the coins
+            coins (int): The amount of coins received from the command
+
+        Returns:
+            True if the coins received from the command is a number and less than 10000, else False
+        """
+
+        try:
+            coins = int(coins.replace(",", "")) if type(coins) != int else coins
+        except ValueError:
+            self.log(
+                "WARNING",
+                f"An error occured while parsing the coins received from the `{command}` command - `{coins}` is not a number.",
+            )
+            return False
+
+        if coins &gt; 10000 and command != "pls blackjack":
+            self.log(
+                "WARNING",
+                f"A possible error was encountered while parsing the coins received from the `{command}` command - `{coins}` is a large amount.",
+            )
+            return False
+
+        if coins &lt; 1:
+            return False
+
+        data["stats"][self.token]["coins_gained"] += coins
+
+        return True
+
+    def _update_items(self, command: str, item: str) -&gt; bool:
+        """
+        The _update_items function is used to update the `items_gained` dictionary in the info file.
+        It takes two arguments: command and item.
+        command is a string that represents what command was run (e.g., `beg` or `crime`).
+        item is a string representing which item was gained (e.g., `apple`, `fish`).
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command ran which was used to gain the item
+            item (int): The item received from that command.
+
+        Returns:
+            False if the item is an empty string, has `answered first` in it, is `no items` or is `the shop sale just started!`, else True
+        """
+
+        item = item.lower()
+
+        if item in [
+            "",
+            "no items",
+            "your immune system is under attack from covid-19",
+            "the shop sale just started!" or "answered first" in item,
+        ]:
+            return False
+
+        if item.count(" ") &gt; 2:
+            self.log(
+                "WARNING",
+                f"A possible error was encountered while parsing the items received from the `{command}` command - `{item}` seems to be more than 3 words.",
+            )
+            return False
+
+        if any(char in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] for char in item):
+            self.log(
+                "WARNING",
+                f"A possible error was encountered while parsing the items received from the `{command}` command - `{item}` seems to contain digits.",
+            )
+            return False
+
+        if item in data["stats"][self.token]["items_gained"]:
+            data["stats"][self.token]["items_gained"][item] += 1
+        else:
+            data["stats"][self.token]["items_gained"][item] = 1
+
+        return True
+
+    def send_message(
+        self,
+        command: str,
+        token: Optional[str] = None,
+        latest_message: Optional[dict] = None,
+        channel_id: Optional[int] = None,
+    ) -&gt; None:
+        """
+        The send_message function sends a message to the Discord channel.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command to send
+            token (Optional[sr]) = None: The token used the send the message (or None if it should be the token in self)
+            latest_message (Optional[dict]) = None: Used if the message should reply to another message.
+            channel_id (Optional[int]) = None: The channel id used the send the message (or None if it should be the channel id in self)
+
+        Returns:
+            None
+        """
+        command = str(command)
+
+        if self.Repository.config["typing indicator"]["enabled"]:
+            req = request(
+                f"https://discord.com/api/v9/channels/{self.channel_id if channel_id is None else channel_id}/typing",
+                headers={"authorization": self.token if token is None else token},
+                method="POST",
+            )
+            sleep(
+                uniform(
+                    self.Repository.config["typing indicator"]["minimum"],
+                    self.Repository.config["typing indicator"]["maximum"],
+                )
+            )
+
+        if self.Repository.config["message delay"]["enabled"]:
+            sleep(
+                uniform(
+                    self.Repository.config["message delay"]["minimum"],
+                    self.Repository.config["message delay"]["maximum"],
+                )
+            )
+
+        while True:
+            req = request(
+                f"https://discord.com/api/v10/channels/{self.channel_id if channel_id is None else channel_id}/messages?limit=1",
+                headers={"authorization": self.token if token is None else token},
+                json={"content": command}
+                if latest_message is None
+                else {
+                    "content": command,
+                    "message_reference": {
+                        "guild_id": latest_message["guild_id"],
+                        "channel_id": latest_message["channel_id"],
+                        "message_id": latest_message["id"],
+                    },
+                },
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    if "pls" in command:
+                        data["stats"][self.token]["commands_ran"] += 1
+
+                    self.log(
+                        "DEBUG",
+                        f"Successfully sent {'command' if 'pls' in command else 'message'} `{command}`.",
+                    )
+                return
+            else:
+                if req.status_code == 429:
+                    self.log(
+                        "WARNING",
+                        f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
+                    )
+                    sleep(req.content["retry_after"])
+                    continue
+
+                self.log(
+                    "WARNING",
+                    f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {req.status_code} (expected 200 or 204).",
+                )
+                raise MessageSendError(
+                    f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+                )
+
+    def webhook_send(self, payload: dict, fallback_message: str) -&gt; bool:
+        """
+        The webhook_send function sends a webhook to the channel specified by self.channel_id with the given payload.
+        If Discord is ratelimiting the bot, it will sleep for `req.content['retry_after'] / 1000` seconds and then try again.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            payload (dict): The webhook to be sent
+            fallback_message (str): The message to be sent if there is an error sending the webhook (usually if missing permissions). This may be removed in future versions
+
+        Returns:
+            bool: Indicates whether the subprogram executed successfully or not
+        """
+
+        req = request(
+            f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+            headers={"authorization": self.token},
+        )
+
+        if req.status_code not in [200, 204]:
+            self.log(
+                "WARNING",
+                f"Cannot send webhook in channel {self.channel_id} - Missing Permissions. Resorting to normal message.",
+            )
+            self.send_message(fallback_message)
+            return True
+
+        if "embeds" in payload.keys():
+            payload["embeds"][-1]["footer"] = {
+                "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+            }
+
+        if len(req.content) &gt; 0:
+            token = req.content[0]["token"]
+            channel_id = req.content[0]["id"]
+        else:
+            req = request(
+                f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+                headers={"authorization": self.token},
+                json={"name": "Spidey Bot"},
+                method="POST",
+            )
+            token = req.content["token"]
+
+            req = request(
+                f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+                headers={"authorization": self.token},
+            )
+            channel_id = req.content[0]["id"]
+
+        while True:
+            req = request(
+                f"https://discord.com/api/webhooks/{channel_id}/{token}",
+                headers={"authorization": self.token},
+                json=payload,
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    self.log(
+                        "DEBUG",
+                        f"Successfully sent webhook `{payload}`.",
+                    )
+                return
+            else:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204).",
+                    )
+                if req.status_code == 429:
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
+                        )
+                    sleep(req.content["retry_after"] / 1000)
+                    continue
+                raise WebhookSendError(
+                    f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
+                )
+
+        return True
+
+    def retreive_message(
+        self,
+        command: str,
+        token: Optional[str] = None,
+        check: bool = True,
+        old_latest_message: Optional[dict] = None,
+    ) -&gt; dict:
+        """
+        The retreive_message function is used to retrieve the latest message from a Discord channel.
+
+        Parameters:
+
+            command (str): The command that was sent to Dank Memer.
+
+            token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+
+            check (bool): Whether or not this function should check for cooldowns and other restrictions in Dank Memer's response before returning it as a dict. Defaults to True, which means it will check for these restrictions and return an error if they are detected; False means no checks will be performed on the response at all, allowing you more control over what is returned by this function without having to manually parse each message yourself.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command the latest message is being retreived for.
+            token (Optional[str]) = None: The token used to retreive the message (or None if if it should be the token in self)
+            check (bool) = True: Determine whether or not the function should check for restrictions in the response from Dank Memer
+            old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck in an infinite loop or getting the wrong latest message if it can't find a response to its request
+
+        Returns:
+            The latest message in the channel
+        """
+
+        while True:
+            time = datetime.now()
+            old_latest_message = (
+                copy(data["channels"][self.channel_id]["message"])
+                if old_latest_message == None
+                else old_latest_message
+            )
+
+            while (datetime.now() - time).total_seconds() &lt; self.Repository.config[
+                "settings"
+            ]["timeout"]:
+                latest_message = copy(data["channels"][self.channel_id]["message"])
+
+                if old_latest_message == latest_message:
+                    sleep(self.Repository.config["settings"]["timeout"] / 10)
+                    continue
+
+                if "referenced_message" in latest_message.keys():
+                    if latest_message["referenced_message"] != None:
+                        if (
+                            latest_message["referenced_message"]["author"]["id"]
+                            == self.id
+                            and latest_message["author"]["id"] == "270904126974590976"
+                            and latest_message["referenced_message"]["content"]
+                            == command
+                        ):
+                            if self.Repository.config["logging"]["debug"]:
+                                self.log(
+                                    "DEBUG",
+                                    f"Got Dank Memer's response to command `{command}`.",
+                                )
+                            break
+                    elif latest_message["author"]["id"] == "270904126974590976":
+                        if self.Repository.config["logging"]["debug"]:
+                            self.log(
+                                "DEBUG",
+                                f"Got Dank Memer's response to command `{command}`.",
+                            )
+                        break
+                elif latest_message["author"]["id"] == "270904126974590976":
+                    if self.Repository.config["logging"]["debug"]:
+                        self.log(
+                            "DEBUG",
+                            f"Got Dank Memer's response to command `{command}`.",
+                        )
+                    break
+
+                sleep(self.Repository.config["settings"]["timeout"] / 10)
+                old_latest_message = copy(latest_message)
+
+            if latest_message["author"]["id"] != "270904126974590976":
+                raise ResponseTimeout(
+                    f"Timeout exceeded for response from Dank Memer ({self.Repository.config['settings']['timeout']} {'second' if self.Repository.config['settings']['timeout'] == 1 else 'seconds'}). Aborting command."
+                )
+
+            elif len(latest_message["embeds"]) &gt; 0:
+                if "description" not in latest_message["embeds"][0].keys():
+                    break
+
+                if (
+                    "The default cooldown is"
+                    not in latest_message["embeds"][0]["description"]
+                ):
+                    break
+
+                cooldown = int(
+                    "".join(
+                        filter(
+                            str.isdigit,
+                            latest_message["embeds"][0]["description"]
+                            .split("**")[1]
+                            .split("**")[0],
+                        )
+                    )
+                )
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
+                    )
+                sleep(cooldown)
+                self.send_message(command, token if token is not None else None)
+                latest_message = self.retreive_message(
+                    command, token, check, old_latest_message
+                )
+            else:
+                break
+
+        if (
+            len(latest_message["embeds"]) != 0
+            and "title" in latest_message["embeds"][0].keys()
+            and latest_message["embeds"][0]["title"]
+            in ["You're currently bot banned!", "You're currently blacklisted!"]
+        ):
+            self.log(
+                "ERROR",
+                "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.",
+            )
+
+        if self.Repository.config["auto trade"]["enabled"] and check:
+            old_latest_message = copy(latest_message)
+
+            for key in self.Repository.config["auto trade"]:
+                if (
+                    key == "enabled"
+                    or key == "trader token"
+                    or not self.Repository.config["auto trade"][key]
+                ):
+                    continue
+
+                found = False
+
+                if key.lower() in latest_message["content"].lower():
+                    found = True
+                elif len(latest_message["embeds"]) &gt; 0:
+                    if (
+                        key.lower()
+                        in latest_message["embeds"][0]["description"].lower()
+                    ):
+                        found = True
+
+                if found:
+                    self.log("DEBUG", "Received an item to be autotraded.")
+
+                    self.send_message(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        self.Repository.config["auto trade"]["trader token"],
+                    )
+
+                    latest_message = self.retreive_message(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        self.Repository.config["auto trade"]["trader token"],
+                        False,
+                    )
+
+                    if (
+                        latest_message["content"]
+                        == "You have 0 coins, you can't give them 1."
+                    ):
+                        self.send_message(
+                            f"pls with 1",
+                            self.Repository.config["auto trade"]["trader token"],
+                        )
+
+                        self.send_message(
+                            f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                            self.Repository.config["auto trade"]["trader token"],
+                        )
+
+                        latest_message = self.retreive_message(
+                            f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                            self.Repository.config["auto trade"]["trader token"],
+                            False,
+                        )
+
+                    self.interact_button(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        latest_message["components"][0]["components"][-1]["custom_id"],
+                        latest_message,
+                        self.Repository.config["auto trade"]["trader token"],
+                        self.trader_token_session_id,
+                    )
+
+                    sleep(1)
+
+                    latest_message = self.retreive_message(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;", check=False
+                    )
+
+                    self.interact_button(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        latest_message["components"][0]["components"][-1]["custom_id"],
+                        latest_message,
+                    )
+
+            return old_latest_message
+
+        elif self.Repository.config["auto sell"]["enabled"] and check:
+            for key in self.Repository.config["auto sell"]:
+                if key == "enabled" or not self.Repository.config["auto sell"][key]:
+                    continue
+
+                found = False
+
+                if key.lower() in latest_message["content"].lower():
+                    found = True
+                elif len(latest_message["embeds"]) &gt; 0:
+                    if (
+                        key.lower()
+                        in latest_message["embeds"][0]["description"].lower()
+                    ):
+                        found = True
+
+                if found:
+                    self.send_message(f"pls sell {key}")
+
+        return latest_message
+
+    def fallback_retreive_message(self, command: str) -&gt; dict:
+        """
+        The fallback_retreive_message function is a helper function that is used to retreive the latest message sent by Dank Memer from the Discord channel.
+        It does this by making an API call to Discord's servers, and then parsing through all of the messages in order to find one that matches our criteria.
+        The criteria for this function is as follows:
+
+            1) The message must be sent by Dank Memer. This ensures we don't get any false positives from other bots or users.
+            2) The command must be referenced in the embed title field of said message (e.g., `pls stream`). This ensures we don't get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command the latest message is being retreived for
+
+        Returns:
+            The latest message sent by Dank Memer in the channel
+        """
+
+        req = request(
+            f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
+            headers={"authorization": self.token},
+        )
+
+        for latest_message in req.content:
+            if latest_message["author"]["id"] != "270904126974590976" or (
+                command != "pls stream"
+                and "referenced_message" not in latest_message.keys()
+            ):
+                continue
+
+            if "referenced_message" in latest_message.keys():
+                if (
+                    latest_message["referenced_message"]["author"]["id"] != self.id
+                    or latest_message["referenced_message"]["content"] != command
+                ):
+                    continue
+            if (
+                len(latest_message["embeds"]) != 0
+                and "title" in latest_message["embeds"][0].keys()
+                and latest_message["embeds"][0]["title"]
+                in ["You're currently bot banned!", "You're currently blacklisted!"]
+            ):
+                self.log(
+                    "ERROR",
+                    "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.",
+                )
+
+            if len(latest_message["embeds"]) &gt; 0:
+                if "description" in latest_message["embeds"][0].keys():
+                    if (
+                        "The default cooldown is"
+                        in latest_message["embeds"][0]["description"]
+                    ):
+                        cooldown = int(
+                            "".join(
+                                filter(
+                                    str.isdigit,
+                                    latest_message["embeds"][0]["description"]
+                                    .split("**")[1]
+                                    .split("**")[0],
+                                )
+                            )
+                        )
+                        self.log(
+                            "WARNING",
+                            f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
+                        )
+                        sleep(cooldown)
+                        self.send_message(command)
+                        latest_message = self.retreive_message(command)
+
+            return latest_message
+
+    def interact_button(
+        self,
+        command: str,
+        custom_id: int,
+        latest_message: dict,
+        token: Optional[str] = None,
+        session_id: Optional[str] = None,
+    ):
+        """
+        The interact_button function sends a POST request to the Discord API, which interacts with a button on Dank Memer's response.
+
+        Parameters:
+
+            command (str): The name of the command that was sent to Discord. This is used for logging purposes only.
+
+            custom_id (int): The ID of the button that should be interacted with on Dank Memer's response message.
+
+            latest_message (dict): The message the button to be interacted with is on.
+
+            token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command is being interacted with
+            custom_id (int): The ID of the button that should be interacted with
+            latest_message (dict): The message the button to be interacted with is on.
+            token (Optional[str]) = None: Pass the token to the function
+            session_id (Optional[str]) = None: The sesion id of the account that is interacting with the button.
+
+        Returns:
+            Nothing
+        """
+
+        payload = {
+            "application_id": 270904126974590976,
+            "channel_id": self.channel_id,
+            "type": 3,
+            "data": {"component_type": 2, "custom_id": custom_id},
+            "guild_id": latest_message["message_reference"]["guild_id"]
+            if "message_reference" in latest_message.keys()
+            else self.guild_id,
+            "message_flags": 0,
+            "message_id": latest_message["id"],
+            "session_id": self.session_id if session_id is None else session_id,
+        }
+
+        if self.Repository.config["button delay"]["enabled"]:
+            sleep(
+                uniform(
+                    self.Repository.config["button delay"]["minimum"],
+                    self.Repository.config["button delay"]["maximum"],
+                )
+            )
+
+        while True:
+            req = request(
+                "https://discord.com/api/v10/interactions",
+                headers={"authorization": self.token if token is None else token},
+                json=payload,
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    data["stats"][self.token]["buttons_clicked"] += 1
+
+                    self.log(
+                        "DEBUG",
+                        f"Successfully interacted with button on Dank Memer's response to command `{command}`.",
+                    )
+                return
+            else:
+                if req.status_code == 429:
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
+                        )
+                    sleep(req.content["retry_after"])
+
+                    continue
+
+                raise ButtonInteractError(
+                    f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+                )
+
+    def interact_dropdown(
+        self, command: str, custom_id: int, option_id: str, latest_message: dict
+    ):
+        """
+        The interact_dropdown function is used to interact with a dropdown menu on Dank Memer's response to a command.
+
+        Parameters:
+
+            self (DiscordSelfbot): The DiscordSelfbot instance that is calling the function.
+
+            command (str): The name of the command that was called
+
+            custom_id (int): A unique ID of the dropdown to be selected.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command is being interacted with
+            custom_id (int): The ID of the button that should be interacted with
+            option_id (str): The ID of the dropdown that should be selected
+            latest_message (dict): The message the button to be interacted with is on.
+
+        Returns:
+            None
+        """
+
+        payload = {
+            "application_id": 270904126974590976,
+            "channel_id": self.channel_id,
+            "type": 3,
+            "data": {
+                "component_type": 3,
+                "custom_id": custom_id,
+                "type": 3,
+                "values": [option_id],
+            },
+            "guild_id": latest_message["message_reference"]["guild_id"]
+            if "message_reference" in latest_message.keys()
+            else self.guild_id,
+            "message_flags": 0,
+            "message_id": latest_message["id"],
+            "session_id": self.session_id,
+        }
+
+        if self.Repository.config["dropdown delay"]["enabled"]:
+            sleep(
+                uniform(
+                    self.Repository.config["dropdown delay"]["minimum"],
+                    self.Repository.config["dropdown delay"]["maximum"],
+                )
+            )
+
+        while True:
+            req = request(
+                "https://discord.com/api/v10/interactions",
+                headers={"authorization": self.token},
+                json=payload,
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    data["stats"][self.token]["dropdowns_selected"] += 1
+
+                    self.log(
+                        "DEBUG",
+                        f"Successfully interacted with dropdown on Dank Memer's response to command `{command}`.",
+                    )
+                return
+            else:
+                if req.status_code == 429:
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
+                        )
+                    sleep(req.content["retry_after"])
+
+                    continue
+                raise DropdownInteractError(
+                    f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+                )
+
+    def clear_lag(self, command: str, index1: int = 0, index2: int = -1) -&gt; None:
+        """
+        The clear_lag function is used to stop possible backlash from Dank Memer commands. It does this
+        by finding the latest message from Dank Memer and interacting with the last button on the first row,
+        although this can be changed
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): Specify which button to interact with
+            index1 (int) = 0: Specify the index of the first component in a message
+            index2 (int) = -1: Specify the index of the button in the message
+
+        Returns:
+            None
+        """
+
+        req = request(
+            f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
+            headers={"authorization": self.token},
+        )
+
+        for message in req.content:
+            if (
+                message["author"]["id"] != "270904126974590976"
+                or len(message["components"]) == 0
+            ):
+                continue
+
+            for _ in range(0, 2):
+                try:
+                    custom_id = message["components"][index1]["components"][index2][
+                        "custom_id"
+                    ]
+                    self.interact_button(command, custom_id, message)
+                    break
+                except ButtonInteractError:
+                    continue
+
+    def log(self, level: str, text: str) -&gt; None:
+        """
+        The log function is used to log messages.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            level (str): The level of the log message
+            text (str): The log message
+
+        Returns:
+            None
+        """
+
+        if "Repository" in self.__dict__.keys():
+            if level == "DEBUG" and not self.Repository.config["logging"]["debug"]:
+                return
+            elif (
+                level == "WARNING" and not self.Repository.config["logging"]["warning"]
+            ):
+                return
+
+        time = datetime.now().strftime("[%x-%X]")
+
+        print(
+            f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}"
+        )
+
+        self.log_file.write(
+            f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n"
+        )
+        self.log_file.flush()
+
+        if level == "ERROR":
+            _ = input(
+                f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}\n"
+            )
+            exit(1)
+
+    def webhook_log(self, payload: dict) -&gt; None:
+        """
+        The webhook_log function is used to send a webhook log to the webhook logging URL
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            payload (dict): The data to be sent to the webhook
+
+        Returns:
+            None
+        """
+
+        if not self.Repository.config["logging"]["webhook logging"]["enabled"]:
+            return
+
+        while True:
+            req = request(
+                self.Repository.config["logging"]["webhook logging"]["url"],
+                json=payload,
+                method="POST",
+            )
+
+            if 199 &lt; req.status_code &lt; 300:
+                if self.Repository.config["logging"]["debug"]:
+                    self.log(
+                        "DEBUG",
+                        f"Successfully sent webhook `{payload}`.",
+                    )
+                return
+            else:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204).",
+                    )
+                if req.status_code == 429:
+                    if self.Repository.config["logging"]["warning"]:
+                        self.log(
+                            "WARNING",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
+                        )
+                    sleep(req.content["retry_after"] / 1000)
+                    continue
+                raise WebhookSendError(
+                    f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
+                )</code></pre>
+       </details>
+       <h3>
+        Methods
+       </h3>
+       <dl>
+        <dt id="src.instance.Client.Instance.clear_lag">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            clear_lag
+           </span>
+          </span>
+          (
+          <span>
+           self, command: str, index1: int = 0, index2: int = -1) ‑&gt; None
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           The clear_lag function is used to stop possible backlash from Dank Memer commands. It does this
+by finding the latest message from Dank Memer and interacting with the last button on the first row,
+although this can be changed
+          </p>
+          <h2 id="args">
+           Args
+          </h2>
+          <dl>
+           <dt>
+            <strong>
+             <code>
+              self
+             </code>
+            </strong>
+           </dt>
+           <dd>
+            Gives access to the class' attributes and methods.
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              command
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            Specify which button to interact with
+           </dd>
+          </dl>
+          <p>
+           index1 (int) = 0: Specify the index of the first component in a message
+index2 (int) = -1: Specify the index of the button in the message
+          </p>
+          <h2 id="returns">
+           Returns
+          </h2>
+          <p>
+           None
+          </p>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def clear_lag(self, command: str, index1: int = 0, index2: int = -1) -&gt; None:
+    """
+    The clear_lag function is used to stop possible backlash from Dank Memer commands. It does this
+    by finding the latest message from Dank Memer and interacting with the last button on the first row,
+    although this can be changed
+
+    Args:
+        self: Gives access to the class' attributes and methods.
+        command (str): Specify which button to interact with
+        index1 (int) = 0: Specify the index of the first component in a message
+        index2 (int) = -1: Specify the index of the button in the message
+
+    Returns:
+        None
+    """
+
+    req = request(
+        f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
+        headers={"authorization": self.token},
+    )
+
+    for message in req.content:
+        if (
+            message["author"]["id"] != "270904126974590976"
+            or len(message["components"]) == 0
+        ):
+            continue
+
+        for _ in range(0, 2):
+            try:
+                custom_id = message["components"][index1]["components"][index2][
+                    "custom_id"
+                ]
+                self.interact_button(command, custom_id, message)
+                break
+            except ButtonInteractError:
+                continue</code></pre>
+         </details>
+        </dd>
+        <dt id="src.instance.Client.Instance.fallback_retreive_message">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            fallback_retreive_message
+           </span>
+          </span>
+          (
+          <span>
+           self, command: str) ‑&gt; dict
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           The fallback_retreive_message function is a helper function that is used to retreive the latest message sent by Dank Memer from the Discord channel.
+It does this by making an API call to Discord's servers, and then parsing through all of the messages in order to find one that matches our criteria.
+The criteria for this function is as follows:
+          </p>
+          <pre><code>1) The message must be sent by Dank Memer. This ensures we don't get any false positives from other bots or users.
+2) The command must be referenced in the embed title field of said message (e.g., &lt;code&gt;pls stream&lt;/code&gt;). This ensures we don't get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.
+</code></pre>
+          <h2 id="args">
+           Args
+          </h2>
+          <dl>
+           <dt>
+            <strong>
+             <code>
+              self
+             </code>
+            </strong>
+           </dt>
+           <dd>
+            Gives access to the class' attributes and methods.
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              command
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            The command the latest message is being retreived for
+           </dd>
+          </dl>
+          <h2 id="returns">
+           Returns
+          </h2>
+          <p>
+           The latest message sent by Dank Memer in the channel
+          </p>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def fallback_retreive_message(self, command: str) -&gt; dict:
+    """
+    The fallback_retreive_message function is a helper function that is used to retreive the latest message sent by Dank Memer from the Discord channel.
+    It does this by making an API call to Discord's servers, and then parsing through all of the messages in order to find one that matches our criteria.
+    The criteria for this function is as follows:
+
+        1) The message must be sent by Dank Memer. This ensures we don't get any false positives from other bots or users.
+        2) The command must be referenced in the embed title field of said message (e.g., `pls stream`). This ensures we don't get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.
+
+    Args:
+        self: Gives access to the class' attributes and methods.
+        command (str): The command the latest message is being retreived for
+
+    Returns:
+        The latest message sent by Dank Memer in the channel
+    """
+
+    req = request(
+        f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
+        headers={"authorization": self.token},
+    )
+
+    for latest_message in req.content:
+        if latest_message["author"]["id"] != "270904126974590976" or (
+            command != "pls stream"
+            and "referenced_message" not in latest_message.keys()
+        ):
+            continue
+
+        if "referenced_message" in latest_message.keys():
+            if (
+                latest_message["referenced_message"]["author"]["id"] != self.id
+                or latest_message["referenced_message"]["content"] != command
+            ):
+                continue
+        if (
+            len(latest_message["embeds"]) != 0
+            and "title" in latest_message["embeds"][0].keys()
+            and latest_message["embeds"][0]["title"]
+            in ["You're currently bot banned!", "You're currently blacklisted!"]
+        ):
+            self.log(
+                "ERROR",
+                "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.",
+            )
+
+        if len(latest_message["embeds"]) &gt; 0:
+            if "description" in latest_message["embeds"][0].keys():
+                if (
+                    "The default cooldown is"
+                    in latest_message["embeds"][0]["description"]
+                ):
+                    cooldown = int(
+                        "".join(
+                            filter(
+                                str.isdigit,
+                                latest_message["embeds"][0]["description"]
+                                .split("**")[1]
+                                .split("**")[0],
+                            )
+                        )
+                    )
+                    self.log(
+                        "WARNING",
+                        f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
+                    )
+                    sleep(cooldown)
+                    self.send_message(command)
+                    latest_message = self.retreive_message(command)
+
+        return latest_message</code></pre>
+         </details>
+        </dd>
+        <dt id="src.instance.Client.Instance.interact_button">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            interact_button
+           </span>
+          </span>
+          (
+          <span>
+           self, command: str, custom_id: int, latest_message: dict, token: Optional[str] = None, session_id: Optional[str] = None)
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           The interact_button function sends a POST request to the Discord API, which interacts with a button on Dank Memer's response.
+          </p>
+          <h2 id="parameters">
+           Parameters
+          </h2>
+          <p>
+           command (str): The name of the command that was sent to Discord. This is used for logging purposes only.
+          </p>
+          <p>
+           custom_id (int): The ID of the button that should be interacted with on Dank Memer's response message.
+          </p>
+          <p>
+           latest_message (dict): The message the button to be interacted with is on.
+          </p>
+          <p>
+           token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+          </p>
+          <h2 id="args">
+           Args
+          </h2>
+          <dl>
+           <dt>
+            <strong>
+             <code>
+              self
+             </code>
+            </strong>
+           </dt>
+           <dd>
+            Gives access to the class' attributes and methods.
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              command
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            The command is being interacted with
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              custom_id
+             </code>
+            </strong>
+            :
+            <code>
+             int
+            </code>
+           </dt>
+           <dd>
+            The ID of the button that should be interacted with
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              latest_message
+             </code>
+            </strong>
+            :
+            <code>
+             dict
+            </code>
+           </dt>
+           <dd>
+            The message the button to be interacted with is on.
+           </dd>
+          </dl>
+          <p>
+           token (Optional[str]) = None: Pass the token to the function
+session_id (Optional[str]) = None: The sesion id of the account that is interacting with the button.
+          </p>
+          <h2 id="returns">
+           Returns
+          </h2>
+          <p>
+           Nothing
+          </p>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def interact_button(
+    self,
+    command: str,
+    custom_id: int,
+    latest_message: dict,
+    token: Optional[str] = None,
+    session_id: Optional[str] = None,
+):
+    """
+    The interact_button function sends a POST request to the Discord API, which interacts with a button on Dank Memer's response.
+
+    Parameters:
+
+        command (str): The name of the command that was sent to Discord. This is used for logging purposes only.
+
+        custom_id (int): The ID of the button that should be interacted with on Dank Memer's response message.
+
+        latest_message (dict): The message the button to be interacted with is on.
+
+        token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+
+    Args:
+        self: Gives access to the class' attributes and methods.
+        command (str): The command is being interacted with
+        custom_id (int): The ID of the button that should be interacted with
+        latest_message (dict): The message the button to be interacted with is on.
+        token (Optional[str]) = None: Pass the token to the function
+        session_id (Optional[str]) = None: The sesion id of the account that is interacting with the button.
+
+    Returns:
+        Nothing
+    """
+
+    payload = {
+        "application_id": 270904126974590976,
+        "channel_id": self.channel_id,
+        "type": 3,
+        "data": {"component_type": 2, "custom_id": custom_id},
+        "guild_id": latest_message["message_reference"]["guild_id"]
+        if "message_reference" in latest_message.keys()
+        else self.guild_id,
+        "message_flags": 0,
+        "message_id": latest_message["id"],
+        "session_id": self.session_id if session_id is None else session_id,
+    }
+
+    if self.Repository.config["button delay"]["enabled"]:
+        sleep(
+            uniform(
+                self.Repository.config["button delay"]["minimum"],
+                self.Repository.config["button delay"]["maximum"],
+            )
+        )
+
+    while True:
+        req = request(
+            "https://discord.com/api/v10/interactions",
+            headers={"authorization": self.token if token is None else token},
+            json=payload,
+            method="POST",
+        )
+
+        if 199 &lt; req.status_code &lt; 300:
+            if self.Repository.config["logging"]["debug"]:
+                data["stats"][self.token]["buttons_clicked"] += 1
+
+                self.log(
+                    "DEBUG",
+                    f"Successfully interacted with button on Dank Memer's response to command `{command}`.",
+                )
+            return
+        else:
+            if req.status_code == 429:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
+                    )
+                sleep(req.content["retry_after"])
+
+                continue
+
+            raise ButtonInteractError(
+                f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+            )</code></pre>
+         </details>
+        </dd>
+        <dt id="src.instance.Client.Instance.interact_dropdown">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            interact_dropdown
+           </span>
+          </span>
+          (
+          <span>
+           self, command: str, custom_id: int, option_id: str, latest_message: dict)
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           The interact_dropdown function is used to interact with a dropdown menu on Dank Memer's response to a command.
+          </p>
+          <h2 id="parameters">
+           Parameters
+          </h2>
+          <p>
+           self (DiscordSelfbot): The DiscordSelfbot instance that is calling the function.
+          </p>
+          <p>
+           command (str): The name of the command that was called
+          </p>
+          <p>
+           custom_id (int): A unique ID of the dropdown to be selected.
+          </p>
+          <h2 id="args">
+           Args
+          </h2>
+          <dl>
+           <dt>
+            <strong>
+             <code>
+              self
+             </code>
+            </strong>
+           </dt>
+           <dd>
+            Gives access to the class' attributes and methods.
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              command
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            The command is being interacted with
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              custom_id
+             </code>
+            </strong>
+            :
+            <code>
+             int
+            </code>
+           </dt>
+           <dd>
+            The ID of the button that should be interacted with
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              option_id
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            The ID of the dropdown that should be selected
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              latest_message
+             </code>
+            </strong>
+            :
+            <code>
+             dict
+            </code>
+           </dt>
+           <dd>
+            The message the button to be interacted with is on.
+           </dd>
+          </dl>
+          <h2 id="returns">
+           Returns
+          </h2>
+          <p>
+           None
+          </p>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def interact_dropdown(
+    self, command: str, custom_id: int, option_id: str, latest_message: dict
+):
+    """
+    The interact_dropdown function is used to interact with a dropdown menu on Dank Memer's response to a command.
+
+    Parameters:
+
+        self (DiscordSelfbot): The DiscordSelfbot instance that is calling the function.
+
+        command (str): The name of the command that was called
+
+        custom_id (int): A unique ID of the dropdown to be selected.
+
+    Args:
+        self: Gives access to the class' attributes and methods.
+        command (str): The command is being interacted with
+        custom_id (int): The ID of the button that should be interacted with
+        option_id (str): The ID of the dropdown that should be selected
+        latest_message (dict): The message the button to be interacted with is on.
+
+    Returns:
+        None
+    """
+
+    payload = {
+        "application_id": 270904126974590976,
+        "channel_id": self.channel_id,
+        "type": 3,
+        "data": {
+            "component_type": 3,
+            "custom_id": custom_id,
+            "type": 3,
+            "values": [option_id],
+        },
+        "guild_id": latest_message["message_reference"]["guild_id"]
+        if "message_reference" in latest_message.keys()
+        else self.guild_id,
+        "message_flags": 0,
+        "message_id": latest_message["id"],
+        "session_id": self.session_id,
+    }
+
+    if self.Repository.config["dropdown delay"]["enabled"]:
+        sleep(
+            uniform(
+                self.Repository.config["dropdown delay"]["minimum"],
+                self.Repository.config["dropdown delay"]["maximum"],
+            )
+        )
+
+    while True:
+        req = request(
+            "https://discord.com/api/v10/interactions",
+            headers={"authorization": self.token},
+            json=payload,
+            method="POST",
+        )
+
+        if 199 &lt; req.status_code &lt; 300:
+            if self.Repository.config["logging"]["debug"]:
+                data["stats"][self.token]["dropdowns_selected"] += 1
+
+                self.log(
+                    "DEBUG",
+                    f"Successfully interacted with dropdown on Dank Memer's response to command `{command}`.",
+                )
+            return
+        else:
+            if req.status_code == 429:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
+                    )
+                sleep(req.content["retry_after"])
+
+                continue
+            raise DropdownInteractError(
+                f"Failed to interact with dropdown on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+            )</code></pre>
+         </details>
+        </dd>
+        <dt id="src.instance.Client.Instance.log">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            log
+           </span>
+          </span>
+          (
+          <span>
+           self, level: str, text: str) ‑&gt; None
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           The log function is used to log messages.
+          </p>
+          <h2 id="args">
+           Args
+          </h2>
+          <dl>
+           <dt>
+            <strong>
+             <code>
+              self
+             </code>
+            </strong>
+           </dt>
+           <dd>
+            Gives access to the class' attributes and methods.
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              level
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            The level of the log message
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              text
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            The log message
+           </dd>
+          </dl>
+          <h2 id="returns">
+           Returns
+          </h2>
+          <p>
+           None
+          </p>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def log(self, level: str, text: str) -&gt; None:
+    """
+    The log function is used to log messages.
+
+    Args:
+        self: Gives access to the class' attributes and methods.
+        level (str): The level of the log message
+        text (str): The log message
+
+    Returns:
+        None
+    """
+
+    if "Repository" in self.__dict__.keys():
+        if level == "DEBUG" and not self.Repository.config["logging"]["debug"]:
+            return
+        elif (
+            level == "WARNING" and not self.Repository.config["logging"]["warning"]
+        ):
+            return
+
+    time = datetime.now().strftime("[%x-%X]")
+
+    print(
+        f"{time}{f' - {fore.Bright_Magenta}{self.username}{style.RESET_ALL}' if self.username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}"
+    )
+
+    self.log_file.write(
+        f"{time}{f' - {self.username}' if self.username is not None else ''} - [{level}] | {text}\n"
+    )
+    self.log_file.flush()
+
+    if level == "ERROR":
+        _ = input(
+            f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}\n"
+        )
+        exit(1)</code></pre>
+         </details>
+        </dd>
+        <dt id="src.instance.Client.Instance.retreive_message">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            retreive_message
+           </span>
+          </span>
+          (
+          <span>
+           self, command: str, token: Optional[str] = None, check: bool = True, old_latest_message: Optional[dict] = None) ‑&gt; dict
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           The retreive_message function is used to retrieve the latest message from a Discord channel.
+          </p>
+          <h2 id="parameters">
+           Parameters
+          </h2>
+          <p>
+           command (str): The command that was sent to Dank Memer.
+          </p>
+          <p>
+           token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+          </p>
+          <p>
+           check (bool): Whether or not this function should check for cooldowns and other restrictions in Dank Memer's response before returning it as a dict. Defaults to True, which means it will check for these restrictions and return an error if they are detected; False means no checks will be performed on the response at all, allowing you more control over what is returned by this function without having to manually parse each message yourself.
+          </p>
+          <h2 id="args">
+           Args
+          </h2>
+          <dl>
+           <dt>
+            <strong>
+             <code>
+              self
+             </code>
+            </strong>
+           </dt>
+           <dd>
+            Gives access to the class' attributes and methods.
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              command
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            The command the latest message is being retreived for.
+           </dd>
+          </dl>
+          <p>
+           token (Optional[str]) = None: The token used to retreive the message (or None if if it should be the token in self)
+check (bool) = True: Determine whether or not the function should check for restrictions in the response from Dank Memer
+old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck in an infinite loop or getting the wrong latest message if it can't find a response to its request
+          </p>
+          <h2 id="returns">
+           Returns
+          </h2>
+          <p>
+           The latest message in the channel
+          </p>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def retreive_message(
+    self,
+    command: str,
+    token: Optional[str] = None,
+    check: bool = True,
+    old_latest_message: Optional[dict] = None,
+) -&gt; dict:
+    """
+    The retreive_message function is used to retrieve the latest message from a Discord channel.
+
+    Parameters:
+
+        command (str): The command that was sent to Dank Memer.
+
+        token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+
+        check (bool): Whether or not this function should check for cooldowns and other restrictions in Dank Memer's response before returning it as a dict. Defaults to True, which means it will check for these restrictions and return an error if they are detected; False means no checks will be performed on the response at all, allowing you more control over what is returned by this function without having to manually parse each message yourself.
+
+    Args:
+        self: Gives access to the class' attributes and methods.
+        command (str): The command the latest message is being retreived for.
+        token (Optional[str]) = None: The token used to retreive the message (or None if if it should be the token in self)
+        check (bool) = True: Determine whether or not the function should check for restrictions in the response from Dank Memer
+        old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck in an infinite loop or getting the wrong latest message if it can't find a response to its request
+
+    Returns:
+        The latest message in the channel
+    """
+
+    while True:
+        time = datetime.now()
+        old_latest_message = (
+            copy(data["channels"][self.channel_id]["message"])
+            if old_latest_message == None
+            else old_latest_message
+        )
+
+        while (datetime.now() - time).total_seconds() &lt; self.Repository.config[
+            "settings"
+        ]["timeout"]:
+            latest_message = copy(data["channels"][self.channel_id]["message"])
+
+            if old_latest_message == latest_message:
+                sleep(self.Repository.config["settings"]["timeout"] / 10)
+                continue
+
+            if "referenced_message" in latest_message.keys():
+                if latest_message["referenced_message"] != None:
+                    if (
+                        latest_message["referenced_message"]["author"]["id"]
+                        == self.id
+                        and latest_message["author"]["id"] == "270904126974590976"
+                        and latest_message["referenced_message"]["content"]
+                        == command
+                    ):
+                        if self.Repository.config["logging"]["debug"]:
+                            self.log(
+                                "DEBUG",
+                                f"Got Dank Memer's response to command `{command}`.",
+                            )
+                        break
+                elif latest_message["author"]["id"] == "270904126974590976":
+                    if self.Repository.config["logging"]["debug"]:
+                        self.log(
+                            "DEBUG",
+                            f"Got Dank Memer's response to command `{command}`.",
+                        )
+                    break
+            elif latest_message["author"]["id"] == "270904126974590976":
+                if self.Repository.config["logging"]["debug"]:
+                    self.log(
+                        "DEBUG",
+                        f"Got Dank Memer's response to command `{command}`.",
+                    )
+                break
+
+            sleep(self.Repository.config["settings"]["timeout"] / 10)
+            old_latest_message = copy(latest_message)
+
+        if latest_message["author"]["id"] != "270904126974590976":
+            raise ResponseTimeout(
+                f"Timeout exceeded for response from Dank Memer ({self.Repository.config['settings']['timeout']} {'second' if self.Repository.config['settings']['timeout'] == 1 else 'seconds'}). Aborting command."
+            )
+
+        elif len(latest_message["embeds"]) &gt; 0:
+            if "description" not in latest_message["embeds"][0].keys():
+                break
+
+            if (
+                "The default cooldown is"
+                not in latest_message["embeds"][0]["description"]
+            ):
+                break
+
+            cooldown = int(
+                "".join(
+                    filter(
+                        str.isdigit,
+                        latest_message["embeds"][0]["description"]
+                        .split("**")[1]
+                        .split("**")[0],
+                    )
+                )
+            )
+            if self.Repository.config["logging"]["warning"]:
+                self.log(
+                    "WARNING",
+                    f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
+                )
+            sleep(cooldown)
+            self.send_message(command, token if token is not None else None)
+            latest_message = self.retreive_message(
+                command, token, check, old_latest_message
+            )
+        else:
+            break
+
+    if (
+        len(latest_message["embeds"]) != 0
+        and "title" in latest_message["embeds"][0].keys()
+        and latest_message["embeds"][0]["title"]
+        in ["You're currently bot banned!", "You're currently blacklisted!"]
+    ):
+        self.log(
+            "ERROR",
+            "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.",
+        )
+
+    if self.Repository.config["auto trade"]["enabled"] and check:
+        old_latest_message = copy(latest_message)
+
+        for key in self.Repository.config["auto trade"]:
+            if (
+                key == "enabled"
+                or key == "trader token"
+                or not self.Repository.config["auto trade"][key]
+            ):
+                continue
+
+            found = False
+
+            if key.lower() in latest_message["content"].lower():
+                found = True
+            elif len(latest_message["embeds"]) &gt; 0:
+                if (
+                    key.lower()
+                    in latest_message["embeds"][0]["description"].lower()
+                ):
+                    found = True
+
+            if found:
+                self.log("DEBUG", "Received an item to be autotraded.")
+
+                self.send_message(
+                    f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                    self.Repository.config["auto trade"]["trader token"],
+                )
+
+                latest_message = self.retreive_message(
+                    f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                    self.Repository.config["auto trade"]["trader token"],
+                    False,
+                )
+
+                if (
+                    latest_message["content"]
+                    == "You have 0 coins, you can't give them 1."
+                ):
+                    self.send_message(
+                        f"pls with 1",
+                        self.Repository.config["auto trade"]["trader token"],
+                    )
+
+                    self.send_message(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        self.Repository.config["auto trade"]["trader token"],
+                    )
+
+                    latest_message = self.retreive_message(
+                        f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                        self.Repository.config["auto trade"]["trader token"],
+                        False,
+                    )
+
+                self.interact_button(
+                    f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                    latest_message["components"][0]["components"][-1]["custom_id"],
+                    latest_message,
+                    self.Repository.config["auto trade"]["trader token"],
+                    self.trader_token_session_id,
+                )
+
+                sleep(1)
+
+                latest_message = self.retreive_message(
+                    f"pls trade 1, 1 {key} &lt;@{self.id}&gt;", check=False
+                )
+
+                self.interact_button(
+                    f"pls trade 1, 1 {key} &lt;@{self.id}&gt;",
+                    latest_message["components"][0]["components"][-1]["custom_id"],
+                    latest_message,
+                )
+
+        return old_latest_message
+
+    elif self.Repository.config["auto sell"]["enabled"] and check:
+        for key in self.Repository.config["auto sell"]:
+            if key == "enabled" or not self.Repository.config["auto sell"][key]:
+                continue
+
+            found = False
+
+            if key.lower() in latest_message["content"].lower():
+                found = True
+            elif len(latest_message["embeds"]) &gt; 0:
+                if (
+                    key.lower()
+                    in latest_message["embeds"][0]["description"].lower()
+                ):
+                    found = True
+
+            if found:
+                self.send_message(f"pls sell {key}")
+
+    return latest_message</code></pre>
+         </details>
+        </dd>
+        <dt id="src.instance.Client.Instance.send_message">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            send_message
+           </span>
+          </span>
+          (
+          <span>
+           self, command: str, token: Optional[str] = None, latest_message: Optional[dict] = None, channel_id: Optional[int] = None) ‑&gt; None
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           The send_message function sends a message to the Discord channel.
+          </p>
+          <h2 id="args">
+           Args
+          </h2>
+          <dl>
+           <dt>
+            <strong>
+             <code>
+              self
+             </code>
+            </strong>
+           </dt>
+           <dd>
+            Gives access to the class' attributes and methods.
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              command
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            The command to send
+           </dd>
+          </dl>
+          <p>
+           token (Optional[sr]) = None: The token used the send the message (or None if it should be the token in self)
+latest_message (Optional[dict]) = None: Used if the message should reply to another message.
+channel_id (Optional[int]) = None: The channel id used the send the message (or None if it should be the channel id in self)
+          </p>
+          <h2 id="returns">
+           Returns
+          </h2>
+          <p>
+           None
+          </p>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def send_message(
+    self,
+    command: str,
+    token: Optional[str] = None,
+    latest_message: Optional[dict] = None,
+    channel_id: Optional[int] = None,
+) -&gt; None:
+    """
+    The send_message function sends a message to the Discord channel.
+
+    Args:
+        self: Gives access to the class' attributes and methods.
+        command (str): The command to send
+        token (Optional[sr]) = None: The token used the send the message (or None if it should be the token in self)
+        latest_message (Optional[dict]) = None: Used if the message should reply to another message.
+        channel_id (Optional[int]) = None: The channel id used the send the message (or None if it should be the channel id in self)
+
+    Returns:
+        None
+    """
+    command = str(command)
+
+    if self.Repository.config["typing indicator"]["enabled"]:
+        req = request(
+            f"https://discord.com/api/v9/channels/{self.channel_id if channel_id is None else channel_id}/typing",
+            headers={"authorization": self.token if token is None else token},
+            method="POST",
+        )
+        sleep(
+            uniform(
+                self.Repository.config["typing indicator"]["minimum"],
+                self.Repository.config["typing indicator"]["maximum"],
+            )
+        )
+
+    if self.Repository.config["message delay"]["enabled"]:
+        sleep(
+            uniform(
+                self.Repository.config["message delay"]["minimum"],
+                self.Repository.config["message delay"]["maximum"],
+            )
+        )
+
+    while True:
+        req = request(
+            f"https://discord.com/api/v10/channels/{self.channel_id if channel_id is None else channel_id}/messages?limit=1",
+            headers={"authorization": self.token if token is None else token},
+            json={"content": command}
+            if latest_message is None
+            else {
+                "content": command,
+                "message_reference": {
+                    "guild_id": latest_message["guild_id"],
+                    "channel_id": latest_message["channel_id"],
+                    "message_id": latest_message["id"],
+                },
+            },
+            method="POST",
+        )
+
+        if 199 &lt; req.status_code &lt; 300:
+            if self.Repository.config["logging"]["debug"]:
+                if "pls" in command:
+                    data["stats"][self.token]["commands_ran"] += 1
+
+                self.log(
+                    "DEBUG",
+                    f"Successfully sent {'command' if 'pls' in command else 'message'} `{command}`.",
+                )
+            return
+        else:
+            if req.status_code == 429:
+                self.log(
+                    "WARNING",
+                    f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after']} {'second' if req.content['retry_after'] == 1 else 'seconds'}.",
+                )
+                sleep(req.content["retry_after"])
+                continue
+
+            self.log(
+                "WARNING",
+                f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {req.status_code} (expected 200 or 204).",
+            )
+            raise MessageSendError(
+                f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+            )</code></pre>
+         </details>
+        </dd>
+        <dt id="src.instance.Client.Instance.webhook_log">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            webhook_log
+           </span>
+          </span>
+          (
+          <span>
+           self, payload: dict) ‑&gt; None
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           The webhook_log function is used to send a webhook log to the webhook logging URL
+          </p>
+          <h2 id="args">
+           Args
+          </h2>
+          <dl>
+           <dt>
+            <strong>
+             <code>
+              self
+             </code>
+            </strong>
+           </dt>
+           <dd>
+            Gives access to the class' attributes and methods.
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              payload
+             </code>
+            </strong>
+            :
+            <code>
+             dict
+            </code>
+           </dt>
+           <dd>
+            The data to be sent to the webhook
+           </dd>
+          </dl>
+          <h2 id="returns">
+           Returns
+          </h2>
+          <p>
+           None
+          </p>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def webhook_log(self, payload: dict) -&gt; None:
+    """
+    The webhook_log function is used to send a webhook log to the webhook logging URL
+
+    Args:
+        self: Gives access to the class' attributes and methods.
+        payload (dict): The data to be sent to the webhook
+
+    Returns:
+        None
+    """
+
+    if not self.Repository.config["logging"]["webhook logging"]["enabled"]:
+        return
+
+    while True:
+        req = request(
+            self.Repository.config["logging"]["webhook logging"]["url"],
+            json=payload,
+            method="POST",
+        )
+
+        if 199 &lt; req.status_code &lt; 300:
+            if self.Repository.config["logging"]["debug"]:
+                self.log(
+                    "DEBUG",
+                    f"Successfully sent webhook `{payload}`.",
+                )
+            return
+        else:
+            if self.Repository.config["logging"]["warning"]:
+                self.log(
+                    "WARNING",
+                    f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204).",
+                )
+            if req.status_code == 429:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
+                    )
+                sleep(req.content["retry_after"] / 1000)
+                continue
+            raise WebhookSendError(
+                f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
+            )</code></pre>
+         </details>
+        </dd>
+        <dt id="src.instance.Client.Instance.webhook_send">
+         <code class="name flex">
+          <span>
+           def
+           <span class="ident">
+            webhook_send
+           </span>
+          </span>
+          (
+          <span>
+           self, payload: dict, fallback_message: str) ‑&gt; bool
+          </span>
+         </code>
+        </dt>
+        <dd>
+         <div class="desc">
+          <p>
+           The webhook_send function sends a webhook to the channel specified by self.channel_id with the given payload.
+If Discord is ratelimiting the bot, it will sleep for
+           <code>
+            req.content['retry_after'] / 1000
+           </code>
+           seconds and then try again.
+          </p>
+          <h2 id="args">
+           Args
+          </h2>
+          <dl>
+           <dt>
+            <strong>
+             <code>
+              self
+             </code>
+            </strong>
+           </dt>
+           <dd>
+            Gives access to the class' attributes and methods.
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              payload
+             </code>
+            </strong>
+            :
+            <code>
+             dict
+            </code>
+           </dt>
+           <dd>
+            The webhook to be sent
+           </dd>
+           <dt>
+            <strong>
+             <code>
+              fallback_message
+             </code>
+            </strong>
+            :
+            <code>
+             str
+            </code>
+           </dt>
+           <dd>
+            The message to be sent if there is an error sending the webhook (usually if missing permissions). This may be removed in future versions
+           </dd>
+          </dl>
+          <h2 id="returns">
+           Returns
+          </h2>
+          <dl>
+           <dt>
+            <code>
+             bool
+            </code>
+           </dt>
+           <dd>
+            Indicates whether the subprogram executed successfully or not
+           </dd>
+          </dl>
+         </div>
+         <details class="source">
+          <summary>
+           <span>
+            Expand source code
+           </span>
+          </summary>
+          <pre><code class="python">def webhook_send(self, payload: dict, fallback_message: str) -&gt; bool:
+    """
+    The webhook_send function sends a webhook to the channel specified by self.channel_id with the given payload.
+    If Discord is ratelimiting the bot, it will sleep for `req.content['retry_after'] / 1000` seconds and then try again.
+
+    Args:
+        self: Gives access to the class' attributes and methods.
+        payload (dict): The webhook to be sent
+        fallback_message (str): The message to be sent if there is an error sending the webhook (usually if missing permissions). This may be removed in future versions
+
+    Returns:
+        bool: Indicates whether the subprogram executed successfully or not
+    """
+
+    req = request(
+        f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+        headers={"authorization": self.token},
+    )
+
+    if req.status_code not in [200, 204]:
+        self.log(
+            "WARNING",
+            f"Cannot send webhook in channel {self.channel_id} - Missing Permissions. Resorting to normal message.",
+        )
+        self.send_message(fallback_message)
+        return True
+
+    if "embeds" in payload.keys():
+        payload["embeds"][-1]["footer"] = {
+            "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+            "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+        }
+
+    if len(req.content) &gt; 0:
+        token = req.content[0]["token"]
+        channel_id = req.content[0]["id"]
+    else:
+        req = request(
+            f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+            headers={"authorization": self.token},
+            json={"name": "Spidey Bot"},
+            method="POST",
+        )
+        token = req.content["token"]
+
+        req = request(
+            f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
+            headers={"authorization": self.token},
+        )
+        channel_id = req.content[0]["id"]
+
+    while True:
+        req = request(
+            f"https://discord.com/api/webhooks/{channel_id}/{token}",
+            headers={"authorization": self.token},
+            json=payload,
+            method="POST",
+        )
+
+        if 199 &lt; req.status_code &lt; 300:
+            if self.Repository.config["logging"]["debug"]:
+                self.log(
+                    "DEBUG",
+                    f"Successfully sent webhook `{payload}`.",
+                )
+            return
+        else:
+            if self.Repository.config["logging"]["warning"]:
+                self.log(
+                    "WARNING",
+                    f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204).",
+                )
+            if req.status_code == 429:
+                if self.Repository.config["logging"]["warning"]:
+                    self.log(
+                        "WARNING",
+                        f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
+                    )
+                sleep(req.content["retry_after"] / 1000)
+                continue
+            raise WebhookSendError(
+                f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
+            )
+
+    return True</code></pre>
+         </details>
+        </dd>
+       </dl>
+      </dd>
+     </dl>
+    </section>
+   </article>
+   <nav id="sidebar">
+    <h1>
+     Index
+    </h1>
+    <div class="toc">
+     <ul>
+     </ul>
+    </div>
+    <ul id="index">
+     <li>
+      <h3>
+       Super-module
+      </h3>
+      <ul>
+       <li>
+        <code>
+         <a href="index.html" title="src.instance">
+          src.instance
+         </a>
+        </code>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <h3>
+       <a href="#header-classes">
+        Classes
+       </a>
+      </h3>
+      <ul>
+       <li>
+        <h4>
+         <code>
+          <a href="#src.instance.Client.Instance" title="src.instance.Client.Instance">
+           Instance
+          </a>
+         </code>
+        </h4>
+        <ul class="">
+         <li>
+          <code>
+           <a href="#src.instance.Client.Instance.clear_lag" title="src.instance.Client.Instance.clear_lag">
+            clear_lag
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.instance.Client.Instance.fallback_retreive_message" title="src.instance.Client.Instance.fallback_retreive_message">
+            fallback_retreive_message
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.instance.Client.Instance.interact_button" title="src.instance.Client.Instance.interact_button">
+            interact_button
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.instance.Client.Instance.interact_dropdown" title="src.instance.Client.Instance.interact_dropdown">
+            interact_dropdown
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.instance.Client.Instance.log" title="src.instance.Client.Instance.log">
+            log
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.instance.Client.Instance.retreive_message" title="src.instance.Client.Instance.retreive_message">
+            retreive_message
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.instance.Client.Instance.send_message" title="src.instance.Client.Instance.send_message">
+            send_message
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.instance.Client.Instance.webhook_log" title="src.instance.Client.Instance.webhook_log">
+            webhook_log
+           </a>
+          </code>
+         </li>
+         <li>
+          <code>
+           <a href="#src.instance.Client.Instance.webhook_send" title="src.instance.Client.Instance.webhook_send">
+            webhook_send
+           </a>
+          </code>
+         </li>
+        </ul>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </nav>
+  </main>
+  <footer id="footer">
+   <p>
+    <a href="Client -pycco.html" target="_blank">
+     View full code
+    </a>
+    - Generated by
+    <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator">
+     <cite>
+      pdoc
+     </cite>
+     0.10.0
+    </a>
+    .
+   </p>
+  </footer>
+ </body>
+</html>

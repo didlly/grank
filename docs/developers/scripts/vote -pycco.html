@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+   <title>
+    vote.py
+   </title>
+   <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+   <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+  </meta>
+ </head>
+ <body>
+  <div id="container">
+   <div id="background">
+   </div>
+   <div class="section">
+    <div class="docs">
+     <h1>
+      vote.py
+     </h1>
+    </div>
+   </div>
+   <div class="clearall">
+    <div class="section" id="section-0">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-0">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span></span><span class="kn">from</span> <span class="nn">instance.Client</span> <span class="kn">import</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">utils.Requests</span> <span class="kn">import</span> <span class="n">request</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-1">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-1">
+        #
+       </a>
+      </div>
+      <p>
+       The vote function is used to vote for Dank Memer on Discord Bot List.
+      </p>
+      <p>
+       Args:
+Client (Instance): The Discord client
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the command ran successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">vote</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-2">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-2">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-3">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-3">
+        #
+       </a>
+      </div>
+      <p>
+       Send an authorize request for Discord Bot List to the Discord API
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">req</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span>
+        <span class="s2">"https://discord.com/api/v10/oauth2/authorize?client_id=477949690848083968&amp;response_type=code&amp;scope=identify"</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">"authorization"</span><span class="p">:</span> <span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">},</span>
+        <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">"authorize"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span> <span class="s2">"permissions"</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">"POST"</span><span class="p">,</span>
+    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-4">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-4">
+        #
+       </a>
+      </div>
+      <p>
+       Get the code from the response
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">code</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="s2">"location"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"code="</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-5">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-5">
+        #
+       </a>
+      </div>
+      <p>
+       Request the token for the account on Discord Bot List
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">req</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span><span class="sa">f</span><span class="s2">"https://discordbotlist.com/api/v1/oauth?code=</span><span class="si">{</span><span class="n">code</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-6">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-6">
+        #
+       </a>
+      </div>
+      <p>
+       If captcha is detected…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="s2">"captcha"</span> <span class="ow">in</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="s2">"WARNING"</span><span class="p">,</span>
+            <span class="s2">"Failed to vote for Dank Memer on Discord Bot List due to captcha."</span><span class="p">,</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-7">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-7">
+        #
+       </a>
+      </div>
+      <p>
+       …return False since currently there is no bypass for captcha
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-8">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-8">
+        #
+       </a>
+      </div>
+      <p>
+       Get the Discord Bot List token
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">dbl_token</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="s2">"token"</span><span class="p">]</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-9">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-9">
+        #
+       </a>
+      </div>
+      <p>
+       Send a request to upvote Dank Memer on Discord Bot List
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">req</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span>
+        <span class="s2">"https://discordbotlist.com/api/v1/bots/270904126974590976/upvote"</span><span class="p">,</span>
+        <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">"authorization"</span><span class="p">:</span> <span class="n">dbl_token</span><span class="p">},</span>
+        <span class="n">method</span><span class="o">=</span><span class="s2">"POST"</span><span class="p">,</span>
+    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-10">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-10">
+        #
+       </a>
+      </div>
+      <p>
+       If the request completed successfully…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="s2">"success"</span><span class="p">]:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Succesfully voted for Dank Memer on Discord Bot List"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-11">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-11">
+        #
+       </a>
+      </div>
+      <p>
+       …return True
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">return</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-12">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-12">
+        #
+       </a>
+      </div>
+      <p>
+       Else…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">else</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-13">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-13">
+        #
+       </a>
+      </div>
+      <p>
+       …if the account has alreadty voted for Dank Memer in the past 24 hours…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="s2">"message"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"User has already voted."</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-14">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-14">
+        #
+       </a>
+      </div>
+      <p>
+       …tell the user a ratelimit response was received
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                <span class="s2">"WARNING"</span><span class="p">,</span>
+                <span class="s2">"Already voted for Dank Memer on Discord Bot List in the past 24 hours."</span><span class="p">,</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-15">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-15">
+        #
+       </a>
+      </div>
+      <p>
+       Else
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">else</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-16">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-16">
+        #
+       </a>
+      </div>
+      <p>
+       …tell the user an unknown error occured
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                <span class="s2">"WARNING"</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"Failed to vote for Dank Memer on Discord Bot List. Status code: </span><span class="si">{</span><span class="n">req</span><span class="o">.</span><span class="n">stauts_code</span><span class="si">}</span><span class="s2">. Content: `</span><span class="si">{</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="kc">False</span>
+
+</pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

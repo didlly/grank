@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, minimum-scale=1" name="viewport"/>
+  <meta content="pdoc 0.10.0" name="generator">
+   <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+   <title>
+    src.main API documentation
+   </title>
+   <meta content="The `main.py` file controls the grinding process for the account. It is the only file that is not commented (apart from `/src/discord/Gateway.py`) …" name="description"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" rel="preload stylesheet"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" rel="preload stylesheet"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" rel="stylesheet preload"/>
+   <style>
+    :root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}
+   </style>
+   <style media="screen and (min-width: 700px)">
+    @media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}
+   </style>
+   <style media="print">
+    @media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}
+   </style>
+   <script crossorigin="" defer="" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js">
+   </script>
+   <script>
+    window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())
+   </script>
+  </meta>
+ </head>
+ <body>
+  <main>
+   <article id="content">
+    <header>
+     <h1 class="title">
+      Module
+      <code>
+       src.main
+      </code>
+     </h1>
+    </header>
+    <section id="section-intro">
+     <p>
+      The
+      <code>
+       main.py
+      </code>
+      file controls everything that Grank does. It spawns the threads for actions like connecting to the Discord websocket, monitoring shifts etc.
+     </p>
+     <details class="source">
+      <summary>
+       <span>
+        Expand source code
+       </span>
+      </summary>
+      <pre><code class="python">"""
+The `main.py` file controls everything that Grank does. It spawns the threads for actions like connecting to the Discord websocket, monitoring shifts etc.
+"""
+
+from contextlib import suppress
+from os import mkdir
+from os.path import dirname
+from platform import python_implementation, python_version, system
+from sys import argv
+from threading import Thread
+
+from configuration.Credentials import verify_credentials
+from database.Handler import Database
+from database.Verifier import verify
+from instance.Client import Instance
+from utils.Console import style
+from utils.Logger import log
+from utils.Modules import verify_modules
+from utils.Requests import request
+from utils.Shared import data
+
+# Check that all the required modules are installed
+verify_modules()
+
+# If the OS is Windows...
+if system().lower() == "windows":
+    from ctypes import windll
+
+    # ...make sure the terminal supports ANSI (coloured) output
+    kernel32 = windll.kernel32
+    kernel32.SetConsoleMode(kernel32.GetStdHandle(-11), 7)
+
+# Get the cwd (current working directory)
+cwd = dirname(argv[0])
+
+# If Python could not determine the cwd, set it to an empty string, else concaternate a `/` to it
+cwd = cwd if cwd == "" else f"{cwd}/"
+
+# Get the latest trivia database
+data["trivia"] = request(
+    "https://raw.githubusercontent.com/didlly/grank/main/src/trivia.json",
+).content
+
+# Open the `current_verion` file and...
+with open(f"{cwd}current_version", "r") as f:
+    # ...read the current verison from it
+    data["version"] = f.read()
+
+latest_version = request(
+    "https://raw.githubusercontent.com/didlly/grank/main/src/current_version"
+).content
+
+# Output: 1. Current Grank version, 2. Current Python version, 3. Python implementation (CPython, PyPy etc), 4. Operating System
+print(
+    f"Grank {style.Bold}{data['version']}{style.RESET_ALL} running on Python {style.Bold}v{python_version()}{style.RESET_ALL} ({style.Bold}{python_implementation()}{style.RESET_ALL}) using {style.Bold}{system()}{style.RESET_ALL}.\n"
+)
+
+# If the installed version isn't the same as the latest version...
+if data["version"] != latest_version:
+    # ...tell the user to update if possible
+    log(None, "WARNING", f"New version available. Update if possible.")
+
+# ...suppres a FileExistsError...
+with suppress(FileExistsError):
+    # ...make the logs directory
+    mkdir(f"{cwd}logs/")
+
+# ...suppres a FileExistsError...
+with suppress(FileExistsError):
+    # ...make this version's logs directory
+    mkdir(f"{cwd}logs/{data['version']}")
+
+# Get details about all the accounts entered in `credentials.json`
+accounts = verify_credentials(cwd)
+
+# Import the `gateway` module (wasn't imported before since the modules required might not have been installed then)
+gateway = __import__("discord.Gateway").Gateway.gateway
+
+for account in accounts:
+    # ...suppres a FileExistsError...
+    with suppress(FileExistsError):
+        # ...make this account's logs directory
+        mkdir(f"{cwd}logs/{data['version']}/{account.token}")
+
+    # Initialize the class for this account for interacting with Discord
+    Client = Instance(cwd, account)
+
+    # Make sure this account's database is not corrupted
+    verify(cwd, Client, account)
+
+    # Initialize the class for this account for interacting with it's database
+    Repository = Database(cwd, account, Client)
+
+    # Merge the account's database class with it's client class.
+    Client.Repository = Repository
+
+    # Start the websocket session for this account
+    Thread(target=gateway, args=[Client]).start()</code></pre>
+     </details>
+    </section>
+    <section>
+    </section>
+    <section>
+    </section>
+    <section>
+    </section>
+   </article>
+   <nav id="sidebar">
+    <h1>
+     Index
+    </h1>
+    <div class="toc">
+     <ul>
+     </ul>
+    </div>
+    <ul id="index">
+     <li>
+      <h3>
+       Super-module
+      </h3>
+      <ul>
+       <li>
+        <code>
+         <a href="index.html" title="src">
+          src
+         </a>
+        </code>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </nav>
+  </main>
+  <footer id="footer">
+   <p>
+    <a href="main -pycco.html" target="_blank">
+     View full code
+    </a>
+    - Generated by
+    <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator">
+     <cite>
+      pdoc
+     </cite>
+     0.10.0
+    </a>
+    .
+   </p>
+  </footer>
+ </body>
+</html>

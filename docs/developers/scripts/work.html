@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1, minimum-scale=1" name="viewport">
+   <meta content="pdoc 0.10.0" name="generator"/>
+   <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+   <title>
+    src.scripts.work API documentation
+   </title>
+   <meta content="" name="description"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" rel="preload stylesheet"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" rel="preload stylesheet"/>
+   <link as="style" crossorigin="" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" rel="stylesheet preload"/>
+   <style>
+    :root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}
+   </style>
+   <style media="screen and (min-width: 700px)">
+    @media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}
+   </style>
+   <style media="print">
+    @media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}
+   </style>
+   <script crossorigin="" defer="" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js">
+   </script>
+   <script>
+    window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())
+   </script>
+  </meta>
+ </head>
+ <body>
+  <main>
+   <article id="content">
+    <header>
+     <h1 class="title">
+      Module
+      <code>
+       src.scripts.work
+      </code>
+     </h1>
+    </header>
+    <section id="section-intro">
+     <details class="source">
+      <summary>
+       <span>
+        Expand source code
+       </span>
+      </summary>
+      <pre><code class="python">from random import choice
+from time import sleep
+
+from instance.Client import Instance
+
+
+def work(Client: Instance) -&gt; bool:
+    """
+    The work function is used to interact with the work command
+
+    Args:
+        Client (Instance): The Discord client
+
+    Returns:
+        bool: Indicates whether the command ran successfully or not
+    """
+
+    # Send the command `pls work`
+    Client.send_message("pls work")
+
+    # Get Dank Memer's response to `pls work`
+    latest_message = Client.retreive_message("pls work")
+
+    # If the account doesn't have a job...
+    if "You don't currently have a job to work at" in latest_message["content"]:
+        # Send the command `pls work babysitter`
+        Client.send_message("pls work babysitter")
+
+        # Send the command `pls work`
+        Client.send_message("pls work")
+
+        # Get Dank Memer's response to `pls work`
+        latest_message = Client.retreive_message(
+            "pls work", old_latest_message=latest_message
+        )
+    # Else if the account was fired...
+    elif "boss was tired" in latest_message["content"]:
+        Client.log("WARNING", "Fired from job.")
+
+        # ...return False
+        return False
+    # Else if awaiting cooldown to join new job...
+    elif "you were fired" in latest_message["content"]:
+        Client.log("WARNING", "Awaiting cooldown to join new job.")
+
+        # ...return False
+        return False
+    # Else if awaiting cooldown to work...
+    elif "You need to wait" in latest_message["content"]:
+        # ...get the time left till the account can work
+        time_left = latest_message["content"].split("**")[1]
+
+        Client.log(
+            "WARNING", f"Cannot work - awaiting cooldown end ({time_left} left)."
+        )
+
+        return False
+    # Else if the account was promoted...
+    elif "deserve a fat promotion" in latest_message["content"]:
+        # ...get the old pay &amp; promotion amount
+        promotion = latest_message["content"].split("\n")[1].split("`")[-2]
+
+        Client.log("DEBUG", f"Got promoted in the `pls work` command - {promotion}.")
+
+        # Send the command `pls work`
+        Client.send_message("pls work")
+
+        # Get Dank Memer's response to `pls work`
+        latest_message = Client.retreive_message(
+            "pls work", old_latest_message=latest_message
+        )
+
+    # If Dank Memer replied with the `Dunk The ball`` minigame...
+    if "Dunk the ball" in latest_message["content"]:
+        Client.log("DEBUG", "Detected dunk the ball game.")
+
+        # ...get the index of the button under the ball
+        level = (
+            latest_message["content"]
+            .split("\n")[2]
+            .split(":basketball")[0]
+            .count("       ")
+        )
+
+        # Interact with the `Catch` button
+        custom_id = latest_message["components"][0]["components"][level]["custom_id"]
+
+        Client.interact_button("pls work", custom_id, latest_message)
+
+    # Else if Dank Memer replied with the `Colour Match` minigame...
+    elif "Color Match" in latest_message["content"]:
+        Client.log("DEBUG", "Detected colour match game.")
+
+        # ...get the colours and the word next to them
+        items = [
+            [item.split(" ")[0].replace(":", ""), item.split(" ")[-1]]
+            for item in latest_message["content"].lower().split("\n")[1:]
+        ]
+
+        while True:
+            # Get Dank Memer's edited message
+            latest_message = Client.retreive_message(
+                "pls work", old_latest_message=latest_message
+            )
+
+            # If Dank Memer's response has buttons...
+            if len(latest_message["components"]) &gt; 0:
+                # ...break out of the loop
+                break
+
+            # Sleep for 2.5 seconds
+            sleep(2.5)
+
+        # Get the word to be matched
+        word = latest_message["content"].split("`")[1].lower()
+
+        # For each word...
+        for item in items:
+            # ...if the word to be matched is found...
+            if item[-1] == word:
+                # ...set word to the colour next to the word
+                word = item[0]
+                break
+
+        # Initialize custom_id as None
+        custom_id = None
+
+        # For each button in Dank Memer's response...
+        for button in latest_message["components"][0]["components"]:
+            # ...if the button's label is the same as the word's colour...
+            if button["label"] == word:
+                # ...choose that button as the button to interact with
+                custom_id = button["custom_id"]
+
+                # Break out of the for loop
+                break
+
+        # If the program failed to match the labels on the buttons to the word's colour...
+        if custom_id is None:
+            Client.log(
+                "WARNING",
+                "Failed to get answer to the colour match game. Choosing a random button.",
+            )
+
+            # ...choose a random button to interact with
+            custom_id = choice(latest_message["components"][0]["components"])[
+                "custom_id"
+            ]
+
+        # Interact with the button
+        Client.interact_button("pls trivia", custom_id, latest_message)
+    # Else if Dank Memer replied with the `Hit the ball` minigame...
+    elif "Hit the ball" in latest_message["content"]:
+        Client.log("DEBUG", "Detected hit the ball game.")
+
+        # ...get the index of the goalkeeper
+        level = latest_message["content"].split("\n")[2].count("       ")
+
+        # Minus 1 from the level if the level equals 2 else add 1
+        level -= 1 if level == 2 else -1
+
+        # Interact with the button
+        Client.interact_button(
+            "pls work",
+            latest_message["components"][0]["components"][level]["custom_id"],
+            latest_message,
+        )
+    # Else if Dank Memer replied with the `Repeat Order` minigame...
+    elif "Repeat Order" in latest_message["content"]:
+        Client.log("DEBUG", "Detected repeat the order game.")
+
+        # ...get the words
+        words = [
+            word.replace("`", "") for word in latest_message["content"].split("\n")[1:]
+        ]
+
+        while True:
+            # Get Dank Memer's edited message
+            latest_message = Client.retreive_message(
+                "pls work", old_latest_message=latest_message
+            )
+
+            # If Dank Memer's response has buttons...
+            if len(latest_message["components"]) &gt; 0:
+                # ...break out of the loop
+                break
+
+            # Sleep for 2.5 seconds
+            sleep(2.5)
+        
+        # For each word in words...
+        for word in words:
+            # ...for each button in Dank Memer's response...
+            for button in latest_message["components"][0]["components"]:
+                # ...if the button label equals the word...
+                if button["label"] == word:
+                    # ...interact with the button
+                    Client.interact_button(
+                        "pls work", button["custom_id"], latest_message
+                    )
+
+                    # Sleep for 1 second
+                    sleep(0.5)
+
+                    # Break out of the buttons for loop
+                    break
+                
+    # Else if Dank Memer replied with the `Emoji Match` minigame
+    elif "Emoji Match" in latest_message["content"]:
+        Client.log("DEBUG", "Detected emoji match game.")
+
+        # Get the emoji to be matched
+        emoji = latest_message["content"].split("\n")[-1]
+
+        while True:
+            # Get Dank Memer's edited message
+            latest_message = Client.retreive_message(
+                "pls work", old_latest_message=latest_message
+            )
+
+            # If Dank Memer's response has buttons...
+            if len(latest_message["components"]) &gt; 0:
+                # ...break out of the loop
+                break
+
+            # Sleep for 2.5 seconds
+            sleep(2.5)
+
+        # Initialize custom_id as None
+        custom_id = None
+
+        # For each row of buttons...
+        for button_row in latest_message["components"]:
+            # ...for each button in that row...
+            for button in button_row["components"]:
+                # ...if that button's emoji is the emoji to be matched...
+                if emoji == button["emoji"]["name"]:
+                    # ...choose that button was the button to interact with
+                    custom_id = button["custom_id"]
+
+                    # Interact with the button
+                    Client.interact_button("pls work", custom_id, latest_message)
+
+                    # Break out of the button for loop
+                    break
+
+            # If custom_id doesn't equal None
+            if custom_id is not None:
+                # Break out of the button_row for loop
+                break
+
+        # If the emoji wasn't matched...
+        if custom_id is None:
+            Client.log("WARNING", "Failed to match the emoji. Clicking a random emoji.")
+
+            # ...interact with a random button
+            Client.interact_button(
+                "pls work",
+                choice(latest_message["components"][0]["components"])["custom_id"],
+                latest_message,
+            )
+    # Else if Dank Memer replied with an unknown minigame...
+    else:
+        Client.log("WARNING", "Unknown `pls work` game. Clicking a random button.")
+        print(f"\n\nIMPORTANT\n{latest_message}\n\n")
+        # If there are buttons to click...
+        if len(latest_message["components"]) &gt; 0:
+            # ...choose a random butotn to interact with
+            custom_id = choice(latest_message["components"][0]["components"])[
+                "custom_id"
+            ]
+        # Else...
+        else:
+            # ...try to get Dank Memer's edited message with buttons (i.e, the command could be one where you have to memorise a pattern and the buttons will only appear after a certain time)
+            for _ in range(1, 6):
+                # Get Dank Memer's edited message
+                latest_message = Client.retreive_message(
+                    "pls work", old_latest_message=latest_message
+                )
+
+                # If Dank Memer's response has buttons...
+                if len(latest_message["components"]) &gt; 0:
+                    # ...break out of the loop
+                    break
+
+                # Sleep for 2.5 seconds
+                sleep(2.5)
+
+            # Choose a random button to interact with
+            custom_id = choice(latest_message["components"][0]["components"])[
+                "custom_id"
+            ]
+
+        # Interact with the random button
+        Client.interact_button("pls work", custom_id, latest_message)
+
+    return True</code></pre>
+     </details>
+    </section>
+    <section>
+    </section>
+    <section>
+    </section>
+    <section>
+     <h2 class="section-title" id="header-functions">
+      Functions
+     </h2>
+     <dl>
+      <dt id="src.scripts.work.work">
+       <code class="name flex">
+        <span>
+         def
+         <span class="ident">
+          work
+         </span>
+        </span>
+        (
+        <span>
+         Client: instance.Client.Instance) ‑&gt; bool
+        </span>
+       </code>
+      </dt>
+      <dd>
+       <div class="desc">
+        <p>
+         The work function is used to interact with the work command
+        </p>
+        <h2 id="args">
+         Args
+        </h2>
+        <dl>
+         <dt>
+          <strong>
+           <code>
+            Client
+           </code>
+          </strong>
+          :
+          <code>
+           Instance
+          </code>
+         </dt>
+         <dd>
+          The Discord client
+         </dd>
+        </dl>
+        <h2 id="returns">
+         Returns
+        </h2>
+        <dl>
+         <dt>
+          <code>
+           bool
+          </code>
+         </dt>
+         <dd>
+          Indicates whether the command ran successfully or not
+         </dd>
+        </dl>
+       </div>
+       <details class="source">
+        <summary>
+         <span>
+          Expand source code
+         </span>
+        </summary>
+        <pre><code class="python">def work(Client: Instance) -&gt; bool:
+    """
+    The work function is used to interact with the work command
+
+    Args:
+        Client (Instance): The Discord client
+
+    Returns:
+        bool: Indicates whether the command ran successfully or not
+    """
+
+    # Send the command `pls work`
+    Client.send_message("pls work")
+
+    # Get Dank Memer's response to `pls work`
+    latest_message = Client.retreive_message("pls work")
+
+    # If the account doesn't have a job...
+    if "You don't currently have a job to work at" in latest_message["content"]:
+        # Send the command `pls work babysitter`
+        Client.send_message("pls work babysitter")
+
+        # Send the command `pls work`
+        Client.send_message("pls work")
+
+        # Get Dank Memer's response to `pls work`
+        latest_message = Client.retreive_message(
+            "pls work", old_latest_message=latest_message
+        )
+    # Else if the account was fired...
+    elif "boss was tired" in latest_message["content"]:
+        Client.log("WARNING", "Fired from job.")
+
+        # ...return False
+        return False
+    # Else if awaiting cooldown to join new job...
+    elif "you were fired" in latest_message["content"]:
+        Client.log("WARNING", "Awaiting cooldown to join new job.")
+
+        # ...return False
+        return False
+    # Else if awaiting cooldown to work...
+    elif "You need to wait" in latest_message["content"]:
+        # ...get the time left till the account can work
+        time_left = latest_message["content"].split("**")[1]
+
+        Client.log(
+            "WARNING", f"Cannot work - awaiting cooldown end ({time_left} left)."
+        )
+
+        return False
+    # Else if the account was promoted...
+    elif "deserve a fat promotion" in latest_message["content"]:
+        # ...get the old pay &amp; promotion amount
+        promotion = latest_message["content"].split("\n")[1].split("`")[-2]
+
+        Client.log("DEBUG", f"Got promoted in the `pls work` command - {promotion}.")
+
+        # Send the command `pls work`
+        Client.send_message("pls work")
+
+        # Get Dank Memer's response to `pls work`
+        latest_message = Client.retreive_message(
+            "pls work", old_latest_message=latest_message
+        )
+
+    # If Dank Memer replied with the `Dunk The ball`` minigame...
+    if "Dunk the ball" in latest_message["content"]:
+        Client.log("DEBUG", "Detected dunk the ball game.")
+
+        # ...get the index of the button under the ball
+        level = (
+            latest_message["content"]
+            .split("\n")[2]
+            .split(":basketball")[0]
+            .count("       ")
+        )
+
+        # Interact with the `Catch` button
+        custom_id = latest_message["components"][0]["components"][level]["custom_id"]
+
+        Client.interact_button("pls work", custom_id, latest_message)
+
+    # Else if Dank Memer replied with the `Colour Match` minigame...
+    elif "Color Match" in latest_message["content"]:
+        Client.log("DEBUG", "Detected colour match game.")
+
+        # ...get the colours and the word next to them
+        items = [
+            [item.split(" ")[0].replace(":", ""), item.split(" ")[-1]]
+            for item in latest_message["content"].lower().split("\n")[1:]
+        ]
+
+        while True:
+            # Get Dank Memer's edited message
+            latest_message = Client.retreive_message(
+                "pls work", old_latest_message=latest_message
+            )
+
+            # If Dank Memer's response has buttons...
+            if len(latest_message["components"]) &gt; 0:
+                # ...break out of the loop
+                break
+
+            # Sleep for 2.5 seconds
+            sleep(2.5)
+
+        # Get the word to be matched
+        word = latest_message["content"].split("`")[1].lower()
+
+        # For each word...
+        for item in items:
+            # ...if the word to be matched is found...
+            if item[-1] == word:
+                # ...set word to the colour next to the word
+                word = item[0]
+                break
+
+        # Initialize custom_id as None
+        custom_id = None
+
+        # For each button in Dank Memer's response...
+        for button in latest_message["components"][0]["components"]:
+            # ...if the button's label is the same as the word's colour...
+            if button["label"] == word:
+                # ...choose that button as the button to interact with
+                custom_id = button["custom_id"]
+
+                # Break out of the for loop
+                break
+
+        # If the program failed to match the labels on the buttons to the word's colour...
+        if custom_id is None:
+            Client.log(
+                "WARNING",
+                "Failed to get answer to the colour match game. Choosing a random button.",
+            )
+
+            # ...choose a random button to interact with
+            custom_id = choice(latest_message["components"][0]["components"])[
+                "custom_id"
+            ]
+
+        # Interact with the button
+        Client.interact_button("pls trivia", custom_id, latest_message)
+    # Else if Dank Memer replied with the `Hit the ball` minigame...
+    elif "Hit the ball" in latest_message["content"]:
+        Client.log("DEBUG", "Detected hit the ball game.")
+
+        # ...get the index of the goalkeeper
+        level = latest_message["content"].split("\n")[2].count("       ")
+
+        # Minus 1 from the level if the level equals 2 else add 1
+        level -= 1 if level == 2 else -1
+
+        # Interact with the button
+        Client.interact_button(
+            "pls work",
+            latest_message["components"][0]["components"][level]["custom_id"],
+            latest_message,
+        )
+    # Else if Dank Memer replied with the `Repeat Order` minigame...
+    elif "Repeat Order" in latest_message["content"]:
+        Client.log("DEBUG", "Detected repeat the order game.")
+
+        # ...get the words
+        words = [
+            word.replace("`", "") for word in latest_message["content"].split("\n")[1:]
+        ]
+
+        while True:
+            # Get Dank Memer's edited message
+            latest_message = Client.retreive_message(
+                "pls work", old_latest_message=latest_message
+            )
+
+            # If Dank Memer's response has buttons...
+            if len(latest_message["components"]) &gt; 0:
+                # ...break out of the loop
+                break
+
+            # Sleep for 2.5 seconds
+            sleep(2.5)
+        
+        # For each word in words...
+        for word in words:
+            # ...for each button in Dank Memer's response...
+            for button in latest_message["components"][0]["components"]:
+                # ...if the button label equals the word...
+                if button["label"] == word:
+                    # ...interact with the button
+                    Client.interact_button(
+                        "pls work", button["custom_id"], latest_message
+                    )
+
+                    # Sleep for 1 second
+                    sleep(0.5)
+
+                    # Break out of the buttons for loop
+                    break
+                
+    # Else if Dank Memer replied with the `Emoji Match` minigame
+    elif "Emoji Match" in latest_message["content"]:
+        Client.log("DEBUG", "Detected emoji match game.")
+
+        # Get the emoji to be matched
+        emoji = latest_message["content"].split("\n")[-1]
+
+        while True:
+            # Get Dank Memer's edited message
+            latest_message = Client.retreive_message(
+                "pls work", old_latest_message=latest_message
+            )
+
+            # If Dank Memer's response has buttons...
+            if len(latest_message["components"]) &gt; 0:
+                # ...break out of the loop
+                break
+
+            # Sleep for 2.5 seconds
+            sleep(2.5)
+
+        # Initialize custom_id as None
+        custom_id = None
+
+        # For each row of buttons...
+        for button_row in latest_message["components"]:
+            # ...for each button in that row...
+            for button in button_row["components"]:
+                # ...if that button's emoji is the emoji to be matched...
+                if emoji == button["emoji"]["name"]:
+                    # ...choose that button was the button to interact with
+                    custom_id = button["custom_id"]
+
+                    # Interact with the button
+                    Client.interact_button("pls work", custom_id, latest_message)
+
+                    # Break out of the button for loop
+                    break
+
+            # If custom_id doesn't equal None
+            if custom_id is not None:
+                # Break out of the button_row for loop
+                break
+
+        # If the emoji wasn't matched...
+        if custom_id is None:
+            Client.log("WARNING", "Failed to match the emoji. Clicking a random emoji.")
+
+            # ...interact with a random button
+            Client.interact_button(
+                "pls work",
+                choice(latest_message["components"][0]["components"])["custom_id"],
+                latest_message,
+            )
+    # Else if Dank Memer replied with an unknown minigame...
+    else:
+        Client.log("WARNING", "Unknown `pls work` game. Clicking a random button.")
+        print(f"\n\nIMPORTANT\n{latest_message}\n\n")
+        # If there are buttons to click...
+        if len(latest_message["components"]) &gt; 0:
+            # ...choose a random butotn to interact with
+            custom_id = choice(latest_message["components"][0]["components"])[
+                "custom_id"
+            ]
+        # Else...
+        else:
+            # ...try to get Dank Memer's edited message with buttons (i.e, the command could be one where you have to memorise a pattern and the buttons will only appear after a certain time)
+            for _ in range(1, 6):
+                # Get Dank Memer's edited message
+                latest_message = Client.retreive_message(
+                    "pls work", old_latest_message=latest_message
+                )
+
+                # If Dank Memer's response has buttons...
+                if len(latest_message["components"]) &gt; 0:
+                    # ...break out of the loop
+                    break
+
+                # Sleep for 2.5 seconds
+                sleep(2.5)
+
+            # Choose a random button to interact with
+            custom_id = choice(latest_message["components"][0]["components"])[
+                "custom_id"
+            ]
+
+        # Interact with the random button
+        Client.interact_button("pls work", custom_id, latest_message)
+
+    return True</code></pre>
+       </details>
+      </dd>
+     </dl>
+    </section>
+    <section>
+    </section>
+   </article>
+   <nav id="sidebar">
+    <h1>
+     Index
+    </h1>
+    <div class="toc">
+     <ul>
+     </ul>
+    </div>
+    <ul id="index">
+     <li>
+      <h3>
+       Super-module
+      </h3>
+      <ul>
+       <li>
+        <code>
+         <a href="index.html" title="src.scripts">
+          src.scripts
+         </a>
+        </code>
+       </li>
+      </ul>
+     </li>
+     <li>
+      <h3>
+       <a href="#header-functions">
+        Functions
+       </a>
+      </h3>
+      <ul class="">
+       <li>
+        <code>
+         <a href="#src.scripts.work.work" title="src.scripts.work.work">
+          work
+         </a>
+        </code>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </nav>
+  </main>
+  <footer id="footer">
+   <p>
+    <a href="work -pycco.html" target="_blank">
+     View full code
+    </a>
+    - Generated by
+    <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator">
+     <cite>
+      pdoc
+     </cite>
+     0.10.0
+    </a>
+    .
+   </p>
+  </footer>
+ </body>
+</html>

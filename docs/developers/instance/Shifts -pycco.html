@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   Shifts.py
+  </title>
+  <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+  <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div id="container">
+   <div id="background">
+   </div>
+   <div class="section">
+    <div class="docs">
+     <h1>
+      Shifts.py
+     </h1>
+    </div>
+   </div>
+   <div class="clearall">
+    <div class="section" id="section-0">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-0">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">uniform</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">instance.Client</span> <span class="kn">import</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">utils.Shared</span> <span class="kn">import</span> <span class="n">data</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-1">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-1">
+        #
+       </a>
+      </div>
+      <p>
+       The shifts function is one of the main functions of the program. It is responsible for
+switching the account between active and passive modes, as well as sleeping when necessary.
+      </p>
+      <p>
+       Args:
+Client (Instance): The account’s class for interacting with Discord.
+      </p>
+      <p>
+       Returns:
+None
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">shifts</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-2">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-2">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-3">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-3">
+        #
+       </a>
+      </div>
+      <p>
+       Gets the last shift the progrm was on
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">index</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"shift"</span><span class="p">]</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-4">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-4">
+        #
+       </a>
+      </div>
+      <p>
+       If the last shift the program was on does not exist anymore, set the shift to
+       <code>
+        1
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">index</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">index</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="n">index</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-5">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-5">
+        #
+       </a>
+      </div>
+      <p>
+       Set the current shift in the database to index
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"shift"</span><span class="p">]</span> <span class="o">=</span> <span class="n">index</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-6">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-6">
+        #
+       </a>
+      </div>
+      <p>
+       Update the database
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-7">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-7">
+        #
+       </a>
+      </div>
+      <p>
+       If the shift the program is on isn’t enabled…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="ow">not</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-8">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-8">
+        #
+       </a>
+      </div>
+      <p>
+       …skip to the next shift. If there is no next shift, go back to the first shift
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">index</span> <span class="o">+=</span> <span class="p">(</span>
+                <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="ow">in</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                <span class="k">else</span> <span class="o">-</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="p">)</span>
+            <span class="k">continue</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-9">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-9">
+        #
+       </a>
+      </div>
+      <p>
+       If the current shift state is active…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"active"</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-10">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-10">
+        #
+       </a>
+      </div>
+      <p>
+       …calculate the variation in the shift length
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">variation</span> <span class="o">=</span> <span class="n">uniform</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="s2">"variation"</span><span class="p">]</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-11">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-11">
+        #
+       </a>
+      </div>
+      <p>
+       Work out how long the program has to sleep for before it can switch to passive mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">sleep_len</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"active"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span>
+                        <span class="n">seconds</span><span class="o">=</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="s2">"active"</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">+</span> <span class="n">variation</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-12">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-12">
+        #
+       </a>
+      </div>
+      <p>
+       If the sleep time is negative, then set it to 1
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">sleep_len</span> <span class="o">=</span> <span class="n">sleep_len</span> <span class="k">if</span> <span class="n">sleep_len</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span>
+
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Currently in active mode."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-13">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-13">
+        #
+       </a>
+      </div>
+      <p>
+       Tell the program it can run commands
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-14">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-14">
+        #
+       </a>
+      </div>
+      <p>
+       Sleep the required time
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">sleep</span><span class="p">(</span><span class="n">sleep_len</span><span class="p">)</span>
+
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Moving to passive mode."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-15">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-15">
+        #
+       </a>
+      </div>
+      <p>
+       Tell the program it can’t run commands
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-16">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-16">
+        #
+       </a>
+      </div>
+      <p>
+       Set the shift state to
+       <code>
+        passive
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"passive"</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-17">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-17">
+        #
+       </a>
+      </div>
+      <p>
+       Set the shift start time to the time now
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"passive"</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-18">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-18">
+        #
+       </a>
+      </div>
+      <p>
+       Update the database
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-19">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-19">
+        #
+       </a>
+      </div>
+      <p>
+       If the current shift state is passive…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"passive"</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-20">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-20">
+        #
+       </a>
+      </div>
+      <p>
+       …calculate the variation in the shift length
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">variation</span> <span class="o">=</span> <span class="n">uniform</span><span class="p">(</span>
+                <span class="mi">0</span><span class="p">,</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="s2">"variation"</span><span class="p">]</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-21">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-21">
+        #
+       </a>
+      </div>
+      <p>
+       Work out how long the program has to sleep for before it can switch to active mode
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">sleep_len</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"passive"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                    <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span>
+                        <span class="n">seconds</span><span class="o">=</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="n">index</span><span class="p">][</span><span class="s2">"passive"</span><span class="p">]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">+</span> <span class="n">variation</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-22">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-22">
+        #
+       </a>
+      </div>
+      <p>
+       If the sleep time is negative, then set it to 1
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">sleep_len</span> <span class="o">=</span> <span class="n">sleep_len</span> <span class="k">if</span> <span class="n">sleep_len</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-23">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-23">
+        #
+       </a>
+      </div>
+      <p>
+       Tell the program it can’t run commands
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Currently in passive mode."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-24">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-24">
+        #
+       </a>
+      </div>
+      <p>
+       Sleep the required time
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">sleep</span><span class="p">(</span><span class="n">sleep_len</span><span class="p">)</span>
+
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Moving to active mode."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-25">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-25">
+        #
+       </a>
+      </div>
+      <p>
+       Tell the program it can run commands
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-26">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-26">
+        #
+       </a>
+      </div>
+      <p>
+       Set the shift state to
+       <code>
+        active
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"active"</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-27">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-27">
+        #
+       </a>
+      </div>
+      <p>
+       Set the shift start time to the time now
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">][</span><span class="s2">"active"</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span>
+                <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-28">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-28">
+        #
+       </a>
+      </div>
+      <p>
+       Update the database
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-29">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-29">
+        #
+       </a>
+      </div>
+      <p>
+       Move to the next shift. If there is no next shift, go back to the first shift
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">index</span> <span class="o">+=</span> <span class="p">(</span>
+            <span class="mi">1</span> <span class="k">if</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">1</span> <span class="ow">in</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"shifts"</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">else</span> <span class="o">-</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="p">)</span>
+
+</pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

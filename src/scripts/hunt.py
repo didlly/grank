@@ -1,20 +1,32 @@
 from time import sleep
 
+from instance.Client import Instance
+from scripts.buy import buy
 
-def hunt(Client) -> None:
+
+def hunt(Client: Instance) -> bool:
+    """
+    The hunt function is used to interact with the hunt command
+
+    Args:
+        Client (Instance): The Discord client
+
+    Returns:
+        bool: Indicates whether the command ran successfully or not
+    """
+
+    # Send the command `pls hunt`
     Client.send_message("pls hunt")
 
+    # Get Dank Memer's response to `pls hunt`
     latest_message = Client.retreive_message("pls hunt")
 
+    # If Dank Memer replied with the `Dodge the Fireball` game...
     if "Dodge the Fireball" in latest_message["content"]:
-        if Client.Repository.config["logging"]["debug"]:
-            Client.log("DEBUG", "Detected dodge the fireball game.")
+        Client.log("DEBUG", "Detected dodge the fireball game.")
 
         while True:
-            latest_message = Client.retreive_message(
-                "pls hunt", old_latest_message=latest_message
-            )
-
+            # ...get the level the fireball is on
             level = (
                 latest_message["content"]
                 .split("\n")[1]
@@ -22,11 +34,20 @@ def hunt(Client) -> None:
                 .count("       ")
             )
 
+            # If the fireball is on level 1 (i.e, it is blocking the path to the dragon)...
             if level == 1:
+                # ...sleep for one second
                 sleep(1)
 
+                # Get Dank Memer's edited response
+                latest_message = Client.retreive_message(
+                    "pls hunt", old_latest_message=latest_message
+                )
+
+                # Continue to the next iteration of the loop
                 continue
 
+            # Interact with the `Catch` button in the middle
             Client.interact_button(
                 "pls hunt",
                 latest_message["components"][0]["components"][1]["custom_id"],
@@ -35,30 +56,31 @@ def hunt(Client) -> None:
 
             break
 
+    # If the account does not have a `hunting rifle`...
     if (
         latest_message["content"]
         == "You don't have a hunting rifle, you need to go buy one. You're not good enough to shoot animals with your bare hands... I hope."
     ):
-        if Client.Repository.config["logging"]["debug"]:
-            Client.log(
-                "DEBUG",
-                "User does not have item `hunting rifle`. Buying hunting rifle now.",
-            )
+        Client.log(
+            "DEBUG",
+            "User does not have item `hunting rifle`. Buying hunting rifle now.",
+        )
 
+        # ...if autobuy is enabled...
         if (
             Client.Repository.config["auto buy"]
             and Client.Repository.config["auto buy"]["hunting rifle"]
         ):
-            from scripts.buy import buy
-
-            buy(Client, "hunting rifle")
-            return
-        elif Client.Repository.config["logging"]["warning"]:
+            # ...try and buy a `hunting rifle`
+            return buy(Client, "hunting rifle")
+        # Else...
+        else:
             Client.log(
                 "WARNING",
                 f"A hunting rifle is required for the command `pls fish`. However, since {'auto buy is off for hunting rifles,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
             )
-            return
+            # ...return False
+            return False
 
     if latest_message["content"] in [
         "Imagine going into the woods to hunt something, and coming out empty handed",
@@ -67,8 +89,9 @@ def hunt(Client) -> None:
         "You went hunting the woods and brought back literally nothing lol",
     ]:
         Client.log("DEBUG", f"Found nothing from the `pls hunt` command.")
-        return
+    # If an item was gained...
     else:
+        # ...get the item gained
         item = (
             latest_message["content"]
             .replace("You went hunting and brought back a ", "")
@@ -77,4 +100,8 @@ def hunt(Client) -> None:
         ).strip()
 
         Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls hunt` command.")
+
+        # Update the items gained
         Client._update_items("pls hunt", item)
+
+    return True

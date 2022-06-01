@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   adventure.py
+  </title>
+  <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+  <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div id="container">
+   <div id="background">
+   </div>
+   <div class="section">
+    <div class="docs">
+     <h1>
+      adventure.py
+     </h1>
+    </div>
+   </div>
+   <div class="clearall">
+    <div class="section" id="section-0">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-0">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">instance.Client</span> <span class="kn">import</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">scripts.buy</span> <span class="kn">import</span> <span class="n">buy</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-1">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-1">
+        #
+       </a>
+      </div>
+      <p>
+       The adventure function is used to interact with the adventure command.
+It will start a new adventure if one is not already in progress, or it will continue an existing one.
+If the cooldown period hasn’t ended, it will return False
+      </p>
+      <p>
+       Args:
+Client (Instance): The Discord client
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the command ran successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">adventure</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-2">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-2">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-3">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-3">
+        #
+       </a>
+      </div>
+      <p>
+       Send the command
+       <code>
+        pls adv
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"pls adv"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-4">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-4">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s response to
+       <code>
+        pls adv
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span><span class="s2">"pls adv"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-5">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-5">
+        #
+       </a>
+      </div>
+      <p>
+       If the response has a
+       <code>
+        description
+       </code>
+       section in the embed…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="s2">"description"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-6">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-6">
+        #
+       </a>
+      </div>
+      <p>
+       …if the adventure has ended
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="p">(</span>
+            <span class="s2">"You reached the end of your adventure!"</span>
+            <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Adventure has ended."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-7">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-7">
+        #
+       </a>
+      </div>
+      <p>
+       …get Dank Memer’s latest message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+                <span class="s2">"pls adv"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-8">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-8">
+        #
+       </a>
+      </div>
+      <p>
+       Get the adventure that has ended
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">adventure</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"fields"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"value"</span><span class="p">]</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-9">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-9">
+        #
+       </a>
+      </div>
+      <p>
+       Get the items taken on the adventure
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">backpack</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"fields"</span><span class="p">][</span><span class="mi">3</span><span class="p">][</span><span class="s2">"value"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)</span>
+            <span class="n">backpack</span> <span class="o">=</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="n">backpack</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">backpack</span><span class="p">),</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-10">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-10">
+        #
+       </a>
+      </div>
+      <p>
+       Get the items found during the adventure
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">found</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"fields"</span><span class="p">][</span><span class="mi">5</span><span class="p">][</span><span class="s2">"value"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":"</span><span class="p">)</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">found</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">found</span><span class="p">),</span> <span class="mi">2</span><span class="p">))</span>
+
+            <span class="k">try</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-11">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-11">
+        #
+       </a>
+      </div>
+      <p>
+       Try and get the coins gained during the adventure
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="n">coins</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span>
+                    <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                        <span class="nb">filter</span><span class="p">(</span>
+                            <span class="nb">str</span><span class="o">.</span><span class="n">isdigit</span><span class="p">,</span>
+                            <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"fields"</span><span class="p">][</span><span class="mi">6</span><span class="p">],</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-12">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-12">
+        #
+       </a>
+      </div>
+      <p>
+       If an Exception is raised, it will be caught here and the coins gained will be set to 0
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="n">coins</span> <span class="o">=</span> <span class="mi">0</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-13">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-13">
+        #
+       </a>
+      </div>
+      <p>
+       Get the amount of interactions completed during the adventure
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">interactions</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"fields"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"value"</span><span class="p">]</span>
+
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                <span class="s2">"DEBUG"</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">"Ended adventure: `</span><span class="si">{</span><span class="n">adventure</span><span class="si">}</span><span class="s2">`; Items taken: `</span><span class="si">{</span><span class="n">backpack</span><span class="si">}</span><span class="s2">`; Items found: `</span><span class="si">{</span><span class="n">found</span><span class="si">}</span><span class="s2">`; Coins found: `</span><span class="si">{</span><span class="n">coins</span><span class="si">}</span><span class="s2">`; Amount of Interactions: `</span><span class="si">{</span><span class="n">interactions</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-14">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-14">
+        #
+       </a>
+      </div>
+      <p>
+       Update the coins gained
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">_update_coins</span><span class="p">(</span><span class="n">coins</span><span class="p">)</span>
+
+            <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-15">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-15">
+        #
+       </a>
+      </div>
+      <p>
+       Send the command
+       <code>
+        pls adv
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"pls adv"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-16">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-16">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s response to
+       <code>
+        pls adv
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+                <span class="s2">"pls adv"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-17">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-17">
+        #
+       </a>
+      </div>
+      <p>
+       …else if the cooldown period hasn’t ended…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">elif</span> <span class="p">(</span>
+            <span class="s2">"You can interact with the adventure again"</span>
+            <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                <span class="s2">"WARNING"</span><span class="p">,</span> <span class="s2">"Cannot interact with adventure yet - awaiting cooldown end."</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-18">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-18">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-19">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-19">
+        #
+       </a>
+      </div>
+      <p>
+       If the response has an
+       <code>
+        author
+       </code>
+       section in the embed…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="s2">"author"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-20">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-20">
+        #
+       </a>
+      </div>
+      <p>
+       …if a new adventure has to be started…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="s2">"Choose an Adventure"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"author"</span><span class="p">][</span><span class="s2">"name"</span><span class="p">]:</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Starting new adventure."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-21">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-21">
+        #
+       </a>
+      </div>
+      <p>
+       …if the account does not have an
+       <code>
+        adventure ticket
+       </code>
+       …
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="s2">"footer"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                    <span class="s2">"DEBUG"</span><span class="p">,</span>
+                    <span class="s2">"User does not have item `adventure ticket`. Buying adventure ticket now."</span><span class="p">,</span>
+                <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-22">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-22">
+        #
+       </a>
+      </div>
+      <p>
+       …if autobuy is enabled…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"auto buy"</span><span class="p">]</span>
+                    <span class="ow">and</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"auto buy"</span><span class="p">][</span><span class="s2">"adventure ticket"</span><span class="p">]</span>
+                <span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-23">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-23">
+        #
+       </a>
+      </div>
+      <p>
+       …interact with the
+       <code>
+        End Interaction
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+                        <span class="s2">"pls adv"</span><span class="p">,</span>
+                        <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+                        <span class="n">latest_message</span><span class="p">,</span>
+                    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-24">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-24">
+        #
+       </a>
+      </div>
+      <p>
+       Try and buy an
+       <code>
+        adventure ticket
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">output</span> <span class="o">=</span> <span class="n">buy</span><span class="p">(</span><span class="n">Client</span><span class="p">,</span> <span class="s2">"adventure ticket"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-25">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-25">
+        #
+       </a>
+      </div>
+      <p>
+       If the adventure ticket was not bought…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-26">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-26">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                        <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-27">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-27">
+        #
+       </a>
+      </div>
+      <p>
+       Send the command
+       <code>
+        pls adv
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"pls adv"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-28">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-28">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s response to
+       <code>
+        pls adv
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+                        <span class="s2">"pls adv"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+                    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-29">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-29">
+        #
+       </a>
+      </div>
+      <p>
+       …else…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                        <span class="s2">"WARNING"</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">"An adventure ticket is required for the command `pls adv`. However, since </span><span class="si">{</span><span class="s1">'auto buy is off for advenure tickets,'</span> <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">'auto buy'</span><span class="p">][</span><span class="s1">'enabled'</span><span class="p">]</span> <span class="k">else</span> <span class="s1">'auto buy is off for all items,'</span><span class="si">}</span><span class="s2"> the program will not buy one. Aborting command."</span><span class="p">,</span>
+                    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-30">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-30">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-31">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-31">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Start Adventure
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+                <span class="s2">"pls adv"</span><span class="p">,</span>
+                <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+                <span class="n">latest_message</span><span class="p">,</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-32">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-32">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s edited response
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+                <span class="s2">"pls adv"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-33">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-33">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Equip all
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+                <span class="s2">"pls adv"</span><span class="p">,</span>
+                <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+                <span class="n">latest_message</span><span class="p">,</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-34">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-34">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Start Adventure
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+                <span class="s2">"pls adv"</span><span class="p">,</span>
+                <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+                <span class="n">latest_message</span><span class="p">,</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-35">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-35">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s edited response
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+                <span class="s2">"pls adv"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-36">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-36">
+        #
+       </a>
+      </div>
+      <p>
+       If there is only one button (the
+       <code>
+        End Interaction
+       </code>
+       one) on Dank Memer’s response
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Uneventful adventure phase."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-37">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-37">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        End Interaction
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="s2">"You ran out of fuel! What next?"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Fuel loss adventure phase. Choosing `Search a planet` option."</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-38">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-38">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Search a planet
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="s2">"You accidentally bumped into the Webb Telescope."</span>
+        <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Webb telescope adventure phase. Choosing `Try and fix it` option."</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-39">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-39">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Try and fix it
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="s2">"You found a strange looking object. What do you do?"</span>
+        <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="s2">"DEBUG"</span><span class="p">,</span>
+            <span class="s2">"Strange looking object adventure phase. Choosing `Inspect` option."</span><span class="p">,</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-40">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-40">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Inspect
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="s2">"A friendly alien approached you slowly."</span>
+        <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Friendly alien adventure phase. Choosing `Talk` option."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-41">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-41">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Talk
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">1</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="s2">"You got abducted by a group of aliens,"</span>
+        <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Alien abduction adventure. Choosing `Sit back and enjoy` option."</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-42">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-42">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Sit back and enjoy
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="s2">"You uh, just came across a pair of Odd Eyes floating around"</span>
+        <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Odd eye adventure phase. Choosing `Collect` option."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-43">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-43">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Collect
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="s2">"Oh my god even in space you cannot escape it"</span>
+        <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Rick roll adventure phase. Choosing `up` option."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-44">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-44">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        up
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span>
+        <span class="s2">"You encountered someone named Dank Sidious, what do you do?"</span>
+        <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"embeds"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"description"</span><span class="p">]</span>
+    <span class="p">):</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Dank Sidious adventure phase. Choosing `Do it` option."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-45">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-45">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Do it
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="s2">"WARNING"</span><span class="p">,</span> <span class="s2">"Unknown `pls adventure` phase. Clicking a random button."</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-46">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-46">
+        #
+       </a>
+      </div>
+      <p>
+       Interacts with a random button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">])[</span><span class="s2">"custom_id"</span><span class="p">]</span>
+
+    <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span><span class="s2">"pls adv"</span><span class="p">,</span> <span class="n">custom_id</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+
+</pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

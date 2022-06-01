@@ -1,10 +1,16 @@
 from copy import copy
 from datetime import datetime
 from random import uniform
-from threading import Thread
 from time import sleep, time
 from typing import Optional
 
+from instance.Exceptions import (
+    ButtonInteractError,
+    DropdownInteractError,
+    MessageSendError,
+    ResponseTimeout,
+    WebhookSendError,
+)
 from utils.Console import fore, style
 from utils.Converter import DictToClass
 from utils.Merge import combine
@@ -12,28 +18,21 @@ from utils.Requests import request
 from utils.Shared import data
 
 
-class MessageSendError(Exception):
-    pass
-
-
-class WebhookSendError(Exception):
-    pass
-
-
-class ResponseTimeout(Exception):
-    pass
-
-
-class ButtonInteractError(Exception):
-    pass
-
-
-class DropdownInteractError(Exception):
-    pass
-
-
 class Instance(object):
     def __init__(self, cwd: str, account: DictToClass) -> None:
+        """
+        The __init__ function is called when an instance of a class is created.
+        It initializes the attributes of the class.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            cwd (str): The current working directory of the program
+            account (DictToClass): The account's data class
+
+        Returns:
+            NoneType: __init__ functions for classes aren't allowed to return anything, don't ask me why
+        """
+
         self.cwd = cwd
         self.avatar = account.avatar
         self.token = account.token
@@ -41,16 +40,18 @@ class Instance(object):
         self.username = f"{account.username}#{account.discriminator}"
         self.user = account.username
         self.discriminator = account.discriminator
+
+        # Set startup_time to the UNIX time the line was executed
         self.startup_time = int(time())
+
+        # Create the log file
         self.log_file = open(
             f"{cwd}logs/{data['version']}/{account.token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
             "a",
             errors="ignore",
         )
 
-        Thread(target=self._update).start()
-
-    def _update(self) -> None:
+        # Initialize the session stats dictionary in the shared dictionary
         data["stats"][self.token] = {
             "commands_ran": 0,
             "buttons_clicked": 0,
@@ -59,40 +60,56 @@ class Instance(object):
             "items_gained": {},
         }
 
-        while "Repository" not in self.__dict__.keys():
-            continue
+    def _update(self) -> bool:
+        """
+        The _update function is called every 10 seconds when the bot is being run. It updates the lifetime stats of the account, and adds their current session's stats to them.
 
-        self.lifetime_commands_ran = self.Repository.info["stats"]["commands_ran"]
-        self.lifetime_buttons_clicked = self.Repository.info["stats"]["buttons_clicked"]
-        self.lifetime_dropdowns_selected = self.Repository.info["stats"][
-            "dropdowns_selected"
+        Args:
+            self: Gives access to the class' attributes and methods.
+
+        Returns:
+            bool: Indicates whether the subprogram executed successfully or not
+        """
+
+        self.Repository.info["stats"]["commands_ran"] += data["stats"][self.token][
+            "commands_ran"
         ]
-        self.lifetime_coins_gained = self.Repository.info["stats"]["coins_gained"]
-        self.lifetime_items_gained = self.Repository.info["stats"]["items_gained"]
 
-        while True:
-            self.Repository.info["stats"]["commands_ran"] = (
-                self.lifetime_commands_ran + data["stats"][self.token]["commands_ran"]
-            )
-            self.Repository.info["stats"]["buttons_clicked"] = (
-                self.lifetime_buttons_clicked
-                + data["stats"][self.token]["buttons_clicked"]
-            )
-            self.Repository.info["stats"]["dropdowns_selected"] = (
-                self.lifetime_dropdowns_selected
-                + data["stats"][self.token]["dropdowns_selected"]
-            )
-            self.Repository.info["stats"]["coins_gained"] = (
-                self.lifetime_coins_gained + data["stats"][self.token]["coins_gained"]
-            )
-            self.Repository.info["stats"]["items_gained"] = combine(
-                self.lifetime_items_gained, data["stats"][self.token]["items_gained"]
-            )
+        self.Repository.info["stats"]["buttons_clicked"] += data["stats"][self.token][
+            "buttons_clicked"
+        ]
 
-            self.Repository.info_write()
-            sleep(10)
+        self.Repository.info["stats"]["dropdowns_selected"] += data["stats"][
+            self.token
+        ]["dropdowns_selected"]
+
+        self.Repository.info["stats"]["coins_gained"] += data["stats"][self.token][
+            "coins_gained"
+        ]
+
+        self.Repository.info["stats"]["items_gained"] = combine(
+            self.Repository.info["stats"]["items_gained"],
+            data["stats"][self.token]["items_gained"],
+        )
+
+        self.Repository.info_write()
+
+        return True
 
     def _update_coins(self, command: str, coins: int) -> bool:
+        """
+        The _update_coins function is used to update the coins_gained integer in the info file
+        It takes two arguments, command and coins. Command is the name of the command that was run, while coins is an integer representing how many coins were gained or lost by running said command.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command ran which was used to gain the coins
+            coins (int): The amount of coins received from the command
+
+        Returns:
+            True if the coins received from the command is a number and less than 10000, else False
+        """
+
         try:
             coins = int(coins.replace(",", "")) if type(coins) != int else coins
         except ValueError:
@@ -116,15 +133,29 @@ class Instance(object):
 
         return True
 
-    def _update_items(self, command: str, item: int) -> bool:
+    def _update_items(self, command: str, item: str) -> bool:
+        """
+        The _update_items function is used to update the `items_gained` dictionary in the info file.
+        It takes two arguments: command and item.
+        command is a string that represents what command was run (e.g., `beg` or `crime`).
+        item is a string representing which item was gained (e.g., `apple`, `fish`).
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command ran which was used to gain the item
+            item (int): The item received from that command.
+
+        Returns:
+            False if the item is an empty string, has `answered first` in it, is `no items` or is `the shop sale just started!`, else True
+        """
+
         item = item.lower()
 
         if item in [
             "",
             "no items",
             "your immune system is under attack from covid-19",
-            "the shop sale just started!"
-            or "answered first!" in item
+            "the shop sale just started!" or "answered first" in item,
         ]:
             return False
 
@@ -134,14 +165,14 @@ class Instance(object):
                 f"A possible error was encountered while parsing the items received from the `{command}` command - `{item}` seems to be more than 3 words.",
             )
             return False
-        
+
         if any(char in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] for char in item):
             self.log(
                 "WARNING",
                 f"A possible error was encountered while parsing the items received from the `{command}` command - `{item}` seems to contain digits.",
             )
             return False
-        
+
         if item in data["stats"][self.token]["items_gained"]:
             data["stats"][self.token]["items_gained"][item] += 1
         else:
@@ -149,7 +180,26 @@ class Instance(object):
 
         return True
 
-    def send_message(self, command, token=None, latest_message=None, channel_id=None):
+    def send_message(
+        self,
+        command: str,
+        token: Optional[str] = None,
+        latest_message: Optional[dict] = None,
+        channel_id: Optional[int] = None,
+    ) -> None:
+        """
+        The send_message function sends a message to the Discord channel.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command to send
+            token (Optional[sr]) = None: The token used the send the message (or None if it should be the token in self)
+            latest_message (Optional[dict]) = None: Used if the message should reply to another message.
+            channel_id (Optional[int]) = None: The channel id used the send the message (or None if it should be the channel id in self)
+
+        Returns:
+            None
+        """
         command = str(command)
 
         if self.Repository.config["typing indicator"]["enabled"]:
@@ -217,7 +267,20 @@ class Instance(object):
                     f"Failed to send {'command' if 'pls' in command else 'message'} `{command}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
 
-    def webhook_send(self, command: dict, fallback_message: str) -> None:
+    def webhook_send(self, payload: dict, fallback_message: str) -> bool:
+        """
+        The webhook_send function sends a webhook to the channel specified by self.channel_id with the given payload.
+        If Discord is ratelimiting the bot, it will sleep for `req.content['retry_after'] / 1000` seconds and then try again.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            payload (dict): The webhook to be sent
+            fallback_message (str): The message to be sent if there is an error sending the webhook (usually if missing permissions). This may be removed in future versions
+
+        Returns:
+            bool: Indicates whether the subprogram executed successfully or not
+        """
+
         req = request(
             f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
             headers={"authorization": self.token},
@@ -229,7 +292,13 @@ class Instance(object):
                 f"Cannot send webhook in channel {self.channel_id} - Missing Permissions. Resorting to normal message.",
             )
             self.send_message(fallback_message)
-            return
+            return True
+
+        if "embeds" in payload.keys():
+            payload["embeds"][-1]["footer"] = {
+                "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
+                "icon_url": "https://avatars.githubusercontent.com/u/94558954",
+            }
 
         if len(req.content) > 0:
             token = req.content[0]["token"]
@@ -253,7 +322,7 @@ class Instance(object):
             req = request(
                 f"https://discord.com/api/webhooks/{channel_id}/{token}",
                 headers={"authorization": self.token},
-                json=command,
+                json=payload,
                 method="POST",
             )
 
@@ -261,14 +330,14 @@ class Instance(object):
                 if self.Repository.config["logging"]["debug"]:
                     self.log(
                         "DEBUG",
-                        f"Successfully sent webhook `{command}`.",
+                        f"Successfully sent webhook `{payload}`.",
                     )
                 return
             else:
                 if self.Repository.config["logging"]["warning"]:
                     self.log(
                         "WARNING",
-                        f"Failed to send webhook `{command}`. Status code: {req.status_code} (expected 200 or 204).",
+                        f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204).",
                     )
                 if req.status_code == 429:
                     if self.Repository.config["logging"]["warning"]:
@@ -279,12 +348,40 @@ class Instance(object):
                     sleep(req.content["retry_after"] / 1000)
                     continue
                 raise WebhookSendError(
-                    f"Failed to send webhook `{command}`. Status code: {req.status_code} (expected 200 or 204)."
+                    f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
 
+        return True
+
     def retreive_message(
-        self, command, token=None, check=True, old_latest_message: Optional[dict] = None
+        self,
+        command: str,
+        token: Optional[str] = None,
+        check: bool = True,
+        old_latest_message: Optional[dict] = None,
     ) -> dict:
+        """
+        The retreive_message function is used to retrieve the latest message from a Discord channel.
+
+        Parameters:
+
+            command (str): The command that was sent to Dank Memer.
+
+            token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+
+            check (bool): Whether or not this function should check for cooldowns and other restrictions in Dank Memer's response before returning it as a dict. Defaults to True, which means it will check for these restrictions and return an error if they are detected; False means no checks will be performed on the response at all, allowing you more control over what is returned by this function without having to manually parse each message yourself.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command the latest message is being retreived for.
+            token (Optional[str]) = None: The token used to retreive the message (or None if if it should be the token in self)
+            check (bool) = True: Determine whether or not the function should check for restrictions in the response from Dank Memer
+            old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck in an infinite loop or getting the wrong latest message if it can't find a response to its request
+
+        Returns:
+            The latest message in the channel
+        """
+
         while True:
             time = datetime.now()
             old_latest_message = (
@@ -336,7 +433,7 @@ class Instance(object):
                 old_latest_message = copy(latest_message)
 
             if latest_message["author"]["id"] != "270904126974590976":
-                raise TimeoutError(
+                raise ResponseTimeout(
                     f"Timeout exceeded for response from Dank Memer ({self.Repository.config['settings']['timeout']} {'second' if self.Repository.config['settings']['timeout'] == 1 else 'seconds'}). Aborting command."
                 )
 
@@ -484,6 +581,22 @@ class Instance(object):
         return latest_message
 
     def fallback_retreive_message(self, command: str) -> dict:
+        """
+        The fallback_retreive_message function is a helper function that is used to retreive the latest message sent by Dank Memer from the Discord channel.
+        It does this by making an API call to Discord's servers, and then parsing through all of the messages in order to find one that matches our criteria.
+        The criteria for this function is as follows:
+
+            1) The message must be sent by Dank Memer. This ensures we don't get any false positives from other bots or users.
+            2) The command must be referenced in the embed title field of said message (e.g., `pls stream`). This ensures we don't get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command the latest message is being retreived for
+
+        Returns:
+            The latest message sent by Dank Memer in the channel
+        """
+
         req = request(
             f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
             headers={"authorization": self.token},
@@ -540,8 +653,38 @@ class Instance(object):
             return latest_message
 
     def interact_button(
-        self, command, custom_id, latest_message, token=None, session_id=None
+        self,
+        command: str,
+        custom_id: int,
+        latest_message: dict,
+        token: Optional[str] = None,
+        session_id: Optional[str] = None,
     ):
+        """
+        The interact_button function sends a POST request to the Discord API, which interacts with a button on Dank Memer's response.
+
+        Parameters:
+
+            command (str): The name of the command that was sent to Discord. This is used for logging purposes only.
+
+            custom_id (int): The ID of the button that should be interacted with on Dank Memer's response message.
+
+            latest_message (dict): The message the button to be interacted with is on.
+
+            token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command is being interacted with
+            custom_id (int): The ID of the button that should be interacted with
+            latest_message (dict): The message the button to be interacted with is on.
+            token (Optional[str]) = None: Pass the token to the function
+            session_id (Optional[str]) = None: The sesion id of the account that is interacting with the button.
+
+        Returns:
+            Nothing
+        """
+
         payload = {
             "application_id": 270904126974590976,
             "channel_id": self.channel_id,
@@ -595,7 +738,31 @@ class Instance(object):
                     f"Failed to interact with button on Dank Memer's response to command `{command}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
 
-    def interact_dropdown(self, command, custom_id, option_id, latest_message):
+    def interact_dropdown(
+        self, command: str, custom_id: int, option_id: str, latest_message: dict
+    ):
+        """
+        The interact_dropdown function is used to interact with a dropdown menu on Dank Memer's response to a command.
+
+        Parameters:
+
+            self (DiscordSelfbot): The DiscordSelfbot instance that is calling the function.
+
+            command (str): The name of the command that was called
+
+            custom_id (int): A unique ID of the dropdown to be selected.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): The command is being interacted with
+            custom_id (int): The ID of the button that should be interacted with
+            option_id (str): The ID of the dropdown that should be selected
+            latest_message (dict): The message the button to be interacted with is on.
+
+        Returns:
+            None
+        """
+
         payload = {
             "application_id": 270904126974590976,
             "channel_id": self.channel_id,
@@ -654,6 +821,21 @@ class Instance(object):
                 )
 
     def clear_lag(self, command: str, index1: int = 0, index2: int = -1) -> None:
+        """
+        The clear_lag function is used to stop possible backlash from Dank Memer commands. It does this
+        by finding the latest message from Dank Memer and interacting with the last button on the first row,
+        although this can be changed
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            command (str): Specify which button to interact with
+            index1 (int) = 0: Specify the index of the first component in a message
+            index2 (int) = -1: Specify the index of the button in the message
+
+        Returns:
+            None
+        """
+
         req = request(
             f"https://discord.com/api/v10/channels/{self.channel_id}/messages",
             headers={"authorization": self.token},
@@ -677,6 +859,18 @@ class Instance(object):
                     continue
 
     def log(self, level: str, text: str) -> None:
+        """
+        The log function is used to log messages.
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            level (str): The level of the log message
+            text (str): The log message
+
+        Returns:
+            None
+        """
+
         if "Repository" in self.__dict__.keys():
             if level == "DEBUG" and not self.Repository.config["logging"]["debug"]:
                 return
@@ -703,6 +897,17 @@ class Instance(object):
             exit(1)
 
     def webhook_log(self, payload: dict) -> None:
+        """
+        The webhook_log function is used to send a webhook log to the webhook logging URL
+
+        Args:
+            self: Gives access to the class' attributes and methods.
+            payload (dict): The data to be sent to the webhook
+
+        Returns:
+            None
+        """
+
         if not self.Repository.config["logging"]["webhook logging"]["enabled"]:
             return
 

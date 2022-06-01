@@ -2,7 +2,6 @@ from copy import copy
 from datetime import datetime, timedelta
 from json import dumps, load, loads
 from platform import python_version
-from pyclbr import Class
 from threading import Thread
 from time import sleep
 from typing import Optional, Union
@@ -11,16 +10,32 @@ import utils.Yaml
 from discord.GuildId import guild_id
 from discord.UserInfo import user_info
 from grinder import grind
-from instance import Shifts
 from instance.ArgumentHandler import parse_args
 from instance.Client import ButtonInteractError, Instance
 from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
+from instance.Shifts import shifts
 from scripts.buy import buy
 from utils.Shared import data
 from websocket import WebSocket, WebSocketConnectionClosedException
 
 
-def anti_heist(Client, latest_message, reset) -> None:
+def anti_heist(Client: Instance, latest_message: dict, reset: bool) -> None:
+    """
+    The anti_heist function is used to prevent a heist from happening.
+    It does this by sending the message "pls use phone" and then checking if it was successful.
+    If it wasn't, buy() is called to buy the item "phone".
+    The function will then send "pls use phone" again
+    Then, the function will send "p" to call the police and avert the heist
+
+    Args:
+        Client (Instance): The Discord client
+        latest_message (dict): Dank Memer's heist message
+        reset (bool): Tells the program whether or not to remove the channel from channels that messages need to be retreived for after averting the heist
+
+    Returns:
+        None
+    """
+
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = latest_message["guild_id"]
 
@@ -69,7 +84,19 @@ def anti_heist(Client, latest_message, reset) -> None:
     )
 
 
-def join_heist(Client, latest_message) -> None:
+def join_heist(Client: Instance, latest_message: dict) -> None:
+    """
+    The join_heist function is used to join a heist that is directed towards another user.
+    It takes in the Client object and the latest message as arguments, and then interacts with the button on the message accordingly.
+
+    Args:
+        Client (Instance): The Discord client
+        latest_message (dict): Dank Memer's heist message
+
+    Returns:
+        None
+    """
+
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = latest_message["guild_id"]
 
@@ -109,7 +136,20 @@ def join_heist(Client, latest_message) -> None:
     )
 
 
-def receive_trade(Client, latest_message) -> None:
+def receive_trade(Client: Instance, latest_message: dict) -> None:
+    """
+    The receive_trade function accepts a Client object and the latest message from the Discord channel.
+    It then logs that it received a trade, sleeps for 2.5 seconds, accepts the trade, and logs that it accepted
+    the trade.
+
+    Args:
+        Client (Instance): The Discord client
+        latest_message (dict): Dank Memer's trade message
+
+    Returns:
+        Nothing
+    """
+
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = latest_message["guild_id"]
 
@@ -157,7 +197,18 @@ def receive_trade(Client, latest_message) -> None:
     )
 
 
-def event_1(Client, latest_message) -> None:
+def event_1(Client: Instance, latest_message: dict) -> None:
+    """
+    The event_1 function is used to respond to the `Your immune system is under attack from Covid-19` event.
+
+    Args:
+        Client (Instance): The Discord client
+        latest_message (dict): Dank Memer's event message
+
+    Returns:
+        None
+    """
+
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = latest_message["guild_id"]
 
@@ -205,13 +256,24 @@ def event_1(Client, latest_message) -> None:
             return
 
 
-def event_2(Client, latest_message) -> None:
+def event_2(Client: Instance, latest_message: dict) -> None:
+    """
+    The event_2 function is used to respond to the `Microsoft is trying to buy Discord again` event.
+
+    Args:
+        Client (Instance): The Discord client
+        latest_message (dict): Dank Memer's event message
+
+    Returns:
+        None
+    """
+
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = latest_message["guild_id"]
 
     Client.log(
         "DEBUG",
-        "Detected the `Microsoft is trying to buy Discord again!` event. Participating now.",
+        "Detected the `Microsoft is trying to buy Discord again` event. Participating now.",
     )
     Client.webhook_log(
         {
@@ -253,7 +315,18 @@ def event_2(Client, latest_message) -> None:
             return
 
 
-def event_3(Client, latest_message) -> None:
+def event_3(Client: Instance, latest_message: dict) -> None:
+    """
+    The event_3 function is used to respond to the `pls rich cmd doesn't work` event.
+
+    Args:
+        Client (Instance): The Discord client
+        latest_message (dict): Dank Memer's event message
+
+    Returns:
+        None
+    """
+
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = latest_message["guild_id"]
 
@@ -301,7 +374,18 @@ def event_3(Client, latest_message) -> None:
             return
 
 
-def event_4(Client, latest_message) -> None:
+def event_4(Client: Instance, latest_message: dict) -> None:
+    """
+    The event_4 function is used to respond to the `f in the chat` event.
+
+    Args:
+        Client (Instance): The Discord client
+        latest_message (dict): Dank Memer's event message
+
+    Returns:
+        None
+    """
+
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = latest_message["guild_id"]
 
@@ -347,7 +431,18 @@ def event_4(Client, latest_message) -> None:
             return
 
 
-def event_5(Client, latest_message) -> None:
+def event_5(Client: Instance, latest_message: dict) -> None:
+    """
+    The event_5 function is used to respond to the `frick of karen` event.
+
+    Args:
+        Client (Instance): The Discord client
+        latest_message (dict): Dank Memer's event message
+
+    Returns:
+        None
+    """
+
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = latest_message["guild_id"]
 
@@ -395,7 +490,18 @@ def event_5(Client, latest_message) -> None:
             return
 
 
-def event_6(Client, latest_message) -> None:
+def event_6(Client: Instance, latest_message: dict) -> None:
+    """
+    The event_6 function is used to respond to the `They've got airpods` event.
+
+    Args:
+        Client (Instance): The Discord client
+        latest_message (dict): Dank Memer's event message
+
+    Returns:
+        None
+    """
+
     Client.channel_id = latest_message["channel_id"]
     Client.guild_id = latest_message["guild_id"]
 
@@ -442,18 +548,29 @@ def event_6(Client, latest_message) -> None:
 
 
 def send_heartbeat(ws, heartbeat_interval: int) -> None:
+    """
+    The send_heartbeat function sends a heartbeat to the Discord API every `heartbeat_interval` seconds.
+    This is necessary in order to keep the connection alive and working.
+
+    Args:
+        ws: Websocket connection used to send the heartbeat
+        heartbeat_interval (int): The set the time between heartbeats
+
+    Returns:
+        None
+    """
     while True:
         try:
             sleep(heartbeat_interval)
             ws.send(dumps({"op": 1, "d": "None"}))
-        except Exception:
+        except WebSocketConnectionClosedException:
             return
 
 
 def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
     if Client.Repository.config["shifts"]["enabled"]:
         data[Client.username] = False
-        Thread(target=Shifts.shifts, args=[Client]).start()
+        Thread(target=shifts, args=[Client]).start()
     else:
         data[Client.username] = True
 
@@ -562,7 +679,7 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                         Client.Repository.log_command(Client, event["d"])
                         args = parse_args(event["d"]["content"])
 
-                        # Client.send_message(f"***DEBUG:***  `{dumps(parse_args(event['d']['content']).__dict__)}`")
+                        # Client.send_message(f"***DEBUG:***  `{dumps(args.__dict__)}`")
 
                         if args.command == "help":
                             Client.webhook_send(
@@ -2367,53 +2484,11 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
                                         "message": {},
                                     }
 
-                                    Client.webhook_send(
-                                        {
-                                            "embeds": [
-                                                {
-                                                    "title": "Success!",
-                                                    "description": f"The grinder has **successfully started** in this channel!",
-                                                    "color": 65423,
-                                                    "footer": {
-                                                        "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
-                                                        "icon_url": "https://avatars.githubusercontent.com/u/94558954",
-                                                    },
-                                                },
-                                            ],
-                                            "username": "Grank",
-                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                            "attachments": [],
-                                        },
-                                        "The grinder has **successfully started** in this channel!",
-                                    )
-
-                                    Client.webhook_log(
-                                        {
-                                            "content": None,
-                                            "embeds": [
-                                                {
-                                                    "title": "Grinder started",
-                                                    "description": f"The grinder started in the channel <#{Client.channel_id}> (**`{Client.channel_id}`**).",
-                                                    "color": 14159511,
-                                                    "footer": {
-                                                        "text": Client.username,
-                                                        "icon_url": f"https://cdn.discordapp.com/avatars/{Client.id}/{Client.avatar}.webp?size=32",
-                                                    },
-                                                    "timestamp": datetime.now().strftime(
-                                                        "%Y-%m-%dT%H:%M:%S.000Z"
-                                                    ),
-                                                }
-                                            ],
-                                            "attachments": [],
-                                            "attachments": [],
-                                            "username": "Grank",
-                                            "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
-                                        }
-                                    )
-
                                     New_Client = copy(Client)
 
-                                    Thread(target=grind, args=[New_Client]).start()
+                                    Thread(
+                                        target=grind, args=[New_Client, True]
+                                    ).start()
 
                                     data["running"].append(Client.channel_id)
                         elif args.command == "stop":
@@ -2898,7 +2973,20 @@ def event_handler(Client, ws, event: dict, autostart: bool = True) -> None:
             continue
 
 
-def gateway(Client: Union[Instance, str], autostart: bool = True) -> Optional[str]:
+def gateway(Client: Union[Instance, str], autostart: bool = True) -> str:
+    """
+    The gateway function is used to connect the bot to Discord.
+    If a Client is provided, it will create a proper websocket sesion and return the first session_id for the account.
+    If a token is provided, it will only return the first session_id for the account
+
+    Args:
+        Client (Union[Instance, str]): The client class
+        autostart (bool) = True: Tells the gateway function whether or not to run the autostart channels code (set to False when reconnecting to the websocket to prevent multiple instances in the same channel)
+
+    Returns:
+        The session id of the bot
+    """
+
     ws = WebSocket()
     ws.connect("wss://gateway.discord.gg/?v=10&encoding=json")
     heartbeat_interval = loads(ws.recv())["d"]["heartbeat_interval"] / 1000
@@ -2914,7 +3002,7 @@ def gateway(Client: Union[Instance, str], autostart: bool = True) -> Optional[st
                     "token": Client if type(Client) == str else Client.token,
                     "properties": {
                         "$os": "windows",
-                        "$browser": "chrome",
+                        "$browser": "firefox",
                         "$device": "pc",
                     },
                 },

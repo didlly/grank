@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+   <title>
+    work.py
+   </title>
+   <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+   <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+  </meta>
+ </head>
+ <body>
+  <div id="container">
+   <div id="background">
+   </div>
+   <div class="section">
+    <div class="docs">
+     <h1>
+      work.py
+     </h1>
+    </div>
+   </div>
+   <div class="clearall">
+    <div class="section" id="section-0">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-0">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">choice</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">instance.Client</span> <span class="kn">import</span> <span class="n">Instance</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-1">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-1">
+        #
+       </a>
+      </div>
+      <p>
+       The work function is used to interact with the work command
+      </p>
+      <p>
+       Args:
+Client (Instance): The Discord client
+      </p>
+      <p>
+       Returns:
+bool: Indicates whether the command ran successfully or not
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">work</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-2">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-2">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-3">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-3">
+        #
+       </a>
+      </div>
+      <p>
+       Send the command
+       <code>
+        pls work
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"pls work"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-4">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-4">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s response to
+       <code>
+        pls work
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span><span class="s2">"pls work"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-5">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-5">
+        #
+       </a>
+      </div>
+      <p>
+       If the account doesn’t have a job…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="s2">"You don't currently have a job to work at"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-6">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-6">
+        #
+       </a>
+      </div>
+      <p>
+       Send the command
+       <code>
+        pls work babysitter
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"pls work babysitter"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-7">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-7">
+        #
+       </a>
+      </div>
+      <p>
+       Send the command
+       <code>
+        pls work
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"pls work"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-8">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-8">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s response to
+       <code>
+        pls work
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+            <span class="s2">"pls work"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-9">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-9">
+        #
+       </a>
+      </div>
+      <p>
+       Else if the account was fired…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">elif</span> <span class="s2">"boss was tired"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"WARNING"</span><span class="p">,</span> <span class="s2">"Fired from job."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-10">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-10">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-11">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-11">
+        #
+       </a>
+      </div>
+      <p>
+       Else if awaiting cooldown to join new job…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">elif</span> <span class="s2">"you were fired"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"WARNING"</span><span class="p">,</span> <span class="s2">"Awaiting cooldown to join new job."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-12">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-12">
+        #
+       </a>
+      </div>
+      <p>
+       …return False
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-13">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-13">
+        #
+       </a>
+      </div>
+      <p>
+       Else if awaiting cooldown to work…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">elif</span> <span class="s2">"You need to wait"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-14">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-14">
+        #
+       </a>
+      </div>
+      <p>
+       …get the time left till the account can work
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">time_left</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"**"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+            <span class="s2">"WARNING"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Cannot work - awaiting cooldown end (</span><span class="si">{</span><span class="n">time_left</span><span class="si">}</span><span class="s2"> left)."</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">False</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-15">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-15">
+        #
+       </a>
+      </div>
+      <p>
+       Else if the account was promoted…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">elif</span> <span class="s2">"deserve a fat promotion"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-16">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-16">
+        #
+       </a>
+      </div>
+      <p>
+       …get the old pay &amp; promotion amount
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">promotion</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"`"</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Got promoted in the `pls work` command - </span><span class="si">{</span><span class="n">promotion</span><span class="si">}</span><span class="s2">."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-17">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-17">
+        #
+       </a>
+      </div>
+      <p>
+       Send the command
+       <code>
+        pls work
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"pls work"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-18">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-18">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s response to
+       <code>
+        pls work
+       </code>
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+            <span class="s2">"pls work"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-19">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-19">
+        #
+       </a>
+      </div>
+      <p>
+       If Dank Memer replied with the `Dunk The ball`` minigame…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">if</span> <span class="s2">"Dunk the ball"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Detected dunk the ball game."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-20">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-20">
+        #
+       </a>
+      </div>
+      <p>
+       …get the index of the button under the ball
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">level</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">":basketball"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"       "</span><span class="p">)</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-21">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-21">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the
+       <code>
+        Catch
+       </code>
+       button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="n">level</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">]</span>
+
+        <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span><span class="s2">"pls work"</span><span class="p">,</span> <span class="n">custom_id</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-22">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-22">
+        #
+       </a>
+      </div>
+      <p>
+       Else if Dank Memer replied with the
+       <code>
+        Colour Match
+       </code>
+       minigame…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">elif</span> <span class="s2">"Color Match"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Detected colour match game."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-23">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-23">
+        #
+       </a>
+      </div>
+      <p>
+       …get the colours and the word next to them
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="p">[</span><span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">":"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span> <span class="n">item</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">" "</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="p">]</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-24">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-24">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s edited message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+                <span class="s2">"pls work"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-25">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-25">
+        #
+       </a>
+      </div>
+      <p>
+       If Dank Memer’s response has buttons…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-26">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-26">
+        #
+       </a>
+      </div>
+      <p>
+       …break out of the loop
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">break</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-27">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-27">
+        #
+       </a>
+      </div>
+      <p>
+       Sleep for 2.5 seconds
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">sleep</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-28">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-28">
+        #
+       </a>
+      </div>
+      <p>
+       Get the word to be matched
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">word</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"`"</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-29">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-29">
+        #
+       </a>
+      </div>
+      <p>
+       For each word…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-30">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-30">
+        #
+       </a>
+      </div>
+      <p>
+       …if the word to be matched is found…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">word</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-31">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-31">
+        #
+       </a>
+      </div>
+      <p>
+       …set word to the colour next to the word
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="n">word</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">break</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-32">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-32">
+        #
+       </a>
+      </div>
+      <p>
+       Initialize custom_id as None
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="kc">None</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-33">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-33">
+        #
+       </a>
+      </div>
+      <p>
+       For each button in Dank Memer’s response…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-34">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-34">
+        #
+       </a>
+      </div>
+      <p>
+       …if the button’s label is the same as the word’s colour…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="n">button</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">==</span> <span class="n">word</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-35">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-35">
+        #
+       </a>
+      </div>
+      <p>
+       …choose that button as the button to interact with
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="n">custom_id</span> <span class="o">=</span> <span class="n">button</span><span class="p">[</span><span class="s2">"custom_id"</span><span class="p">]</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-36">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-36">
+        #
+       </a>
+      </div>
+      <p>
+       Break out of the for loop
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">break</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-37">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-37">
+        #
+       </a>
+      </div>
+      <p>
+       If the program failed to match the labels on the buttons to the word’s colour…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="n">custom_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                <span class="s2">"WARNING"</span><span class="p">,</span>
+                <span class="s2">"Failed to get answer to the colour match game. Choosing a random button."</span><span class="p">,</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-38">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-38">
+        #
+       </a>
+      </div>
+      <p>
+       …choose a random button to interact with
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">custom_id</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">])[</span>
+                <span class="s2">"custom_id"</span>
+            <span class="p">]</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-39">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-39">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span><span class="s2">"pls trivia"</span><span class="p">,</span> <span class="n">custom_id</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-40">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-40">
+        #
+       </a>
+      </div>
+      <p>
+       Else if Dank Memer replied with the
+       <code>
+        Hit the ball
+       </code>
+       minigame…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">elif</span> <span class="s2">"Hit the ball"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Detected hit the ball game."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-41">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-41">
+        #
+       </a>
+      </div>
+      <p>
+       …get the index of the goalkeeper
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">level</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">"       "</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-42">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-42">
+        #
+       </a>
+      </div>
+      <p>
+       Minus 1 from the level if the level equals 2 else add 1
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">level</span> <span class="o">-=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">level</span> <span class="o">==</span> <span class="mi">2</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-43">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-43">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+            <span class="s2">"pls work"</span><span class="p">,</span>
+            <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">][</span><span class="n">level</span><span class="p">][</span><span class="s2">"custom_id"</span><span class="p">],</span>
+            <span class="n">latest_message</span><span class="p">,</span>
+        <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-44">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-44">
+        #
+       </a>
+      </div>
+      <p>
+       Else if Dank Memer replied with the
+       <code>
+        Repeat Order
+       </code>
+       minigame…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">elif</span> <span class="s2">"Repeat Order"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Detected repeat the order game."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-45">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-45">
+        #
+       </a>
+      </div>
+      <p>
+       …get the words
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">words</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">word</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"`"</span><span class="p">,</span> <span class="s2">""</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="p">]</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-46">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-46">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s edited message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+                <span class="s2">"pls work"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-47">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-47">
+        #
+       </a>
+      </div>
+      <p>
+       If Dank Memer’s response has buttons…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-48">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-48">
+        #
+       </a>
+      </div>
+      <p>
+       …break out of the loop
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">break</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-49">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-49">
+        #
+       </a>
+      </div>
+      <p>
+       Sleep for 2.5 seconds
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">sleep</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-50">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-50">
+        #
+       </a>
+      </div>
+      <p>
+       For each word in words…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">words</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-51">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-51">
+        #
+       </a>
+      </div>
+      <p>
+       …for each button in Dank Memer’s response…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-52">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-52">
+        #
+       </a>
+      </div>
+      <p>
+       …if the button label equals the word…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">if</span> <span class="n">button</span><span class="p">[</span><span class="s2">"label"</span><span class="p">]</span> <span class="o">==</span> <span class="n">word</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-53">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-53">
+        #
+       </a>
+      </div>
+      <p>
+       …interact with the button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+                        <span class="s2">"pls work"</span><span class="p">,</span> <span class="n">button</span><span class="p">[</span><span class="s2">"custom_id"</span><span class="p">],</span> <span class="n">latest_message</span>
+                    <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-54">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-54">
+        #
+       </a>
+      </div>
+      <p>
+       Sleep for 1 second
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">sleep</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-55">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-55">
+        #
+       </a>
+      </div>
+      <p>
+       Break out of the buttons for loop
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">break</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-56">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-56">
+        #
+       </a>
+      </div>
+      <p>
+       Else if Dank Memer replied with the
+       <code>
+        Emoji Match
+       </code>
+       minigame
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">elif</span> <span class="s2">"Emoji Match"</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"DEBUG"</span><span class="p">,</span> <span class="s2">"Detected emoji match game."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-57">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-57">
+        #
+       </a>
+      </div>
+      <p>
+       Get the emoji to be matched
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">emoji</span> <span class="o">=</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"content"</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-58">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-58">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s edited message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+                <span class="s2">"pls work"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-59">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-59">
+        #
+       </a>
+      </div>
+      <p>
+       If Dank Memer’s response has buttons…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-60">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-60">
+        #
+       </a>
+      </div>
+      <p>
+       …break out of the loop
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">break</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-61">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-61">
+        #
+       </a>
+      </div>
+      <p>
+       Sleep for 2.5 seconds
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">sleep</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-62">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-62">
+        #
+       </a>
+      </div>
+      <p>
+       Initialize custom_id as None
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">custom_id</span> <span class="o">=</span> <span class="kc">None</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-63">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-63">
+        #
+       </a>
+      </div>
+      <p>
+       For each row of buttons…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">for</span> <span class="n">button_row</span> <span class="ow">in</span> <span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-64">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-64">
+        #
+       </a>
+      </div>
+      <p>
+       …for each button in that row…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">for</span> <span class="n">button</span> <span class="ow">in</span> <span class="n">button_row</span><span class="p">[</span><span class="s2">"components"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-65">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-65">
+        #
+       </a>
+      </div>
+      <p>
+       …if that button’s emoji is the emoji to be matched…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">if</span> <span class="n">emoji</span> <span class="o">==</span> <span class="n">button</span><span class="p">[</span><span class="s2">"emoji"</span><span class="p">][</span><span class="s2">"name"</span><span class="p">]:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-66">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-66">
+        #
+       </a>
+      </div>
+      <p>
+       …choose that button was the button to interact with
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">custom_id</span> <span class="o">=</span> <span class="n">button</span><span class="p">[</span><span class="s2">"custom_id"</span><span class="p">]</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-67">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-67">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span><span class="s2">"pls work"</span><span class="p">,</span> <span class="n">custom_id</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-68">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-68">
+        #
+       </a>
+      </div>
+      <p>
+       Break out of the button for loop
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">break</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-69">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-69">
+        #
+       </a>
+      </div>
+      <p>
+       If custom_id doesn’t equal None
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">if</span> <span class="n">custom_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-70">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-70">
+        #
+       </a>
+      </div>
+      <p>
+       Break out of the button_row for loop
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">break</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-71">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-71">
+        #
+       </a>
+      </div>
+      <p>
+       If the emoji wasn’t matched…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="n">custom_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"WARNING"</span><span class="p">,</span> <span class="s2">"Failed to match the emoji. Clicking a random emoji."</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-72">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-72">
+        #
+       </a>
+      </div>
+      <p>
+       …interact with a random button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span>
+                <span class="s2">"pls work"</span><span class="p">,</span>
+                <span class="n">choice</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">])[</span><span class="s2">"custom_id"</span><span class="p">],</span>
+                <span class="n">latest_message</span><span class="p">,</span>
+            <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-73">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-73">
+        #
+       </a>
+      </div>
+      <p>
+       Else if Dank Memer replied with an unknown minigame…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>    <span class="k">else</span><span class="p">:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">"WARNING"</span><span class="p">,</span> <span class="s2">"Unknown `pls work` game. Clicking a random button."</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n\n</span><span class="s2">IMPORTANT</span><span class="se">\n</span><span class="si">{</span><span class="n">latest_message</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-74">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-74">
+        #
+       </a>
+      </div>
+      <p>
+       If there are buttons to click…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-75">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-75">
+        #
+       </a>
+      </div>
+      <p>
+       …choose a random butotn to interact with
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">custom_id</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">])[</span>
+                <span class="s2">"custom_id"</span>
+            <span class="p">]</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-76">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-76">
+        #
+       </a>
+      </div>
+      <p>
+       Else…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="k">else</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-77">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-77">
+        #
+       </a>
+      </div>
+      <p>
+       …try to get Dank Memer’s edited message with buttons (i.e, the command could be one where you have to memorise a pattern and the buttons will only appear after a certain time)
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-78">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-78">
+        #
+       </a>
+      </div>
+      <p>
+       Get Dank Memer’s edited message
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="n">latest_message</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">retreive_message</span><span class="p">(</span>
+                    <span class="s2">"pls work"</span><span class="p">,</span> <span class="n">old_latest_message</span><span class="o">=</span><span class="n">latest_message</span>
+                <span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-79">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-79">
+        #
+       </a>
+      </div>
+      <p>
+       If Dank Memer’s response has buttons…
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-80">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-80">
+        #
+       </a>
+      </div>
+      <p>
+       …break out of the loop
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                    <span class="k">break</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-81">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-81">
+        #
+       </a>
+      </div>
+      <p>
+       Sleep for 2.5 seconds
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>                <span class="n">sleep</span><span class="p">(</span><span class="mf">2.5</span><span class="p">)</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-82">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-82">
+        #
+       </a>
+      </div>
+      <p>
+       Choose a random button to interact with
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>            <span class="n">custom_id</span> <span class="o">=</span> <span class="n">choice</span><span class="p">(</span><span class="n">latest_message</span><span class="p">[</span><span class="s2">"components"</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">"components"</span><span class="p">])[</span>
+                <span class="s2">"custom_id"</span>
+            <span class="p">]</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-83">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-83">
+        #
+       </a>
+      </div>
+      <p>
+       Interact with the random button
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre>        <span class="n">Client</span><span class="o">.</span><span class="n">interact_button</span><span class="p">(</span><span class="s2">"pls work"</span><span class="p">,</span> <span class="n">custom_id</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">True</span>
+
+</pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>

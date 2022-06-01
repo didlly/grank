@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta content="text/html;charset=utf-8" http-equiv="content-type"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   grinder.py
+  </title>
+  <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+  <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <div id="container">
+   <div id="background">
+   </div>
+   <div class="section">
+    <div class="docs">
+     <h1>
+      grinder.py
+     </h1>
+    </div>
+   </div>
+   <div class="clearall">
+    <div class="section" id="section-0">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-0">
+        #
+       </a>
+      </div>
+      <p>
+       The
+       <code>
+        grinder.py
+       </code>
+       file controls the grinding process for the account. It is the only file that is not commented (apart from
+       <code>
+        /src/discord/Gateway.py
+       </code>
+       ) due to its large size. It calls the subprograms that run commands, as well as organising the custom commands.
+      </p>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">exc_info</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Optional</span>
+
+<span class="kn">from</span> <span class="nn">discord.UserInfo</span> <span class="kn">import</span> <span class="n">user_info</span>
+<span class="kn">from</span> <span class="nn">instance.Client</span> <span class="kn">import</span> <span class="n">Instance</span>
+<span class="kn">from</span> <span class="nn">scripts.adventure</span> <span class="kn">import</span> <span class="n">adventure</span>
+<span class="kn">from</span> <span class="nn">scripts.beg</span> <span class="kn">import</span> <span class="n">beg</span>
+<span class="kn">from</span> <span class="nn">scripts.blackjack</span> <span class="kn">import</span> <span class="n">blackjack</span>
+<span class="kn">from</span> <span class="nn">scripts.crime</span> <span class="kn">import</span> <span class="n">crime</span>
+<span class="kn">from</span> <span class="nn">scripts.custom</span> <span class="kn">import</span> <span class="n">custom</span>
+<span class="kn">from</span> <span class="nn">scripts.daily</span> <span class="kn">import</span> <span class="n">daily</span>
+<span class="kn">from</span> <span class="nn">scripts.dig</span> <span class="kn">import</span> <span class="n">dig</span>
+<span class="kn">from</span> <span class="nn">scripts.fish</span> <span class="kn">import</span> <span class="n">fish</span>
+<span class="kn">from</span> <span class="nn">scripts.guess</span> <span class="kn">import</span> <span class="n">guess</span>
+<span class="kn">from</span> <span class="nn">scripts.highlow</span> <span class="kn">import</span> <span class="n">highlow</span>
+<span class="kn">from</span> <span class="nn">scripts.hunt</span> <span class="kn">import</span> <span class="n">hunt</span>
+<span class="kn">from</span> <span class="nn">scripts.lottery</span> <span class="kn">import</span> <span class="n">lottery</span>
+<span class="kn">from</span> <span class="nn">scripts.postmeme</span> <span class="kn">import</span> <span class="n">postmeme</span>
+<span class="kn">from</span> <span class="nn">scripts.search</span> <span class="kn">import</span> <span class="n">search</span>
+<span class="kn">from</span> <span class="nn">scripts.snakeeyes</span> <span class="kn">import</span> <span class="n">snakeeyes</span>
+<span class="kn">from</span> <span class="nn">scripts.stream</span> <span class="kn">import</span> <span class="n">stream</span>
+<span class="kn">from</span> <span class="nn">scripts.trivia</span> <span class="kn">import</span> <span class="n">trivia</span>
+<span class="kn">from</span> <span class="nn">scripts.vote</span> <span class="kn">import</span> <span class="n">vote</span>
+<span class="kn">from</span> <span class="nn">scripts.work</span> <span class="kn">import</span> <span class="n">work</span>
+<span class="kn">from</span> <span class="nn">utils.Shared</span> <span class="kn">import</span> <span class="n">data</span></pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+    <div class="section" id="section-1">
+     <div class="docs">
+      <div class="octowrap">
+       <a class="octothorpe" href="#section-1">
+        #
+       </a>
+      </div>
+     </div>
+     <div class="code">
+      <div class="highlight">
+       <pre><span class="k">def</span> <span class="nf">grind</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">log</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">bool</span><span class="p">]:</span>
+    <span class="n">last_db_update</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    
+    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"auto trade"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+        <span class="k">if</span> <span class="n">user_info</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"auto trade"</span><span class="p">][</span><span class="s2">"trader token"</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">"embeds"</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Error!"</span><span class="p">,</span>
+                            <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"The grinder **cannot start** since an **invalid trader token** has been set!"</span><span class="p">,</span>
+                            <span class="s2">"color"</span><span class="p">:</span> <span class="mi">16711680</span><span class="p">,</span>
+                            <span class="s2">"footer"</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">"text"</span><span class="p">:</span> <span class="s2">"Bot made by didlly#0302 - https://www.github.com/didlly"</span><span class="p">,</span>
+                                <span class="s2">"icon_url"</span><span class="p">:</span> <span class="s2">"https://avatars.githubusercontent.com/u/94558954"</span><span class="p">,</span>
+                            <span class="p">},</span>
+                        <span class="p">}</span>
+                    <span class="p">],</span>
+                    <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Grank"</span><span class="p">,</span>
+                    <span class="s2">"avatar_url"</span><span class="p">:</span> <span class="s2">"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&amp;usqp=CAU"</span><span class="p">,</span>
+                    <span class="s2">"attachments"</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="p">},</span>
+                <span class="s2">"The grinder **cannot start** since an **invalid trader token** has been set!"</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">return</span> <span class="kc">False</span>
+
+        <span class="n">Client</span><span class="o">.</span><span class="n">trader_token_session_id</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="s2">"discord.Gateway"</span><span class="p">)</span><span class="o">.</span><span class="n">Gateway</span><span class="o">.</span><span class="n">gateway</span><span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"auto trade"</span><span class="p">][</span><span class="s2">"trader token"</span><span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">log</span><span class="p">:</span>
+        <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"embeds"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Success!"</span><span class="p">,</span>
+                        <span class="s2">"description"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"The grinder has **successfully started** in this channel!"</span><span class="p">,</span>
+                        <span class="s2">"color"</span><span class="p">:</span> <span class="mi">65423</span><span class="p">,</span>
+                        <span class="s2">"footer"</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">"text"</span><span class="p">:</span> <span class="s2">"Bot made by didlly#0302 - https://www.github.com/didlly"</span><span class="p">,</span>
+                            <span class="s2">"icon_url"</span><span class="p">:</span> <span class="s2">"https://avatars.githubusercontent.com/u/94558954"</span><span class="p">,</span>
+                        <span class="p">},</span>
+                    <span class="p">},</span>
+                <span class="p">],</span>
+                <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Grank"</span><span class="p">,</span>
+                <span class="s2">"avatar_url"</span><span class="p">:</span> <span class="s2">"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&amp;usqp=CAU"</span><span class="p">,</span>
+                <span class="s2">"attachments"</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="p">},</span>
+            <span class="s2">"The grinder has **successfully started** in this channel!"</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">Client</span><span class="o">.</span><span class="n">webhook_log</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">"content"</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="s2">"embeds"</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">"title"</span><span class="p">:</span> <span class="s2">"Grinder started"</span><span class="p">,</span>
+                        <span class="s2">"description"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"The grinder started in the channel &lt;#</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="si">}</span><span class="s2">&gt; (**`</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="si">}</span><span class="s2">`**)."</span><span class="p">,</span>
+                        <span class="s2">"color"</span><span class="p">:</span> <span class="mi">14159511</span><span class="p">,</span>
+                        <span class="s2">"footer"</span><span class="p">:</span> <span class="p">{</span>
+                            <span class="s2">"text"</span><span class="p">:</span> <span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">,</span>
+                            <span class="s2">"icon_url"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"https://cdn.discordapp.com/avatars/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">avatar</span><span class="si">}</span><span class="s2">.webp?size=32"</span><span class="p">,</span>
+                        <span class="p">},</span>
+                        <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">T%H:%M:%S.000Z"</span><span class="p">),</span>
+                    <span class="p">}</span>
+                <span class="p">],</span>
+                <span class="s2">"attachments"</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s2">"attachments"</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="s2">"username"</span><span class="p">:</span> <span class="s2">"Grank"</span><span class="p">,</span>
+                <span class="s2">"avatar_url"</span><span class="p">:</span> <span class="s2">"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&amp;usqp=CAU"</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"confirmations"</span><span class="p">]</span> <span class="o">==</span> <span class="s2">"False"</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"pls settings confirmations nah"</span><span class="p">)</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"confirmations"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"True"</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                    <span class="s2">"WARNING"</span><span class="p">,</span>
+                    <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls settings confirmations nah` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                <span class="p">)</span>
+
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"custom commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+            <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"custom commands"</span><span class="p">]:</span>
+                        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s2">"enabled"</span><span class="p">:</span>
+                            <span class="k">continue</span>
+                        <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"custom commands"</span><span class="p">][</span><span class="n">key</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                            <span class="k">try</span><span class="p">:</span>
+                                <span class="n">exec</span><span class="p">(</span>
+                                    <span class="sa">f</span><span class="s2">"if (datetime.now() - datetime.strptime(Client.Repository.database['custom command cooldowns']['</span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">)</span><span class="si">}</span><span class="s2">'], '%Y-%m-%d %H:%M:%S.%f')).total_seconds() &gt; Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); Client.Repository.database['custom command cooldowns']['</span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">)</span><span class="si">}</span><span class="s2">'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write(); sleep(Client.Repository.config['cooldowns']['commands']['value'] if Client.Repository.config['cooldowns']['commands']['enabled'] else 0.5)"</span>
+                                <span class="p">)</span>
+                            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                                <span class="n">custom</span><span class="p">(</span><span class="n">Client</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+
+                                <span class="n">exec</span><span class="p">(</span>
+                                    <span class="sa">f</span><span class="s2">"Client.Repository.database['custom command cooldowns']['</span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="s1">'_'</span><span class="p">)</span><span class="si">}</span><span class="s2">'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write()"</span>
+                                <span class="p">)</span>
+                    <span class="k">break</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                        <span class="s2">"WARNING"</span><span class="p">,</span>
+                        <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the custom commands: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                    <span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"adventure"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"adventure"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"adventure"</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">adventure</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls adventure` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"adventure"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"beg"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"beg"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"beg"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"beg"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"beg"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">beg</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls beg` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"beg"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"blackjack"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"blackjack"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"blackjack"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"blackjack"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"blackjack"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">blackjack</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls blackjack` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">clear_lag</span><span class="p">(</span><span class="s2">"pls blackjack"</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                                <span class="s2">"WARNING"</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s2">"Failed to clear lag from the `pls blackjack` command failing: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank)."</span><span class="p">,</span>
+                            <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"blackjack"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"crime"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"crime"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"crime"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"crime"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"crime"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">crime</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls crime` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">clear_lag</span><span class="p">(</span><span class="s2">"pls crime"</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                                <span class="s2">"WARNING"</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s2">"Failed to clear lag from the `pls crime` command failing: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank)."</span><span class="p">,</span>
+                            <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"crime"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"daily"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"daily"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"daily"</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">daily</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls daily` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"daily"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"dig"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"dig"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"dig"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"dig"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"dig"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">dig</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls dig` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"dig"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"fish"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"fish"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"fish"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"fish"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"fish"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">fish</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls fish` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"fish"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"guess"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"guess"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"guess"</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">guess</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls guess` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                    <span class="n">Client</span><span class="o">.</span><span class="n">send_message</span><span class="p">(</span><span class="s2">"end"</span><span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"guess"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"highlow"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"highlow"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"highlow"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"highlow"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"highlow"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">highlow</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls highlow` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">clear_lag</span><span class="p">(</span><span class="s2">"pls highlow"</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                                <span class="s2">"WARNING"</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s2">"Failed to clear lag from the `pls highlow` command failing: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank)."</span><span class="p">,</span>
+                            <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"highlow"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"hunt"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"hunt"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"hunt"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"hunt"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"hunt"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">hunt</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls hunt` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"hunt"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"lottery"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"lottery"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"lottery"</span><span class="p">][</span><span class="s2">"cooldown"</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">lottery</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls lottery` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">clear_lag</span><span class="p">(</span><span class="s2">"pls lottery"</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                                <span class="s2">"WARNING"</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s2">"Failed to clear lag from the `pls lottery` command failing: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank)."</span><span class="p">,</span>
+                            <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"lottery"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"postmeme"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"postmeme"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"postmeme"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"postmeme"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"postmeme"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">postmeme</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls postmeme` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">clear_lag</span><span class="p">(</span><span class="s2">"pls postmeme"</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                                <span class="s2">"WARNING"</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s2">"Failed to clear lag from the `pls postmeme` command failing: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank)."</span><span class="p">,</span>
+                            <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"postmeme"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"search"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"search"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"search"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"search"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"search"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">search</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls search` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">clear_lag</span><span class="p">(</span><span class="s2">"pls search"</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                                <span class="s2">"WARNING"</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s2">"Failed to clear lag from the `pls search` command failing: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank)."</span><span class="p">,</span>
+                            <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"search"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"snakeeyes"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"snakeeyes"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"snakeeyes"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"snakeeyes"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"snakeeyes"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">snakeeyes</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls snakeeyes` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"snakeeyes"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"stream"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"stream"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"stream"</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">stream</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls stream` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">clear_lag</span><span class="p">(</span><span class="s2">"pls stream"</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                                <span class="s2">"WARNING"</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s2">"Failed to clear lag from the `pls stream` command failing: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank)."</span><span class="p">,</span>
+                            <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"stream"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"trivia"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"settings"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+                <span class="ow">and</span> <span class="p">(</span>
+                    <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                    <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"trivia"</span><span class="p">],</span>
+                        <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                    <span class="p">)</span>
+                <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span>
+                <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"trivia"</span><span class="p">][</span><span class="s2">"patron"</span><span class="p">]</span>
+            <span class="p">)</span> <span class="ow">or</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"trivia"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                <span class="s2">"cooldowns"</span>
+            <span class="p">][</span>
+                <span class="s2">"trivia"</span>
+            <span class="p">][</span>
+                <span class="s2">"default"</span>
+            <span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">trivia</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls trivia` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                        <span class="k">try</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">clear_lag</span><span class="p">(</span><span class="s2">"pls trivia"</span><span class="p">)</span>
+                        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                                <span class="s2">"WARNING"</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s2">"Failed to clear lag from the `pls trivia` command failing: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`. Backlash expected (if commands keep failing after this, it would be advisable to close Grank, wait a few minutues, and re-open Grank)."</span><span class="p">,</span>
+                            <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"trivia"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"vote"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"vote"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"vote"</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">vote</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls vote` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"vote"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+        <span class="k">if</span> <span class="p">(</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"work"</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">and</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+                <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"work"</span><span class="p">],</span>
+                    <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"work"</span><span class="p">]:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">work</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"logging"</span><span class="p">][</span><span class="s2">"warning"</span><span class="p">]:</span>
+                        <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                            <span class="s2">"WARNING"</span><span class="p">,</span>
+                            <span class="sa">f</span><span class="s2">"An unexpected error occured during the running of the `pls work` command: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`."</span><span class="p">,</span>
+                        <span class="p">)</span>
+
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span>
+                    <span class="s2">"work"</span>
+                <span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2"> %H:%M:%S.</span><span class="si">%f</span><span class="s2">"</span><span class="p">)</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_write</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"enabled"</span><span class="p">]:</span>
+                    <span class="n">sleep</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">"cooldowns"</span><span class="p">][</span><span class="s2">"commands"</span><span class="p">][</span><span class="s2">"value"</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">last_db_update</span><span class="p">)</span><span class="o">.</span><span class="n">total_seconds</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">10</span><span class="p">:</span>
+            <span class="n">Client</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>
+            <span class="n">last_db_update</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+
+        <span class="k">while</span> <span class="p">(</span>
+            <span class="ow">not</span> <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span>
+            <span class="ow">or</span> <span class="ow">not</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]</span>
+        <span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">data</span><span class="p">[</span><span class="s2">"channels"</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span><span class="p">][</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">]:</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">_update</span><span class="p">()</span>    
+                <span class="k">return</span>
+
+</pre>
+      </div>
+     </div>
+    </div>
+    <div class="clearall">
+    </div>
+   </div>
+  </div>
+ </body>
+</html>
