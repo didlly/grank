@@ -48,16 +48,16 @@
        </a>
       </div>
       <p>
-       The user_info function returns a dictionary containing the user�s Discord ID, username, discriminator (the 4-digit number after their username), avatar hash (a unique string of numbers and letters that identifies an image file on Discord), and email. If the user_info function is passed a token for an invalid or expired authorization code, it will return None.
+       The user_info function returns a dictionary containing the user's Discord ID, username, discriminator (the 4-digit number after their username), avatar hash (a unique string of numbers and letters that identifies an image file on Discord), and email. If the user_info function is passed a token for an invalid or expired authorization code, it will return None.
       </p>
       <p>
        Args:
-token (str): The token that should be used when collecting the user�s info.
+token (str): The token that should be used when collecting the user's info.
 user_id (Optional[int]) = None: Tells the function whether to use @me instead of a user id
       </p>
       <p>
        Returns:
-req (Optional[DictToClass]): A class with the user�s information
+req (Optional[DictToClass]): A class with the user's information
       </p>
      </div>
      <div class="code">
@@ -92,7 +92,7 @@ req (Optional[DictToClass]): A class with the user�s information
        </a>
       </div>
       <p>
-       Send a request to the Discord API. If the user_id is None, then we are getting information about the account linked to the token, so we do a @me request. Else, we do a request to the user�s page
+       Send a request to the Discord API. If the user_id is None, then we are getting information about the account linked to the token, so we do a @me request. Else, we do a request to the user's page
       </p>
      </div>
      <div class="code">
@@ -116,7 +116,7 @@ req (Optional[DictToClass]): A class with the user�s information
        </a>
       </div>
       <p>
-       If the request status code is an error code�
+       If the request status code is an error code...
       </p>
      </div>
      <div class="code">
@@ -135,7 +135,7 @@ req (Optional[DictToClass]): A class with the user�s information
        </a>
       </div>
       <p>
-       �return None
+       ...return None
       </p>
      </div>
      <div class="code">

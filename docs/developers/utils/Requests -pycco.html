@@ -118,7 +118,7 @@ params (dict) = {}: The query parameters
 json (Optional[dict]) = None: The json payload (or None if there is none)
 data (Optional[str]) = None: The string payload (or None if there is none)
 headers (dict) = {}: The headers for the request
-method (str) = �GET�: The request method
+method (str) = ...GET...: The request method
 verify (bool) = False: Whether or not to ignore ssl errors
 redirect (bool) = True: Whether or not to follow redirects
 cookiejar (Optional[CookieJar]) = None: Cookie container
@@ -197,7 +197,7 @@ A tuple of status code, response content and the final url
        <code>
         User-Agent
        </code>
-       header so Discord doesn�t block us
+       header so Discord doesn't block us
       </p>
      </div>
      <div class="code">
@@ -237,7 +237,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If there are query parameters�
+       If there are query parameters...
       </p>
      </div>
      <div class="code">
@@ -275,7 +275,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If a json and data payload have both been provided�
+       If a json and data payload have both been provided...
       </p>
      </div>
      <div class="code">
@@ -294,7 +294,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �raise an Exception
+       ...raise an Exception
       </p>
      </div>
      <div class="code">
@@ -313,7 +313,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If json / data is provided and the method isn�t
+       If json / data is provided and the method isn't
        <code>
         POST
        </code>
@@ -344,7 +344,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �raise an Exception
+       ...raise an Exception
       </p>
      </div>
      <div class="code">
@@ -365,7 +365,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If a json payload was supplied�
+       If a json payload was supplied...
       </p>
      </div>
      <div class="code">
@@ -384,7 +384,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �add the json header to the request
+       ...add the json header to the request
       </p>
      </div>
      <div class="code">
@@ -425,7 +425,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       Else if a data payload was supplied�
+       Else if a data payload was supplied...
       </p>
      </div>
      <div class="code">
@@ -444,7 +444,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �encode the data
+       ...encode the data
       </p>
      </div>
      <div class="code">
@@ -463,7 +463,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If basic_auth is set to True and a username and password have been supplied�
+       If basic_auth is set to True and a username and password have been supplied...
       </p>
      </div>
      <div class="code">
@@ -482,7 +482,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �unpack the username and password from the variable basic_auth
+       ...unpack the username and password from the variable basic_auth
       </p>
      </div>
      <div class="code">
@@ -522,7 +522,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If a cookiejar wasn�t supplied�
+       If a cookiejar wasn't supplied...
       </p>
      </div>
      <div class="code">
@@ -541,7 +541,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �create a new one
+       ...create a new one
       </p>
      </div>
      <div class="code">
@@ -579,7 +579,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If verify is set to False�
+       If verify is set to False...
       </p>
      </div>
      <div class="code">
@@ -693,7 +693,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If redirecting is disabled�
+       If redirecting is disabled...
       </p>
      </div>
      <div class="code">
@@ -712,7 +712,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �append a NoRedirect class to handlers
+       ...append a NoRedirect class to handlers
       </p>
      </div>
      <div class="code">
@@ -771,7 +771,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       Open the request�
+       Open the request...
       </p>
      </div>
      <div class="code">
@@ -790,7 +790,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �unpack the response status code, content etc.
+       ...unpack the response status code, content etc.
       </p>
      </div>
      <div class="code">
@@ -832,7 +832,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If gzip is in the request headers�
+       If gzip is in the request headers...
       </p>
      </div>
      <div class="code">
@@ -851,7 +851,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �decompress the content using gzip
+       ...decompress the content using gzip
       </p>
      </div>
      <div class="code">
@@ -894,7 +894,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �except HTTPError�
+       ...except HTTPError...
       </p>
      </div>
      <div class="code">
@@ -913,7 +913,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �unpack the response status code, content etc.
+       ...unpack the response status code, content etc.
       </p>
      </div>
      <div class="code">
@@ -951,7 +951,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       If gzip is in the request headers�
+       If gzip is in the request headers...
       </p>
      </div>
      <div class="code">
@@ -970,7 +970,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �decompress the content using gzip
+       ...decompress the content using gzip
       </p>
      </div>
      <div class="code">
@@ -1012,7 +1012,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �except URLError (no WiFi connection)�
+       ...except URLError (no WiFi connection)...
       </p>
      </div>
      <div class="code">
@@ -1031,7 +1031,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �tell the user of ;-)
+       'tell the user of ;-)
       </p>
      </div>
      <div class="code">
@@ -1054,7 +1054,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �suppress a JSONDecodeError�
+       'suppress a JSONDecodeError...
       </p>
      </div>
      <div class="code">
@@ -1073,7 +1073,7 @@ A tuple of status code, response content and the final url
        </a>
       </div>
       <p>
-       �parse the response as json if possible
+       ...parse the response as json if possible
       </p>
      </div>
      <div class="code">

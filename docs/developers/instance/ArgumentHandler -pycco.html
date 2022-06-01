@@ -31,13 +31,13 @@
       <p>
        The parse_args function takes a string as input and returns an object with the following attributes:
 command (str): The first word of the input string.
-subcommand (list): A list of all words in the input string that follow �command�.
-variables (list): A list of all words in �subcommand� that are separated by equals signs.
-For example, if �foo=bar� is present in �subcommand�, it will be included as one element
-in this attribute�s value. If there are no variables, this attribute will be an empty list.
+subcommand (list): A list of all words in the input string that follow ...command....
+variables (list): A list of all words in 'subcommand'that are separated by equals signs.
+For example, if ...foo=bar'is present in 'subcommand..., it will be included as one element
+in this attribute's value. If there are no variables, this attribute will be an empty list.
       </p>
       <p>
-       flags (list): A list containing any elements from �subcommand� that begin with a dash (�-�).
+       flags (list): A list containing any elements from 'subcommand'that begin with a dash (...-...).
       </p>
       <p>
        var (str or NoneType): If there is exactly one variable defined by equals signs, then this attribute
@@ -225,7 +225,7 @@ A class object with the attributes
        <code>
         add
        </code>
-       ) by iterating through the words in msg (skipping command) and adding it if it doesn�t start with
+       ) by iterating through the words in msg (skipping command) and adding it if it doesn't start with
        <code>
         -
        </code>

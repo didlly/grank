@@ -19,7 +19,7 @@ cwd = cwd if cwd == "" else f"{cwd}/"
 
 def prettify(file_path: str) -> None:
     print(f"Prettifying: {file_path}")
-    with open(file_path, "r+", errors="ignore") as f:
+    with open(file_path, "r+", encoding="cp437") as f:
         html = f.read()
         soup = BeautifulSoup(html, "html.parser")
         pretty_html = soup.prettify()

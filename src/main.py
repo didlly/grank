@@ -60,12 +60,12 @@ if data["version"] != latest_version:
     # ...tell the user to update if possible
     log(None, "WARNING", f"New version available. Update if possible.")
 
-# ...suppres a FileExistsError...
+# ...suppress a FileExistsError...
 with suppress(FileExistsError):
     # ...make the logs directory
     mkdir(f"{cwd}logs/")
 
-# ...suppres a FileExistsError...
+# ...suppress a FileExistsError...
 with suppress(FileExistsError):
     # ...make this version's logs directory
     mkdir(f"{cwd}logs/{data['version']}")
@@ -77,7 +77,7 @@ accounts = verify_credentials(cwd)
 gateway = __import__("discord.Gateway").Gateway.gateway
 
 for account in accounts:
-    # ...suppres a FileExistsError...
+    # ...suppress a FileExistsError...
     with suppress(FileExistsError):
         # ...make this account's logs directory
         mkdir(f"{cwd}logs/{data['version']}/{account.token}")
