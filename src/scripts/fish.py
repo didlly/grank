@@ -19,7 +19,7 @@ def fish(Client: Instance) -> bool:
     # Get Dank Memer's response to `pls fish`
     latest_message = Client.retreive_message("pls fish")
 
-    # If Dank Memer replied with the `Catch the fish`` game...
+    # If Dank Memer replied with the `Catch the fish` game...
     if "Catch the fish" in latest_message["content"]:
         Client.log("DEBUG", "Detected catch the fish game.")
 

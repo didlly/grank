@@ -62,12 +62,12 @@
        The create_config function creates a config file for the specified account.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory
 folder (int): The name of the account's folder
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 A tuple of the config file and the parsed config
       </p>
      </div>
@@ -279,12 +279,12 @@ A tuple of the config file and the parsed config
        The rebuild_config function is used to rebuild the config file for the specified account.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory of the program
 folder (int): The name of the account's folder
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: Indicates whether the subprogram executed successfully or not
       </p>
      </div>
@@ -539,12 +539,12 @@ bool: Indicates whether the subprogram executed successfully or not
        The create_database function creates a database file for the specified account.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory
 folder (int): The name of the account's folder
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 A tuple of the database file and the parsed database
       </p>
      </div>
@@ -756,12 +756,12 @@ A tuple of the database file and the parsed database
        The rebuild_database function is used to rebuild the database file for the specified account.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory of the program
 folder (int): The name of the account's folder
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: Indicates whether the subprogram executed successfully or not
       </p>
      </div>
@@ -1016,12 +1016,12 @@ bool: Indicates whether the subprogram executed successfully or not
        The create_controllers function creates a controllers file for the specified account.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory
 account (DictToClass): The account's data class
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 A tuple of the controllers file and the parsed controllers
       </p>
      </div>
@@ -1204,12 +1204,12 @@ A tuple of the controllers file and the parsed controllers
        The rebuild_controllers function is used to rebuild the controllers file for the specified account.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory of the program
 folder (int): The name of the account's folder
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: Indicates whether the subprogram executed successfully or not
       </p>
      </div>
@@ -1325,10 +1325,7 @@ bool: Indicates whether the subprogram executed successfully or not
       </div>
       <p>
        Merge the controllers &amp; controllers template.
-       <code>
-        folder
-       </code>
-       is being used as it is the same as the account's ID
+       <code>folder</code>   is being used as it is the same as the account's ID
       </p>
      </div>
      <div class="code">
@@ -1440,12 +1437,12 @@ bool: Indicates whether the subprogram executed successfully or not
        The create_info function creates a info file for the specified account.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory
 account (DictToClass): The account's data class
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 A tuple of the info file and the parsed info
       </p>
      </div>
@@ -1625,13 +1622,13 @@ A tuple of the info file and the parsed info
        The rebuild_info function is used to rebuild the info file for the specified account.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory of the program
 folder (int): The name of the account's folder
 account (DictToClass): The account's data class
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: Indicates whether the subprogram executed successfully or not
       </p>
      </div>
@@ -1881,14 +1878,14 @@ that every variable defined in this function will be an attribute of every
 instance created from this class.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 self: Gives access to the class' attributes and methods
 cwd (str): The current working directory of the program
 account (DictToClass) The account's data class
 Client (Instance): The account's class for interacting with Discord
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 NoneType:
        <strong>
         init
@@ -1948,10 +1945,7 @@ NoneType:
       </div>
       <p>
        If the account already has a database (when getting the list of folders, folders called
-       <code>
-        __pycache__
-       </code>
-       aren't added)...
+       <code>__pycache__</code>   aren't added)...
       </p>
      </div>
      <div class="code">
@@ -2255,11 +2249,11 @@ NoneType:
        The config_write function writes the config dictionary in memory, converted to a string, to it's file
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 self: Access the attributes and methods of the class in python
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: Indicates whether the subprogram executed successfully or not
       </p>
      </div>
@@ -2376,11 +2370,11 @@ bool: Indicates whether the subprogram executed successfully or not
        The database_write function writes the database dictionary in memory, converted to a string, to it's file
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 self: Access the attributes and methods of the class in python
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: Indicates whether the subprogram executed successfully or not
       </p>
      </div>
@@ -2497,11 +2491,11 @@ bool: Indicates whether the subprogram executed successfully or not
        The info_write function writes the info dictionary in memory, converted to a string, to it's file
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 self: Access the attributes and methods of the class in python
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: Indicates whether the subprogram executed successfully or not
       </p>
      </div>
@@ -2618,11 +2612,11 @@ bool: Indicates whether the subprogram executed successfully or not
        The controllers_write function writes the controllers dictionary in memory, converted to a string, to it's file
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 self: Access the attributes and methods of the class in python
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: Indicates whether the subprogram executed successfully or not
       </p>
      </div>
@@ -2741,7 +2735,7 @@ The database_handler function takes in a command, an argument, some data, and an
 If the command is ...write' it will write to the database
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 self: Access variables that belongs to the class
 command:str: Specify what command is being run
 arg:Optional[str]=None: Tell the user that they do not have to provide an argument
@@ -2751,7 +2745,7 @@ ID:int=None: Specify the id of the user who is executing the command
 : Specify the command that is being run
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 A tuple containing data indicating whether the subprogram ran successfully or not
       </p>
      </div>
@@ -2794,10 +2788,7 @@ A tuple containing data indicating whether the subprogram ran successfully or no
       </div>
       <p>
        If the command is
-       <code>
-        write
-       </code>
-       ...
+       <code>write</code>   ...
       </p>
      </div>
      <div class="code">
@@ -2817,10 +2808,7 @@ A tuple containing data indicating whether the subprogram ran successfully or no
       </div>
       <p>
        ...if the arg is
-       <code>
-        controller add
-       </code>
-       ...
+       <code>controller add</code>   ...
       </p>
      </div>
      <div class="code">
@@ -3095,10 +3083,7 @@ A tuple containing data indicating whether the subprogram ran successfully or no
       </div>
       <p>
        ...else if the arg is
-       <code>
-        controller remove
-       </code>
-       ...
+       <code>controller remove</code>   ...
       </p>
      </div>
      <div class="code">
@@ -3220,13 +3205,13 @@ A tuple containing data indicating whether the subprogram ran successfully or no
        The log_command function is called when a command is ran. It logs the command in the log file, and also sends a webhook to the logging channel.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 self: Access the bot's attributes and methods
 Client (Instance): The Discord client
 message (dict): The command that was sent by the user
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: Indicates whether the subprogram ran successfully or not
       </p>
      </div>

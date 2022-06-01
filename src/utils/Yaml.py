@@ -43,7 +43,7 @@ def load(path: str) -> dict:
     """
 
     with open(path, "r") as yaml:
-        # Initialize levels as an empty list. This data structure will hold the dictionary keys in the form `['{key}']` (e.g, `['commands`])
+        # Initialize levels as an empty list. This data structure will hold the dictionary keys in the form `['{key}']` (e.g, `['commands']`)
         levels = []
 
         # Initialize data as an empty dictionary. This data structure will hold the converted yaml

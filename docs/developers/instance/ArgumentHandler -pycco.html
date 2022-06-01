@@ -31,45 +31,31 @@
       <p>
        The parse_args function takes a string as input and returns an object with the following attributes:
 command (str): The first word of the input string.
-subcommand (list): A list of all words in the input string that follow ...command....
-variables (list): A list of all words in 'subcommand'that are separated by equals signs.
-For example, if ...foo=bar'is present in 'subcommand..., it will be included as one element
+<br><br>
+subcommand (list): A list of all words in the input string that follow 'command'
+<br><br>
+variables (list): A list of all words in 'subcommand' that are separated by equals signs. For example, if 'foo=bar' is present in 'subcommand', it will be included as one element
 in this attribute's value. If there are no variables, this attribute will be an empty list.
       </p>
       <p>
-       flags (list): A list containing any elements from 'subcommand'that begin with a dash (...-...).
+       flags (list): A list containing any elements from 'subcommand'that begin with a dash ('-').
       </p>
       <p>
        var (str or NoneType): If there is exactly one variable defined by equals signs, then this attribute
 contains its value; otherwise it is None.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cmd (str): The command to be parsed
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 A class object with the attributes
-       <code>
-        command
-       </code>
-       ,
-       <code>
-        subcommand
-       </code>
-       ,
-       <code>
-        variables
-       </code>
-       ,
-       <code>
-        flags
-       </code>
-       &amp;
-       <code>
-        var
-       </code>
-      </p>
+       <code>command</code>,
+       <code>subcommand</code>,
+       <code>variables</code>,
+       <code>flags</code> &amp;
+       <code>var</code></p>
      </div>
      <div class="code">
       <div class="highlight">
@@ -160,10 +146,7 @@ A class object with the attributes
       </div>
       <p>
        Split the msg variable into words and skip the first word (i.e.,
-       <code>
-        grank
-       </code>
-       ).\
+       <code>grank</code>).
       </p>
      </div>
      <div class="code">
@@ -183,26 +166,11 @@ A class object with the attributes
       </div>
       <p>
        Get the command (e.g.,
-       <code>
-        config
-       </code>
-       ). If there is a
-       <code>
-        .
-       </code>
-       in the first word, get the part of the first word before the
-       <code>
-        .
-       </code>
-       (i.e,
-       <code>
-        config.commands
-       </code>
-       becomes
-       <code>
-        config
-       </code>
-       ). Else, keep the command as the first word.
+       <code>config</code>). If there is a
+       <code>.</code> in the first word, get the part of the first word before the
+       <code>.</code> (i.e,
+       <code>config.commands</code> becomes
+       <code>config</code>). Else, keep the command as the first word.
       </p>
      </div>
      <div class="code">
@@ -222,14 +190,8 @@ A class object with the attributes
       </div>
       <p>
        Gets the subcommand(s) (e.g,
-       <code>
-        add
-       </code>
-       ) by iterating through the words in msg (skipping command) and adding it if it doesn't start with
-       <code>
-        -
-       </code>
-       (because then it is a flag).
+       <code>add</code>) by iterating through the words in msg (skipping command) and adding it if it doesn't start with
+       <code>-</code> (because then it is a flag).
       </p>
      </div>
      <div class="code">
@@ -249,10 +211,7 @@ A class object with the attributes
       </div>
       <p>
        Gets the variable(s) by iterating through the subcommand and getting the value(s) (removing
-       <code>
-        =
-       </code>
-       )
+       <code>=</code>)
       </p>
      </div>
      <div class="code">
@@ -276,10 +235,7 @@ A class object with the attributes
       </div>
       <p>
        Gets the flag(s) by iterating trough all the word(s) in msg and adding them if they start with
-       <code>
-        -
-       </code>
-      </p>
+       <code>-</code>  </p>
      </div>
      <div class="code">
       <div class="highlight">
@@ -302,14 +258,8 @@ A class object with the attributes
       </div>
       <p>
        Gets the var if
-       <code>
-        =
-       </code>
-       is in the msg, otherwise var is left as
-       <code>
-        None
-       </code>
-      </p>
+       <code>=</code> is in the msg, otherwise var is left as
+       <code>None</code>  </p>
      </div>
      <div class="code">
       <div class="highlight">

@@ -61,13 +61,13 @@
        The verify function checks if the database is corrupted. If it is, it will rebuild the database.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory of the program
 Client (Instance): The account's class for interacting with Discord.
 account (DictToClass): The account's data class
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -644,12 +644,12 @@ None
 It does this by checking for all of the required options and making sure that they are present.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory
 folder (str): The account's folder to check
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 True if the config file is valid, else False
       </p>
      </div>
@@ -914,14 +914,14 @@ True if the config file is valid, else False
        The verify_database function verifies that the database.json file is valid.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory
 folder (Optional[str]): The account's folder to check (or None if the files are specified)
 database_template (Optional[dict]) = None: The database template (or None if the program should read it from the account's folder)
 database (Optional[dict]) = None: The database to check (or None if the prgraom should read it from the account's folder)
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 True if the database file is valid, else False
       </p>
      </div>
@@ -1204,12 +1204,12 @@ True if the database file is valid, else False
        The verify_controllers function checks to see if the controllers.json file exists in the database folder and then checks to see if it contains a ...controllers'key and a ...controllers_info'key. If either of these keys are missing, then this function returns False.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory
 folder (str): The account's folder to check
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 True if the controllers file is valid, else False
       </p>
      </div>
@@ -1308,14 +1308,8 @@ True if the controllers file is valid, else False
       </div>
       <p>
        If the keys
-       <code>
-        controllers
-       </code>
-       and
-       <code>
-        controllers_info
-       </code>
-       are present, return True, else return Fa;se
+       <code>controllers</code>   and
+       <code>controllers_info</code>   are present, return True, else return Fa;se
       </p>
      </div>
      <div class="code">
@@ -1342,12 +1336,12 @@ True if the controllers file is valid, else False
        The verify_info function checks if the info.json file is formatted correctly.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 cwd (str): The current working directory
 folder (str): The account's folder to check
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 True if the info file is valid, else False
       </p>
      </div>
@@ -1446,10 +1440,7 @@ True if the info file is valid, else False
       </div>
       <p>
        If the
-       <code>
-        stats
-       </code>
-       key is found...
+       <code>stats</code>   key is found...
       </p>
      </div>
      <div class="code">
@@ -1469,30 +1460,12 @@ True if the info file is valid, else False
       </div>
       <p>
        If the
-       <code>
-        commands_ran
-       </code>
-       or
-       <code>
-        buttons_clicked
-       </code>
-       or
-       <code>
-        dropdowns_selected
-       </code>
-       or
-       <code>
-        coins_gained
-       </code>
-       or
-       <code>
-        items_gained
-       </code>
-       key is not found in the subdict
-       <code>
-        stats
-       </code>
-       ...
+       <code>commands_ran</code>   or
+       <code>buttons_clicked</code>   or
+       <code>dropdowns_selected</code>   or
+       <code>coins_gained</code>   or
+       <code>items_gained</code>   key is not found in the subdict
+       <code>stats</code>   ...
       </p>
      </div>
      <div class="code">

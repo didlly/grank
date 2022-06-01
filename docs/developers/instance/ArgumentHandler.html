@@ -34,10 +34,7 @@
     <header>
      <h1 class="title">
       Module
-      <code>
-       src.instance.ArgumentHandler
-      </code>
-     </h1>
+      <code>src.instance.ArgumentHandler</code> </h1>
     </header>
     <section id="section-intro">
      <details class="source">
@@ -84,7 +81,7 @@
     # Get the command (e.g., `config`). If there is a `.` in the first word, get the part of the first word before the `.` (i.e, `config.commands` becomes `config`). Else, keep the command as the first word.
     command = cmd[0].split(".")[0] if "." in cmd[0] else cmd[0]
 
-    # Gets the subcommand(s) (e.g, `add`) by iterating through the words in msg (skipping command) and adding it if it doesn't start with `-` (because then it is a flag).
+    # Gets the subcommand(s) ((e.g, `['commands`]`)dd`) by iterating through the words in msg (skipping command) and adding it if it doesn't start with `-` (because then it is a flag).
     subcommand = [arg for arg in cmd[1:] if arg[0] != "-"]
 
     # Gets the variable(s) by iterating through the subcommand and getting the value(s) (removing `=`)
@@ -127,9 +124,7 @@
         (
         <span>
          cmd: str)
-        </span>
-       </code>
-      </dt>
+        </span></code>  </dt>
       <dd>
        <div class="desc">
         <p>
@@ -143,23 +138,16 @@ in this attribute's value. If there are no variables, this attribute will be an 
         <pre><code>flags (list): A list containing any elements from 'subcommand' that begin with a dash ('-').
 
 var (str or NoneType): If there is exactly one variable defined by equals signs, then this attribute
-    contains its value; otherwise it is None.
-</code></pre>
+    contains its value; otherwise it is None.</code></pre>
         <h2 id="args">
          Args
         </h2>
         <dl>
          <dt>
           <strong>
-           <code>
-            cmd
-           </code>
-          </strong>
+           <code>cmd</code>      </strong>
           :
-          <code>
-           str
-          </code>
-         </dt>
+          <code>str</code>     </dt>
          <dd>
           The command to be parsed
          </dd>
@@ -169,26 +157,11 @@ var (str or NoneType): If there is exactly one variable defined by equals signs,
         </h2>
         <p>
          A class object with the attributes
-         <code>
-          command
-         </code>
-         ,
-         <code>
-          subcommand
-         </code>
-         ,
-         <code>
-          variables
-         </code>
-         ,
-         <code>
-          flags
-         </code>
-         &amp;
-         <code>
-          var
-         </code>
-        </p>
+         <code>command</code>     ,
+         <code>subcommand</code>     ,
+         <code>variables</code>     ,
+         <code>flags</code>     &amp;
+         <code>var</code>    </p>
        </div>
        <details class="source">
         <summary>
@@ -234,7 +207,7 @@ var (str or NoneType): If there is exactly one variable defined by equals signs,
     # Get the command (e.g., `config`). If there is a `.` in the first word, get the part of the first word before the `.` (i.e, `config.commands` becomes `config`). Else, keep the command as the first word.
     command = cmd[0].split(".")[0] if "." in cmd[0] else cmd[0]
 
-    # Gets the subcommand(s) (e.g, `add`) by iterating through the words in msg (skipping command) and adding it if it doesn't start with `-` (because then it is a flag).
+    # Gets the subcommand(s) ((e.g, `['commands`]`)dd`) by iterating through the words in msg (skipping command) and adding it if it doesn't start with `-` (because then it is a flag).
     subcommand = [arg for arg in cmd[1:] if arg[0] != "-"]
 
     # Gets the variable(s) by iterating through the subcommand and getting the value(s) (removing `=`)
@@ -277,12 +250,9 @@ var (str or NoneType): If there is exactly one variable defined by equals signs,
       </h3>
       <ul>
        <li>
-        <code>
-         <a href="index.html" title="src.instance">
+        <code><a href="index.html" title="src.instance">
           src.instance
-         </a>
-        </code>
-       </li>
+         </a></code>   </li>
       </ul>
      </li>
      <li>
@@ -293,12 +263,9 @@ var (str or NoneType): If there is exactly one variable defined by equals signs,
       </h3>
       <ul class="">
        <li>
-        <code>
-         <a href="#src.instance.ArgumentHandler.parse_args" title="src.instance.ArgumentHandler.parse_args">
+        <code><a href="#src.instance.ArgumentHandler.parse_args" title="src.instance.ArgumentHandler.parse_args">
           parse_args
-         </a>
-        </code>
-       </li>
+         </a></code>   </li>
       </ul>
      </li>
     </ul>

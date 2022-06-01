@@ -70,13 +70,13 @@ The function will then send ...pls use phone' again
 Then, the function will send ...p' to call the police and avert the heist
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Instance): The Discord client
 latest_message (dict): Dank Memer's heist message
 reset (bool): Tells the program whether or not to remove the channel from channels that messages need to be retreived for after averting the heist
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -161,12 +161,12 @@ None
 It takes in the Client object and the latest message as arguments, and then interacts with the button on the message accordingly.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Instance): The Discord client
 latest_message (dict): Dank Memer's heist message
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -243,12 +243,12 @@ It then logs that it received a trade, sleeps for 2.5 seconds, accepts the trade
 the trade.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Instance): The Discord client
 latest_message (dict): Dank Memer's trade message
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 Nothing
       </p>
      </div>
@@ -329,18 +329,15 @@ Nothing
       </div>
       <p>
        The event_1 function is used to respond to the
-       <code>
-        Your immune system is under attack from Covid-19
-       </code>
-       event.
+       <code>Your immune system is under attack from Covid-19</code>   event.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Instance): The Discord client
 latest_message (dict): Dank Memer's event message
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -421,18 +418,15 @@ None
       </div>
       <p>
        The event_2 function is used to respond to the
-       <code>
-        Microsoft is trying to buy Discord again
-       </code>
-       event.
+       <code>Microsoft is trying to buy Discord again</code>   event.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Instance): The Discord client
 latest_message (dict): Dank Memer's event message
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -513,18 +507,15 @@ None
       </div>
       <p>
        The event_3 function is used to respond to the
-       <code>
-        pls rich cmd doesn't work
-       </code>
-       event.
+       <code>pls rich cmd doesn't work</code>   event.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Instance): The Discord client
 latest_message (dict): Dank Memer's event message
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -605,18 +596,15 @@ None
       </div>
       <p>
        The event_4 function is used to respond to the
-       <code>
-        f in the chat
-       </code>
-       event.
+       <code>f in the chat</code>   event.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Instance): The Discord client
 latest_message (dict): Dank Memer's event message
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -695,18 +683,15 @@ None
       </div>
       <p>
        The event_5 function is used to respond to the
-       <code>
-        frick of karen
-       </code>
-       event.
+       <code>frick of karen</code>   event.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Instance): The Discord client
 latest_message (dict): Dank Memer's event message
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -787,18 +772,15 @@ None
       </div>
       <p>
        The event_6 function is used to respond to the
-       <code>
-        They've got airpods
-       </code>
-       event.
+       <code>They've got airpods</code>   event.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Instance): The Discord client
 latest_message (dict): Dank Memer's event message
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -877,19 +859,16 @@ None
       </div>
       <p>
        The send_heartbeat function sends a heartbeat to the Discord API every
-       <code>
-        heartbeat_interval
-       </code>
-       seconds.
+       <code>heartbeat_interval</code>   seconds.
 This is necessary in order to keep the connection alive and working.
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 ws: Websocket connection used to send the heartbeat
 heartbeat_interval (int): The set the time between heartbeats
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 None
       </p>
      </div>
@@ -1062,10 +1041,7 @@ None
          DEBUG:
         </em>
        </strong>
-       <code>
-        {dumps(args.__dict__)}
-       </code>
-       ...)
+       <code>{dumps(args.__dict__)}</code>   ...)
       </p>
      </div>
      <div class="code">
@@ -3378,12 +3354,12 @@ If a Client is provided, it will create a proper websocket sesion and return the
 If a token is provided, it will only return the first session_id for the account
       </p>
       <p>
-       Args:
+       <b>Args:</b><br>
 Client (Union[Instance, str]): The client class
 autostart (bool) = True: Tells the gateway function whether or not to run the autostart channels code (set to False when reconnecting to the websocket to prevent multiple instances in the same channel)
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 The session id of the bot
       </p>
      </div>

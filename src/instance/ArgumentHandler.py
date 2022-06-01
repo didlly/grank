@@ -36,7 +36,7 @@ def parse_args(cmd: str):
     # Get the command (e.g., `config`). If there is a `.` in the first word, get the part of the first word before the `.` (i.e, `config.commands` becomes `config`). Else, keep the command as the first word.
     command = cmd[0].split(".")[0] if "." in cmd[0] else cmd[0]
 
-    # Gets the subcommand(s) (e.g, `add`) by iterating through the words in msg (skipping command) and adding it if it doesn't start with `-` (because then it is a flag).
+    # Gets the subcommand(s) ((e.g, `['commands`]`)dd`) by iterating through the words in msg (skipping command) and adding it if it doesn't start with `-` (because then it is a flag).
     subcommand = [arg for arg in cmd[1:] if arg[0] != "-"]
 
     # Gets the variable(s) by iterating through the subcommand and getting the value(s) (removing `=`)

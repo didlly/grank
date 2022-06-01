@@ -34,10 +34,7 @@
     <header>
      <h1 class="title">
       Module
-      <code>
-       src.instance.Client
-      </code>
-     </h1>
+      <code>src.instance.Client</code> </h1>
     </header>
     <section id="section-intro">
      <details class="source">
@@ -1015,9 +1012,7 @@ class Instance(object):
         </span>
         <span>
          cwd: str, account: utils.Converter.DictToClass)
-        </span>
-       </code>
-      </dt>
+        </span></code>  </dt>
       <dd>
        <div class="desc">
         <p>
@@ -1034,39 +1029,24 @@ It initializes the attributes of the class.
         <dl>
          <dt>
           <strong>
-           <code>
-            self
-           </code>
-          </strong>
+           <code>self</code>      </strong>
          </dt>
          <dd>
           Gives access to the class' attributes and methods.
          </dd>
          <dt>
           <strong>
-           <code>
-            cwd
-           </code>
-          </strong>
+           <code>cwd</code>      </strong>
           :
-          <code>
-           str
-          </code>
-         </dt>
+          <code>str</code>     </dt>
          <dd>
           The current working directory of the program
          </dd>
          <dt>
           <strong>
-           <code>
-            account
-           </code>
-          </strong>
+           <code>account</code>      </strong>
           :
-          <code>
-           DictToClass
-          </code>
-         </dt>
+          <code>DictToClass</code>     </dt>
          <dd>
           The account's data class
          </dd>
@@ -1076,10 +1056,7 @@ It initializes the attributes of the class.
         </h2>
         <dl>
          <dt>
-          <code>
-           NoneType
-          </code>
-         </dt>
+          <code>NoneType</code>     </dt>
          <dd>
           <strong>
            init
@@ -2033,9 +2010,7 @@ It initializes the attributes of the class.
           (
           <span>
            self, command: str, index1: int = 0, index2: int = -1) ‑&gt; None
-          </span>
-         </code>
-        </dt>
+          </span></code>    </dt>
         <dd>
          <div class="desc">
           <p>
@@ -2049,25 +2024,16 @@ although this can be changed
           <dl>
            <dt>
             <strong>
-             <code>
-              self
-             </code>
-            </strong>
+             <code>self</code>        </strong>
            </dt>
            <dd>
             Gives access to the class' attributes and methods.
            </dd>
            <dt>
             <strong>
-             <code>
-              command
-             </code>
-            </strong>
+             <code>command</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             Specify which button to interact with
            </dd>
@@ -2139,9 +2105,7 @@ index2 (int) = -1: Specify the index of the button in the message
           (
           <span>
            self, command: str) ‑&gt; dict
-          </span>
-         </code>
-        </dt>
+          </span></code>    </dt>
         <dd>
          <div class="desc">
           <p>
@@ -2150,33 +2114,23 @@ It does this by making an API call to Discord's servers, and then parsing throug
 The criteria for this function is as follows:
           </p>
           <pre><code>1) The message must be sent by Dank Memer. This ensures we don't get any false positives from other bots or users.
-2) The command must be referenced in the embed title field of said message (e.g., &lt;code&gt;pls stream&lt;/code&gt;). This ensures we don't get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.
-</code></pre>
+2) The command must be referenced in the embed title field of said message (e.g., &lt;code&gt;pls stream&lt;/code&gt;). This ensures we don't get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.</code></pre>
           <h2 id="args">
            Args
           </h2>
           <dl>
            <dt>
             <strong>
-             <code>
-              self
-             </code>
-            </strong>
+             <code>self</code>        </strong>
            </dt>
            <dd>
             Gives access to the class' attributes and methods.
            </dd>
            <dt>
             <strong>
-             <code>
-              command
-             </code>
-            </strong>
+             <code>command</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             The command the latest message is being retreived for
            </dd>
@@ -2278,9 +2232,7 @@ The criteria for this function is as follows:
           (
           <span>
            self, command: str, custom_id: int, latest_message: dict, token: Optional[str] = None, session_id: Optional[str] = None)
-          </span>
-         </code>
-        </dt>
+          </span></code>    </dt>
         <dd>
          <div class="desc">
           <p>
@@ -2307,53 +2259,32 @@ The criteria for this function is as follows:
           <dl>
            <dt>
             <strong>
-             <code>
-              self
-             </code>
-            </strong>
+             <code>self</code>        </strong>
            </dt>
            <dd>
             Gives access to the class' attributes and methods.
            </dd>
            <dt>
             <strong>
-             <code>
-              command
-             </code>
-            </strong>
+             <code>command</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             The command is being interacted with
            </dd>
            <dt>
             <strong>
-             <code>
-              custom_id
-             </code>
-            </strong>
+             <code>custom_id</code>        </strong>
             :
-            <code>
-             int
-            </code>
-           </dt>
+            <code>int</code>       </dt>
            <dd>
             The ID of the button that should be interacted with
            </dd>
            <dt>
             <strong>
-             <code>
-              latest_message
-             </code>
-            </strong>
+             <code>latest_message</code>        </strong>
             :
-            <code>
-             dict
-            </code>
-           </dt>
+            <code>dict</code>       </dt>
            <dd>
             The message the button to be interacted with is on.
            </dd>
@@ -2473,9 +2404,7 @@ session_id (Optional[str]) = None: The sesion id of the account that is interact
           (
           <span>
            self, command: str, custom_id: int, option_id: str, latest_message: dict)
-          </span>
-         </code>
-        </dt>
+          </span></code>    </dt>
         <dd>
          <div class="desc">
           <p>
@@ -2499,67 +2428,40 @@ session_id (Optional[str]) = None: The sesion id of the account that is interact
           <dl>
            <dt>
             <strong>
-             <code>
-              self
-             </code>
-            </strong>
+             <code>self</code>        </strong>
            </dt>
            <dd>
             Gives access to the class' attributes and methods.
            </dd>
            <dt>
             <strong>
-             <code>
-              command
-             </code>
-            </strong>
+             <code>command</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             The command is being interacted with
            </dd>
            <dt>
             <strong>
-             <code>
-              custom_id
-             </code>
-            </strong>
+             <code>custom_id</code>        </strong>
             :
-            <code>
-             int
-            </code>
-           </dt>
+            <code>int</code>       </dt>
            <dd>
             The ID of the button that should be interacted with
            </dd>
            <dt>
             <strong>
-             <code>
-              option_id
-             </code>
-            </strong>
+             <code>option_id</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             The ID of the dropdown that should be selected
            </dd>
            <dt>
             <strong>
-             <code>
-              latest_message
-             </code>
-            </strong>
+             <code>latest_message</code>        </strong>
             :
-            <code>
-             dict
-            </code>
-           </dt>
+            <code>dict</code>       </dt>
            <dd>
             The message the button to be interacted with is on.
            </dd>
@@ -2671,9 +2573,7 @@ session_id (Optional[str]) = None: The sesion id of the account that is interact
           (
           <span>
            self, level: str, text: str) ‑&gt; None
-          </span>
-         </code>
-        </dt>
+          </span></code>    </dt>
         <dd>
          <div class="desc">
           <p>
@@ -2685,39 +2585,24 @@ session_id (Optional[str]) = None: The sesion id of the account that is interact
           <dl>
            <dt>
             <strong>
-             <code>
-              self
-             </code>
-            </strong>
+             <code>self</code>        </strong>
            </dt>
            <dd>
             Gives access to the class' attributes and methods.
            </dd>
            <dt>
             <strong>
-             <code>
-              level
-             </code>
-            </strong>
+             <code>level</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             The level of the log message
            </dd>
            <dt>
             <strong>
-             <code>
-              text
-             </code>
-            </strong>
+             <code>text</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             The log message
            </dd>
@@ -2785,9 +2670,7 @@ session_id (Optional[str]) = None: The sesion id of the account that is interact
           (
           <span>
            self, command: str, token: Optional[str] = None, check: bool = True, old_latest_message: Optional[dict] = None) ‑&gt; dict
-          </span>
-         </code>
-        </dt>
+          </span></code>    </dt>
         <dd>
          <div class="desc">
           <p>
@@ -2811,25 +2694,16 @@ session_id (Optional[str]) = None: The sesion id of the account that is interact
           <dl>
            <dt>
             <strong>
-             <code>
-              self
-             </code>
-            </strong>
+             <code>self</code>        </strong>
            </dt>
            <dd>
             Gives access to the class' attributes and methods.
            </dd>
            <dt>
             <strong>
-             <code>
-              command
-             </code>
-            </strong>
+             <code>command</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             The command the latest message is being retreived for.
            </dd>
@@ -3091,9 +2965,7 @@ old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck i
           (
           <span>
            self, command: str, token: Optional[str] = None, latest_message: Optional[dict] = None, channel_id: Optional[int] = None) ‑&gt; None
-          </span>
-         </code>
-        </dt>
+          </span></code>    </dt>
         <dd>
          <div class="desc">
           <p>
@@ -3105,25 +2977,16 @@ old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck i
           <dl>
            <dt>
             <strong>
-             <code>
-              self
-             </code>
-            </strong>
+             <code>self</code>        </strong>
            </dt>
            <dd>
             Gives access to the class' attributes and methods.
            </dd>
            <dt>
             <strong>
-             <code>
-              command
-             </code>
-            </strong>
+             <code>command</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             The command to send
            </dd>
@@ -3245,9 +3108,7 @@ channel_id (Optional[int]) = None: The channel id used the send the message (or 
           (
           <span>
            self, payload: dict) ‑&gt; None
-          </span>
-         </code>
-        </dt>
+          </span></code>    </dt>
         <dd>
          <div class="desc">
           <p>
@@ -3259,25 +3120,16 @@ channel_id (Optional[int]) = None: The channel id used the send the message (or 
           <dl>
            <dt>
             <strong>
-             <code>
-              self
-             </code>
-            </strong>
+             <code>self</code>        </strong>
            </dt>
            <dd>
             Gives access to the class' attributes and methods.
            </dd>
            <dt>
             <strong>
-             <code>
-              payload
-             </code>
-            </strong>
+             <code>payload</code>        </strong>
             :
-            <code>
-             dict
-            </code>
-           </dt>
+            <code>dict</code>       </dt>
            <dd>
             The data to be sent to the webhook
            </dd>
@@ -3354,18 +3206,13 @@ channel_id (Optional[int]) = None: The channel id used the send the message (or 
           (
           <span>
            self, payload: dict, fallback_message: str) ‑&gt; bool
-          </span>
-         </code>
-        </dt>
+          </span></code>    </dt>
         <dd>
          <div class="desc">
           <p>
            The webhook_send function sends a webhook to the channel specified by self.channel_id with the given payload.
 If Discord is ratelimiting the bot, it will sleep for
-           <code>
-            req.content['retry_after'] / 1000
-           </code>
-           seconds and then try again.
+           <code>req.content['retry_after'] / 1000</code>       seconds and then try again.
           </p>
           <h2 id="args">
            Args
@@ -3373,39 +3220,24 @@ If Discord is ratelimiting the bot, it will sleep for
           <dl>
            <dt>
             <strong>
-             <code>
-              self
-             </code>
-            </strong>
+             <code>self</code>        </strong>
            </dt>
            <dd>
             Gives access to the class' attributes and methods.
            </dd>
            <dt>
             <strong>
-             <code>
-              payload
-             </code>
-            </strong>
+             <code>payload</code>        </strong>
             :
-            <code>
-             dict
-            </code>
-           </dt>
+            <code>dict</code>       </dt>
            <dd>
             The webhook to be sent
            </dd>
            <dt>
             <strong>
-             <code>
-              fallback_message
-             </code>
-            </strong>
+             <code>fallback_message</code>        </strong>
             :
-            <code>
-             str
-            </code>
-           </dt>
+            <code>str</code>       </dt>
            <dd>
             The message to be sent if there is an error sending the webhook (usually if missing permissions). This may be removed in future versions
            </dd>
@@ -3415,10 +3247,7 @@ If Discord is ratelimiting the bot, it will sleep for
           </h2>
           <dl>
            <dt>
-            <code>
-             bool
-            </code>
-           </dt>
+            <code>bool</code>       </dt>
            <dd>
             Indicates whether the subprogram executed successfully or not
            </dd>
@@ -3537,12 +3366,9 @@ If Discord is ratelimiting the bot, it will sleep for
       </h3>
       <ul>
        <li>
-        <code>
-         <a href="index.html" title="src.instance">
+        <code><a href="index.html" title="src.instance">
           src.instance
-         </a>
-        </code>
-       </li>
+         </a></code>   </li>
       </ul>
      </li>
      <li>
@@ -3554,76 +3380,46 @@ If Discord is ratelimiting the bot, it will sleep for
       <ul>
        <li>
         <h4>
-         <code>
-          <a href="#src.instance.Client.Instance" title="src.instance.Client.Instance">
+         <code><a href="#src.instance.Client.Instance" title="src.instance.Client.Instance">
            Instance
-          </a>
-         </code>
-        </h4>
+          </a></code>    </h4>
         <ul class="">
          <li>
-          <code>
-           <a href="#src.instance.Client.Instance.clear_lag" title="src.instance.Client.Instance.clear_lag">
+          <code><a href="#src.instance.Client.Instance.clear_lag" title="src.instance.Client.Instance.clear_lag">
             clear_lag
-           </a>
-          </code>
-         </li>
+           </a></code>     </li>
          <li>
-          <code>
-           <a href="#src.instance.Client.Instance.fallback_retreive_message" title="src.instance.Client.Instance.fallback_retreive_message">
+          <code><a href="#src.instance.Client.Instance.fallback_retreive_message" title="src.instance.Client.Instance.fallback_retreive_message">
             fallback_retreive_message
-           </a>
-          </code>
-         </li>
+           </a></code>     </li>
          <li>
-          <code>
-           <a href="#src.instance.Client.Instance.interact_button" title="src.instance.Client.Instance.interact_button">
+          <code><a href="#src.instance.Client.Instance.interact_button" title="src.instance.Client.Instance.interact_button">
             interact_button
-           </a>
-          </code>
-         </li>
+           </a></code>     </li>
          <li>
-          <code>
-           <a href="#src.instance.Client.Instance.interact_dropdown" title="src.instance.Client.Instance.interact_dropdown">
+          <code><a href="#src.instance.Client.Instance.interact_dropdown" title="src.instance.Client.Instance.interact_dropdown">
             interact_dropdown
-           </a>
-          </code>
-         </li>
+           </a></code>     </li>
          <li>
-          <code>
-           <a href="#src.instance.Client.Instance.log" title="src.instance.Client.Instance.log">
+          <code><a href="#src.instance.Client.Instance.log" title="src.instance.Client.Instance.log">
             log
-           </a>
-          </code>
-         </li>
+           </a></code>     </li>
          <li>
-          <code>
-           <a href="#src.instance.Client.Instance.retreive_message" title="src.instance.Client.Instance.retreive_message">
+          <code><a href="#src.instance.Client.Instance.retreive_message" title="src.instance.Client.Instance.retreive_message">
             retreive_message
-           </a>
-          </code>
-         </li>
+           </a></code>     </li>
          <li>
-          <code>
-           <a href="#src.instance.Client.Instance.send_message" title="src.instance.Client.Instance.send_message">
+          <code><a href="#src.instance.Client.Instance.send_message" title="src.instance.Client.Instance.send_message">
             send_message
-           </a>
-          </code>
-         </li>
+           </a></code>     </li>
          <li>
-          <code>
-           <a href="#src.instance.Client.Instance.webhook_log" title="src.instance.Client.Instance.webhook_log">
+          <code><a href="#src.instance.Client.Instance.webhook_log" title="src.instance.Client.Instance.webhook_log">
             webhook_log
-           </a>
-          </code>
-         </li>
+           </a></code>     </li>
          <li>
-          <code>
-           <a href="#src.instance.Client.Instance.webhook_send" title="src.instance.Client.Instance.webhook_send">
+          <code><a href="#src.instance.Client.Instance.webhook_send" title="src.instance.Client.Instance.webhook_send">
             webhook_send
-           </a>
-          </code>
-         </li>
+           </a></code>     </li>
         </ul>
        </li>
       </ul>

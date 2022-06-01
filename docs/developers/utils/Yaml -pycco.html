@@ -49,11 +49,11 @@
        </a>
       </div>
       <p>
-       Args:
+       <b>Args:</b><br>
 string (str): The string to be checked
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: True if string can be converted to a float, else False
       </p>
      </div>
@@ -96,11 +96,11 @@ bool: True if string can be converted to a float, else False
        </a>
       </div>
       <p>
-       Args:
+       <b>Args:</b><br>
 string (str): The string to be checked
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 bool: True if string can be converted to an integer, else False
       </p>
      </div>
@@ -143,11 +143,11 @@ bool: True if string can be converted to an integer, else False
        </a>
       </div>
       <p>
-       Args:
+       <b>Args:</b><br>
 path (str): The path to the yaml file
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 data (dict): The yaml file in dictionary form
       </p>
      </div>
@@ -167,15 +167,9 @@ data (dict): The yaml file in dictionary form
        </a>
       </div>
       <p>
-       Initialize levels as an empty list. This data structure will hold the dictionary keys in the form
-       <code>
-        ['{key}']
-       </code>
-       (e.g,
-       <code>
-        ['commands
-       </code>
-       ])
+       Initialize levels as an empty list. This data structure willhold the dictionary keys in the form
+       <code>['{key}']</code>   (e.g,
+       <code>['commands']</code>)
       </p>
      </div>
      <div class="code">
@@ -270,11 +264,8 @@ data (dict): The yaml file in dictionary form
        </a>
       </div>
       <p>
-       'set indentation_str (without the trailing
-       <code>
-        \n
-       </code>
-       ) to the indent for that line
+       ...set indentation_str (without the trailing
+       <code>\n</code>) to the indent for that line
       </p>
      </div>
      <div class="code">
@@ -332,10 +323,7 @@ data (dict): The yaml file in dictionary form
       </div>
       <p>
        Elif the line is initializing a sub category (e.g.,
-       <code>
-        commands:
-       </code>
-       )
+       <code>commands:</code>)
       </p>
      </div>
      <div class="code">
@@ -355,10 +343,7 @@ data (dict): The yaml file in dictionary form
       </div>
       <p>
        Strip the line of leading and trailing chars, and remove the
-       <code>
-        :
-       </code>
-      </p>
+       <code>:</code>  </p>
      </div>
      <div class="code">
       <div class="highlight">
@@ -986,11 +971,11 @@ data (dict): The yaml file in dictionary form
        </a>
       </div>
       <p>
-       Args:
+       <b>Args:</b><br>
 yaml (str): The yaml
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 data (dict): The yaml file in dictionary form
       </p>
      </div>
@@ -1011,14 +996,8 @@ data (dict): The yaml file in dictionary form
       </div>
       <p>
        Initialize levels as an empty list. This data structure will hold the dictionary keys in the form
-       <code>
-        ['{key}']
-       </code>
-       (e.g,
-       <code>
-        ['commands
-       </code>
-       ])
+       <code>['{key}']</code>   (e.g,
+       <code>['commands']</code>)
       </p>
      </div>
      <div class="code">
@@ -1113,7 +1092,7 @@ data (dict): The yaml file in dictionary form
        </a>
       </div>
       <p>
-       'set indentation_str to the indent for that line
+       ...set indentation_str to the indent for that line
       </p>
      </div>
      <div class="code">
@@ -1171,10 +1150,7 @@ data (dict): The yaml file in dictionary form
       </div>
       <p>
        Elif the line is initializing a sub category (e.g.,
-       <code>
-        commands:
-       </code>
-       )
+       <code>commands:</code>)
       </p>
      </div>
      <div class="code">
@@ -1194,10 +1170,7 @@ data (dict): The yaml file in dictionary form
       </div>
       <p>
        Strip the line of leading and trailing chars, and remove the
-       <code>
-        :
-       </code>
-      </p>
+       <code>:</code>  </p>
      </div>
      <div class="code">
       <div class="highlight">
@@ -1825,12 +1798,12 @@ data (dict): The yaml file in dictionary form
        </a>
       </div>
       <p>
-       Args:
+       <b>Args:</b><br>
 data (dict): The dictionary to be converted.
-indent (str) = ......: The indentation of the current level.
+indent (str) = '': The indentation of the current level.
       </p>
       <p>
-       Returns:
+       <b>Returns:</b><br>
 yaml (str): The dictionary in yaml form.
       </p>
      </div>
