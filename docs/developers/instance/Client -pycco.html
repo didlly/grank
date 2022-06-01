@@ -6,8 +6,8 @@
   <title>
    Client.py
   </title>
-  <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
-  <link href="/docs/assets/css/pycco.css" rel="stylesheet"/>
+  <link href="/grank/docs/assets/img/favicon.png" rel="shortcut icon"/>
+  <link href="/grank/docs/assets/css/pycco.css" rel="stylesheet"/>
  </head>
  <body>
   <div id="container">
@@ -87,9 +87,9 @@ It initializes the attributes of the class.
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 cwd (str): The current working directory of the program
-account (DictToClass): The account’s data class
+account (DictToClass): The accountï¿½s data class
       </p>
       <p>
        Returns:
@@ -97,7 +97,7 @@ NoneType:
        <strong>
         init
        </strong>
-       functions for classes aren’t allowed to return anything, don’t ask me why
+       functions for classes arenï¿½t allowed to return anything, donï¿½t ask me why
       </p>
      </div>
      <div class="code">
@@ -205,11 +205,11 @@ NoneType:
        </a>
       </div>
       <p>
-       The _update function is called every 10 seconds when the bot is being run. It updates the lifetime stats of the account, and adds their current session’s stats to them.
+       The _update function is called every 10 seconds when the bot is being run. It updates the lifetime stats of the account, and adds their current sessionï¿½s stats to them.
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
       </p>
       <p>
        Returns:
@@ -276,7 +276,7 @@ It takes two arguments, command and coins. Command is the name of the command th
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 command (str): The command ran which was used to gain the coins
 coins (int): The amount of coins received from the command
       </p>
@@ -365,7 +365,7 @@ item is a string representing which item was gained (e.g.,
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 command (str): The command ran which was used to gain the item
 item (int): The item received from that command.
       </p>
@@ -451,7 +451,7 @@ False if the item is an empty string, has
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 command (str): The command to send
 token (Optional[sr]) = None: The token used the send the message (or None if it should be the token in self)
 latest_message (Optional[dict]) = None: Used if the message should reply to another message.
@@ -574,7 +574,7 @@ If Discord is ratelimiting the bot, it will sleep for
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 payload (dict): The webhook to be sent
 fallback_message (str): The message to be sent if there is an error sending the webhook (usually if missing permissions). This may be removed in future versions
       </p>
@@ -697,15 +697,15 @@ bool: Indicates whether the subprogram executed successfully or not
        token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)
       </p>
       <p>
-       check (bool): Whether or not this function should check for cooldowns and other restrictions in Dank Memer’s response before returning it as a dict. Defaults to True, which means it will check for these restrictions and return an error if they are detected; False means no checks will be performed on the response at all, allowing you more control over what is returned by this function without having to manually parse each message yourself.
+       check (bool): Whether or not this function should check for cooldowns and other restrictions in Dank Memerï¿½s response before returning it as a dict. Defaults to True, which means it will check for these restrictions and return an error if they are detected; False means no checks will be performed on the response at all, allowing you more control over what is returned by this function without having to manually parse each message yourself.
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 command (str): The command the latest message is being retreived for.
 token (Optional[str]) = None: The token used to retreive the message (or None if if it should be the token in self)
 check (bool) = True: Determine whether or not the function should check for restrictions in the response from Dank Memer
-old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck in an infinite loop or getting the wrong latest message if it can’t find a response to its request
+old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck in an infinite loop or getting the wrong latest message if it canï¿½t find a response to its request
       </p>
       <p>
        Returns:
@@ -947,20 +947,20 @@ The latest message in the channel
       </div>
       <p>
        The fallback_retreive_message function is a helper function that is used to retreive the latest message sent by Dank Memer from the Discord channel.
-It does this by making an API call to Discord’s servers, and then parsing through all of the messages in order to find one that matches our criteria.
+It does this by making an API call to Discordï¿½s servers, and then parsing through all of the messages in order to find one that matches our criteria.
 The criteria for this function is as follows:
       </p>
       <p>
-       1) The message must be sent by Dank Memer. This ensures we don’t get any false positives from other bots or users.
+       1) The message must be sent by Dank Memer. This ensures we donï¿½t get any false positives from other bots or users.
 2) The command must be referenced in the embed title field of said message (e.g.,
        <code>
         pls stream
        </code>
-       ). This ensures we don’t get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.
+       ). This ensures we donï¿½t get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 command (str): The command the latest message is being retreived for
       </p>
       <p>
@@ -1053,7 +1053,7 @@ The latest message sent by Dank Memer in the channel
        </a>
       </div>
       <p>
-       The interact_button function sends a POST request to the Discord API, which interacts with a button on Dank Memer’s response.
+       The interact_button function sends a POST request to the Discord API, which interacts with a button on Dank Memerï¿½s response.
       </p>
       <p>
        Parameters:
@@ -1062,7 +1062,7 @@ The latest message sent by Dank Memer in the channel
        command (str): The name of the command that was sent to Discord. This is used for logging purposes only.
       </p>
       <p>
-       custom_id (int): The ID of the button that should be interacted with on Dank Memer’s response message.
+       custom_id (int): The ID of the button that should be interacted with on Dank Memerï¿½s response message.
       </p>
       <p>
        latest_message (dict): The message the button to be interacted with is on.
@@ -1072,7 +1072,7 @@ The latest message sent by Dank Memer in the channel
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 command (str): The command is being interacted with
 custom_id (int): The ID of the button that should be interacted with
 latest_message (dict): The message the button to be interacted with is on.
@@ -1174,7 +1174,7 @@ Nothing
        </a>
       </div>
       <p>
-       The interact_dropdown function is used to interact with a dropdown menu on Dank Memer’s response to a command.
+       The interact_dropdown function is used to interact with a dropdown menu on Dank Memerï¿½s response to a command.
       </p>
       <p>
        Parameters:
@@ -1190,7 +1190,7 @@ Nothing
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 command (str): The command is being interacted with
 custom_id (int): The ID of the button that should be interacted with
 option_id (str): The ID of the dropdown that should be selected
@@ -1296,7 +1296,7 @@ although this can be changed
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 command (str): Specify which button to interact with
 index1 (int) = 0: Specify the index of the first component in a message
 index2 (int) = -1: Specify the index of the button in the message
@@ -1362,7 +1362,7 @@ None
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 level (str): The level of the log message
 text (str): The log message
       </p>
@@ -1430,7 +1430,7 @@ None
       </p>
       <p>
        Args:
-self: Gives access to the class’ attributes and methods.
+self: Gives access to the classï¿½ attributes and methods.
 payload (dict): The data to be sent to the webhook
       </p>
       <p>

@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1, minimum-scale=1" name="viewport">
    <meta content="pdoc 0.10.0" name="generator"/>
-   <link href="/docs/assets/img/favicon.png" rel="shortcut icon"/>
+   <link href="/grank/docs/assets/img/favicon.png" rel="shortcut icon"/>
    <title>
     src.scripts.beg API documentation
    </title>
@@ -74,8 +74,8 @@ def beg(Client: Instance) -&gt; bool:
     try:
         # Try and get the coins gained from the command
         coins = (
-            latest_message["embeds"][0]["description"].split("**")[1].replace("â£ ", "")
-            if "â£" in latest_message["embeds"][0]["description"]
+            latest_message["embeds"][0]["description"].split("**")[1].replace("ï¿½ ", "")
+            if "ï¿½" in latest_message["embeds"][0]["description"]
             else 0
         )
     except Exception:
@@ -199,8 +199,8 @@ def beg(Client: Instance) -&gt; bool:
     try:
         # Try and get the coins gained from the command
         coins = (
-            latest_message["embeds"][0]["description"].split("**")[1].replace("â£ ", "")
-            if "â£" in latest_message["embeds"][0]["description"]
+            latest_message["embeds"][0]["description"].split("**")[1].replace("ï¿½ ", "")
+            if "ï¿½" in latest_message["embeds"][0]["description"]
             else 0
         )
     except Exception:
