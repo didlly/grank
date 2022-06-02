@@ -49,7 +49,7 @@ def hunt(Client: Instance) -> bool:
                 latest_message,
             )
 
-            break
+            return True
 
     # If the account does not have a `hunting rifle`...
     if (
