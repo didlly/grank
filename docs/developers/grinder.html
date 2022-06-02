@@ -168,28 +168,26 @@ def grind(Client: Instance, log: bool = False) -&gt; Optional[bool]:
 
     while True:
         if Client.Repository.config["custom commands"]["enabled"]:
-            while True:
-                try:
-                    for key in Client.Repository.config["custom commands"]:
-                        if key == "enabled":
-                            continue
-                        if Client.Repository.config["custom commands"][key]["enabled"]:
-                            try:
-                                exec(
-                                    f"if (datetime.now() - datetime.strptime(Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'], '%Y-%m-%d %H:%M:%S.%f')).total_seconds() &gt; Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write(); sleep(Client.Repository.config['cooldowns']['commands']['value'] if Client.Repository.config['cooldowns']['commands']['enabled'] else 0.5)"
-                                )
-                            except KeyError:
-                                custom(Client, key)
+            try:
+                for key in Client.Repository.config["custom commands"]:
+                    if key == "enabled":
+                        continue
+                    if Client.Repository.config["custom commands"][key]["enabled"]:
+                        try:
+                            exec(
+                                f"if (datetime.now() - datetime.strptime(Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'], '%Y-%m-%d %H:%M:%S.%f')).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write(); if Client.Repository.config['cooldowns']['commands']['enabled']: sleep(Client.Repository.config['cooldowns']['commands']['value'])"
+                            )
+                        except KeyError:
+                            custom(Client, key)
 
-                                exec(
-                                    f"Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write()"
-                                )
-                    break
-                except Exception:
-                    Client.log(
-                        "WARNING",
-                        f"An unexpected error occured during the running of the custom commands: `{exc_info()}`.",
-                    )
+                            exec(
+                                f"Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write()"
+                            )
+            except Exception:
+                Client.log(
+                    "WARNING",
+                    f"An unexpected error occured during the running of the custom command `{key}`: `{exc_info()}`.",
+                )
 
         if (
             Client.Repository.config["commands"]["adventure"]
@@ -1081,28 +1079,26 @@ def grind(Client: Instance, log: bool = False) -&gt; Optional[bool]:
 
     while True:
         if Client.Repository.config["custom commands"]["enabled"]:
-            while True:
-                try:
-                    for key in Client.Repository.config["custom commands"]:
-                        if key == "enabled":
-                            continue
-                        if Client.Repository.config["custom commands"][key]["enabled"]:
-                            try:
-                                exec(
-                                    f"if (datetime.now() - datetime.strptime(Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'], '%Y-%m-%d %H:%M:%S.%f')).total_seconds() &gt; Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write(); sleep(Client.Repository.config['cooldowns']['commands']['value'] if Client.Repository.config['cooldowns']['commands']['enabled'] else 0.5)"
-                                )
-                            except KeyError:
-                                custom(Client, key)
+            try:
+                for key in Client.Repository.config["custom commands"]:
+                    if key == "enabled":
+                        continue
+                    if Client.Repository.config["custom commands"][key]["enabled"]:
+                        try:
+                            exec(
+                                f"if (datetime.now() - datetime.strptime(Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'], '%Y-%m-%d %H:%M:%S.%f')).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write(); if Client.Repository.config['cooldowns']['commands']['enabled']: sleep(Client.Repository.config['cooldowns']['commands']['value'])"
+                            )
+                        except KeyError:
+                            custom(Client, key)
 
-                                exec(
-                                    f"Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write()"
-                                )
-                    break
-                except Exception:
-                    Client.log(
-                        "WARNING",
-                        f"An unexpected error occured during the running of the custom commands: `{exc_info()}`.",
-                    )
+                            exec(
+                                f"Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write()"
+                            )
+            except Exception:
+                Client.log(
+                    "WARNING",
+                    f"An unexpected error occured during the running of the custom command `{key}`: `{exc_info()}`.",
+                )
 
         if (
             Client.Repository.config["commands"]["adventure"]
