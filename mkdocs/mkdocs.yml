@@ -1,5 +1,6 @@
 site_name: Grank
 site_url: https://didlly.github.io/
+repo_url: https://github.com/didlly/grank
 
 nav:
   - Home: index.md
@@ -7,4 +8,39 @@ nav:
   - Developer Documentation: /docs/developers
 
 theme:
-  name: readthedocs
+  name: material
+  logo: /grank/assets/img/favicon.png
+  favicon: /grank/assets/img/favicon.png
+
+  font:
+    text: Raleway
+
+  palette:
+    - media: "(prefers-color-scheme: light)" 
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+    - media: "(prefers-color-scheme: dark)" 
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/didlly/grank
+      name: Grank's GitHub
+
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/X3JMC9FAgy
+      name: Grank's Discord support server
+
+copyright: Copyright &copy; 2022 - Present by <a href="https://github.com/didlly">didlly</a>.
