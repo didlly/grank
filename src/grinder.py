@@ -125,7 +125,11 @@ def grind(Client: Instance, log: bool = False) -> Optional[bool]:
                     if Client.Repository.config["custom commands"][key]["enabled"]:
                         try:
                             exec(
-                                f"if (datetime.now() - datetime.strptime(Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'], '%Y-%m-%d %H:%M:%S.%f')).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write(); if Client.Repository.config['cooldowns']['commands']['enabled']: sleep(Client.Repository.config['cooldowns']['commands']['value'])"
+                                f"if (datetime.now() - datetime.strptime(Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'], '%Y-%m-%d %H:%M:%S.%f')).total_seconds() > Client.Repository.config['custom commands'][key]['cooldown']: custom(Client, key); Client.Repository.database['custom command cooldowns']['{key.replace(' ', '_')}'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S.%f'); Client.Repository.database_write()"
+                            )
+
+                            exec(
+                                f"if Client.Repository.config['cooldowns']['commands']['enabled']: sleep(Client.Repository.config['cooldowns']['commands']['value'])"
                             )
                         except KeyError:
                             custom(Client, key)

@@ -27,12 +27,7 @@ def hunt(Client: Instance) -> bool:
 
         while True:
             # ...get the level the fireball is on
-            level = (
-                latest_message["content"]
-                .split("\n")[2]
-                .rstrip()
-                .count("       ")
-            )
+            level = latest_message["content"].split("\n")[2].rstrip().count("       ")
 
             # If the fireball is on level 1 (i.e, it is blocking the path to the dragon)...
             if level == 1:
