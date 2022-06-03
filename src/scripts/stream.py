@@ -35,7 +35,7 @@ def stream(Client: Instance) -> bool:
         )
 
     # If the response has a `description` section in the embed...
-    if "description" in latest_message["embeds"][0].keys():
+    if "description" in latest_message["embeds"][0]:
         # ...if the `description` section has `keyboard` in it...
         if "keyboard" in latest_message["embeds"][0]["description"].lower():
             # ...if the account does not have a `keyboard`...
@@ -92,7 +92,7 @@ def stream(Client: Instance) -> bool:
     # If there are three buttons on Dank Memer's response...
     if len(latest_message["components"][0]["components"]) == 3:
         # ...if the response has a `footer` section in the embed...
-        if "footer" in latest_message["embeds"][0].keys():
+        if "footer" in latest_message["embeds"][0]:
             # ...if the `footer` section has `Wait` in it's text section...
             if "Wait" in latest_message["embeds"][0]["footer"]["text"]:
                 Client.log("DEBUG", "Cannot stream yet - awaiting cooldown end.")
@@ -140,7 +140,7 @@ def stream(Client: Instance) -> bool:
     )
 
     # If the wrong latest message was retreived...
-    if "fields" not in latest_message["embeds"][0].keys():
+    if "fields" not in latest_message["embeds"][0]:
         # ...get the correct latest message
         latest_message = Client.fallback_retreive_message("pls stream")
     elif len(latest_message["embeds"][0]["fields"]) != 6:

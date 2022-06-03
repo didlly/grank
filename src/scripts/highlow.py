@@ -19,7 +19,7 @@ def highlow(Client: Instance) -> bool:
     latest_message = Client.retreive_message("pls highlow")
 
     # If the wrong latest message was retreived...
-    if "description" not in latest_message["embeds"][0].keys():
+    if "description" not in latest_message["embeds"][0]:
         # ...get the correct latest message
         latest_message = Client.fallback_retreive_message("pls highlow")
     elif (

@@ -326,7 +326,7 @@ def dumps(data: dict, indent="") -> str:
     yaml = ""
 
     # For each key in the yaml dictionary...
-    for key in data.keys():
+    for key in data:
         # ...if the key's value is a dictionary...
         if type(data[key]) == dict:
             # ...add a subcategory to the yaml

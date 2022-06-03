@@ -302,7 +302,7 @@ def verify_database(
                 return False
 
     # For each key in the database...
-    for key in database_template.keys():
+    for key in database_template:
         try:
             # ...if the value of the key is a dictionary...
             if type(database_template[key]) == dict:
@@ -316,7 +316,7 @@ def verify_database(
             # If the value is not in the database, a KeyError would be raised, which is caught here, and the program will return False
             return False
 
-        if key not in database.keys():
+        if key not in database:
             return False
 
     # No errors were raised, so return True
@@ -381,7 +381,7 @@ def verify_info(
             return False
 
     # If the `stats` key is found...
-    if "stats" in info.keys():
+    if "stats" in info:
         # If the `commands_ran` or `buttons_clicked` or `dropdowns_selected` or `coins_gained` or `items_gained` key is not found in the subdict `stats`...
         if (
             "commands_ran" not in info["stats"].keys()

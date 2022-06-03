@@ -32,37 +32,44 @@ def search(Client: Instance) -> bool:
     # Else...
     else:
         # Get a list of all the possible places
-        places = [button["label"].lower().replace("'", "") for button in latest_message["components"][0]["components"]]
-        
+        places = [
+            button["label"].lower().replace("'", "")
+            for button in latest_message["components"][0]["components"]
+        ]
+
         # Initialize custom_id as None
         custom_id = None
-        
+
         # For each key in the list of preferred search places...
         for key in Client.Repository.config["search"]["preferences"]:
             # If the key is not enabled...
             if not Client.Repository.config["search"]["preferences"][key]:
                 # ...continue to the next iteration of the for loop
                 continue
-            
+
             # For each place that can be chosen...
             for index, place in enumerate(places):
                 # ...if the key, in lowercase, is in the place that can be chosen...
                 if key.lower() in place:
                     # Choose that place to interact with
-                    custom_id = latest_message["components"][0]["components"][index]["custom_id"]
-                    
+                    custom_id = latest_message["components"][0]["components"][index][
+                        "custom_id"
+                    ]
+
                     # Break out of the places for loop
                     break
-                
+
             # If a button has been chosen...
             if custom_id is not None:
                 # ...break out of the keys for loop
                 break
-            
+
         # If a button hasn't been chosen...
         if custom_id is None:
             # Choose a random button to interact with
-            custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
+            custom_id = choice(latest_message["components"][0]["components"])[
+                "custom_id"
+            ]
 
     # Interacts with the chosen button, or a random one if one hasn't been chosen
     Client.interact_button(

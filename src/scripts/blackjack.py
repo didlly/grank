@@ -45,7 +45,7 @@ def blackjack(Client: Instance) -> bool:
 
     while True:
         # If the game has ended...
-        if "description" in latest_message["embeds"][0].keys():
+        if "description" in latest_message["embeds"][0]:
             # ...if the dealer one...
             if (
                 "You lost" in latest_message["embeds"][0]["description"]

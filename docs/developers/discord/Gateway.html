@@ -30,6 +30,7 @@
 <pre><code class="python">from copy import copy
 from datetime import datetime, timedelta
 from json import dumps, load, loads
+from json.decoder import JSONDecodeError
 from platform import python_version
 from sys import exc_info
 from threading import Thread
@@ -2685,7 +2686,7 @@ def event_handler(Client, ws, event: dict, restarted: bool) -&gt; None:
                                     and len(args.variables) == 0
                                     and len(args.flags) == 0
                                 ):
-                                    for key in Client.Repository.config.keys():
+                                    for key in Client.Repository.config:
                                         Client.webhook_send(
                                             {
                                                 &#34;embeds&#34;: [
@@ -2967,7 +2968,7 @@ def event_handler(Client, ws, event: dict, restarted: bool) -&gt; None:
                                     Thread(
                                         target=receive_trade, args=[Client, event[&#34;d&#34;]]
                                     ).start()
-                            if &#34;description&#34; in event[&#34;d&#34;][&#34;embeds&#34;][0].keys():
+                            if &#34;description&#34; in event[&#34;d&#34;][&#34;embeds&#34;][0]:
                                 if (
                                     &#34;They&#39;re trying to break into&#34;
                                     in event[&#34;d&#34;][&#34;embeds&#34;][0][&#34;description&#34;]
@@ -5734,7 +5735,7 @@ Then, the function will send "p" to call the police and avert the heist</p>
                                     and len(args.variables) == 0
                                     and len(args.flags) == 0
                                 ):
-                                    for key in Client.Repository.config.keys():
+                                    for key in Client.Repository.config:
                                         Client.webhook_send(
                                             {
                                                 &#34;embeds&#34;: [
@@ -6016,7 +6017,7 @@ Then, the function will send "p" to call the police and avert the heist</p>
                                     Thread(
                                         target=receive_trade, args=[Client, event[&#34;d&#34;]]
                                     ).start()
-                            if &#34;description&#34; in event[&#34;d&#34;][&#34;embeds&#34;][0].keys():
+                            if &#34;description&#34; in event[&#34;d&#34;][&#34;embeds&#34;][0]:
                                 if (
                                     &#34;They&#39;re trying to break into&#34;
                                     in event[&#34;d&#34;][&#34;embeds&#34;][0][&#34;description&#34;]
@@ -6073,11 +6074,11 @@ Then, the function will send "p" to call the police and avert the heist</p>
                     == data[&#34;channels&#34;][event[&#34;d&#34;][&#34;channel_id&#34;]][&#34;message&#34;][&#34;id&#34;]
                 ):
                     data[&#34;channels&#34;][event[&#34;d&#34;][&#34;channel_id&#34;]][&#34;message&#34;] = event[&#34;d&#34;]
-        except WebSocketConnectionClosedException:
+        except (WebSocketConnectionClosedException, JSONDecodeError):
             Thread(target=gateway, args=[Client, True]).start()
             return
         except Exception:
-            Client.log(f&#34;An unepected error occured while processing the event {event[&#39;d&#39;]}: `{exc_info()}`.&#34;)</code></pre>
+            Client.log("WARNING", f&#34;An unepected error occured while processing the event {event[&#39;d&#39;]}: `{exc_info()}`.&#34;)</code></pre>
 </details>
 </dd>
 <dt id="src.discord.Gateway.gateway"><code class="name flex">

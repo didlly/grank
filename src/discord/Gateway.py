@@ -1,6 +1,7 @@
 from copy import copy
 from datetime import datetime, timedelta
 from json import dumps, load, loads
+from json.decoder import JSONDecodeError
 from platform import python_version
 from sys import exc_info
 from threading import Thread
@@ -560,7 +561,7 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
     Returns:
         None
     """
-    
+
     while True:
         try:
             sleep(heartbeat_interval)
@@ -572,7 +573,7 @@ def send_heartbeat(ws, heartbeat_interval: int) -> None:
 def event_handler(Client, ws, event: dict, restarted: bool) -> None:
     Client.session_id = event["d"]["sessions"][0]["session_id"]
     heist = False
-        
+
     if not restarted:
         if Client.Repository.config["shifts"]["enabled"]:
             data[Client.username] = False
@@ -600,10 +601,12 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                 "avatar_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&usqp=CAU",
             }
         )
-        
+
         if Client.Repository.config["auto start"]["enabled"]:
             try:
-                Client.channel_id = str(Client.Repository.config["auto start"]["channel"])
+                Client.channel_id = str(
+                    Client.Repository.config["auto start"]["channel"]
+                )
                 Client.guild_id = guild_id(Client)
 
                 if Client.guild_id == False:
@@ -649,7 +652,7 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                     "ERROR",
                     f"Autostart channel ID  (`{Client.Repository.config['auto start']['channel']}`) is invalid.",
                 )
-                
+
         Client.log("DEBUG", "Ready to receive commands.")
 
     while True:
@@ -846,7 +849,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                                         f"**`{key}`**: **`{Client.Repository.info['stats']['items_gained'][key]}`**"
                                                         for key in Client.Repository.info[
                                                             "stats"
-                                                        ]["items_gained"]
+                                                        ][
+                                                            "items_gained"
+                                                        ]
                                                     ),
                                                 },
                                             ],
@@ -1041,9 +1046,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                             f"The blacklisted server option **was successfully set to `True`**.",
                                         )
                                 elif "disable" in args.subcommand:
-                                    if not Client.Repository.config["blacklisted servers"][
-                                        "enabled"
-                                    ]:
+                                    if not Client.Repository.config[
+                                        "blacklisted servers"
+                                    ]["enabled"]:
                                         Client.webhook_send(
                                             {
                                                 "embeds": [
@@ -1148,9 +1153,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                                 "blacklisted servers"
                                             ]["servers"]
                                         ):
-                                            Client.Repository.config["blacklisted servers"][
-                                                "servers"
-                                            ].remove(args.subcommand[-1])
+                                            Client.Repository.config[
+                                                "blacklisted servers"
+                                            ]["servers"].remove(args.subcommand[-1])
                                             Client.Repository.config_write()
 
                                             Client.webhook_send(
@@ -1240,9 +1245,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                                 {
                                                     "title": f"`{shift}`",
                                                     "description": "Enabled"
-                                                    if Client.Repository.config["shifts"][
-                                                        shift
-                                                    ]["enabled"]
+                                                    if Client.Repository.config[
+                                                        "shifts"
+                                                    ][shift]["enabled"]
                                                     else "Disabled",
                                                     "fields": [
                                                         {
@@ -1355,7 +1360,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                             f"The shifts option is **already disabled**.",
                                         )
                                     else:
-                                        Client.Repository.config["shifts"]["enabled"] = True
+                                        Client.Repository.config["shifts"][
+                                            "enabled"
+                                        ] = True
                                         Client.Repository.config_write()
 
                                         Client.webhook_send(
@@ -1378,7 +1385,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                             f"The shifts option **was successfully set to `True`**.",
                                         )
                                 elif "disable" in args.subcommand:
-                                    if not Client.Repository.config["shifts"]["enabled"]:
+                                    if not Client.Repository.config["shifts"][
+                                        "enabled"
+                                    ]:
                                         Client.webhook_send(
                                             {
                                                 "embeds": [
@@ -1426,7 +1435,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                 elif "add" in args.subcommand:
                                     if len(args.subcommand) == 4:
                                         try:
-                                            _ = [int(arg) for arg in args.subcommand[2:]]
+                                            _ = [
+                                                int(arg) for arg in args.subcommand[2:]
+                                            ]
 
                                             num = (
                                                 max(
@@ -1527,16 +1538,22 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                             remove
                                             in Client.Repository.config["shifts"].keys()
                                         ):
-                                            del Client.Repository.config["shifts"][remove]
+                                            del Client.Repository.config["shifts"][
+                                                remove
+                                            ]
                                             shift = 1
 
                                             for num in list(
-                                                Client.Repository.config["shifts"].keys()
+                                                Client.Repository.config[
+                                                    "shifts"
+                                                ].keys()
                                             )[1:]:
-                                                temp = Client.Repository.config["shifts"][
+                                                temp = Client.Repository.config[
+                                                    "shifts"
+                                                ][num]
+                                                del Client.Repository.config["shifts"][
                                                     num
                                                 ]
-                                                del Client.Repository.config["shifts"][num]
                                                 Client.Repository.config["shifts"][
                                                     shift
                                                 ] = temp
@@ -1608,7 +1625,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                     and len(args.variables) == 0
                                     and len(args.flags) == 0
                                 ):
-                                    if Client.Repository.config["auto start"]["enabled"]:
+                                    if Client.Repository.config["auto start"][
+                                        "enabled"
+                                    ]:
                                         embed = {
                                             "content": "**Auto start channel** for this account.",
                                             "embeds": [
@@ -1696,7 +1715,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                         f"Help for the command **`channels`**. This command is used to modify the auto start channels for this account. auto start channels are saved in the config file, and so are remembered even if you close Grank.\n\n__**Commands:**__\n```yaml\nchannels: Shows a list of all the auto start channels for this account.\nchannels add 0: Adds the channel with the ID of 0 to the list of auto start channels.\nRemoves the channel with the ID of 0 from the list of auto start channels.\n```",
                                     )
                                 elif "enable" in args.subcommand:
-                                    if Client.Repository.config["auto start"]["enabled"]:
+                                    if Client.Repository.config["auto start"][
+                                        "enabled"
+                                    ]:
                                         Client.webhook_send(
                                             {
                                                 "embeds": [
@@ -1840,10 +1861,12 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                             f"IDs contain **only numbers**. The ID you provided contained **other characters**.",
                                         )
                                 elif "remove" in args.subcommand:
-                                    old_channel_id = Client.Repository.config["auto start"][
+                                    old_channel_id = Client.Repository.config[
+                                        "auto start"
+                                    ]["channel"]
+                                    Client.Repository.config["auto start"][
                                         "channel"
-                                    ]
-                                    Client.Repository.config["auto start"]["channel"] = 0
+                                    ] = 0
                                     Client.Repository.config_write()
 
                                     Client.webhook_send(
@@ -2106,7 +2129,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                             },
                                             f"The custom command you provided was not found.",
                                         )
-                            elif args.command == "controllers" or args.command == "cont":
+                            elif (
+                                args.command == "controllers" or args.command == "cont"
+                            ):
                                 if (
                                     len(args.subcommand) == 0
                                     and len(args.variables) == 0
@@ -2216,7 +2241,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                             "controllers_info"
                                         ][args.subcommand[-1]]
 
-                                        info = user_info(Client.token, args.subcommand[-1])
+                                        info = user_info(
+                                            Client.token, args.subcommand[-1]
+                                        )
                                         adder_info = user_info(
                                             Client.token, controller_info["added_by"]
                                         )
@@ -2256,7 +2283,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                             "attachments": [],
                                         }
 
-                                        for command in controller_info["commands"][::-1]:
+                                        for command in controller_info["commands"][
+                                            ::-1
+                                        ]:
                                             commands += f"\n{datetime.utcfromtimestamp(command[0]).strftime('%Y-%m-%d %H:%M:%S')}: {command[-1]}"
                                             embed["embeds"][-1]["fields"].append(
                                                 {
@@ -2304,9 +2333,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                         args.subcommand[-1]
                                         in Client.Repository.controllers["controllers"]
                                     ):
-                                        Client.Repository.controllers["controllers_info"][
-                                            args.subcommand[-1]
-                                        ]["commands"] = []
+                                        Client.Repository.controllers[
+                                            "controllers_info"
+                                        ][args.subcommand[-1]]["commands"] = []
                                         Client.Repository.controllers_write()
 
                                         Client.webhook_send(
@@ -2406,7 +2435,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                         )
                                 elif "remove" in args.subcommand:
                                     output = Client.Repository.database_handler(
-                                        "write", "controller remove", args.subcommand[-1]
+                                        "write",
+                                        "controller remove",
+                                        args.subcommand[-1],
                                     )
 
                                     if not output[0]:
@@ -2656,7 +2687,7 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                     and len(args.variables) == 0
                                     and len(args.flags) == 0
                                 ):
-                                    for key in Client.Repository.config.keys():
+                                    for key in Client.Repository.config:
                                         Client.webhook_send(
                                             {
                                                 "embeds": [
@@ -2664,7 +2695,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                                         "title": key,
                                                         "description": ""
                                                         if type(
-                                                            Client.Repository.config[key]
+                                                            Client.Repository.config[
+                                                                key
+                                                            ]
                                                         )
                                                         == dict
                                                         else f"`{Client.Repository.config[key]}`",
@@ -2678,7 +2711,9 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                                             ].keys()
                                                         ]
                                                         if type(
-                                                            Client.Repository.config[key]
+                                                            Client.Repository.config[
+                                                                key
+                                                            ]
                                                         )
                                                         == dict
                                                         else None,
@@ -2808,7 +2843,8 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                             )
                                     else:
                                         args.variables = [
-                                            arg.replace("_", " ") for arg in args.variables
+                                            arg.replace("_", " ")
+                                            for arg in args.variables
                                         ]
 
                                         try:
@@ -2857,8 +2893,11 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                                 f"Configuration key **`{'.'.join(arg[2:][:-2] for arg in args.variables)}` **was **not found**.",
                                             )
                         except Exception:
-                            Client.log("WARNING", f"An unexpected error occured while executing the command `{event['d']['content']}` from {event['d']['author']['username']}#{event['d']['author']['discriminator']}: `{exc_info()}`.")
-                            
+                            Client.log(
+                                "WARNING",
+                                f"An unexpected error occured while executing the command `{event['d']['content']}` from {event['d']['author']['username']}#{event['d']['author']['discriminator']}: `{exc_info()}`.",
+                            )
+
                             Client.webhook_send(
                                 {
                                     "embeds": [
@@ -2938,7 +2977,7 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                                     Thread(
                                         target=receive_trade, args=[Client, event["d"]]
                                     ).start()
-                            if "description" in event["d"]["embeds"][0].keys():
+                            if "description" in event["d"]["embeds"][0]:
                                 if (
                                     "They're trying to break into"
                                     in event["d"]["embeds"][0]["description"]
@@ -2995,11 +3034,14 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                     == data["channels"][event["d"]["channel_id"]]["message"]["id"]
                 ):
                     data["channels"][event["d"]["channel_id"]]["message"] = event["d"]
-        except WebSocketConnectionClosedException:
+        except (WebSocketConnectionClosedException, JSONDecodeError):
             Thread(target=gateway, args=[Client, True]).start()
             return
         except Exception:
-            Client.log(f"An unepected error occured while processing the event {event['d']}: `{exc_info()}`.")
+            Client.log(
+                "WARNING",
+                f"An unepected error occured while processing the event {event['d']}: `{exc_info()}`."
+            )
 
 
 def gateway(Client: Union[Instance, str], restarted: bool = False) -> str:

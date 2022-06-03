@@ -23,7 +23,7 @@ def merge(dict1: dict, dict2: dict) -> dict:
             # ...set the key in merged to a recursive call of merge()
             merged[key] = merge(dict1[key] if key in dict1 else {}, dict2[key])
         # ...else if the key isn't in dict1......
-        elif key not in dict1.keys():
+        elif key not in dict1:
             # ...set the key in merged to the key in dict2
             merged[key] = dict2[key]
 
@@ -53,7 +53,7 @@ def combine(dict1: dict, dict2: dict) -> dict:
             # ...set the key in combined to a recursive call of combine()
             combined[key] = combine(dict1[key], dict2[key])
         # ...else if the key is in dict1...
-        elif key in dict1.keys():
+        elif key in dict1:
             # ...suppress a TypeError...
             with suppress(TypeError):
                 # ...and set add the key's value in dict2 to th key's value in combined

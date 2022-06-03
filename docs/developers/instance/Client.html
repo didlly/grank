@@ -324,7 +324,7 @@ class Instance(object):
             self.send_message(fallback_message)
             return True
 
-        if &#34;embeds&#34; in payload.keys():
+        if &#34;embeds&#34; in payload:
             payload[&#34;embeds&#34;][-1][&#34;footer&#34;] = {
                 &#34;text&#34;: &#34;Bot made by didlly#0302 - https://www.github.com/didlly&#34;,
                 &#34;icon_url&#34;: &#34;https://avatars.githubusercontent.com/u/94558954&#34;,
@@ -431,7 +431,7 @@ class Instance(object):
                     sleep(self.Repository.config[&#34;settings&#34;][&#34;timeout&#34;] / 10)
                     continue
 
-                if &#34;referenced_message&#34; in latest_message.keys():
+                if &#34;referenced_message&#34; in latest_message:
                     if latest_message[&#34;referenced_message&#34;] != None:
                         if (
                             latest_message[&#34;referenced_message&#34;][&#34;author&#34;][&#34;id&#34;]
@@ -470,7 +470,7 @@ class Instance(object):
                 )
 
             elif len(latest_message[&#34;embeds&#34;]) &gt; 0:
-                if &#34;description&#34; not in latest_message[&#34;embeds&#34;][0].keys():
+                if &#34;description&#34; not in latest_message[&#34;embeds&#34;][0]:
                     break
 
                 if (
@@ -641,7 +641,7 @@ class Instance(object):
             ):
                 continue
 
-            if &#34;referenced_message&#34; in latest_message.keys():
+            if &#34;referenced_message&#34; in latest_message:
                 if (
                     latest_message[&#34;referenced_message&#34;][&#34;author&#34;][&#34;id&#34;] != self.id
                     or latest_message[&#34;referenced_message&#34;][&#34;content&#34;] != command
@@ -659,7 +659,7 @@ class Instance(object):
                 )
 
             if len(latest_message[&#34;embeds&#34;]) &gt; 0:
-                if &#34;description&#34; in latest_message[&#34;embeds&#34;][0].keys():
+                if &#34;description&#34; in latest_message[&#34;embeds&#34;][0]:
                     if (
                         &#34;The default cooldown is&#34;
                         in latest_message[&#34;embeds&#34;][0][&#34;description&#34;]
@@ -903,7 +903,7 @@ class Instance(object):
             None
         &#34;&#34;&#34;
 
-        if &#34;Repository&#34; in self.__dict__.keys():
+        if &#34;Repository&#34; in self.__dict__:
             if level == &#34;DEBUG&#34; and not self.Repository.config[&#34;logging&#34;][&#34;debug&#34;]:
                 return
             elif (
@@ -1287,7 +1287,7 @@ It initializes the attributes of the class.</p>
             self.send_message(fallback_message)
             return True
 
-        if &#34;embeds&#34; in payload.keys():
+        if &#34;embeds&#34; in payload:
             payload[&#34;embeds&#34;][-1][&#34;footer&#34;] = {
                 &#34;text&#34;: &#34;Bot made by didlly#0302 - https://www.github.com/didlly&#34;,
                 &#34;icon_url&#34;: &#34;https://avatars.githubusercontent.com/u/94558954&#34;,
@@ -1394,7 +1394,7 @@ It initializes the attributes of the class.</p>
                     sleep(self.Repository.config[&#34;settings&#34;][&#34;timeout&#34;] / 10)
                     continue
 
-                if &#34;referenced_message&#34; in latest_message.keys():
+                if &#34;referenced_message&#34; in latest_message:
                     if latest_message[&#34;referenced_message&#34;] != None:
                         if (
                             latest_message[&#34;referenced_message&#34;][&#34;author&#34;][&#34;id&#34;]
@@ -1433,7 +1433,7 @@ It initializes the attributes of the class.</p>
                 )
 
             elif len(latest_message[&#34;embeds&#34;]) &gt; 0:
-                if &#34;description&#34; not in latest_message[&#34;embeds&#34;][0].keys():
+                if &#34;description&#34; not in latest_message[&#34;embeds&#34;][0]:
                     break
 
                 if (
@@ -1604,7 +1604,7 @@ It initializes the attributes of the class.</p>
             ):
                 continue
 
-            if &#34;referenced_message&#34; in latest_message.keys():
+            if &#34;referenced_message&#34; in latest_message:
                 if (
                     latest_message[&#34;referenced_message&#34;][&#34;author&#34;][&#34;id&#34;] != self.id
                     or latest_message[&#34;referenced_message&#34;][&#34;content&#34;] != command
@@ -1622,7 +1622,7 @@ It initializes the attributes of the class.</p>
                 )
 
             if len(latest_message[&#34;embeds&#34;]) &gt; 0:
-                if &#34;description&#34; in latest_message[&#34;embeds&#34;][0].keys():
+                if &#34;description&#34; in latest_message[&#34;embeds&#34;][0]:
                     if (
                         &#34;The default cooldown is&#34;
                         in latest_message[&#34;embeds&#34;][0][&#34;description&#34;]
@@ -1866,7 +1866,7 @@ It initializes the attributes of the class.</p>
             None
         &#34;&#34;&#34;
 
-        if &#34;Repository&#34; in self.__dict__.keys():
+        if &#34;Repository&#34; in self.__dict__:
             if level == &#34;DEBUG&#34; and not self.Repository.config[&#34;logging&#34;][&#34;debug&#34;]:
                 return
             elif (
@@ -2053,7 +2053,7 @@ The criteria for this function is as follows:</p>
         ):
             continue
 
-        if &#34;referenced_message&#34; in latest_message.keys():
+        if &#34;referenced_message&#34; in latest_message:
             if (
                 latest_message[&#34;referenced_message&#34;][&#34;author&#34;][&#34;id&#34;] != self.id
                 or latest_message[&#34;referenced_message&#34;][&#34;content&#34;] != command
@@ -2071,7 +2071,7 @@ The criteria for this function is as follows:</p>
             )
 
         if len(latest_message[&#34;embeds&#34;]) &gt; 0:
-            if &#34;description&#34; in latest_message[&#34;embeds&#34;][0].keys():
+            if &#34;description&#34; in latest_message[&#34;embeds&#34;][0]:
                 if (
                     &#34;The default cooldown is&#34;
                     in latest_message[&#34;embeds&#34;][0][&#34;description&#34;]
@@ -2357,7 +2357,7 @@ session_id (Optional[str]) = None: The sesion id of the account that is interact
         None
     &#34;&#34;&#34;
 
-    if &#34;Repository&#34; in self.__dict__.keys():
+    if &#34;Repository&#34; in self.__dict__:
         if level == &#34;DEBUG&#34; and not self.Repository.config[&#34;logging&#34;][&#34;debug&#34;]:
             return
         elif (
@@ -2454,7 +2454,7 @@ old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck i
                 sleep(self.Repository.config[&#34;settings&#34;][&#34;timeout&#34;] / 10)
                 continue
 
-            if &#34;referenced_message&#34; in latest_message.keys():
+            if &#34;referenced_message&#34; in latest_message:
                 if latest_message[&#34;referenced_message&#34;] != None:
                     if (
                         latest_message[&#34;referenced_message&#34;][&#34;author&#34;][&#34;id&#34;]
@@ -2493,7 +2493,7 @@ old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck i
             )
 
         elif len(latest_message[&#34;embeds&#34;]) &gt; 0:
-            if &#34;description&#34; not in latest_message[&#34;embeds&#34;][0].keys():
+            if &#34;description&#34; not in latest_message[&#34;embeds&#34;][0]:
                 break
 
             if (
@@ -2862,7 +2862,7 @@ If Discord is ratelimiting the bot, it will sleep for <code>req.content['retry_a
         self.send_message(fallback_message)
         return True
 
-    if &#34;embeds&#34; in payload.keys():
+    if &#34;embeds&#34; in payload:
         payload[&#34;embeds&#34;][-1][&#34;footer&#34;] = {
             &#34;text&#34;: &#34;Bot made by didlly#0302 - https://www.github.com/didlly&#34;,
             &#34;icon_url&#34;: &#34;https://avatars.githubusercontent.com/u/94558954&#34;,

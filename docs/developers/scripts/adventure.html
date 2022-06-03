@@ -54,7 +54,7 @@ def adventure(Client: Instance) -&gt; bool:
     latest_message = Client.retreive_message(&#34;pls adv&#34;)
 
     # If the response has a `description` section in the embed...
-    if &#34;description&#34; in latest_message[&#34;embeds&#34;][0].keys():
+    if &#34;description&#34; in latest_message[&#34;embeds&#34;][0]:
         # ...if the adventure has ended
         if (
             &#34;You reached the end of your adventure!&#34;
@@ -132,13 +132,13 @@ def adventure(Client: Instance) -&gt; bool:
             return False
 
     # If the response has an `author` section in the embed...
-    if &#34;author&#34; in latest_message[&#34;embeds&#34;][0].keys():
+    if &#34;author&#34; in latest_message[&#34;embeds&#34;][0]:
         # ...if a new adventure has to be started...
         if &#34;Choose an Adventure&#34; in latest_message[&#34;embeds&#34;][0][&#34;author&#34;][&#34;name&#34;]:
             Client.log(&#34;DEBUG&#34;, &#34;Starting new adventure.&#34;)
 
             # ...if the account does not have an `adventure ticket`...
-            if &#34;footer&#34; in latest_message[&#34;embeds&#34;][0].keys():
+            if &#34;footer&#34; in latest_message[&#34;embeds&#34;][0]:
                 Client.log(
                     &#34;DEBUG&#34;,
                     &#34;Account does not have item `adventure ticket`. Buying adventure ticket now.&#34;,
@@ -351,7 +351,7 @@ If the cooldown period hasn't ended, it will return False</p>
     latest_message = Client.retreive_message(&#34;pls adv&#34;)
 
     # If the response has a `description` section in the embed...
-    if &#34;description&#34; in latest_message[&#34;embeds&#34;][0].keys():
+    if &#34;description&#34; in latest_message[&#34;embeds&#34;][0]:
         # ...if the adventure has ended
         if (
             &#34;You reached the end of your adventure!&#34;
@@ -429,13 +429,13 @@ If the cooldown period hasn't ended, it will return False</p>
             return False
 
     # If the response has an `author` section in the embed...
-    if &#34;author&#34; in latest_message[&#34;embeds&#34;][0].keys():
+    if &#34;author&#34; in latest_message[&#34;embeds&#34;][0]:
         # ...if a new adventure has to be started...
         if &#34;Choose an Adventure&#34; in latest_message[&#34;embeds&#34;][0][&#34;author&#34;][&#34;name&#34;]:
             Client.log(&#34;DEBUG&#34;, &#34;Starting new adventure.&#34;)
 
             # ...if the account does not have an `adventure ticket`...
-            if &#34;footer&#34; in latest_message[&#34;embeds&#34;][0].keys():
+            if &#34;footer&#34; in latest_message[&#34;embeds&#34;][0]:
                 Client.log(
                     &#34;DEBUG&#34;,
                     &#34;Account does not have item `adventure ticket`. Buying adventure ticket now.&#34;,

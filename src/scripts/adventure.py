@@ -25,7 +25,7 @@ def adventure(Client: Instance) -> bool:
     latest_message = Client.retreive_message("pls adv")
 
     # If the response has a `description` section in the embed...
-    if "description" in latest_message["embeds"][0].keys():
+    if "description" in latest_message["embeds"][0]:
         # ...if the adventure has ended
         if (
             "You reached the end of your adventure!"
@@ -75,7 +75,7 @@ def adventure(Client: Instance) -> bool:
 
             # Update the coins gained
             Client._update_coins("pls adv", coins)
-            
+
             # For each item gained...
             for item in found.split(", "):
                 # ...update the items gained
@@ -103,13 +103,13 @@ def adventure(Client: Instance) -> bool:
             return False
 
     # If the response has an `author` section in the embed...
-    if "author" in latest_message["embeds"][0].keys():
+    if "author" in latest_message["embeds"][0]:
         # ...if a new adventure has to be started...
         if "Choose an Adventure" in latest_message["embeds"][0]["author"]["name"]:
             Client.log("DEBUG", "Starting new adventure.")
 
             # ...if the account does not have an `adventure ticket`...
-            if "footer" in latest_message["embeds"][0].keys():
+            if "footer" in latest_message["embeds"][0]:
                 Client.log(
                     "DEBUG",
                     "Account does not have item `adventure ticket`. Buying adventure ticket now.",

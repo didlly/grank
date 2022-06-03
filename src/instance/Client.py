@@ -151,13 +151,17 @@ class Instance(object):
 
         item = item.lower()
 
-        if item in [
-            "",
-            "no items",
-            "your immune system is under attack from covid-19",
-            "skype is trying to beat discord again!",
-            "the shop sale just started!"
-        ]  or "answered first" in item:
+        if (
+            item
+            in [
+                "",
+                "no items",
+                "your immune system is under attack from covid-19",
+                "skype is trying to beat discord again!",
+                "the shop sale just started!",
+            ]
+            or "answered first" in item
+        ):
             return False
 
         if item.count(" ") > 2:
@@ -295,7 +299,7 @@ class Instance(object):
             self.send_message(fallback_message)
             return True
 
-        if "embeds" in payload.keys():
+        if "embeds" in payload:
             payload["embeds"][-1]["footer"] = {
                 "text": "Bot made by didlly#0302 - https://www.github.com/didlly",
                 "icon_url": "https://avatars.githubusercontent.com/u/94558954",
@@ -307,7 +311,7 @@ class Instance(object):
             if "token" in req.content[0]:
                 token = req.content[0]["token"]
                 channel_id = req.content[0]["id"]
-            
+
         if token is None:
             req = request(
                 f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
@@ -402,7 +406,7 @@ class Instance(object):
                     sleep(self.Repository.config["settings"]["timeout"] / 10)
                     continue
 
-                if "referenced_message" in latest_message.keys():
+                if "referenced_message" in latest_message:
                     if latest_message["referenced_message"] != None:
                         if (
                             latest_message["referenced_message"]["author"]["id"]
@@ -441,7 +445,7 @@ class Instance(object):
                 )
 
             elif len(latest_message["embeds"]) > 0:
-                if "description" not in latest_message["embeds"][0].keys():
+                if "description" not in latest_message["embeds"][0]:
                     break
 
                 if (
@@ -612,7 +616,7 @@ class Instance(object):
             ):
                 continue
 
-            if "referenced_message" in latest_message.keys():
+            if "referenced_message" in latest_message:
                 if (
                     latest_message["referenced_message"]["author"]["id"] != self.id
                     or latest_message["referenced_message"]["content"] != command
@@ -630,7 +634,7 @@ class Instance(object):
                 )
 
             if len(latest_message["embeds"]) > 0:
-                if "description" in latest_message["embeds"][0].keys():
+                if "description" in latest_message["embeds"][0]:
                     if (
                         "The default cooldown is"
                         in latest_message["embeds"][0]["description"]
@@ -874,7 +878,7 @@ class Instance(object):
             None
         """
 
-        if "Repository" in self.__dict__.keys():
+        if "Repository" in self.__dict__:
             if level == "DEBUG" and not self.Repository.config["logging"]["debug"]:
                 return
             elif (

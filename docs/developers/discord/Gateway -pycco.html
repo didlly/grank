@@ -24,6 +24,7 @@
       <div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">copy</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 <span class="kn">from</span> <span class="nn">json</span> <span class="kn">import</span> <span class="n">dumps</span><span class="p">,</span> <span class="n">load</span><span class="p">,</span> <span class="n">loads</span>
+<span class="kn">from</span> <span class="nn">json.decoder</span> <span class="kn">import</span> <span class="n">JSONDecodeError</span>
 <span class="kn">from</span> <span class="nn">platform</span> <span class="kn">import</span> <span class="n">python_version</span>
 <span class="kn">from</span> <span class="nn">sys</span> <span class="kn">import</span> <span class="n">exc_info</span>
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
@@ -49,17 +50,20 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-1'>#</a>
       </div>
-      <p>The anti_heist function is used to prevent a heist from happening.
-It does this by sending the message &ldquo;pls use phone&rdquo; and then checking if it was successful.
-If it wasn&rsquo;t, buy() is called to buy the item &ldquo;phone&rdquo;.
-The function will then send &ldquo;pls use phone&rdquo; again
-Then, the function will send &ldquo;p&rdquo; to call the police and avert the heist</p>
-<p>Args:
-Client (Instance): The Discord client
-latest_message (dict): Dank Memer&rsquo;s heist message
-reset (bool): Tells the program whether or not to remove the channel from channels that messages need to be retreived for after averting the heist</p>
-<p>Returns:
-None</p>
+      <pre><code>The anti_heist function is used to prevent a heist from happening.
+It does this by sending the message "pls use phone" and then checking if it was successful.
+If it wasn't, buy() is called to buy the item "phone".
+The function will then send "pls use phone" again
+Then, the function will send "p" to call the police and avert the heist
+
+Args:
+</code></pre>
+<p>Client (Instance): The Discord client
+   latest_message (dict): Dank Memer&rsquo;s heist message
+   reset (bool): Tells the program whether or not to remove the channel from channels that messages need to be retreived for after averting the heist</p>
+<pre><code>Returns:
+</code></pre>
+<p>None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">anti_heist</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">reset</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -128,13 +132,16 @@ None</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-3'>#</a>
       </div>
-      <p>The join_heist function is used to join a heist that is directed towards another user.
-It takes in the Client object and the latest message as arguments, and then interacts with the button on the message accordingly.</p>
-<p>Args:
-Client (Instance): The Discord client
-latest_message (dict): Dank Memer&rsquo;s heist message</p>
-<p>Returns:
-None</p>
+      <pre><code>The join_heist function is used to join a heist that is directed towards another user.
+It takes in the Client object and the latest message as arguments, and then interacts with the button on the message accordingly.
+
+Args:
+</code></pre>
+<p>Client (Instance): The Discord client
+   latest_message (dict): Dank Memer&rsquo;s heist message</p>
+<pre><code>Returns:
+</code></pre>
+<p>None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">join_heist</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -194,14 +201,17 @@ None</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-5'>#</a>
       </div>
-      <p>The receive_trade function accepts a Client object and the latest message from the Discord channel.
+      <pre><code>The receive_trade function accepts a Client object and the latest message from the Discord channel.
 It then logs that it received a trade, sleeps for 2.5 seconds, accepts the trade, and logs that it accepted
-the trade.</p>
-<p>Args:
-Client (Instance): The Discord client
-latest_message (dict): Dank Memer&rsquo;s trade message</p>
-<p>Returns:
-Nothing</p>
+the trade.
+
+Args:
+</code></pre>
+<p>Client (Instance): The Discord client
+   latest_message (dict): Dank Memer&rsquo;s trade message</p>
+<pre><code>Returns:
+</code></pre>
+<p>Nothing</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">receive_trade</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -269,12 +279,15 @@ Nothing</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-7'>#</a>
       </div>
-      <p>The event_1 function is used to respond to the <code>Your immune system is under attack from Covid-19</code> event.</p>
-<p>Args:
-Client (Instance): The Discord client
-latest_message (dict): Dank Memer&rsquo;s event message</p>
-<p>Returns:
-None</p>
+      <pre><code>The event_1 function is used to respond to the `Your immune system is under attack from Covid-19` event.
+
+Args:
+</code></pre>
+<p>Client (Instance): The Discord client
+   latest_message (dict): Dank Memer&rsquo;s event message</p>
+<pre><code>Returns:
+</code></pre>
+<p>None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">event_1</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -342,12 +355,15 @@ None</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-9'>#</a>
       </div>
-      <p>The event_2 function is used to respond to the <code>Microsoft is trying to buy Discord again</code> event.</p>
-<p>Args:
-Client (Instance): The Discord client
-latest_message (dict): Dank Memer&rsquo;s event message</p>
-<p>Returns:
-None</p>
+      <pre><code>The event_2 function is used to respond to the `Microsoft is trying to buy Discord again` event.
+
+Args:
+</code></pre>
+<p>Client (Instance): The Discord client
+   latest_message (dict): Dank Memer&rsquo;s event message</p>
+<pre><code>Returns:
+</code></pre>
+<p>None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">event_2</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -415,12 +431,15 @@ None</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-11'>#</a>
       </div>
-      <p>The event_3 function is used to respond to the <code>pls rich cmd doesn't work</code> event.</p>
-<p>Args:
-Client (Instance): The Discord client
-latest_message (dict): Dank Memer&rsquo;s event message</p>
-<p>Returns:
-None</p>
+      <pre><code>The event_3 function is used to respond to the `pls rich cmd doesn't work` event.
+
+Args:
+</code></pre>
+<p>Client (Instance): The Discord client
+   latest_message (dict): Dank Memer&rsquo;s event message</p>
+<pre><code>Returns:
+</code></pre>
+<p>None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">event_3</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -488,12 +507,15 @@ None</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-13'>#</a>
       </div>
-      <p>The event_4 function is used to respond to the <code>f in the chat</code> event.</p>
-<p>Args:
-Client (Instance): The Discord client
-latest_message (dict): Dank Memer&rsquo;s event message</p>
-<p>Returns:
-None</p>
+      <pre><code>The event_4 function is used to respond to the `f in the chat` event.
+
+Args:
+</code></pre>
+<p>Client (Instance): The Discord client
+   latest_message (dict): Dank Memer&rsquo;s event message</p>
+<pre><code>Returns:
+</code></pre>
+<p>None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">event_4</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -559,12 +581,15 @@ None</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-15'>#</a>
       </div>
-      <p>The event_5 function is used to respond to the <code>frick of karen</code> event.</p>
-<p>Args:
-Client (Instance): The Discord client
-latest_message (dict): Dank Memer&rsquo;s event message</p>
-<p>Returns:
-None</p>
+      <pre><code>The event_5 function is used to respond to the `frick of karen` event.
+
+Args:
+</code></pre>
+<p>Client (Instance): The Discord client
+   latest_message (dict): Dank Memer&rsquo;s event message</p>
+<pre><code>Returns:
+</code></pre>
+<p>None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">event_5</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -632,12 +657,15 @@ None</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-17'>#</a>
       </div>
-      <p>The event_6 function is used to respond to the <code>They've got airpods</code> event.</p>
-<p>Args:
-Client (Instance): The Discord client
-latest_message (dict): Dank Memer&rsquo;s event message</p>
-<p>Returns:
-None</p>
+      <pre><code>The event_6 function is used to respond to the `They've got airpods` event.
+
+Args:
+</code></pre>
+<p>Client (Instance): The Discord client
+   latest_message (dict): Dank Memer&rsquo;s event message</p>
+<pre><code>Returns:
+</code></pre>
+<p>None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">event_6</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Instance</span><span class="p">,</span> <span class="n">latest_message</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -703,13 +731,16 @@ None</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-19'>#</a>
       </div>
-      <p>The send_heartbeat function sends a heartbeat to the Discord API every <code>heartbeat_interval</code> seconds.
-This is necessary in order to keep the connection alive and working.</p>
-<p>Args:
-ws: Websocket connection used to send the heartbeat
-heartbeat_interval (int): The set the time between heartbeats</p>
-<p>Returns:
-None</p>
+      <pre><code>The send_heartbeat function sends a heartbeat to the Discord API every `heartbeat_interval` seconds.
+This is necessary in order to keep the connection alive and working.
+
+Args:
+</code></pre>
+<p>ws: Websocket connection used to send the heartbeat
+   heartbeat_interval (int): The set the time between heartbeats</p>
+<pre><code>Returns:
+</code></pre>
+<p>None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">send_heartbeat</span><span class="p">(</span><span class="n">ws</span><span class="p">,</span> <span class="n">heartbeat_interval</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -724,8 +755,7 @@ None</p>
       
     </div>
     <div class='code'>
-      <div class="highlight"><pre>    
-    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+      <div class="highlight"><pre>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
             <span class="n">sleep</span><span class="p">(</span><span class="n">heartbeat_interval</span><span class="p">)</span>
             <span class="n">ws</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">dumps</span><span class="p">({</span><span class="s2">&quot;op&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;d&quot;</span><span class="p">:</span> <span class="s2">&quot;None&quot;</span><span class="p">}))</span>
@@ -745,7 +775,7 @@ None</p>
       <div class="highlight"><pre><span class="k">def</span> <span class="nf">event_handler</span><span class="p">(</span><span class="n">Client</span><span class="p">,</span> <span class="n">ws</span><span class="p">,</span> <span class="n">event</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">restarted</span><span class="p">:</span> <span class="nb">bool</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
     <span class="n">Client</span><span class="o">.</span><span class="n">session_id</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;sessions&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;session_id&quot;</span><span class="p">]</span>
     <span class="n">heist</span> <span class="o">=</span> <span class="kc">False</span>
-        
+
     <span class="k">if</span> <span class="ow">not</span> <span class="n">restarted</span><span class="p">:</span>
         <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]:</span>
             <span class="n">data</span><span class="p">[</span><span class="n">Client</span><span class="o">.</span><span class="n">username</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
@@ -773,10 +803,12 @@ None</p>
                 <span class="s2">&quot;avatar_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBkrRNRouYU3p-FddqiIF4TCBeJC032su5Zg&amp;usqp=CAU&quot;</span><span class="p">,</span>
             <span class="p">}</span>
         <span class="p">)</span>
-        
+
         <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]:</span>
             <span class="k">try</span><span class="p">:</span>
-                <span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span><span class="s2">&quot;channel&quot;</span><span class="p">])</span>
+                <span class="n">Client</span><span class="o">.</span><span class="n">channel_id</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span>
+                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span><span class="s2">&quot;channel&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
                 <span class="n">Client</span><span class="o">.</span><span class="n">guild_id</span> <span class="o">=</span> <span class="n">guild_id</span><span class="p">(</span><span class="n">Client</span><span class="p">)</span>
 
                 <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">guild_id</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
@@ -822,7 +854,7 @@ None</p>
                     <span class="s2">&quot;ERROR&quot;</span><span class="p">,</span>
                     <span class="sa">f</span><span class="s2">&quot;Autostart channel ID  (`</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;auto start&#39;</span><span class="p">][</span><span class="s1">&#39;channel&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">`) is invalid.&quot;</span><span class="p">,</span>
                 <span class="p">)</span>
-                
+
         <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span> <span class="s2">&quot;Ready to receive commands.&quot;</span><span class="p">)</span>
 
     <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
@@ -1027,7 +1059,9 @@ None</p>
                                                         <span class="sa">f</span><span class="s2">&quot;**`</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">`**: **`</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">info</span><span class="p">[</span><span class="s1">&#39;stats&#39;</span><span class="p">][</span><span class="s1">&#39;items_gained&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span><span class="si">}</span><span class="s2">`**&quot;</span>
                                                         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">info</span><span class="p">[</span>
                                                             <span class="s2">&quot;stats&quot;</span>
-                                                        <span class="p">][</span><span class="s2">&quot;items_gained&quot;</span><span class="p">]</span>
+                                                        <span class="p">][</span>
+                                                            <span class="s2">&quot;items_gained&quot;</span>
+                                                        <span class="p">]</span>
                                                     <span class="p">),</span>
                                                 <span class="p">},</span>
                                             <span class="p">],</span>
@@ -1222,9 +1256,9 @@ None</p>
                                             <span class="sa">f</span><span class="s2">&quot;The blacklisted server option **was successfully set to `True`**.&quot;</span><span class="p">,</span>
                                         <span class="p">)</span>
                                 <span class="k">elif</span> <span class="s2">&quot;disable&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">:</span>
-                                    <span class="k">if</span> <span class="ow">not</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;blacklisted servers&quot;</span><span class="p">][</span>
-                                        <span class="s2">&quot;enabled&quot;</span>
-                                    <span class="p">]:</span>
+                                    <span class="k">if</span> <span class="ow">not</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                                        <span class="s2">&quot;blacklisted servers&quot;</span>
+                                    <span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]:</span>
                                         <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
                                             <span class="p">{</span>
                                                 <span class="s2">&quot;embeds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1329,9 +1363,9 @@ None</p>
                                                 <span class="s2">&quot;blacklisted servers&quot;</span>
                                             <span class="p">][</span><span class="s2">&quot;servers&quot;</span><span class="p">]</span>
                                         <span class="p">):</span>
-                                            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;blacklisted servers&quot;</span><span class="p">][</span>
-                                                <span class="s2">&quot;servers&quot;</span>
-                                            <span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                                            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                                                <span class="s2">&quot;blacklisted servers&quot;</span>
+                                            <span class="p">][</span><span class="s2">&quot;servers&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
                                             <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config_write</span><span class="p">()</span>
 
                                             <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
@@ -1421,9 +1455,9 @@ None</p>
                                                 <span class="p">{</span>
                                                     <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">shift</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">,</span>
                                                     <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Enabled&quot;</span>
-                                                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span>
-                                                        <span class="n">shift</span>
-                                                    <span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]</span>
+                                                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                                                        <span class="s2">&quot;shifts&quot;</span>
+                                                    <span class="p">][</span><span class="n">shift</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]</span>
                                                     <span class="k">else</span> <span class="s2">&quot;Disabled&quot;</span><span class="p">,</span>
                                                     <span class="s2">&quot;fields&quot;</span><span class="p">:</span> <span class="p">[</span>
                                                         <span class="p">{</span>
@@ -1536,7 +1570,9 @@ None</p>
                                             <span class="sa">f</span><span class="s2">&quot;The shifts option is **already disabled**.&quot;</span><span class="p">,</span>
                                         <span class="p">)</span>
                                     <span class="k">else</span><span class="p">:</span>
-                                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+                                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span>
+                                            <span class="s2">&quot;enabled&quot;</span>
+                                        <span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
                                         <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config_write</span><span class="p">()</span>
 
                                         <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
@@ -1559,7 +1595,9 @@ None</p>
                                             <span class="sa">f</span><span class="s2">&quot;The shifts option **was successfully set to `True`**.&quot;</span><span class="p">,</span>
                                         <span class="p">)</span>
                                 <span class="k">elif</span> <span class="s2">&quot;disable&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">:</span>
-                                    <span class="k">if</span> <span class="ow">not</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]:</span>
+                                    <span class="k">if</span> <span class="ow">not</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span>
+                                        <span class="s2">&quot;enabled&quot;</span>
+                                    <span class="p">]:</span>
                                         <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
                                             <span class="p">{</span>
                                                 <span class="s2">&quot;embeds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1607,7 +1645,9 @@ None</p>
                                 <span class="k">elif</span> <span class="s2">&quot;add&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">:</span>
                                     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
                                         <span class="k">try</span><span class="p">:</span>
-                                            <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="mi">2</span><span class="p">:]]</span>
+                                            <span class="n">_</span> <span class="o">=</span> <span class="p">[</span>
+                                                <span class="nb">int</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+                                            <span class="p">]</span>
 
                                             <span class="n">num</span> <span class="o">=</span> <span class="p">(</span>
                                                 <span class="nb">max</span><span class="p">(</span>
@@ -1708,16 +1748,22 @@ None</p>
                                             <span class="n">remove</span>
                                             <span class="ow">in</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
                                         <span class="p">):</span>
-                                            <span class="k">del</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span><span class="n">remove</span><span class="p">]</span>
+                                            <span class="k">del</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span>
+                                                <span class="n">remove</span>
+                                            <span class="p">]</span>
                                             <span class="n">shift</span> <span class="o">=</span> <span class="mi">1</span>
 
                                             <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span>
-                                                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+                                                <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                                                    <span class="s2">&quot;shifts&quot;</span>
+                                                <span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
                                             <span class="p">)[</span><span class="mi">1</span><span class="p">:]:</span>
-                                                <span class="n">temp</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span>
+                                                <span class="n">temp</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                                                    <span class="s2">&quot;shifts&quot;</span>
+                                                <span class="p">][</span><span class="n">num</span><span class="p">]</span>
+                                                <span class="k">del</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span>
                                                     <span class="n">num</span>
                                                 <span class="p">]</span>
-                                                <span class="k">del</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span><span class="n">num</span><span class="p">]</span>
                                                 <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;shifts&quot;</span><span class="p">][</span>
                                                     <span class="n">shift</span>
                                                 <span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
@@ -1789,7 +1835,9 @@ None</p>
                                     <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
                                     <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
                                 <span class="p">):</span>
-                                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]:</span>
+                                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span>
+                                        <span class="s2">&quot;enabled&quot;</span>
+                                    <span class="p">]:</span>
                                         <span class="n">embed</span> <span class="o">=</span> <span class="p">{</span>
                                             <span class="s2">&quot;content&quot;</span><span class="p">:</span> <span class="s2">&quot;**Auto start channel** for this account.&quot;</span><span class="p">,</span>
                                             <span class="s2">&quot;embeds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1877,7 +1925,9 @@ None</p>
                                         <span class="sa">f</span><span class="s2">&quot;Help for the command **`channels`**. This command is used to modify the auto start channels for this account. auto start channels are saved in the config file, and so are remembered even if you close Grank.</span><span class="se">\n\n</span><span class="s2">__**Commands:**__</span><span class="se">\n</span><span class="s2">```yaml</span><span class="se">\n</span><span class="s2">channels: Shows a list of all the auto start channels for this account.</span><span class="se">\n</span><span class="s2">channels add 0: Adds the channel with the ID of 0 to the list of auto start channels.</span><span class="se">\n</span><span class="s2">Removes the channel with the ID of 0 from the list of auto start channels.</span><span class="se">\n</span><span class="s2">```&quot;</span><span class="p">,</span>
                                     <span class="p">)</span>
                                 <span class="k">elif</span> <span class="s2">&quot;enable&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">:</span>
-                                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span><span class="s2">&quot;enabled&quot;</span><span class="p">]:</span>
+                                    <span class="k">if</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span>
+                                        <span class="s2">&quot;enabled&quot;</span>
+                                    <span class="p">]:</span>
                                         <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
                                             <span class="p">{</span>
                                                 <span class="s2">&quot;embeds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -2021,10 +2071,12 @@ None</p>
                                             <span class="sa">f</span><span class="s2">&quot;IDs contain **only numbers**. The ID you provided contained **other characters**.&quot;</span><span class="p">,</span>
                                         <span class="p">)</span>
                                 <span class="k">elif</span> <span class="s2">&quot;remove&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">:</span>
-                                    <span class="n">old_channel_id</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span>
+                                    <span class="n">old_channel_id</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                                        <span class="s2">&quot;auto start&quot;</span>
+                                    <span class="p">][</span><span class="s2">&quot;channel&quot;</span><span class="p">]</span>
+                                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span>
                                         <span class="s2">&quot;channel&quot;</span>
-                                    <span class="p">]</span>
-                                    <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;auto start&quot;</span><span class="p">][</span><span class="s2">&quot;channel&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                                    <span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
                                     <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config_write</span><span class="p">()</span>
 
                                     <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
@@ -2287,7 +2339,9 @@ None</p>
                                             <span class="p">},</span>
                                             <span class="sa">f</span><span class="s2">&quot;The custom command you provided was not found.&quot;</span><span class="p">,</span>
                                         <span class="p">)</span>
-                            <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;controllers&quot;</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;cont&quot;</span><span class="p">:</span>
+                            <span class="k">elif</span> <span class="p">(</span>
+                                <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;controllers&quot;</span> <span class="ow">or</span> <span class="n">args</span><span class="o">.</span><span class="n">command</span> <span class="o">==</span> <span class="s2">&quot;cont&quot;</span>
+                            <span class="p">):</span>
                                 <span class="k">if</span> <span class="p">(</span>
                                     <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
                                     <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
@@ -2397,7 +2451,9 @@ None</p>
                                             <span class="s2">&quot;controllers_info&quot;</span>
                                         <span class="p">][</span><span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
 
-                                        <span class="n">info</span> <span class="o">=</span> <span class="n">user_info</span><span class="p">(</span><span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                                        <span class="n">info</span> <span class="o">=</span> <span class="n">user_info</span><span class="p">(</span>
+                                            <span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                                        <span class="p">)</span>
                                         <span class="n">adder_info</span> <span class="o">=</span> <span class="n">user_info</span><span class="p">(</span>
                                             <span class="n">Client</span><span class="o">.</span><span class="n">token</span><span class="p">,</span> <span class="n">controller_info</span><span class="p">[</span><span class="s2">&quot;added_by&quot;</span><span class="p">]</span>
                                         <span class="p">)</span>
@@ -2437,7 +2493,9 @@ None</p>
                                             <span class="s2">&quot;attachments&quot;</span><span class="p">:</span> <span class="p">[],</span>
                                         <span class="p">}</span>
 
-                                        <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">controller_info</span><span class="p">[</span><span class="s2">&quot;commands&quot;</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                                        <span class="k">for</span> <span class="n">command</span> <span class="ow">in</span> <span class="n">controller_info</span><span class="p">[</span><span class="s2">&quot;commands&quot;</span><span class="p">][</span>
+                                            <span class="p">::</span><span class="o">-</span><span class="mi">1</span>
+                                        <span class="p">]:</span>
                                             <span class="n">commands</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">utcfromtimestamp</span><span class="p">(</span><span class="n">command</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1"> %H:%M:%S&#39;</span><span class="p">)</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">command</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
                                             <span class="n">embed</span><span class="p">[</span><span class="s2">&quot;embeds&quot;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="s2">&quot;fields&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
                                                 <span class="p">{</span>
@@ -2485,9 +2543,9 @@ None</p>
                                         <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
                                         <span class="ow">in</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span><span class="s2">&quot;controllers&quot;</span><span class="p">]</span>
                                     <span class="p">):</span>
-                                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span><span class="s2">&quot;controllers_info&quot;</span><span class="p">][</span>
-                                            <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-                                        <span class="p">][</span><span class="s2">&quot;commands&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+                                        <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">controllers</span><span class="p">[</span>
+                                            <span class="s2">&quot;controllers_info&quot;</span>
+                                        <span class="p">][</span><span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]][</span><span class="s2">&quot;commands&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
                                         <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">controllers_write</span><span class="p">()</span>
 
                                         <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
@@ -2587,7 +2645,9 @@ None</p>
                                         <span class="p">)</span>
                                 <span class="k">elif</span> <span class="s2">&quot;remove&quot;</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">:</span>
                                     <span class="n">output</span> <span class="o">=</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">database_handler</span><span class="p">(</span>
-                                        <span class="s2">&quot;write&quot;</span><span class="p">,</span> <span class="s2">&quot;controller remove&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                                        <span class="s2">&quot;write&quot;</span><span class="p">,</span>
+                                        <span class="s2">&quot;controller remove&quot;</span><span class="p">,</span>
+                                        <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
                                     <span class="p">)</span>
 
                                     <span class="k">if</span> <span class="ow">not</span> <span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
@@ -2837,7 +2897,7 @@ None</p>
                                     <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
                                     <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">flags</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
                                 <span class="p">):</span>
-                                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                                    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">:</span>
                                         <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
                                             <span class="p">{</span>
                                                 <span class="s2">&quot;embeds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -2845,7 +2905,9 @@ None</p>
                                                         <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="n">key</span><span class="p">,</span>
                                                         <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span>
                                                         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span>
-                                                            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                                                            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                                                                <span class="n">key</span>
+                                                            <span class="p">]</span>
                                                         <span class="p">)</span>
                                                         <span class="o">==</span> <span class="nb">dict</span>
                                                         <span class="k">else</span> <span class="sa">f</span><span class="s2">&quot;`</span><span class="si">{</span><span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="si">}</span><span class="s2">`&quot;</span><span class="p">,</span>
@@ -2859,7 +2921,9 @@ None</p>
                                                             <span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
                                                         <span class="p">]</span>
                                                         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span>
-                                                            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                                                            <span class="n">Client</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span>
+                                                                <span class="n">key</span>
+                                                            <span class="p">]</span>
                                                         <span class="p">)</span>
                                                         <span class="o">==</span> <span class="nb">dict</span>
                                                         <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
@@ -2989,7 +3053,8 @@ None</p>
                                             <span class="p">)</span>
                                     <span class="k">else</span><span class="p">:</span>
                                         <span class="n">args</span><span class="o">.</span><span class="n">variables</span> <span class="o">=</span> <span class="p">[</span>
-                                            <span class="n">arg</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">variables</span>
+                                            <span class="n">arg</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">)</span>
+                                            <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">variables</span>
                                         <span class="p">]</span>
 
                                         <span class="k">try</span><span class="p">:</span>
@@ -3038,8 +3103,11 @@ None</p>
                                                 <span class="sa">f</span><span class="s2">&quot;Configuration key **`</span><span class="si">{</span><span class="s1">&#39;.&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">arg</span><span class="p">[</span><span class="mi">2</span><span class="p">:][:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span><span class="o">.</span><span class="n">variables</span><span class="p">)</span><span class="si">}</span><span class="s2">` **was **not found**.&quot;</span><span class="p">,</span>
                                             <span class="p">)</span>
                         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s2">&quot;WARNING&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;An unexpected error occured while executing the command `</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">` from </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="s1">&#39;author&#39;</span><span class="p">][</span><span class="s1">&#39;username&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="s1">&#39;author&#39;</span><span class="p">][</span><span class="s1">&#39;discriminator&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`.&quot;</span><span class="p">)</span>
-                            
+                            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                                <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span>
+                                <span class="sa">f</span><span class="s2">&quot;An unexpected error occured while executing the command `</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="s1">&#39;content&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">` from </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="s1">&#39;author&#39;</span><span class="p">][</span><span class="s1">&#39;username&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">#</span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">][</span><span class="s1">&#39;author&#39;</span><span class="p">][</span><span class="s1">&#39;discriminator&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`.&quot;</span><span class="p">,</span>
+                            <span class="p">)</span>
+
                             <span class="n">Client</span><span class="o">.</span><span class="n">webhook_send</span><span class="p">(</span>
                                 <span class="p">{</span>
                                     <span class="s2">&quot;embeds&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -3119,7 +3187,7 @@ None</p>
                                     <span class="n">Thread</span><span class="p">(</span>
                                         <span class="n">target</span><span class="o">=</span><span class="n">receive_trade</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">Client</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">]]</span>
                                     <span class="p">)</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
-                            <span class="k">if</span> <span class="s2">&quot;description&quot;</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;embeds&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                            <span class="k">if</span> <span class="s2">&quot;description&quot;</span> <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;embeds&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">]:</span>
                                 <span class="k">if</span> <span class="p">(</span>
                                     <span class="s2">&quot;They&#39;re trying to break into&quot;</span>
                                     <span class="ow">in</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;embeds&quot;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;description&quot;</span><span class="p">]</span>
@@ -3176,11 +3244,14 @@ None</p>
                     <span class="o">==</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">][</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;channel_id&quot;</span><span class="p">]][</span><span class="s2">&quot;message&quot;</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
                 <span class="p">):</span>
                     <span class="n">data</span><span class="p">[</span><span class="s2">&quot;channels&quot;</span><span class="p">][</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">][</span><span class="s2">&quot;channel_id&quot;</span><span class="p">]][</span><span class="s2">&quot;message&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;d&quot;</span><span class="p">]</span>
-        <span class="k">except</span> <span class="n">WebSocketConnectionClosedException</span><span class="p">:</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">WebSocketConnectionClosedException</span><span class="p">,</span> <span class="n">JSONDecodeError</span><span class="p">):</span>
             <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">gateway</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">Client</span><span class="p">,</span> <span class="kc">True</span><span class="p">])</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
             <span class="k">return</span>
         <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
-            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;An unepected error occured while processing the event </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`.&quot;</span><span class="p">)</span></pre></div>
+            <span class="n">Client</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
+                <span class="s2">&quot;WARNING&quot;</span><span class="p">,</span>
+                <span class="sa">f</span><span class="s2">&quot;An unepected error occured while processing the event </span><span class="si">{</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">: `</span><span class="si">{</span><span class="n">exc_info</span><span class="p">()</span><span class="si">}</span><span class="s2">`.&quot;</span>
+            <span class="p">)</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -3189,17 +3260,20 @@ None</p>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-23'>#</a>
       </div>
-      <p>The gateway function is used to connect the bot to Discord.
+      <pre><code>The gateway function is used to connect the bot to Discord.
 If a Client is provided, it will create a proper websocket sesion and return the first session_id for the account.
-If a token is provided, it will only return the first session_id for the account</p>
-<p>Args:
-Client (Union[Instance, str]): The client class
-restarted (bool) = False: Tells the gateway function whether or not to log online messages (set to False when reconnecting to the websocket to prevent accidental re-logging)</p>
-<p>Returns:
-The session id of the bot</p>
+If a token is provided, it will only return the first session_id for the account
+
+Args:
+</code></pre>
+<p>Client (Union[Instance, str]): The client class
+   restarted (bool) = False: Tells the gateway function whether or not to log online messages (set to False when reconnecting to the websocket to prevent accidental re-logging)</p>
+<pre><code>Returns:
+</code></pre>
+<p>The session id of the bot</p>
     </div>
     <div class='code'>
-      <div class="highlight"><pre><span class="k">def</span> <span class="nf">gateway</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Instance</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">restarted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span></pre></div>
+      <div class="highlight"><pre><span class="k">def</span> <span class="nf">gateway</span><span class="p">(</span><span class="n">Client</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Instance</span><span class="p">,</span> <span class="nb">str</span><span class="p">],</span> <span class="n">restarted</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>

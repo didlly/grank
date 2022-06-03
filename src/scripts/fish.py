@@ -37,7 +37,7 @@ def fish(Client: Instance) -> bool:
             latest_message["components"][0]["components"][level]["custom_id"],
             latest_message,
         )
-        
+
         return True
 
     # If the account does not have a `fishing pole`...
