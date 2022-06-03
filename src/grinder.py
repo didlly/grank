@@ -270,7 +270,7 @@ def grind(Client: Instance, log: bool = False) -> Optional[bool]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
-            Client.Repository.config["commands"]["crime"]
+            Client.Repository.config["crime"]["enabled"]
             and data[Client.username]
             and data["channels"][Client.channel_id][Client.token]
         ):
@@ -660,7 +660,7 @@ def grind(Client: Instance, log: bool = False) -> Optional[bool]:
                     sleep(Client.Repository.config["cooldowns"]["commands"]["value"])
 
         if (
-            Client.Repository.config["commands"]["search"]
+            Client.Repository.config["search"]["enabled"]
             and data[Client.username]
             and data["channels"][Client.channel_id][Client.token]
         ):

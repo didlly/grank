@@ -6,7 +6,7 @@ from platform import python_version
 from sys import exc_info
 from threading import Thread
 from time import sleep
-from typing import Optional, Union
+from typing import Union
 
 import utils.Yaml
 from discord.GuildId import guild_id
@@ -3040,7 +3040,7 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
         except Exception:
             Client.log(
                 "WARNING",
-                f"An unepected error occured while processing the event {event['d']}: `{exc_info()}`."
+                f"An unepected error occured while processing the event {event['d']}: `{exc_info()}`.",
             )
 
 
