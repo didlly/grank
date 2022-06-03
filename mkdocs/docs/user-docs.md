@@ -218,7 +218,7 @@ This subcategory tells the program what places to choose, if they are available,
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| `God's own place`  | `Boolean` | `True`  | Tells the program to choose `God's own place` if it is present. |
+| `Gods own place`  | `Boolean` | `True`  | Tells the program to choose `Gods own place` if it is present. |
 | `bank`  | `Boolean` | `True`  | Tells the program to choose `bank` if it is present. |
 
 ### `lottery` category
