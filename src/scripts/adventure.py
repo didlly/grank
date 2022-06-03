@@ -42,13 +42,13 @@ def adventure(Client: Instance) -> bool:
             adventure = latest_message["embeds"][0]["fields"][0]["value"]
 
             # Get the items taken on the adventure
-            backpack = latest_message["embeds"][0]["fields"][3]["value"].split(":")
+            backpack = latest_message["embeds"][0]["fields"][2]["value"].split(":")
             backpack = ", ".join(
                 backpack[index].lower() for index in range(1, len(backpack), 2)
             )
 
             # Get the items found during the adventure
-            found = latest_message["embeds"][0]["fields"][5]["value"].split(":")
+            found = latest_message["embeds"][0]["fields"][3]["value"].split(":")
             found = ", ".join(found[index].lower() for index in range(1, len(found), 2))
 
             try:
@@ -57,7 +57,7 @@ def adventure(Client: Instance) -> bool:
                     "".join(
                         filter(
                             str.isdigit,
-                            latest_message["embeds"][0]["fields"][6],
+                            latest_message["embeds"][0]["fields"][4],
                         )
                     )
                 )
@@ -74,7 +74,12 @@ def adventure(Client: Instance) -> bool:
             )
 
             # Update the coins gained
-            Client._update_coins(coins)
+            Client._update_coins("pls adv", coins)
+            
+            # For each item gained...
+            for item in found.split(", "):
+                # ...update the items gained
+                Client._update_items("pls adv", item)
 
             sleep(1)
 
@@ -261,7 +266,7 @@ def adventure(Client: Instance) -> bool:
         )
 
         # Interacts with a random button
-        Client.interact_button(latest_message["components"][0]["components"])["custom_id"]
+        custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
 
     # Choose the button
     Client.interact_button("pls adv", custom_id, latest_message)
