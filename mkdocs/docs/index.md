@@ -39,10 +39,10 @@ Grank does not use any Discord self-bot library, since I wanted to code my own f
 [ME] - [didlly](https://github.com/didlly)
 
 ### Contributors
-[SXVXGE](https://github.com/SXVXGEE)
+[SXVXGE](https://github.com/SXVXGEE) - Contributing code to the trivia scraper & contributing to the database.
 
 ### Helpers
-[V4NSH4J](https://github.com/V4NSH4J/)
+[V4NSH4J](https://github.com/V4NSH4J/) - Helping me with undestanding Discord's docs & answering all my questions without getting tired of the continual stream of questions ;-).
 
 <hr>
 

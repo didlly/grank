@@ -301,10 +301,14 @@ class Instance(object):
                 "icon_url": "https://avatars.githubusercontent.com/u/94558954",
             }
 
+        token = None
+
         if len(req.content) > 0:
-            token = req.content[0]["token"]
-            channel_id = req.content[0]["id"]
-        else:
+            if "token" in req.content[0]:
+                token = req.content[0]["token"]
+                channel_id = req.content[0]["id"]
+            
+        if token is None:
             req = request(
                 f"https://discord.com/api/v9/channels/{self.channel_id}/webhooks",
                 headers={"authorization": self.token},
@@ -333,7 +337,7 @@ class Instance(object):
                         "DEBUG",
                         f"Successfully sent webhook `{payload}`.",
                     )
-                return
+                return True
             else:
                 if self.Repository.config["logging"]["warning"]:
                     self.log(
@@ -351,8 +355,6 @@ class Instance(object):
                 raise WebhookSendError(
                     f"Failed to send webhook `{payload}`. Status code: {req.status_code} (expected 200 or 204)."
                 )
-
-        return True
 
     def retreive_message(
         self,

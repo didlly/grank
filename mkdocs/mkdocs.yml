@@ -5,7 +5,7 @@ repo_url: https://github.com/didlly/grank
 nav:
   - Home: index.md
   - User Documentation: user-docs.md
-  - Developer Documentation: /docs/developers
+  - Developer Documentation: /grank/developers
 
 theme:
   name: material

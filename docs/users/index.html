@@ -457,9 +457,42 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cooldowns-category" class="md-nav__link">
-    cooldowns category
+  <a href="#crime-category" class="md-nav__link">
+    crime category
   </a>
+  
+    <nav class="md-nav" aria-label="crime category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preferences-subcategory" class="md-nav__link">
+    preferences subcategory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-category" class="md-nav__link">
+    search category
+  </a>
+  
+    <nav class="md-nav" aria-label="search category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preferences-subcategory_1" class="md-nav__link">
+    preferences subcategory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -487,6 +520,13 @@
           <li class="md-nav__item">
   <a href="#snakeeyes-category" class="md-nav__link">
     snakeeyes category
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cooldowns-category" class="md-nav__link">
+    cooldowns category
   </a>
   
 </li>
@@ -871,9 +911,42 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#cooldowns-category" class="md-nav__link">
-    cooldowns category
+  <a href="#crime-category" class="md-nav__link">
+    crime category
   </a>
+  
+    <nav class="md-nav" aria-label="crime category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preferences-subcategory" class="md-nav__link">
+    preferences subcategory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#search-category" class="md-nav__link">
+    search category
+  </a>
+  
+    <nav class="md-nav" aria-label="search category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preferences-subcategory_1" class="md-nav__link">
+    preferences subcategory
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -901,6 +974,13 @@
           <li class="md-nav__item">
   <a href="#snakeeyes-category" class="md-nav__link">
     snakeeyes category
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cooldowns-category" class="md-nav__link">
+    cooldowns category
   </a>
   
 </li>
@@ -1444,12 +1524,6 @@
 <td>Tells the program whether or not to run the command <code>pls beg</code>.</td>
 </tr>
 <tr>
-<td><code>crime</code></td>
-<td><code>Boolean</code></td>
-<td><code>True</code></td>
-<td>Tells the program whether or not to run the command <code>pls crime</code>.</td>
-</tr>
-<tr>
 <td><code>daily</code></td>
 <td><code>Boolean</code></td>
 <td><code>True</code></td>
@@ -1492,12 +1566,6 @@
 <td>Tells the program whether or not to run the command <code>pls postmeme</code>.</td>
 </tr>
 <tr>
-<td><code>search</code></td>
-<td><code>Boolean</code></td>
-<td><code>True</code></td>
-<td>Tells the program whether or not to run the command <code>pls search</code>.</td>
-</tr>
-<tr>
 <td><code>trivia</code></td>
 <td><code>Boolean</code></td>
 <td><code>True</code></td>
@@ -1517,8 +1585,110 @@
 </tr>
 </tbody>
 </table>
-<h3 id="cooldowns-category"><code>cooldowns</code> category</h3>
-<p>Values in the <code>cooldowns</code> category tell the program <em>the cooldowns for each command</em> &amp; <em>cooldowns between commands</em>. Edit them only if you know what you are doing. You have the most optimal settings by default.</p>
+<h3 id="crime-category"><code>crime</code> category</h3>
+<p>Values in the <code>crime</code> category tell the program <em>whether or not to run the command <code>pls crime</code></em>, and <em>what places to choose</em> (or random).</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td><code>Boolean</code></td>
+<td><code>True</code></td>
+<td>Tells the program whether or not to run the command <code>pls crime</code>.</td>
+</tr>
+<tr>
+<td><code>random</code></td>
+<td><code>Boolean</code></td>
+<td><code>True</code></td>
+<td>Tells the program whether or not to choose a random place.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="preferences-subcategory"><strong><code>preferences</code> subcategory</strong></h4>
+<p>This subcategory tells the program what places to choose, if they are available, and if <code>random</code> is set to <code>False</code>. You can make the program skip an option by setting it to <code>False</code>. The first option takes priority over the second option, etc. They do not have to be the same case as Dank Memer's options, and you can use shorten the name since Grank compares them using the <code>in</code> operator. Please do not add <code>'</code>s into the names of places to be searched, since it will cause a parsing error. The program will handle <code>'</code>s itself until the bug is fixed</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tax evasion</code></td>
+<td><code>Boolean</code></td>
+<td><code>True</code></td>
+<td>Tells the program to choose <code>tax evasion</code> if it is present.</td>
+</tr>
+<tr>
+<td><code>vandalism</code></td>
+<td><code>Boolean</code></td>
+<td><code>True</code></td>
+<td>Tells the program to choose <code>vandalism</code> if it is present.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="search-category"><code>search</code> category</h3>
+<p>Values in the <code>search</code> category tell the program <em>whether or not to run the command <code>pls search</code></em>, and <em>what places to choose</em> (or random).</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>enabled</code></td>
+<td><code>Boolean</code></td>
+<td><code>True</code></td>
+<td>Tells the program whether or not to run the command <code>pls search</code>.</td>
+</tr>
+<tr>
+<td><code>random</code></td>
+<td><code>Boolean</code></td>
+<td><code>True</code></td>
+<td>Tells the program whether or not to choose a random place.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="preferences-subcategory_1"><strong><code>preferences</code> subcategory</strong></h4>
+<p>This subcategory tells the program what places to choose, if they are available, and if <code>random</code> is set to <code>False</code>. You can make the program skip an option by setting it to <code>False</code>. The first option takes priority over the second option, etc. They do not have to be the same case as Dank Memer's options, and you can use shorten the name since Grank compares them using the <code>in</code> operator. Please do not add <code>'</code>s into the names of places to be searched, since it will cause a parsing error. The program will handle <code>'</code>s itself until the bug is fixed.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Default Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>God's own place</code></td>
+<td><code>Boolean</code></td>
+<td><code>True</code></td>
+<td>Tells the program to choose <code>God's own place</code> if it is present.</td>
+</tr>
+<tr>
+<td><code>bank</code></td>
+<td><code>Boolean</code></td>
+<td><code>True</code></td>
+<td>Tells the program to choose <code>bank</code> if it is present.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="lottery-category"><code>lottery</code> category</h3>
 <p>Values in the <code>lottery</code> category tell the program <em>whether lottery tickets should be bought</em>, and <em>how often they should be bought</em>.</p>
 <table>
@@ -1671,6 +1841,8 @@
 </tr>
 </tbody>
 </table>
+<h3 id="cooldowns-category"><code>cooldowns</code> category</h3>
+<p>Values in the <code>cooldowns</code> category tell the program <em>the cooldowns for each command</em> &amp; <em>cooldowns between commands</em>. Edit them only if you know what you are doing. You have the most optimal settings by default.</p>
 <h3 id="custom-commands-category"><code>custom commands</code> category</h3>
 <p>Values in the <code>custom commands</code> category tell the program <em>what custom commands should be run</em> and <em>their cooldowns</em>.</p>
 <table>
@@ -2099,7 +2271,7 @@
 </tbody>
 </table>
 <h3 id="blacklisted-servers-category"><code>blacklisted servers</code> category</h3>
-<p>Values in the <code>logging</code> category tell the program whether or not to <em>ignore messages from certain servers</em> and <em>which servers to ignore the messages from</em>.</p>
+<p>Values in the <code>blacklisted servers</code> category tell the program whether or not to <em>ignore messages from certain servers</em> and <em>which servers to ignore the messages from</em>.</p>
 <table>
 <thead>
 <tr>

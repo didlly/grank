@@ -1,7 +1,6 @@
 commands:
   adventure: True
   beg: True
-  crime: True
   daily: True
   dig: True
   fish: True
@@ -9,10 +8,49 @@ commands:
   highlow: True
   hunt: True
   postmeme: True
-  search: True
   trivia: True
   vote: True
   work: True
+
+crime:
+  enabled: True
+  random: True
+
+  preferences:
+    tax evasion: True
+    vandalism: True
+
+search:
+  enabled: True
+  random: True
+
+  preferences:
+    Gods own place: True
+    bank: True
+
+lottery:
+  enabled: False
+  cooldown: 3600
+
+stream:
+  enabled: True
+  ads: True
+  chat: True
+  donations: True
+
+blackjack:
+  enabled: False
+  random: False
+  amount: 1500
+  minimum: 1500
+  maximum: 3000
+
+snakeeyes:
+  enabled: False
+  random: False
+  amount: 1500
+  minimum: 1500
+  maximum: 3000
 
 cooldowns:
   adventure: 120
@@ -73,30 +111,6 @@ cooldowns:
   commands:
     enabled: False
     value: 0.5
-
-lottery:
-  enabled: False
-  cooldown: 3600
-
-stream:
-  enabled: True
-  ads: True
-  chat: True
-  donations: True
-
-blackjack:
-  enabled: False
-  random: False
-  amount: 1500
-  minimum: 1500
-  maximum: 3000
-
-snakeeyes:
-  enabled: False
-  random: False
-  amount: 1500
-  minimum: 1500
-  maximum: 3000
 
 custom commands:
   enabled: False

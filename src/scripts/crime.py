@@ -25,10 +25,49 @@ def crime(Client: Instance) -> bool:
         # ...get the correct latest message
         latest_message = Client.fallback_retreive_message("pls crime")
 
-    # Interact with a random button
+    # If the crime setting is random...
+    if Client.Repository.config["crime"]["random"]:
+        # ...choose a random button to interact with
+        custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
+    # Else...
+    else:
+        # Get a list of all the possible places
+        places = [button["label"].lower().replace("'", "") for button in latest_message["components"][0]["components"]]
+        
+        # Initialize custom_id as None
+        custom_id = None
+        
+        # For each key in the list of preferred crime places...
+        for key in Client.Repository.config["crime"]["preferences"]:
+            # If the key is not enabled...
+            if not Client.Repository.config["crime"]["preferences"][key]:
+                # ...continue to the next iteration of the for loop
+                continue
+            
+            # For each place that can be chosen...
+            for index, place in enumerate(places):
+                # ...if the key, in lowercase, is in the place that can be chosen...
+                if key.lower() in place:
+                    # Choose that place to interact with
+                    custom_id = latest_message["components"][0]["components"][index]["custom_id"]
+                    
+                    # Break out of the places for loop
+                    break
+                
+            # If a button has been chosen...
+            if custom_id is not None:
+                # ...break out of the keys for loop
+                break
+            
+        # If a button hasn't been chosen...
+        if custom_id is None:
+            # Choose a random button to interact with
+            custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
+
+    # Interact with the button
     Client.interact_button(
         "pls crime",
-        choice(latest_message["components"][0]["components"])["custom_id"],
+        custom_id,
         latest_message,
     )
 

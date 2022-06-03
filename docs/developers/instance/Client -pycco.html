@@ -59,17 +59,14 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-2'>#</a>
       </div>
-      <pre><code>    The __init__ function is called when an instance of a class is created.
-    It initializes the attributes of the class.
-
-    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   cwd (str): The current working directory of the program
-   account (DictToClass): The account&rsquo;s data class</p>
-<pre><code>    Returns:
-</code></pre>
-<p>NoneType: <strong>init</strong> functions for classes aren&rsquo;t allowed to return anything, don&rsquo;t ask me why</p>
+      <p>The <strong>init</strong> function is called when an instance of a class is created.
+It initializes the attributes of the class.</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+cwd (str): The current working directory of the program
+account (DictToClass): The account&rsquo;s data class</p>
+<p>Returns:
+NoneType: <strong>init</strong> functions for classes aren&rsquo;t allowed to return anything, don&rsquo;t ask me why</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cwd</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">account</span><span class="p">:</span> <span class="n">DictToClass</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -145,14 +142,11 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-7'>#</a>
       </div>
-      <pre><code>    The _update function is called every 10 seconds when the bot is being run. It updates the lifetime stats of the account, and adds their current session's stats to them.
-
-    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.</p>
-<pre><code>    Returns:
-</code></pre>
-<p>bool: Indicates whether the subprogram executed successfully or not</p>
+      <p>The _update function is called every 10 seconds when the bot is being run. It updates the lifetime stats of the account, and adds their current session&rsquo;s stats to them.</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.</p>
+<p>Returns:
+bool: Indicates whether the subprogram executed successfully or not</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">_update</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre></div>
@@ -199,17 +193,14 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-9'>#</a>
       </div>
-      <pre><code>    The _update_coins function is used to update the coins_gained integer in the info file
-    It takes two arguments, command and coins. Command is the name of the command that was run, while coins is an integer representing how many coins were gained or lost by running said command.
-
-    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   command (str): The command ran which was used to gain the coins
-   coins (int): The amount of coins received from the command</p>
-<pre><code>    Returns:
-</code></pre>
-<p>True if the coins received from the command is a number and less than 10000, else False</p>
+      <p>The _update_coins function is used to update the coins_gained integer in the info file
+It takes two arguments, command and coins. Command is the name of the command that was run, while coins is an integer representing how many coins were gained or lost by running said command.</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+command (str): The command ran which was used to gain the coins
+coins (int): The amount of coins received from the command</p>
+<p>Returns:
+True if the coins received from the command is a number and less than 10000, else False</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">_update_coins</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">coins</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre></div>
@@ -254,19 +245,16 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-11'>#</a>
       </div>
-      <pre><code>    The _update_items function is used to update the `items_gained` dictionary in the info file.
-    It takes two arguments: command and item.
-    command is a string that represents what command was run (e.g., `beg` or `crime`).
-    item is a string representing which item was gained (e.g., `apple`, `fish`).
-
-    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   command (str): The command ran which was used to gain the item
-   item (int): The item received from that command.</p>
-<pre><code>    Returns:
-</code></pre>
-<p>False if the item is an empty string, has <code>answered first</code> in it, is <code>no items</code> or is <code>the shop sale just started!</code>, else True</p>
+      <p>The _update_items function is used to update the <code>items_gained</code> dictionary in the info file.
+It takes two arguments: command and item.
+command is a string that represents what command was run (e.g., <code>beg</code> or <code>crime</code>).
+item is a string representing which item was gained (e.g., <code>apple</code>, <code>fish</code>).</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+command (str): The command ran which was used to gain the item
+item (int): The item received from that command.</p>
+<p>Returns:
+False if the item is an empty string, has <code>answered first</code> in it, is <code>no items</code> or is <code>the shop sale just started!</code>, else True</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">_update_items</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">item</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre></div>
@@ -320,18 +308,15 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-13'>#</a>
       </div>
-      <pre><code>    The send_message function sends a message to the Discord channel.
-
-    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   command (str): The command to send
-   token (Optional[sr]) = None: The token used the send the message (or None if it should be the token in self)
-   latest_message (Optional[dict]) = None: Used if the message should reply to another message.
-   channel_id (Optional[int]) = None: The channel id used the send the message (or None if it should be the channel id in self)</p>
-<pre><code>    Returns:
-</code></pre>
-<p>None</p>
+      <p>The send_message function sends a message to the Discord channel.</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+command (str): The command to send
+token (Optional[sr]) = None: The token used the send the message (or None if it should be the token in self)
+latest_message (Optional[dict]) = None: Used if the message should reply to another message.
+channel_id (Optional[int]) = None: The channel id used the send the message (or None if it should be the channel id in self)</p>
+<p>Returns:
+None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">send_message</span><span class="p">(</span>
@@ -426,17 +411,14 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-15'>#</a>
       </div>
-      <pre><code>    The webhook_send function sends a webhook to the channel specified by self.channel_id with the given payload.
-    If Discord is ratelimiting the bot, it will sleep for `req.content['retry_after'] / 1000` seconds and then try again.
-
-    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   payload (dict): The webhook to be sent
-   fallback_message (str): The message to be sent if there is an error sending the webhook (usually if missing permissions). This may be removed in future versions</p>
-<pre><code>    Returns:
-</code></pre>
-<p>bool: Indicates whether the subprogram executed successfully or not</p>
+      <p>The webhook_send function sends a webhook to the channel specified by self.channel_id with the given payload.
+If Discord is ratelimiting the bot, it will sleep for <code>req.content['retry_after'] / 1000</code> seconds and then try again.</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+payload (dict): The webhook to be sent
+fallback_message (str): The message to be sent if there is an error sending the webhook (usually if missing permissions). This may be removed in future versions</p>
+<p>Returns:
+bool: Indicates whether the subprogram executed successfully or not</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">webhook_send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">fallback_message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span></pre></div>
@@ -470,10 +452,14 @@
                 <span class="s2">&quot;icon_url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://avatars.githubusercontent.com/u/94558954&quot;</span><span class="p">,</span>
             <span class="p">}</span>
 
+        <span class="n">token</span> <span class="o">=</span> <span class="kc">None</span>
+
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="n">token</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;token&quot;</span><span class="p">]</span>
-            <span class="n">channel_id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
-        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s2">&quot;token&quot;</span> <span class="ow">in</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;token&quot;</span><span class="p">]</span>
+                <span class="n">channel_id</span> <span class="o">=</span> <span class="n">req</span><span class="o">.</span><span class="n">content</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+            
+        <span class="k">if</span> <span class="n">token</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">req</span> <span class="o">=</span> <span class="n">request</span><span class="p">(</span>
                 <span class="sa">f</span><span class="s2">&quot;https://discord.com/api/v9/channels/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">channel_id</span><span class="si">}</span><span class="s2">/webhooks&quot;</span><span class="p">,</span>
                 <span class="n">headers</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;authorization&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">},</span>
@@ -502,7 +488,7 @@
                         <span class="s2">&quot;DEBUG&quot;</span><span class="p">,</span>
                         <span class="sa">f</span><span class="s2">&quot;Successfully sent webhook `</span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s2">`.&quot;</span><span class="p">,</span>
                     <span class="p">)</span>
-                <span class="k">return</span>
+                <span class="k">return</span> <span class="kc">True</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">Repository</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;logging&quot;</span><span class="p">][</span><span class="s2">&quot;warning&quot;</span><span class="p">]:</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span>
@@ -519,9 +505,7 @@
                     <span class="k">continue</span>
                 <span class="k">raise</span> <span class="n">WebhookSendError</span><span class="p">(</span>
                     <span class="sa">f</span><span class="s2">&quot;Failed to send webhook `</span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s2">`. Status code: </span><span class="si">{</span><span class="n">req</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2"> (expected 200 or 204).&quot;</span>
-                <span class="p">)</span>
-
-        <span class="k">return</span> <span class="kc">True</span></pre></div>
+                <span class="p">)</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -530,23 +514,19 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-17'>#</a>
       </div>
-      <pre><code>    The retreive_message function is used to retrieve the latest message from a Discord channel.
-
-    Parameters:
-</code></pre>
+      <p>The retreive_message function is used to retrieve the latest message from a Discord channel.</p>
+<p>Parameters:</p>
 <p>command (str): The command that was sent to Dank Memer.</p>
 <p>token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)</p>
 <p>check (bool): Whether or not this function should check for cooldowns and other restrictions in Dank Memer&rsquo;s response before returning it as a dict. Defaults to True, which means it will check for these restrictions and return an error if they are detected; False means no checks will be performed on the response at all, allowing you more control over what is returned by this function without having to manually parse each message yourself.</p>
-<pre><code>    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   command (str): The command the latest message is being retreived for.
-   token (Optional[str]) = None: The token used to retreive the message (or None if if it should be the token in self)
-   check (bool) = True: Determine whether or not the function should check for restrictions in the response from Dank Memer
-   old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck in an infinite loop or getting the wrong latest message if it can&rsquo;t find a response to its request</p>
-<pre><code>    Returns:
-</code></pre>
-<p>The latest message in the channel</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+command (str): The command the latest message is being retreived for.
+token (Optional[str]) = None: The token used to retreive the message (or None if if it should be the token in self)
+check (bool) = True: Determine whether or not the function should check for restrictions in the response from Dank Memer
+old_latest_message (Optional[dict]) = None: Prevent the bot from getting stuck in an infinite loop or getting the wrong latest message if it can&rsquo;t find a response to its request</p>
+<p>Returns:
+The latest message in the channel</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">retreive_message</span><span class="p">(</span>
@@ -772,19 +752,16 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-19'>#</a>
       </div>
-      <pre><code>    The fallback_retreive_message function is a helper function that is used to retreive the latest message sent by Dank Memer from the Discord channel.
-    It does this by making an API call to Discord's servers, and then parsing through all of the messages in order to find one that matches our criteria.
-    The criteria for this function is as follows:
-</code></pre>
+      <p>The fallback_retreive_message function is a helper function that is used to retreive the latest message sent by Dank Memer from the Discord channel.
+It does this by making an API call to Discord&rsquo;s servers, and then parsing through all of the messages in order to find one that matches our criteria.
+The criteria for this function is as follows:</p>
 <p>1) The message must be sent by Dank Memer. This ensures we don&rsquo;t get any false positives from other bots or users.
-   2) The command must be referenced in the embed title field of said message (e.g., <code>pls stream</code>). This ensures we don&rsquo;t get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.</p>
-<pre><code>    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   command (str): The command the latest message is being retreived for</p>
-<pre><code>    Returns:
-</code></pre>
-<p>The latest message sent by Dank Memer in the channel</p>
+2) The command must be referenced in the embed title field of said message (e.g., <code>pls stream</code>). This ensures we don&rsquo;t get any false negatives from other commands with similar names or unrelated errors/warnings/notifications.</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+command (str): The command the latest message is being retreived for</p>
+<p>Returns:
+The latest message sent by Dank Memer in the channel</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">fallback_retreive_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span></pre></div>
@@ -861,25 +838,21 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-21'>#</a>
       </div>
-      <pre><code>    The interact_button function sends a POST request to the Discord API, which interacts with a button on Dank Memer's response.
-
-    Parameters:
-</code></pre>
+      <p>The interact_button function sends a POST request to the Discord API, which interacts with a button on Dank Memer&rsquo;s response.</p>
+<p>Parameters:</p>
 <p>command (str): The name of the command that was sent to Discord. This is used for logging purposes only.</p>
 <p>custom_id (int): The ID of the button that should be interacted with on Dank Memer&rsquo;s response message.</p>
 <p>latest_message (dict): The message the button to be interacted with is on.</p>
 <p>token (Optional[str]): The token used to retreive the message (or None if if it should be the token in self)</p>
-<pre><code>    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   command (str): The command is being interacted with
-   custom_id (int): The ID of the button that should be interacted with
-   latest_message (dict): The message the button to be interacted with is on.
-   token (Optional[str]) = None: Pass the token to the function
-   session_id (Optional[str]) = None: The sesion id of the account that is interacting with the button.</p>
-<pre><code>    Returns:
-</code></pre>
-<p>Nothing</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+command (str): The command is being interacted with
+custom_id (int): The ID of the button that should be interacted with
+latest_message (dict): The message the button to be interacted with is on.
+token (Optional[str]) = None: Pass the token to the function
+session_id (Optional[str]) = None: The sesion id of the account that is interacting with the button.</p>
+<p>Returns:
+Nothing</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">interact_button</span><span class="p">(</span>
@@ -961,23 +934,19 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-23'>#</a>
       </div>
-      <pre><code>    The interact_dropdown function is used to interact with a dropdown menu on Dank Memer's response to a command.
-
-    Parameters:
-</code></pre>
+      <p>The interact_dropdown function is used to interact with a dropdown menu on Dank Memer&rsquo;s response to a command.</p>
+<p>Parameters:</p>
 <p>self (DiscordSelfbot): The DiscordSelfbot instance that is calling the function.</p>
 <p>command (str): The name of the command that was called</p>
 <p>custom_id (int): A unique ID of the dropdown to be selected.</p>
-<pre><code>    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   command (str): The command is being interacted with
-   custom_id (int): The ID of the button that should be interacted with
-   option_id (str): The ID of the dropdown that should be selected
-   latest_message (dict): The message the button to be interacted with is on.</p>
-<pre><code>    Returns:
-</code></pre>
-<p>None</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+command (str): The command is being interacted with
+custom_id (int): The ID of the button that should be interacted with
+option_id (str): The ID of the dropdown that should be selected
+latest_message (dict): The message the button to be interacted with is on.</p>
+<p>Returns:
+None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">interact_dropdown</span><span class="p">(</span>
@@ -1058,19 +1027,16 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-25'>#</a>
       </div>
-      <pre><code>    The clear_lag function is used to stop possible backlash from Dank Memer commands. It does this
-    by finding the latest message from Dank Memer and interacting with the last button on the first row,
-    although this can be changed
-
-    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   command (str): Specify which button to interact with
-   index1 (int) = 0: Specify the index of the first component in a message
-   index2 (int) = -1: Specify the index of the button in the message</p>
-<pre><code>    Returns:
-</code></pre>
-<p>None</p>
+      <p>The clear_lag function is used to stop possible backlash from Dank Memer commands. It does this
+by finding the latest message from Dank Memer and interacting with the last button on the first row,
+although this can be changed</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+command (str): Specify which button to interact with
+index1 (int) = 0: Specify the index of the first component in a message
+index2 (int) = -1: Specify the index of the button in the message</p>
+<p>Returns:
+None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">clear_lag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">index1</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">index2</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -1114,16 +1080,13 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-27'>#</a>
       </div>
-      <pre><code>    The log function is used to log messages.
-
-    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   level (str): The level of the log message
-   text (str): The log message</p>
-<pre><code>    Returns:
-</code></pre>
-<p>None</p>
+      <p>The log function is used to log messages.</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+level (str): The level of the log message
+text (str): The log message</p>
+<p>Returns:
+None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">level</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>
@@ -1170,15 +1133,12 @@
       <div class='octowrap'>
         <a class='octothorpe' href='#section-29'>#</a>
       </div>
-      <pre><code>    The webhook_log function is used to send a webhook log to the webhook logging URL
-
-    Args:
-</code></pre>
-<p>self: Gives access to the class&rsquo; attributes and methods.
-   payload (dict): The data to be sent to the webhook</p>
-<pre><code>    Returns:
-</code></pre>
-<p>None</p>
+      <p>The webhook_log function is used to send a webhook log to the webhook logging URL</p>
+<p>Args:
+self: Gives access to the class&rsquo; attributes and methods.
+payload (dict): The data to be sent to the webhook</p>
+<p>Returns:
+None</p>
     </div>
     <div class='code'>
       <div class="highlight"><pre>    <span class="k">def</span> <span class="nf">webhook_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span></pre></div>

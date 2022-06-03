@@ -178,7 +178,6 @@ Values in the `commands` category tell the program whether or not to *run certai
 | ------------- | ------------- | ------------- | ------------- |
 | `adventure`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls adventure`. |
 | `beg`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls beg`. |
-| `crime`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls crime`. |
 | `daily`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls daily`. |
 | `dig`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls dig`. |
 | `fish`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls fish`. |
@@ -186,14 +185,41 @@ Values in the `commands` category tell the program whether or not to *run certai
 | `highlow`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls highlow`. |
 | `hunt`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls hunt`. |
 | `postmeme`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls postmeme`. |
-| `search`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls search`. |
 | `trivia`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls trivia`. |
 | `vote`  | `Boolean` | `True`  | Tells the program whether or not to vote for Dank Memer on Discord Bot List. |
 | `work`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls work`. |
 
-### `cooldowns` category
+### `crime` category
+Values in the `crime` category tell the program *whether or not to run the command `pls crime`*, and *what places to choose* (or random).
 
-Values in the `cooldowns` category tell the program *the cooldowns for each command* & *cooldowns between commands*. Edit them only if you know what you are doing. You have the most optimal settings by default.
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls crime`. |
+| `random`  | `Boolean` | `True`  | Tells the program whether or not to choose a random place. |
+
+#### __`preferences` subcategory__
+This subcategory tells the program what places to choose, if they are available, and if `random` is set to `False`. You can make the program skip an option by setting it to `False`. The first option takes priority over the second option, etc. They do not have to be the same case as Dank Memer's options, and you can use shorten the name since Grank compares them using the `in` operator. Please do not add `'`s into the names of places to be searched, since it will cause a parsing error. The program will handle `'`s itself until the bug is fixed.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `tax evasion`  | `Boolean` | `True`  | Tells the program to choose `tax evasion` if it is present. |
+| `vandalism`  | `Boolean` | `True`  | Tells the program to choose `vandalism` if it is present. |
+
+### `search` category
+Values in the `search` category tell the program *whether or not to run the command `pls search`*, and *what places to choose* (or random).
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to run the command `pls search`. |
+| `random`  | `Boolean` | `True`  | Tells the program whether or not to choose a random place. |
+
+#### __`preferences` subcategory__
+This subcategory tells the program what places to choose, if they are available, and if `random` is set to `False`. You can make the program skip an option by setting it to `False`. The first option takes priority over the second option, etc. They do not have to be the same case as Dank Memer's options, and you can use shorten the name since Grank compares them using the `in` operator. Please do not add `'`s into the names of places to be searched, since it will cause a parsing error. The program will handle `'`s itself until the bug is fixed.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `God's own place`  | `Boolean` | `True`  | Tells the program to choose `God's own place` if it is present. |
+| `bank`  | `Boolean` | `True`  | Tells the program to choose `bank` if it is present. |
 
 ### `lottery` category
 
@@ -238,6 +264,10 @@ Values in the `snakeeyes` category tell the program *whether or not to run the c
 | `amount`  | `Integer` | `1500`  | The pre-set amount to be bet if `random` is set to `False`. |
 | `minimum`  | `Integer` | `1500`  | The minimum amount to be bet if `random` is set to `True`. |
 | `maximum`  | `Integer` | `3000`  | The maximum amount to be bet if `random` is set to `True`. |
+
+### `cooldowns` category
+
+Values in the `cooldowns` category tell the program *the cooldowns for each command* & *cooldowns between commands*. Edit them only if you know what you are doing. You have the most optimal settings by default.
 
 ### `custom commands` category
 
@@ -383,7 +413,7 @@ Values in the `auto start` category tell the program whether or not to *automati
 
 ### `blacklisted servers` category
 
-Values in the `logging` category tell the program whether or not to *ignore messages from certain servers* and *which servers to ignore the messages from*.
+Values in the `blacklisted servers` category tell the program whether or not to *ignore messages from certain servers* and *which servers to ignore the messages from*.
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |

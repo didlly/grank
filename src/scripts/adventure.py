@@ -147,7 +147,7 @@ def adventure(Client: Instance) -> bool:
                     # ...return False
                     return False
 
-            # Interact with the `Start Adventure` button
+            # Choose the `Start Adventure` button
             Client.interact_button(
                 "pls adv",
                 latest_message["components"][1]["components"][0]["custom_id"],
@@ -159,14 +159,14 @@ def adventure(Client: Instance) -> bool:
                 "pls adv", old_latest_message=latest_message
             )
 
-            # Interact with the `Equip all` button
+            # Choose the `Equip all` button
             Client.interact_button(
                 "pls adv",
                 latest_message["components"][-1]["components"][1]["custom_id"],
                 latest_message,
             )
 
-            # Interact with the `Start Adventure` button
+            # Choose the `Start Adventure` button
             Client.interact_button(
                 "pls adv",
                 latest_message["components"][-1]["components"][0]["custom_id"],
@@ -181,7 +181,7 @@ def adventure(Client: Instance) -> bool:
     if len(latest_message["components"][0]["components"]) == 1:
         Client.log("DEBUG", "Uneventful adventure phase.")
 
-        # Interact with the `End Interaction` button
+        # Choose the `End Interaction` button
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     elif (
         "You ran out of fuel! What next?" in latest_message["embeds"][0]["description"]
@@ -190,7 +190,7 @@ def adventure(Client: Instance) -> bool:
             "DEBUG", "Fuel loss adventure phase. Choosing `Search a planet` option."
         )
 
-        # Interact with the `Search a planet` button
+        # Choose the `Search a planet` button
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     elif (
         "You accidentally bumped into the Webb Telescope."
@@ -200,7 +200,7 @@ def adventure(Client: Instance) -> bool:
             "DEBUG", "Webb telescope adventure phase. Choosing `Try and fix it` option."
         )
 
-        # Interact with the `Try and fix it` button
+        # Choose the `Try and fix it` button
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     elif (
         "You found a strange looking object. What do you do?"
@@ -211,7 +211,7 @@ def adventure(Client: Instance) -> bool:
             "Strange looking object adventure phase. Choosing `Inspect` option.",
         )
 
-        # Interact with the `Inspect` button
+        # Choose the `Inspect` button
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     elif (
         "A friendly alien approached you slowly."
@@ -219,7 +219,7 @@ def adventure(Client: Instance) -> bool:
     ):
         Client.log("DEBUG", "Friendly alien adventure phase. Choosing `Talk` option.")
 
-        # Interact with the `Talk` button
+        # Choose the `Talk` button
         custom_id = latest_message["components"][0]["components"][1]["custom_id"]
     elif (
         "You got abducted by a group of aliens,"
@@ -229,7 +229,7 @@ def adventure(Client: Instance) -> bool:
             "DEBUG", "Alien abduction adventure. Choosing `Sit back and enjoy` option."
         )
 
-        # Interact with the `Sit back and enjoy` button
+        # Choose the `Sit back and enjoy` button
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     elif (
         "You uh, just came across a pair of Odd Eyes floating around"
@@ -237,7 +237,7 @@ def adventure(Client: Instance) -> bool:
     ):
         Client.log("DEBUG", "Odd eye adventure phase. Choosing `Collect` option.")
 
-        # Interact with the `Collect` button
+        # Choose the `Collect` button
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     elif (
         "Oh my god even in space you cannot escape it"
@@ -245,7 +245,7 @@ def adventure(Client: Instance) -> bool:
     ):
         Client.log("DEBUG", "Rick roll adventure phase. Choosing `up` option.")
 
-        # Interact with the `up` button
+        # Choose the `up` button
         custom_id = latest_message["components"][0]["components"][-1]["custom_id"]
     elif (
         "You encountered someone named Dank Sidious, what do you do?"
@@ -253,7 +253,7 @@ def adventure(Client: Instance) -> bool:
     ):
         Client.log("DEBUG", "Dank Sidious adventure phase. Choosing `Do it` option.")
 
-        # Interact with the `Do it` button
+        # Choose the `Do it` button
         custom_id = latest_message["components"][0]["components"][0]["custom_id"]
     else:
         Client.log(
@@ -261,8 +261,9 @@ def adventure(Client: Instance) -> bool:
         )
 
         # Interacts with a random button
-        custom_id = choice(latest_message["components"][0]["components"])["custom_id"]
+        Client.interact_button(latest_message["components"][0]["components"])["custom_id"]
 
+    # Choose the button
     Client.interact_button("pls adv", custom_id, latest_message)
 
     return True
