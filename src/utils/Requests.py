@@ -205,6 +205,7 @@ def request(
             "WARNING",
             f"Connecting to {url} failed - `{exc_info()}`.",
         )
+        return False
 
     # ...suppress a JSONDecodeError...
     with suppress(JSONDecodeError):
