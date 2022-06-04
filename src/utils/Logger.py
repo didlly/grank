@@ -26,7 +26,7 @@ def log(username: Union[str, None], level: str, text: str) -> None:
 
     # If the level is an `ERROR`...
     if level == "ERROR":
-        _ = input(
+        input(
             f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}\n"
         )
         # ...exit the program

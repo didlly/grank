@@ -898,7 +898,7 @@ class Instance(object):
         self.log_file.flush()
 
         if level == "ERROR":
-            _ = input(
+            input(
                 f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}\n"
             )
             exit(1)

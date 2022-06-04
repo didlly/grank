@@ -10,6 +10,7 @@ from http.cookiejar import CookieJar
 from json import dumps, loads
 from json.decoder import JSONDecodeError
 from ssl import CERT_NONE, create_default_context
+from sys import exc_info
 from typing import Optional
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlencode
@@ -201,8 +202,8 @@ def request(
         # ...tell the user of ;-)
         log(
             None,
-            "ERROR",
-            "In case you didn't realise, Sherlock, you need an internet connection to run Grank ;-).",
+            "WARNING",
+            f"Connecting to {url} failed - `{exc_info()}`.",
         )
 
     # ...suppress a JSONDecodeError...
