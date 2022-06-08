@@ -193,9 +193,19 @@ blacklisted servers:
   servers: [0, 0]
 
 settings:
-  prefix: grank
+  prefix: ["grank"]
   timeout: 5
   patron: False
+
+events:
+  enabled: True
+
+  attack the boss by clicking disenfect: True
+  windows sucks lol: True
+  why my pls rich no work: True
+  f: True
+  frick off karen: True
+  attack the boss by clicking jerk: True
 
 logging:
   debug: True

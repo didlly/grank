@@ -16,6 +16,7 @@
 
 ## Supported commands
 
+* `pls adv`
 * `pls beg`
 * `pls blackjack`
 * `pls crime`
@@ -32,7 +33,6 @@
 * `pls stream`
 * `pls trivia`
 * `pls work`
-* `pls adv` (Partial support)
 
 ## Installing for the first time
 * Download and extract the latest version of Grank from [here](https://github.com/didlly/grank/archive/refs/heads/main.zip).
@@ -413,7 +413,7 @@ Values in the `auto start` category tell the program whether or not to *automati
 
 ### `blacklisted servers` category
 
-Values in the `blacklisted servers` category tell the program whether or not to *ignore messages from certain servers* and *which servers to ignore the messages from*.
+Values in the `blacklisted servers` category tell the program whether or not to *ignore messages from certain servers* and *which servers to ignore the messages from*. The program *ignores commands and events* from blacklisted servers.
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
@@ -422,13 +422,26 @@ Values in the `blacklisted servers` category tell the program whether or not to 
 
 ### `settings` category
 
-Values in the `settings` category  *change how Grank functions*.
+Values in the `settings` category *change how the program functions*.
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
-| `prefix`  | `String` | `grank`  | Granks self-bot commands prefix. |
+| `prefix`  | `List` | `["grank"]`  | A list of prefixes the program should respond to. |
 | `patron`  | `Boolean` | `False`  | Changes cooldowns to reflect the cooldowns of `patrons`. |
 | `timeout`  | `Integer` | `5`  | Timeout for waiting for responses from Dank Memer to commands that require user interaction (like `pls search`). |
+
+### `events` category
+Values in the `events` category the program whether or not to *join events* and *what events* to join.
+
+| Name  | Type | Default Value | Description |
+| ------------- | ------------- | ------------- | ------------- |
+| `enabled`  | `Boolean` | `True`  | Tells the program whether or not to respond to events. |
+| `attack the boss by clicking disenfect`  | `Boolean` | `True`  | Tells the program whether or not to respond to the `attack the boss by clicking disenfect` event. |
+| `windows sucks lol`  | `Boolean` | `True`  | Tells the program whether or not to respond to the `windows sucks lol` event. |
+| `why my pls rich no work`  | `Boolean` | `True`  | Tells the program whether or not to respond to the `why my pls rich no work` event. |
+| `f`  | `Boolean` | `True`  | Tells the program whether or not to respond to the `f` event. |
+| `frick off karen`  | `Boolean` | `True`  | Tells the program whether or not to respond to the `frick off karen` event. |
+| `attack the boss by clicking jerk`  | `Boolean` | `True`  | Tells the program whether or not to respond to the `attack the boss by clicking jerk` event. |
 
 ### `logging` category
 

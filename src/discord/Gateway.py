@@ -8,6 +8,8 @@ from threading import Thread
 from time import sleep
 from typing import Union
 
+from websocket import WebSocket, WebSocketConnectionClosedException
+
 import utils.Yaml
 from discord.GuildId import guild_id
 from discord.UserInfo import user_info
@@ -18,7 +20,6 @@ from instance.Exceptions import ExistingUserID, IDNotFound, InvalidUserID
 from instance.Shifts import shifts
 from scripts.buy import buy
 from utils.Shared import data
-from websocket import WebSocket, WebSocketConnectionClosedException
 
 
 def anti_heist(Client: Instance, latest_message: dict, reset: bool) -> None:
@@ -660,14 +661,11 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
             event = loads(ws.recv())
 
             if event["t"] == "MESSAGE_CREATE":
-                length = len(Client.Repository.config["settings"]["prefix"])
-
-                if (
-                    event["d"]["content"][:length]
-                    == Client.Repository.config["settings"]["prefix"]
-                    and len(event["d"]["content"]) > length + 2
+                if any(
+                    event["d"]["content"][: len(prefix)] == prefix
+                    and len(event["d"]["content"]) > len(prefix) + 2
+                    for prefix in Client.Repository.config["settings"]["prefix"]
                 ):
-
                     if (
                         event["d"]["author"]["id"]
                         in Client.Repository.controllers["controllers"]
@@ -2923,38 +2921,64 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                         or f"pls heist {Client.username}" in event["d"]["content"]
                         or f"pls bankrob <@{Client.id}>" in event["d"]["content"]
                         or f"pls heist <@{Client.id}>" in event["d"]["content"]
+                        and (
+                            not Client.Repository.config["blacklisted servers"][
+                                "enabled"
+                            ]
+                            or int(event["d"]["guild_id"])
+                            not in Client.Repository.config["blacklisted servers"][
+                                "servers"
+                            ]
+                        )
                     ):
                         Client.log(
                             "WARNING",
                             "Possible heist detected - awaiting Dank Memer confirmation.",
                         )
                         heist = True
-                    elif event["d"]["author"]["id"] == "270904126974590976":
+                    elif (
+                        event["d"]["author"]["id"] == "270904126974590976"
+                        and Client.Repository.config["events"]["enabled"]
+                    ):
                         if (
                             "Attack the boss by clicking `disinfect`"
                             in event["d"]["content"]
+                            and Client.Repository.config["events"][
+                                "attack the boss by clicking disinfect"
+                            ]
                         ):
                             Thread(target=event_1, args=[Client, event["d"]]).start()
                         elif (
                             "Attack the boss by clicking `windows sucks lol`"
                             in event["d"]["content"]
+                            and Client.Repository.config["events"]["windows sucks lol"]
                         ):
                             Thread(target=event_2, args=[Client, event["d"]]).start()
                         elif (
                             "Attack the boss by clicking `why my pls rich no work?`"
                             in event["d"]["content"]
+                            and Client.Repository.config["events"][
+                                "why my pls rich no work"
+                            ]
                         ):
                             Thread(target=event_3, args=[Client, event["d"]]).start()
-                        elif event["d"]["content"] == "F":
+                        elif (
+                            event["d"]["content"] == "F"
+                            and Client.Repository.config["events"]["f"]
+                        ):
                             Thread(target=event_4, args=[Client, event["d"]]).start()
                         elif (
                             "Attack the boss by clicking `frick off karen`"
                             in event["d"]["content"]
+                            and Client.Repository.config["events"]["frick off karen"]
                         ):
                             Thread(target=event_5, args=[Client, event["d"]]).start()
                         elif (
                             "Attack the boss by clicking `jerk`"
                             in event["d"]["content"]
+                            and Client.Repository.config["events"][
+                                "attack the boss by clicking jerk"
+                            ]
                         ):
                             Thread(target=event_6, args=[Client, event["d"]]).start()
                         if len(event["d"]["embeds"]) > 0:

@@ -240,6 +240,13 @@ def verify_config(cwd: str, folder: str) -> bool:
         "['settings']['prefix']",
         "['settings']['patron']",
         "['settings']['timeout']",
+        "['events']['enabled']",
+        "['events']['attack the boss by clicking disenfect']",
+        "['events']['windows sucks lol']",
+        "['events']['why my pls rich no work']",
+        "['events']['f']",
+        "['events']['frick off karen']",
+        "['events']['attack the boss by clicking jerk']",
         "['logging']['webhook logging']",
         "['logging']['webhook logging']['enabled']",
         "['logging']['webhook logging']['url']",
@@ -252,10 +259,27 @@ def verify_config(cwd: str, folder: str) -> bool:
         # If there is an error while parsing, an Exception would be raised, which is caught here, and the program will return False
         return False
 
+    try:
+        # Try to parse the config file
+        config_template = utils.Yaml.load(f"{cwd}database/templates/config.yml")
+    except Exception:
+        # If there is an error while parsing, an Exception would be raised, which is caught here, and the program will return False
+        return False
+
     for option in options:
         try:
             # Set a throwaway variable to the value in the config
             exec(f"_ = config{option}")
+
+            wrong_type = False
+
+            # Make sure variable the types are the same
+            exec(
+                f"if type(config{option}) != type(config_template{option}): wrong_type = True"
+            )
+
+            if wrong_type:
+                return False
         except KeyError:
             # If the value is not in the config, a KeyError would be raised, which is caught here, and the program will return False
             return False
