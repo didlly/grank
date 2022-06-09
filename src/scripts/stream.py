@@ -147,9 +147,12 @@ def stream(Client: Instance) -> bool:
         # ...get the correct latest message
         latest_message = Client.fallback_retreive_message("pls stream")
 
+    # Get the amount of stream sponsors.
+    int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", ""))
+
     # If the stream has sponsers, and the config allows running ads on stream...
     if (
-        int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", "")) > 0
+        sponsors > 0
         and Client.Repository.config["stream"]["ads"]
     ):
         # ...run an ad
@@ -168,14 +171,14 @@ def stream(Client: Instance) -> bool:
             else 1
             if Client.Repository.config["stream"]["chat"]
             else 2
-            if Client.Repository.config["stream"]["donations"]
+            if Client.Repository.config["stream"]["donations"] and sponsors > 0
             else None
         )
 
         # If no button abides by the config...
         if button is None:
-            # ...return False
-            return False
+            Client.log("WARNING", "Interacting with a random button on the `pls stream` command since no button fulfills the requirements in the config.")
+            button = randint(1, 2)
 
         # Interact with the button
         Client.interact_button(
