@@ -12,7 +12,6 @@ def daily(Client: Instance) -> bool:
         bool: Indicates whether the command ran successfully or not
     """
 
-    # Send the command `pls daily`
     Client.send_message("pls daily")
 
     return True

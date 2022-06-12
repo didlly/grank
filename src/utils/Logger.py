@@ -17,17 +17,14 @@ def log(username: Union[str, None], level: str, text: str) -> None:
         None
     """
 
-    # Get the time now
     time = datetime.now().strftime("[%x-%X]")
 
     print(
         f"{time}{f' - {fore.Bright_Magenta}{username}{style.RESET_ALL}' if username is not None else ''} - {style.Italic}{fore.Bright_Red if level == 'ERROR' else fore.Bright_Blue if level == 'DEBUG' else fore.Bright_Yellow}[{level}]{style.RESET_ALL} | {text}"
     )
 
-    # If the level is an `ERROR`...
     if level == "ERROR":
         input(
             f"\n{style.Italic and style.Faint}Press ENTER to exit the program...{style.RESET_ALL}\n"
         )
-        # ...exit the program
         exit(1)

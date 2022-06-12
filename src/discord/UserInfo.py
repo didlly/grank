@@ -16,7 +16,6 @@ def user_info(token: str, user_id: Optional[int] = None) -> Optional[DictToClass
         req (Optional[DictToClass]): A class with the user's information
     """
 
-    # Send a request to the Discord API. If the user_id is None, then we are getting information about the account linked to the token, so we do a @me request. Else, we do a request to the user's page
     req = request(
         "https://discord.com/api/v10/users/@me"
         if user_id is None
@@ -24,16 +23,11 @@ def user_info(token: str, user_id: Optional[int] = None) -> Optional[DictToClass
         headers={"authorization": token},
     )
 
-    # If the request status code is an error code...
     if not 199 < req.status_code < 300:
-        # ...return None
         return None
 
-    # Convert the account data to a class
     req = DictToClass(req.content)
 
-    # Add the token attribute
     req.token = token
 
-    # Return the class
     return req

@@ -14,7 +14,6 @@ def blackjack(Client: Instance) -> bool:
         bool: Indicates whether the command ran successfully or not
     """
 
-    # Calculate the amount to bet
     amount = (
         randint(
             Client.Repository.config["blackjack"]["minimum"],
@@ -24,13 +23,10 @@ def blackjack(Client: Instance) -> bool:
         else Client.Repository.config["blackjack"]["amount"]
     )
 
-    # Send the command `pls blackjack {amount}`
     Client.send_message(f"pls blackjack {amount}")
 
-    # Get Dank Memer's response to `pls blackjack {amount}`
     latest_message = Client.retreive_message(f"pls blackjack {amount}")
 
-    # If there are insufficient funds to blackjack that amount...
     if (
         "coins, dont try and lie to me hoe." in latest_message["content"]
         or "You have no coins in your wallet to gamble with lol."
@@ -40,13 +36,10 @@ def blackjack(Client: Instance) -> bool:
             "WARNING",
             f"Insufficient funds to run the command `pls bj {amount}`. Aborting command.",
         )
-        # ...return False
         return False
 
     while True:
-        # If the game has ended...
         if "description" in latest_message["embeds"][0]:
-            # ...if the dealer one...
             if (
                 "You lost" in latest_message["embeds"][0]["description"]
                 or "You didn't" in latest_message["embeds"][0]["description"]
@@ -54,12 +47,9 @@ def blackjack(Client: Instance) -> bool:
                 Client.log(
                     "DEBUG", f"Lost {amount} through the `pls blackjack` command."
                 )
-                # ...return True
                 return True
-            # ...else if we won...
             elif "You won" in latest_message["embeds"][0]["description"]:
                 try:
-                    # ...try and get the coins gained from the command
                     coins = int(
                         "".join(
                             filter(
@@ -71,26 +61,21 @@ def blackjack(Client: Instance) -> bool:
                         )
                     )
                 except Exception:
-                    # If an Exception is raised, it will be caught here and the coins gained will be set to 0
                     coins = "no"
 
                 Client.log(
                     "DEBUG",
                     f"Won {coins} coin{'' if coins == 1 else 's'} from the `pls blackjack` command.",
                 )
-                # Update the coins gained
                 Client._update_coins("pls blackjack", coins)
 
                 return True
-            # ...else if we tied with the dealer...
             elif "hasn't changed" in latest_message["embeds"][0]["description"]:
                 Client.log(
                     "DEBUG", "Tied with the dealer in the `pls blackjack` command."
                 )
-                # ...return True
                 return True
 
-        # Get our total
         total = int(
             "".join(
                 filter(
@@ -100,17 +85,13 @@ def blackjack(Client: Instance) -> bool:
             )
         )
 
-        # If the total is less than 17...
         if total < 17:
-            # ...interact with the `Hit` button
             Client.interact_button(
                 f"pls bj {amount}",
                 latest_message["components"][0]["components"][0]["custom_id"],
                 latest_message,
             )
-        # Else...
         else:
-            # ...interact with the `Stand` button
             Client.interact_button(
                 f"pls bj {amount}",
                 latest_message["components"][0]["components"][1]["custom_id"],
@@ -118,7 +99,6 @@ def blackjack(Client: Instance) -> bool:
             )
             break
 
-        # Get Dank Memer's edited response
         latest_message = Client.retreive_message(
             f"pls blackjack {amount}", old_latest_message=latest_message
         )

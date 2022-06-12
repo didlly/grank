@@ -687,7 +687,6 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                             Client.Repository.log_command(Client, event["d"])
                             args = parse_args(event["d"]["content"])
 
-                            # Client.send_message(f"***DEBUG:***  `{dumps(args.__dict__)}`")
 
                             if args.command == "help":
                                 Client.webhook_send(

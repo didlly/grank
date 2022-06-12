@@ -13,17 +13,13 @@ def fish(Client: Instance) -> bool:
         bool: Indicates whether the command ran successfully or not
     """
 
-    # Send the command `pls fish`
     Client.send_message("pls fish")
 
-    # Get Dank Memer's response to `pls fish`
     latest_message = Client.retreive_message("pls fish")
 
-    # If Dank Memer replied with the `Catch the fish` game...
     if "Catch the fish" in latest_message["content"]:
         Client.log("DEBUG", "Detected catch the fish game.")
 
-        # ...get the index of the button under the fish
         level = (
             latest_message["content"]
             .split("\n")[1]
@@ -31,7 +27,6 @@ def fish(Client: Instance) -> bool:
             .count("       ")
         )
 
-        # Interact with the `Catch` button
         Client.interact_button(
             "pls fish",
             latest_message["components"][0]["components"][level]["custom_id"],
@@ -40,7 +35,6 @@ def fish(Client: Instance) -> bool:
 
         return True
 
-    # If the account does not have a `fishing pole`...
     if (
         latest_message["content"]
         == "You don't have a fishing pole, you need to go buy one. You're not good enough to catch them with your hands."
@@ -50,20 +44,16 @@ def fish(Client: Instance) -> bool:
             "Account does not have item `fishing pole`. Buying fishing pole now.",
         )
 
-        # ...if autobuy is enabled...
         if (
             Client.Repository.config["auto buy"]
             and Client.Repository.config["auto buy"]["fishing pole"]
         ):
-            # ...try and buy a `fishing pole`
             return buy(Client, "fishing pole")
-        # Else...
         else:
             Client.log(
                 "WARNING",
                 f"A fishing pole is required for the command `pls fish`. However, since {'auto buy is off for fishing poles,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
             )
-            # ...return False
             return False
 
     if latest_message["content"] in [
@@ -72,9 +62,7 @@ def fish(Client: Instance) -> bool:
         "You cast out your line and sadly didn't get a bite",
     ]:
         Client.log("DEBUG", f"Found nothing from the `pls fish` command.")
-    # If an item was gained...
     else:
-        # ...get the item gained
         item = (
             latest_message["content"]
             .replace("You cast out your line and brought back 1 ", "")
@@ -84,7 +72,6 @@ def fish(Client: Instance) -> bool:
 
         Client.log("DEBUG", f"Received 1 {item.lower()} from the `pls fish` command.")
 
-        # Update the items gained
         Client._update_items("pls fish", item)
 
     return True

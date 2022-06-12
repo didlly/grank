@@ -1,5 +1,4 @@
 class fore:
-    # ANSII colour codes to change the foreground of text in the terminal.
 
     Black = "\u001b[30m"
     Red = "\u001b[31m"
@@ -21,7 +20,6 @@ class fore:
 
 
 class back:
-    # ANSII colour codes to change the background of text in the terminal.
 
     Black = "\u001b[40m"
     Red = "\u001b[41m"
@@ -43,7 +41,6 @@ class back:
 
 
 class style:
-    # ANSII colour codes to change the style of text in the terminal.
 
     Bold = "\033[1m"
     Faint = "\033[2m"

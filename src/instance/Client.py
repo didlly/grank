@@ -41,17 +41,14 @@ class Instance(object):
         self.user = account.username
         self.discriminator = account.discriminator
 
-        # Set startup_time to the UNIX time the line was executed
         self.startup_time = int(time())
 
-        # Create the log file
         self.log_file = open(
             f"{cwd}logs/{data['version']}/{account.token}/{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}.log",
             "a",
             errors="ignore",
         )
 
-        # Initialize the session stats dictionary in the shared dictionary
         data["stats"][self.token] = {
             "commands_ran": 0,
             "buttons_clicked": 0,

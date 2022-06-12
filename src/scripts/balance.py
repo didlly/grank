@@ -12,13 +12,10 @@ def balance(Client: Instance) -> tuple:
         The amount of money in the bank & wallet of the account
     """
 
-    # Send the command `pls bal`
     Client.send_message("pls bal")
 
-    # Gets Dank Memer's response to `pls bal`
     latest_message = Client.retreive_message("pls bal")
 
-    # Get the amount of money in the account's bank
     bank = int(
         "".join(
             filter(
@@ -31,7 +28,6 @@ def balance(Client: Instance) -> tuple:
         )
     )
 
-    # Get the amount of money in the account's wallet
     wallet = int(
         "".join(
             filter(
@@ -41,5 +37,4 @@ def balance(Client: Instance) -> tuple:
         )
     )
 
-    # Returns the amount of money in the account's bank & wallet
     return bank, wallet

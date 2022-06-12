@@ -13,9 +13,6 @@ Choose the docs you would like to view, or stay on this page for more informatio
 ### User
 Click [here](/grank/users) to proceed to the user documentation. This includes details on how to set-up Grank.
 
-### Developer
-Click [here](/grank/developers) to proceed to the developer documentation. This includes details on how Grank works.
-
 ## Why was Grank created
 Back in early January of 2022, me and my friends started grinding out Dank Memer as a fun past-time to see who could make the most money / networth. For the first half of January, I grinded Dank Memer legitimately, but then realised how easy it would be to automate it.
 
