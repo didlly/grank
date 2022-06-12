@@ -159,6 +159,7 @@ class Instance(object):
                 "your immune system is under attack from covid-19",
                 "skype is trying to beat discord again!",
                 "the shop sale just started!",
+                "trivia night"
             ]
             or "answered first" in item
         ):
