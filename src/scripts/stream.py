@@ -117,10 +117,7 @@ def stream(Client: Instance) -> bool:
 
     sponsors = int(latest_message["embeds"][0]["fields"][5]["value"].replace("`", ""))
 
-    if (
-        sponsors > 0
-        and Client.Repository.config["stream"]["ads"]
-    ):
+    if sponsors > 0 and Client.Repository.config["stream"]["ads"]:
         Client.interact_button(
             "pls stream",
             latest_message["components"][0]["components"][0]["custom_id"],
@@ -139,7 +136,10 @@ def stream(Client: Instance) -> bool:
         )
 
         if button is None:
-            Client.log("WARNING", "Interacting with a random button on the `pls stream` command since no button fulfills the requirements in the config.")
+            Client.log(
+                "WARNING",
+                "Interacting with a random button on the `pls stream` command since no button fulfills the requirements in the config.",
+            )
             button = randint(1, 2)
 
         Client.interact_button(

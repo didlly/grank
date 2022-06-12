@@ -687,7 +687,6 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                             Client.Repository.log_command(Client, event["d"])
                             args = parse_args(event["d"]["content"])
 
-
                             if args.command == "help":
                                 Client.webhook_send(
                                     {
@@ -3057,7 +3056,11 @@ def event_handler(Client, ws, event: dict, restarted: bool) -> None:
                     == data["channels"][event["d"]["channel_id"]]["message"]["id"]
                 ):
                     data["channels"][event["d"]["channel_id"]]["message"] = event["d"]
-        except (WebSocketConnectionClosedException, JSONDecodeError, ConnectionResetError):
+        except (
+            WebSocketConnectionClosedException,
+            JSONDecodeError,
+            ConnectionResetError,
+        ):
             Thread(target=gateway, args=[Client, True]).start()
             return
         except Exception:
