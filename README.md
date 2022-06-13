@@ -9,4 +9,4 @@
 
 Please visit the website [here](https://didlly.github.io/grank). All content has been moved away from the README.
 
-<sub>© [didlly](https://github.com/didlly) 2022 - Present under the [MIT License](https://github.com/didlly/grank/tree/main/LICENSE).</sub>
+<sub>© [didlly](https://github.com/didlly) 2022 - Present under the [GNU Affero General Public License 3](https://github.com/didlly/grank/tree/main/LICENSE).</sub>
