@@ -327,7 +327,7 @@ Values in the `auto trade` category tell the program *who items should be traded
 
 ### `auto accept trade` category
 
-Values in the `anti heist` category tell the program whether or not to *automatically accept trades* and *who to accept them from*.
+Values in the `auto accept trade` category tell the program whether or not to *automatically accept trades* and *who to accept them from*.
 
 | Name  | Type | Default Value | Description |
 | ------------- | ------------- | ------------- | ------------- |
