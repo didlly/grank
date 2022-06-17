@@ -40,7 +40,7 @@ class Instance(object):
         self.username = f"{account.username}#{account.discriminator}"
         self.user = account.username
         self.discriminator = account.discriminator
-        
+
         # Stream moveset cache, can be used for more than 1 cache to make thing less messy
         self.cache = {
             "stream": []
@@ -155,14 +155,14 @@ class Instance(object):
 
         if (
             item
-            in [
+            in {
                 "",
                 "no items",
                 "your immune system is under attack from covid-19",
                 "skype is trying to beat discord again!",
                 "the shop sale just started!",
                 "trivia night",
-            ]
+            }
             or "answered first" in item
         ):
             return False
@@ -208,7 +208,7 @@ class Instance(object):
         Returns:
             None
         """
-        command = str(command)
+        command = command
 
         if self.Repository.config["typing indicator"]["enabled"]:
             req = request(
@@ -310,10 +310,9 @@ class Instance(object):
 
         token = None
 
-        if len(req.content) > 0:
-            if "token" in req.content[0]:
-                token = req.content[0]["token"]
-                channel_id = req.content[0]["id"]
+        if len(req.content) > 0 and "token" in req.content[0]:
+            token = req.content[0]["token"]
+            channel_id = req.content[0]["id"]
 
         if token is None:
             req = request(
@@ -355,8 +354,9 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] == 1000 else 'seconds'}.",
                         )
+
                     sleep(req.content["retry_after"] / 1000)
                     continue
                 raise WebhookSendError(
@@ -396,9 +396,10 @@ class Instance(object):
             time = datetime.now()
             old_latest_message = (
                 copy(data["channels"][self.channel_id]["message"])
-                if old_latest_message == None
+                if old_latest_message is None
                 else old_latest_message
             )
+
 
             while (datetime.now() - time).total_seconds() < self.Repository.config[
                 "settings"
@@ -532,9 +533,10 @@ class Instance(object):
                         == "You have 0 coins, you can't give them 1."
                     ):
                         self.send_message(
-                            f"pls with 1",
+                            "pls with 1",
                             self.Repository.config["auto trade"]["trader token"],
                         )
+
 
                         self.send_message(
                             f"pls trade 1, 1 {key} <@{self.id}>",
@@ -619,12 +621,13 @@ class Instance(object):
             ):
                 continue
 
-            if "referenced_message" in latest_message:
-                if (
+            if "referenced_message" in latest_message and (
+                (
                     latest_message["referenced_message"]["author"]["id"] != self.id
                     or latest_message["referenced_message"]["content"] != command
-                ):
-                    continue
+                )
+            ):
+                continue
             if (
                 len(latest_message["embeds"]) != 0
                 and "title" in latest_message["embeds"][0].keys()
@@ -636,29 +639,31 @@ class Instance(object):
                     "Exiting self-bot instance since Grank has detected the user has been bot banned / blacklisted.",
                 )
 
-            if len(latest_message["embeds"]) > 0:
-                if "description" in latest_message["embeds"][0]:
-                    if (
-                        "The default cooldown is"
-                        in latest_message["embeds"][0]["description"]
-                    ):
-                        cooldown = int(
-                            "".join(
-                                filter(
-                                    str.isdigit,
-                                    latest_message["embeds"][0]["description"]
-                                    .split("**")[1]
-                                    .split("**")[0],
-                                )
-                            )
+            if (
+                len(latest_message["embeds"]) > 0
+                and "description" in latest_message["embeds"][0]
+                and (
+                    "The default cooldown is"
+                    in latest_message["embeds"][0]["description"]
+                )
+            ):
+                cooldown = int(
+                    "".join(
+                        filter(
+                            str.isdigit,
+                            latest_message["embeds"][0]["description"]
+                            .split("**")[1]
+                            .split("**")[0],
                         )
-                        self.log(
-                            "WARNING",
-                            f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
-                        )
-                        sleep(cooldown)
-                        self.send_message(command)
-                        latest_message = self.retreive_message(command)
+                    )
+                )
+                self.log(
+                    "WARNING",
+                    f"Detected cooldown in Dank Memer's response to `{command}`. Sleeping for {cooldown} {'second' if cooldown == 1 else 'seconds'}.",
+                )
+                sleep(cooldown)
+                self.send_message(command)
+                latest_message = self.retreive_message(command)
 
             return latest_message
 
@@ -701,12 +706,13 @@ class Instance(object):
             "type": 3,
             "data": {"component_type": 2, "custom_id": custom_id},
             "guild_id": latest_message["message_reference"]["guild_id"]
-            if "message_reference" in latest_message.keys()
+            if "message_reference" in latest_message
             else self.guild_id,
             "message_flags": 0,
             "message_id": latest_message["id"],
             "session_id": self.session_id if session_id is None else session_id,
         }
+
 
         if self.Repository.config["button delay"]["enabled"]:
             sleep(
@@ -784,12 +790,13 @@ class Instance(object):
                 "values": [option_id],
             },
             "guild_id": latest_message["message_reference"]["guild_id"]
-            if "message_reference" in latest_message.keys()
+            if "message_reference" in latest_message
             else self.guild_id,
             "message_flags": 0,
             "message_id": latest_message["id"],
             "session_id": self.session_id,
         }
+
 
         if self.Repository.config["dropdown delay"]["enabled"]:
             sleep(
@@ -858,7 +865,7 @@ class Instance(object):
             ):
                 continue
 
-            for _ in range(0, 2):
+            for _ in range(2):
                 try:
                     custom_id = message["components"][index1]["components"][index2][
                         "custom_id"
@@ -945,8 +952,9 @@ class Instance(object):
                     if self.Repository.config["logging"]["warning"]:
                         self.log(
                             "WARNING",
-                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] / 1000 == 1 else 'seconds'}.",
+                            f"Discord is ratelimiting the self-bot. Sleeping for {req.content['retry_after'] / 1000} {'second' if req.content['retry_after'] == 1000 else 'seconds'}.",
                         )
+
                     sleep(req.content["retry_after"] / 1000)
                     continue
                 raise WebhookSendError(
