@@ -40,6 +40,11 @@ class Instance(object):
         self.username = f"{account.username}#{account.discriminator}"
         self.user = account.username
         self.discriminator = account.discriminator
+        
+        # Stream moveset cache, can be used for more than 1 cache to make thing less messy
+        self.cache = {
+            "stream": []
+        }
 
         self.startup_time = int(time())
 
