@@ -124,17 +124,28 @@ def stream(Client: Instance) -> bool:
             latest_message,
         )
     else:
-        button = (
-            randint(1, 2)
-            if Client.Repository.config["stream"]["chat"]
-            and Client.Repository.config["stream"]["donations"]
-            else 1
-            if Client.Repository.config["stream"]["chat"]
-            else 2
-            if Client.Repository.config["stream"]["donations"] and sponsors > 0
-            else None
-        )
-
+        if len(Client.Repository.config["settings"]["preferences"]["stream"]["moveset"]) == 0:
+            button = (
+                randint(1, 2)
+                if Client.Repository.config["stream"]["chat"]
+                and Client.Repository.config["stream"]["donations"]
+                else 1
+                if Client.Repository.config["stream"]["chat"]
+                else 2
+                if Client.Repository.config["stream"]["donations"] and sponsors > 0
+                else None
+            )
+        else:
+            ms_settings = Client.Repository.config["settings"]["preferences"]["stream"]
+            if sponsors > 0:
+                if len(Client.cache["stream"]) == len(ms_settings["moveset"]):
+                    Client.cache["stream"] = []
+                
+                button = ms_settings["moveset"][len(Client.cache["stream"])]
+                Client.cache["stream"].append(button)
+            else:
+                button = ms_settings["no_sponsor_move"]
+                
         if button is None:
             Client.log(
                 "WARNING",
