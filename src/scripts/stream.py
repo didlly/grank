@@ -30,56 +30,60 @@ def stream(Client: Instance) -> bool:
         )
 
     if "description" in latest_message["embeds"][0]:
-        if "keyboard" in latest_message["embeds"][0]["description"].lower():
-            if not has_item(Client, "keyboard"):
-                Client.log(
-                    "DEBUG",
-                    "Account does not have item `keyboard`. Buying keyboard now.",
-                )
+        if "keyboard" in latest_message["embeds"][0][
+            "description"
+        ].lower() and not has_item(Client, "keyboard"):
+            Client.log(
+                "DEBUG",
+                "Account does not have item `keyboard`. Buying keyboard now.",
+            )
 
-                if (
-                    Client.Repository.config["auto buy"]
-                    and Client.Repository.config["auto buy"]["keyboard"]
-                ):
-                    bought_keyboard = buy(Client, "keyboard")
-                else:
-                    Client.log(
-                        "WARNING",
-                        f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
-                    )
-                    return False
-        if "mouse" in latest_message["embeds"][0]["description"].lower():
-            if not has_item(Client, "mouse"):
+            if (
+                Client.Repository.config["auto buy"]
+                and Client.Repository.config["auto buy"]["keyboard"]
+            ):
+                bought_keyboard = buy(Client, "keyboard")
+            else:
                 Client.log(
-                    "DEBUG", "Account does not have item `mouse`. Buying mouse now."
+                    "WARNING",
+                    f"A keyboard is required for the command `pls stream`. However, since {'autobuy is off for keyboards,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
                 )
+                return False
+        if "mouse" in latest_message["embeds"][0][
+            "description"
+        ].lower() and not has_item(Client, "mouse"):
+            Client.log(
+                "DEBUG", "Account does not have item `mouse`. Buying mouse now."
+            )
 
-                if (
-                    Client.Repository.config["auto buy"]
-                    and Client.Repository.config["auto buy"]["mouse"]
-                ):
-                    bought_mouse = buy(Client, "mouse")
-                else:
-                    Client.log(
-                        "WARNING",
-                        f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
-                    )
-                    return False
+            if (
+                Client.Repository.config["auto buy"]
+                and Client.Repository.config["auto buy"]["mouse"]
+            ):
+                bought_mouse = buy(Client, "mouse")
+            else:
+                Client.log(
+                    "WARNING",
+                    f"A mouse is required for the command `pls stream`. However, since {'autobuy is off for mouses,' if Client.Repository.config['auto buy']['enabled'] else 'auto buy is off for all items,'} the program will not buy one. Aborting command.",
+                )
+                return False
 
     if not bought_mouse or not bought_keyboard:
         return False
 
     if len(latest_message["components"][0]["components"]) == 3:
-        if "footer" in latest_message["embeds"][0]:
-            if "Wait" in latest_message["embeds"][0]["footer"]["text"]:
-                Client.log("DEBUG", "Cannot stream yet - awaiting cooldown end.")
+        if (
+            "footer" in latest_message["embeds"][0]
+            and "Wait" in latest_message["embeds"][0]["footer"]["text"]
+        ):
+            Client.log("DEBUG", "Cannot stream yet - awaiting cooldown end.")
 
-                Client.interact_button(
-                    "pls stream",
-                    latest_message["components"][-1]["components"][-1]["custom_id"],
-                    latest_message,
-                )
-                return False
+            Client.interact_button(
+                "pls stream",
+                latest_message["components"][-1]["components"][-1]["custom_id"],
+                latest_message,
+            )
+            return False
 
         Client.interact_button(
             "pls stream",
@@ -140,12 +144,12 @@ def stream(Client: Instance) -> bool:
             if sponsors > 0:
                 if len(Client.cache["stream"]) == len(ms_settings["moveset"]):
                     Client.cache["stream"] = []
-                
+
                 button = ms_settings["moveset"][len(Client.cache["stream"])]
                 Client.cache["stream"].append(button)
             else:
                 button = ms_settings["no_sponsor_move"]
-                
+
         if button is None:
             Client.log(
                 "WARNING",
